@@ -1,45 +1,59 @@
 //
 //  GameScene.swift
-//  BowGame
+//  Test
 //
-//  Created by Antonis papantoniou on 9/7/15.
-//  Copyright (c) 2015 Antonis papantoniou. All rights reserved.
+//  Created by ZhangYu on 9/5/15.
+//  Copyright (c) 2015 ZhangYu. All rights reserved.
 //
 
 import SpriteKit
 
-class GameScene: SKScene {
-    override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
+class GameScene: SKScene, SKPhysicsContactDelegate{
+    var player = PlayerFactory.getPlayer()
+    func initworld()
+    {
+        backgroundColor = SKColor.whiteColor()
+        self.physicsWorld.gravity = CGVectorMake(0, -9.8);
+        self.physicsWorld.contactDelegate = self
     }
-    
+    override func didMoveToView(view: SKView) {
+        initworld()
+        player.position = CGPointMake(size.width*0.15, size.height/5);
+        self.addChild(player)
+        var enemy = PlayerFactory.getPlayer()
+        enemy.position = CGPointMake((size.width*0.85), size.height/5);
+        self.addChild(enemy)
+
+    }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
         for touch in (touches as! Set<UITouch>) {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            player.shoot(CGVectorMake(8 , 10), scene: self)
         }
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        
+        for child in (self.children) {
+            if child is Arrow{
+                var arrow = child as! Arrow
+                arrow.update()
+            }
+        }
+    }
+    func didBeginContact(contact: SKPhysicsContact)
+    {
+        NSLog("get hurt")
+        var player: Player
+        if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask {
+            player = contact.bodyA.node as! Player
+            player.shot()
+        }
+        if contact.bodyB.categoryBitMask == CollisonHelper.PlayerMask {
+            player = contact.bodyB.node as! Player
+            player.shot()
+        }
     }
 }
