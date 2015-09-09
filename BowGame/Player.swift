@@ -16,19 +16,25 @@ class PlayerFactory{
 }
 class Player: SKSpriteNode
 {
+    var totalHealth:Float = 100
+    var currentHealth:Float = 100
+    var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
+    var scalePara:Float = 1
     private init() {
         let spriteColor = SKColor.blackColor()
         let spriteSize = CGSize(width: 50.0, height: 50.0)
         let texture = SKTexture(imageNamed: "Player2")
         super.init(texture: texture, color: spriteColor, size: spriteSize)
-        self.physicsBody =
-            SKPhysicsBody(rectangleOfSize: self.size)
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.PlayerMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
+        
+        healthbar.fillColor = SKColor.greenColor()
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -51,9 +57,20 @@ class Player: SKSpriteNode
         bow.shoot(impulse, arrow: arrow, scene: scene)
         
     }
-    func shot()
+    func shot(damage:Float)
     {
         self.color = randomColor()
+        
+        //decrease player's health
+        currentHealth -= damage
+        currentHealth = currentHealth < 0 ? 0 : currentHealth
+        if(currentHealth <= 30){
+            healthbar.fillColor = SKColor.redColor()
+        }else if(currentHealth <= 60){
+            healthbar.fillColor = SKColor.orangeColor()
+        }
+        healthbar.xScale = CGFloat(currentHealth / totalHealth)
+        
     }
     
     func randomCGFloat() -> CGFloat {

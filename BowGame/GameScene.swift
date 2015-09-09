@@ -21,15 +21,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         player.position = CGPointMake(size.width*0.15, size.height/5);
         self.addChild(player)
         var enemy = PlayerFactory.getPlayer()
-        enemy.position = CGPointMake((size.width*0.85), size.height/5);
+        enemy.position = CGPointMake((size.width*0.95), size.height/5);
         self.addChild(enemy)
+        
+        //add healthbar
+        player.healthbar.position = CGPointMake(size.width*0.05 , size.height * 0.8)
+        self.addChild(player.healthbar)
+        enemy.healthbar.position = CGPointMake(size.width*0.95 - player.healthbar.frame.size.width, size.height * 0.8)
+        self.addChild(enemy.healthbar)
+
 
     }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
         for touch in (touches as! Set<UITouch>) {
-            player.shoot(CGVectorMake(8 , 10), scene: self)
+            player.shoot(CGVectorMake(8 , 11), scene: self)
         }
     }
    
@@ -49,11 +56,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         var player: Player
         if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask {
             player = contact.bodyA.node as! Player
-            player.shot()
+            player.shot(10)
         }
         if contact.bodyB.categoryBitMask == CollisonHelper.PlayerMask {
             player = contact.bodyB.node as! Player
-            player.shot()
+            player.shot(10)
         }
     }
 }
