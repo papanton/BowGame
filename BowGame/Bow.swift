@@ -9,8 +9,8 @@
 import UIKit
 import SpriteKit
 class Bow: SKSpriteNode {
-    func shoot(velocity: CGVector, arrow: Arrow,scene : SKScene)
+    func shoot(impulse: CGVector, arrow: Arrow,scene : SKScene)
     {
-        arrow.go(velocity)
+        arrow.go(impulse,  position: CGPointMake(30, 20))
     }
 }
