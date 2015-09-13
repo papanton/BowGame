@@ -12,6 +12,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var player1 = PlayerFactory.getPlayer("player1")
     private var player2 = PlayerFactory.getPlayer("player2")
     private var playerTurn:Int = 1 /* variable determining whose turn is to play.  */
+    var sheet = ShootAnimation()
+    private var sprite = SKSpriteNode()
     
     
     func initworld()
@@ -25,6 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         self.addChild(background)
         
+        
     }
     
     /*
@@ -34,9 +37,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     {
         player1.position = CGPointMake(size.width*0.15, size.height/5);
         self.addChild(player1)
+        player1.hidden = true
         
         player2.position = CGPointMake((size.width*0.85), size.height/5);
         self.addChild(player2)
+        
+        
+//        animation
+        sprite = SKSpriteNode(texture: sheet.Shoot_01())
+        sprite.position = CGPointMake(size.width * 0.15, size.height / 5);
+        sprite.size = CGSize(width: 100, height: 80)
+        addChild(sprite)
+        
+
+
+        
+        
 
     }
     override func didMoveToView(view: SKView) {
@@ -54,19 +70,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         for touch in (touches as! Set<UITouch>) {
             if (playerTurn == 1){
                 self.playerTurn = 0
-                player1.shoot(impulseVector, scene: self, position: CGPointMake(size.width * 0.17, size.height/5))
-                arrowLandDelay(2, impulse: impulseVector)
                 
+                //               animation
+                var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
+                sprite.runAction(shoot)
+                
+                delay(0.64) {
+                    self.player1.shoot(impulseVector, position: CGPointMake(self.size.width * 0.17, self.size.height/5))
+                    self.arrowLandDelay(2, impulse: impulseVector)
+                }
             }
             if (playerTurn == 2){
                 //temp for testing purposes impulseVector2.
                 var impulseVector2 =  CGVectorMake(-8, 10)
 
                 self.playerTurn = 0
-                player2.shoot(impulseVector2, scene:self, position: CGPointMake(size.width*0.82,size.height/5))
+                player2.shoot(impulseVector2, position: CGPointMake(size.width*0.82,size.height/5))
                 arrowLandDelay(1, impulse: impulseVector)
             }
         }
+        
+
+    }
+//    function to delay |input| time
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
    /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
