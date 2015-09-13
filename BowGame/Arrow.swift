@@ -11,7 +11,7 @@ import SpriteKit
 class Arrow: SKSpriteNode {
     init() {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
-        let texture = SKTexture(imageNamed: "Arrow")
+        let texture = SKTexture(imageNamed: ArrowImage)
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
     }
