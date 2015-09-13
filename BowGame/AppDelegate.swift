@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  BowGame
+//  Test
 //
-//  Created by Antonis papantoniou on 9/7/15.
-//  Copyright (c) 2015 Antonis papantoniou. All rights reserved.
+//  Created by ZhangYu on 9/5/15.
+//  Copyright (c) 2015 ZhangYu. All rights reserved.
 //
 
 import UIKit
