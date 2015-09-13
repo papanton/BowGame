@@ -10,7 +10,7 @@ import UIKit
 
 //Constants
 
-let BackgroundImage = "backgroundImage.png"
+let BackgroundImage = "background"
 let PlayerImage1 = "player.png"
 let PlayerImage2 = "Player2.png"
 let ArrowImage = "arrow.png"
