@@ -13,10 +13,10 @@ class PlayerFactory{
     {
         name = name.lowercaseString;
         if(name == "player1"){
-            return Player(name: "Player2")
+            return Player(name: PlayerImage1)
         }
         if(name == "player2"){
-            return Player(name: "Player2")
+            return Player(name: PlayerImage2)
         }
         return Player(name : "")
     }
@@ -55,12 +55,13 @@ class Player: SKSpriteNode
         aCoder.encodeObject(self.bow, forKey: "BOW")
         super.encodeWithCoder(aCoder)
     }*/
-    func shoot(impulse: CGVector , scene : SKScene)
+    func shoot(impulse: CGVector , scene : SKScene, position: CGPoint)
     {
         var bow = Bow()
         var arrow = Arrow()
         scene.addChild(arrow)
-        bow.shoot(impulse, arrow: arrow, scene: scene)
+        bow.shoot(impulse, arrow: arrow, scene: scene, position: position)
+        
         
     }
     func shot()
