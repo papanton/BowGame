@@ -115,11 +115,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 }
             }
         }
-        
+        }
 
     }
     
     
+        
+        
     /* function to delay |input| time */
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
