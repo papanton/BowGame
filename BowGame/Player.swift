@@ -23,7 +23,7 @@ class PlayerFactory{
 }
 class Player: SKSpriteNode
 {
-<<<<<<< HEAD
+
     var totalHealth:Float = 100
     var currentHealth:Float = 100
     var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
@@ -34,32 +34,30 @@ class Player: SKSpriteNode
         let texture = SKTexture(imageNamed: "Player2")
         super.init(texture: texture, color: spriteColor, size: spriteSize)
         self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
-=======
+
     private let mPlayerSize = CGSize(width: 50.0, height: 50.0)
 
     private func addPhysicsBody()
     {
         self.physicsBody =
         SKPhysicsBody(rectangleOfSize: self.size)
->>>>>>> master
+
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.PlayerMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
-<<<<<<< HEAD
+
         
         healthbar.fillColor = SKColor.greenColor()
-        
-=======
+
     
     }
     private init(name : String) {
         let texture = SKTexture(imageNamed: name)
         super.init(texture: texture, color: SKColor.clearColor(),  size: mPlayerSize)
         addPhysicsBody()
->>>>>>> master
     }
 
     required init?(coder aDecoder: NSCoder) {
