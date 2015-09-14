@@ -55,12 +55,14 @@ class Player: SKSpriteNode
         aCoder.encodeObject(self.bow, forKey: "BOW")
         super.encodeWithCoder(aCoder)
     }*/
-    func shoot(impulse: CGVector , scene : SKScene, position: CGPoint)
+    func shoot(impulse: CGVector , position: CGPoint)
     {
         var bow = Bow()
         var arrow = Arrow()
-        scene.addChild(arrow)
-        bow.shoot(impulse, arrow: arrow, scene: scene, position: position)
+        self.scene?.addChild(arrow);
+//        scene.addChild(arrow)
+        
+        bow.shoot(impulse, arrow: arrow, scene: self.scene!, position: position)
         
         
     }

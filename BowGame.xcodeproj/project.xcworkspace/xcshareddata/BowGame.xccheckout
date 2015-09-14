@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>0A8F4E4C-7365-463C-9F2F-4C79CF5F5B48</string>
+	<string>3E706B6C-C79D-42B2-96E5-5D359C544E23</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BowGame</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>BA3D2B72BF8C44669D40411ECB480E79CE72895D</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Bowgame</string>
+			<string>BowGame</string>
 		</dict>
 	</array>
 </dict>
