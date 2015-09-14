@@ -9,13 +9,21 @@
 import UIKit
 import SpriteKit
 class PlayerFactory{
-    static func getPlayer() -> Player
+    static func getPlayer(var name : String) -> Player
     {
-        return Player()
+        name = name.lowercaseString;
+        if(name == "player1"){
+            return Player(name: PlayerImage1)
+        }
+        if(name == "player2"){
+            return Player(name: PlayerImage2)
+        }
+        return Player(name : "")
     }
 }
 class Player: SKSpriteNode
 {
+<<<<<<< HEAD
     var totalHealth:Float = 100
     var currentHealth:Float = 100
     var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
@@ -26,15 +34,32 @@ class Player: SKSpriteNode
         let texture = SKTexture(imageNamed: "Player2")
         super.init(texture: texture, color: spriteColor, size: spriteSize)
         self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
+=======
+    private let mPlayerSize = CGSize(width: 50.0, height: 50.0)
+
+    private func addPhysicsBody()
+    {
+        self.physicsBody =
+        SKPhysicsBody(rectangleOfSize: self.size)
+>>>>>>> master
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.PlayerMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
+<<<<<<< HEAD
         
         healthbar.fillColor = SKColor.greenColor()
         
+=======
+    
+    }
+    private init(name : String) {
+        let texture = SKTexture(imageNamed: name)
+        super.init(texture: texture, color: SKColor.clearColor(),  size: mPlayerSize)
+        addPhysicsBody()
+>>>>>>> master
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,12 +74,13 @@ class Player: SKSpriteNode
         aCoder.encodeObject(self.bow, forKey: "BOW")
         super.encodeWithCoder(aCoder)
     }*/
-    func shoot(impulse: CGVector , scene : SKScene)
+    func shoot(impulse: CGVector , scene : SKScene, position: CGPoint)
     {
         var bow = Bow()
         var arrow = Arrow()
         scene.addChild(arrow)
-        bow.shoot(impulse, arrow: arrow, scene: scene)
+        bow.shoot(impulse, arrow: arrow, scene: scene, position: position)
+        
         
     }
     func shot(damage:Float)
@@ -74,7 +100,6 @@ class Player: SKSpriteNode
     }
     
     func randomCGFloat() -> CGFloat {
-        println()
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
     
