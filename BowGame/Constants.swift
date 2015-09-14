@@ -10,7 +10,6 @@ import UIKit
 
 //Constants
 
-
 /*
 All images used for the game
 */
