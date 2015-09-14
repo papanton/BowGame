@@ -29,6 +29,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         settingsButton()
         self.addChild(background)
         
+        player1.healthbar.position = CGPointMake(size.width*0.05 , size.height * 0.8)
+        self.addChild(player1.healthbar)
+        player2.healthbar.position = CGPointMake(size.width*0.95 - player2.healthbar.frame.size.width, size.height * 0.8)
+        self.addChild(player2.healthbar)
+        
         
     }
     
@@ -72,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         */
         
         
-        var impulseVector =  CGVectorMake(8, 10)
+        var impulseVector =  CGVectorMake(7, 10)
         for touch in (touches as! Set<UITouch>) {
             let touch = touches.first as! UITouch
             let touchLocation = touch.locationInNode(self)
@@ -145,14 +150,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     func didBeginContact(contact: SKPhysicsContact)
     {
-        var player: Player
-        if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask {
+        var player: Player!
+        var arrow: Arrow!
+        if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask{
             player = contact.bodyA.node as! Player
-            player.shot()
+            arrow = contact.bodyB.node as! Arrow
         }
-        if contact.bodyB.categoryBitMask == CollisonHelper.PlayerMask {
+        if contact.bodyB.categoryBitMask == CollisonHelper.PlayerMask{
             player = contact.bodyB.node as! Player
-            player.shot()
+            arrow = contact.bodyA.node as! Arrow
+        }
+        if(arrow.host != player){
+            player.shot(arrow)
         }
     }
     /*Function to determine the duration of time needed to expire before next arrow is shot.  */

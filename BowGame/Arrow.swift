@@ -9,9 +9,15 @@
 import UIKit
 import SpriteKit
 class Arrow: SKSpriteNode {
-    init() {
+    
+    var damage :Int!
+    var host : Player!
+    
+    init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
+        damage = 10
+        host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
     }

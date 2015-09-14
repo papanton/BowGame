@@ -25,6 +25,11 @@ class Player: SKSpriteNode
 {
     private let mPlayerSize = CGSize(width: 50.0, height: 50.0)
 
+    var totalHealth:Float = 100
+    var currentHealth:Float = 100
+    var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
+    var scalePara:Float = 1
+    
     private func addPhysicsBody()
     {
         self.physicsBody =
@@ -35,6 +40,8 @@ class Player: SKSpriteNode
         self.physicsBody?.categoryBitMask = CollisonHelper.PlayerMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
+        
+        healthbar.fillColor = SKColor.greenColor()
     
     }
     private init(name : String) {
@@ -58,7 +65,7 @@ class Player: SKSpriteNode
     func shoot(impulse: CGVector , position: CGPoint)
     {
         var bow = Bow()
-        var arrow = Arrow()
+        var arrow = Arrow(player: self)
         self.scene?.addChild(arrow);
 //        scene.addChild(arrow)
         
@@ -66,9 +73,17 @@ class Player: SKSpriteNode
         
         
     }
-    func shot()
+    func shot(arrow : Arrow)
     {
         self.color = randomColor()
+        currentHealth -= Float(arrow.damage)
+        currentHealth = currentHealth < 0 ? 0 : currentHealth
+        if(currentHealth <= 30){
+            healthbar.fillColor = SKColor.redColor()
+        }else if(currentHealth <= 60){
+            healthbar.fillColor = SKColor.orangeColor()
+        }
+        healthbar.xScale = CGFloat(currentHealth / totalHealth)
     }
     
     func randomCGFloat() -> CGFloat {
