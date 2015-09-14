@@ -10,12 +10,23 @@ import UIKit
 
 //Constants
 
+
+/*
+All images used for the game
+*/
 let BackgroundImage = "backgroundImage.png"
 let PlayerImage1 = "player.png"
 let PlayerImage2 = "Player2.png"
 let ArrowImage = "arrow.png"
+let InGameSettingButton = "InGameSettings.png"
+/*
+Main menu images (buttons etc)
+*/
 let LoadImage = "startImage.png"
-let StartButtonImage = "startButton.png"
+let StartButtonImage = "Start.png"
+let SettingsButton = "Setting.png"
+let QuitButtonImage = "Quit.png"
+let ResumeButtonImage = "ResumeGame.png"
 
 struct Layer {
     static let Background: CGFloat = 0

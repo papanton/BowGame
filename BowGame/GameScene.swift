@@ -23,12 +23,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         background.zPosition = -100;
         background.position = CGPointMake(size.width*0.5,  size.height*0.5)
         
+        settingsButton()
         self.addChild(background)
         
     }
     
     /*
-        Function adding the two players in the scene in their respective positions
+    Function adding the two players in the scene in their respective positions
     */
     func addPlayers()
     {
@@ -37,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         player2.position = CGPointMake((size.width*0.85), size.height/5);
         self.addChild(player2)
-
+        
     }
     override func didMoveToView(view: SKView) {
         initworld()
@@ -47,28 +48,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         /* Called when a touch begins */
         /*
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
-
+        
         */
+        
         
         var impulseVector =  CGVectorMake(8, 10)
         for touch in (touches as! Set<UITouch>) {
-            if (playerTurn == 1){
-                self.playerTurn = 0
-                player1.shoot(impulseVector, scene: self, position: CGPointMake(size.width * 0.17, size.height/5))
-                arrowLandDelay(2, impulse: impulseVector)
-                
-            }
-            if (playerTurn == 2){
-                //temp for testing purposes impulseVector2.
-                var impulseVector2 =  CGVectorMake(-8, 10)
-
-                self.playerTurn = 0
-                player2.shoot(impulseVector2, scene:self, position: CGPointMake(size.width*0.82,size.height/5))
-                arrowLandDelay(1, impulse: impulseVector)
+            let touch = touches.first as! UITouch
+            let touchLocation = touch.locationInNode(self)
+            let touchedNode = self.nodeAtPoint(touchLocation)
+            
+            /*
+            Checking if first touch was on settings button. Returning on main menu if so.
+            */
+            
+            if(touchedNode.name == "settings"){
+                let settingsScene = StartGameScene(size: size)
+                settingsScene.scaleMode = scaleMode
+                let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+                view?.presentScene(settingsScene,transition: transitionType)            }
+            else{
+                if (playerTurn == 1){
+                    self.playerTurn = 0
+                    player1.shoot(impulseVector, scene: self, position: CGPointMake(size.width * 0.17, size.height/5))
+                    arrowLandDelay(2, impulse: impulseVector)
+                    
+                }
+                if (playerTurn == 2){
+                    //temp for testing purposes impulseVector2.
+                    var impulseVector2 =  CGVectorMake(-8, 10)
+                    
+                    self.playerTurn = 0
+                    player2.shoot(impulseVector2, scene:self, position: CGPointMake(size.width*0.82,size.height/5))
+                    arrowLandDelay(1, impulse: impulseVector)
+                }
             }
         }
     }
-   /*Funciton updating the angle and posiiton of the arrow during flight */
+    /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
@@ -103,6 +120,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             // here code perfomed with delay
             
         })
-
+        
+    }
+    
+    
+    func settingsButton(){
+        
+        let settings = SKSpriteNode(imageNamed: InGameSettingButton )
+        settings.position = CGPointMake(size.width*0.95,size.height*0.95)
+        settings.name = "settings"
+        settings.size = CGSize(width: 16, height: 16)
+        addChild(settings)
+        
     }
 }
