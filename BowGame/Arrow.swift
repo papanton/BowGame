@@ -9,24 +9,32 @@
 import UIKit
 import SpriteKit
 class Arrow: SKSpriteNode {
-    init() {
-        var spriteSize = CGSize(width: 70.0, height: 5.0)
-        let spriteColor = SKColor.blackColor()
-        super.init(texture: nil, color: spriteColor, size: spriteSize)
+    
+    var damage :Int!
+    var host : Player!
+    
+    init(player : Player) {
+        var spriteSize = CGSize(width: 30.0, height: 10.0)
+        let texture = SKTexture(imageNamed: ArrowImage)
+        damage = 10
+        host = player
+        super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
+        addPhysicsBody()
+    }
+    private func addPhysicsBody()
+    {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size);
         self.physicsBody?.dynamic = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.PlayerMask
         self.physicsBody?.collisionBitMask = 0x0
-        
     }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    func go(impulse : CGVector){
-        position = CGPointMake(100, 200)
+    func go(impulse : CGVector, position : CGPoint){
+        self.position = position
         physicsBody!.applyImpulse(impulse)
        // self.physicsBody?.applyForce(CGVectorMake(100, 100))
         //physicsBody!.velocity = velocity
