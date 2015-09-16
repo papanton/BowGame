@@ -12,6 +12,8 @@ class Arrow: SKSpriteNode {
     
     var damage :Int!
     var host : Player!
+    var isFlying = true
+    var hitShooterSelf = true
     
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
@@ -27,13 +29,16 @@ class Arrow: SKSpriteNode {
         self.physicsBody?.dynamic = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ArrowMask
-        self.physicsBody?.contactTestBitMask = CollisonHelper.PlayerMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.PlayerMask | CollisonHelper.GroundMask
         self.physicsBody?.collisionBitMask = 0x0
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     func go(impulse : CGVector, position : CGPoint){
+        if(impulse.dx < 0) {
+            self.xScale = -1
+        }
         self.position = position
         physicsBody!.applyImpulse(impulse)
        // self.physicsBody?.applyForce(CGVectorMake(100, 100))
