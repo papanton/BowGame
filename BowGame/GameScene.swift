@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var linerow = SKShapeNode()
     var linecol = SKShapeNode()
     let anglelabel = SKLabelNode(fontNamed:"Chalkduster")
-    
+    private var ground: Ground!
     
     func initworld()
     {
@@ -71,10 +71,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         sprite_2.xScale = -1.0
         addChild(sprite_2)
         
+    
     }
+    
+    //function adding ground object (for contact detection)
+    func addGround() {
+        let groundSize = CGSizeMake(self.size.width, 1.0)
+        let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.1)
+        self.ground = Ground(size: groundSize, position: groundPosition)
+        
+        self.addChild(self.ground)
+    }
+    
+    
     override func didMoveToView(view: SKView) {
         initworld()
         addPlayers()
+        addGround()
     }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
@@ -120,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
                 sprite_1.runAction(shoot)
                 delay(0.64) {
-                    self.player1.shoot(impulseVector1, position: CGPointMake(self.size.width * 0.13, self.size.height/5))
+                    self.player1.shoot(impulseVector1, scene: self.scene!, position: CGPointMake(self.size.width * 0.13, self.size.height/5))
                     self.arrowLandDelay(2)
                 }
             }
@@ -129,7 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
                 sprite_2.runAction(shoot)
                 delay(0.64) {
-                    self.player2.shoot(impulseVector2, position: CGPointMake(self.size.width*0.87,self.size.height/5))
+                    self.player2.shoot(impulseVector2, scene: self.scene!, position: CGPointMake(self.size.width*0.87,self.size.height/5))
                     self.arrowLandDelay(1)
                 }
             }
@@ -214,7 +227,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         for child in (self.children) {
             if child is Arrow{
                 var arrow = child as! Arrow
-                arrow.update()
+                if(arrow.isFlying) {
+                    arrow.update()
+                }
             }
         }
     }
@@ -222,17 +237,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     {
         var player: Player!
         var arrow: Arrow!
-        if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask{
-            player = contact.bodyA.node as! Player
+        //B hits A
+        
+        //bodyA is the body to be hit (the responder)
+        if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask {
             arrow = contact.bodyB.node as! Arrow
+            player = contact.bodyA.node as! Player
+            
+            if(arrow.host != player) {
+                player.shot(self,arrow: arrow)
+            }
         }
-        if contact.bodyB.categoryBitMask == CollisonHelper.PlayerMask{
-            player = contact.bodyB.node as! Player
-            arrow = contact.bodyA.node as! Arrow
+        //body B is the attacker
+        if contact.bodyB.categoryBitMask == CollisonHelper.ArrowMask {
+            arrow = contact.bodyB.node as! Arrow
+            
+            if(arrow.hitShooterSelf) {
+                arrow.hitShooterSelf = false
+            }
+            else {
+                //stop updating arrow's direction
+                arrow.isFlying = false
+                
+                //avoid more physical effect
+                arrow.physicsBody = nil
+                
+                let fadeout:SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+                arrow.runAction(fadeout, completion: {
+                    arrow.removeFromParent()
+                })
+            }
         }
-        if(arrow.host != player){
-            player.shot(arrow)
-        }
+        
     }
     /*Function to determine the duration of time needed to expire before next arrow is shot.  */
     func arrowLandDelay(var nextPlayer:Int){

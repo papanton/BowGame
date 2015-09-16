@@ -14,18 +14,18 @@ import UIKit
 All images used for the game
 */
 let BackgroundImage = "background"
-let PlayerImage1 = "player.png"
-let PlayerImage2 = "Player2.png"
-let ArrowImage = "arrow.png"
-let InGameSettingButton = "InGameSettings.png"
+let PlayerImage1 = "player"
+let PlayerImage2 = "Player2"
+let ArrowImage = "arrow"
+let InGameSettingButton = "InGameSettings"
 /*
 Main menu images (buttons etc)
 */
-let LoadImage = "startImage.png"
-let StartButtonImage = "Start.png"
-let SettingsButton = "Setting.png"
-let QuitButtonImage = "Quit.png"
-let ResumeButtonImage = "ResumeGame.png"
+let LoadImage = "startImage"
+let StartButtonImage = "Start"
+let SettingsButton = "Setting"
+let QuitButtonImage = "Quit"
+let ResumeButtonImage = "ResumeGame"
 
 struct Layer {
     static let Background: CGFloat = 0

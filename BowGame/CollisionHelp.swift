@@ -13,5 +13,6 @@ class CollisonHelper
 {
     static let ArrowMask : UInt32 = 0x1 << 0
     static let PlayerMask: UInt32 = 0x1 << 1
+    static let GroundMask: UInt32 = 0x1 << 2
     
 }
