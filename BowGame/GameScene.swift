@@ -15,6 +15,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var sheet = ShootAnimation()
     private var sprite_1 = SKSpriteNode()
     private var sprite_2 = SKSpriteNode()
+    var startpositionOfTouch: CGPoint!
+    var endpositionOfTouch: CGPoint!
+    var lineNode = SKShapeNode()
+    var linerow = SKShapeNode()
+    var linecol = SKShapeNode()
+    let anglelabel = SKLabelNode(fontNamed:"Chalkduster")
     
     
     func initworld()
@@ -28,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         settingsButton()
         self.addChild(background)
+        
         
         player1.healthbar.position = CGPointMake(size.width*0.05 , size.height * 0.8)
         self.addChild(player1.healthbar)
@@ -51,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         player2.hidden = true
         
         
-//        animation
+        //        animation
         sprite_1 = SKSpriteNode(texture: sheet.Shoot_01())
         sprite_1.position = CGPointMake(size.width * 0.15, size.height / 5);
         sprite_1.size = CGSize(width: 100, height: 80)
@@ -73,11 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         /* Called when a touch begins */
         /*
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
-        
         */
-        
-        
-        var impulseVector =  CGVectorMake(7, 10)
         for touch in (touches as! Set<UITouch>) {
             let touch = touches.first as! UITouch
             let touchLocation = touch.locationInNode(self)
@@ -93,40 +96,107 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
                 view?.presentScene(settingsScene,transition: transitionType)            }
             else {
+                if (playerTurn == 1){
+                    startpositionOfTouch = touch.locationInNode(self)
+                }
+                if (playerTurn == 2){
+                    startpositionOfTouch = touch.locationInNode(self)
+                }
+            }
+        }
+        
+    }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        for touch: AnyObject in touches
+        {
+            endpositionOfTouch = touch.locationInNode(self)
+            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
+            {
+                break
+            }
             if (playerTurn == 1){
-                self.playerTurn = 0
-                
-                //               animation
+                var impulseVector1 = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9.3)
                 var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
                 sprite_1.runAction(shoot)
-                
                 delay(0.64) {
-                    self.player1.shoot(impulseVector, position: CGPointMake(self.size.width * 0.13, self.size.height/5))
-                    self.arrowLandDelay(2, impulse: impulseVector)
+                    self.player1.shoot(impulseVector1, position: CGPointMake(self.size.width * 0.13, self.size.height/5))
+                    self.arrowLandDelay(2)
                 }
             }
             if (playerTurn == 2){
-                //temp for testing purposes impulseVector2.
-                var impulseVector2 =  CGVectorMake(-8, 10)
-
-                self.playerTurn = 0
-                
+                var impulseVector2 =  CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9.3)
                 var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
                 sprite_2.runAction(shoot)
-                
                 delay(0.64) {
                     self.player2.shoot(impulseVector2, position: CGPointMake(self.size.width*0.87,self.size.height/5))
-                    self.arrowLandDelay(1, impulse: impulseVector)
+                    self.arrowLandDelay(1)
                 }
             }
+            lineNode.removeFromParent()
+            linerow.removeFromParent()
+            linecol.removeFromParent()
+            anglelabel.removeFromParent()
         }
+    }
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        for touch: AnyObject in touches
+        {
+            var  position = touch.locationInNode(self)
+            
+            lineNode.removeFromParent()
+            linerow.removeFromParent()
+            linecol.removeFromParent()
+            
+            var pathToDraw = CGPathCreateMutable()
+            CGPathMoveToPoint(pathToDraw, nil, startpositionOfTouch.x, startpositionOfTouch.y)
+            CGPathAddLineToPoint(pathToDraw, nil, position.x, position.y)
+            
+            var pathToDrawrow = CGPathCreateMutable()
+            CGPathMoveToPoint(pathToDrawrow, nil, startpositionOfTouch.x, startpositionOfTouch.y)
+            CGPathAddLineToPoint(pathToDrawrow, nil, position.x, startpositionOfTouch.y)
+            
+            var pathToDrawcol = CGPathCreateMutable()
+            CGPathMoveToPoint(pathToDrawcol, nil, startpositionOfTouch.x, startpositionOfTouch.y)
+            CGPathAddLineToPoint(pathToDrawcol, nil, startpositionOfTouch.x, position.y)
+            
+            
+            linerow.path = pathToDrawrow
+            linerow.lineWidth = 2.0
+            linerow.strokeColor = UIColor.grayColor()
+            linerow.alpha = 0.1
+            self.addChild(linerow)
+            
+            linecol.path = pathToDrawcol
+            linecol.lineWidth = 2.0
+            linecol.strokeColor = UIColor.grayColor()
+            linecol.alpha = 0.1
+            self.addChild(linecol)
+            
+            lineNode.path = pathToDraw
+            lineNode.lineWidth = 2.0
+            lineNode.strokeColor = UIColor.grayColor()
+            lineNode.alpha = 0.1
+            self.addChild(lineNode)
+            
+            
+            anglelabel.removeFromParent()
+            anglelabel.position = CGPoint(x: startpositionOfTouch.x , y:startpositionOfTouch.y-(startpositionOfTouch.y-position.y)/2)
+            let row1 = abs(startpositionOfTouch.x - position.x)
+            let col1 = abs(startpositionOfTouch.y - position.y)
+            let angle =  floor((Double(atan2( row1 , col1)) / M_PI * 180*100))/100
+            anglelabel.fontSize = 15
+            anglelabel.text = String(stringInterpolationSegment: angle)
+            self.addChild(anglelabel)
+            
+            
         }
-
     }
     
     
-        
-        
+    
+    
     /* function to delay |input| time */
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
@@ -137,7 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             dispatch_get_main_queue(), closure)
     }
     
-   /*Funciton updating the angle and posiiton of the arrow during flight */
+    /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
@@ -165,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
     }
     /*Function to determine the duration of time needed to expire before next arrow is shot.  */
-    func arrowLandDelay(var nextPlayer:Int, impulse:CGVector){
+    func arrowLandDelay(var nextPlayer:Int){
         let seconds = 1.0
         let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
