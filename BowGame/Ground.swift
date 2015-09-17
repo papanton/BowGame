@@ -22,6 +22,4 @@ class Ground: SKNode {
 //        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
 //        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
     }
- 
-    
 }

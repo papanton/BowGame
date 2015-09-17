@@ -7,14 +7,10 @@
 //
 
 import SpriteKit
-
 class GameScene: SKScene, SKPhysicsContactDelegate{
-    private var player1 = PlayerFactory.getPlayer("player1")
-    private var player2 = PlayerFactory.getPlayer("player2")
+    private var player1 : Player!
+    private var player2 : Player!
     private var playerTurn:Int = 1 /* variable determining whose turn is to play.  */
-    var sheet = ShootAnimation()
-    private var sprite_1 = SKSpriteNode()
-    private var sprite_2 = SKSpriteNode()
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var lineNode = SKShapeNode()
@@ -31,17 +27,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let background = SKSpriteNode(texture:backgroundTexture, color: SKColor.clearColor(), size: self.frame.size)
         background.zPosition = -100;
         background.position = CGPointMake(size.width*0.5,  size.height*0.5)
-        
-        settingsButton()
         self.addChild(background)
-        
-        
-        player1.healthbar.position = CGPointMake(size.width*0.05 , size.height * 0.8)
-        self.addChild(player1.healthbar)
-        player2.healthbar.position = CGPointMake(size.width*0.95 - player2.healthbar.frame.size.width, size.height * 0.8)
-        self.addChild(player2.healthbar)
-        
-        
+        settingsButton()
     }
     
     /*
@@ -49,29 +36,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     */
     func addPlayers()
     {
-        player1.position = CGPointMake(size.width*0.15, size.height/5);
-        self.addChild(player1)
-        player1.hidden = true
-        
-        player2.position = CGPointMake((size.width*0.85), size.height/5);
-        self.addChild(player2)
-        player2.hidden = true
-        
-        
-        //        animation
-        sprite_1 = SKSpriteNode(texture: sheet.Shoot_01())
-        sprite_1.position = CGPointMake(size.width * 0.15, size.height / 5);
-        sprite_1.size = CGSize(width: 100, height: 80)
-        addChild(sprite_1)
-        
-        
-        sprite_2 = SKSpriteNode(texture: sheet.Shoot_01())
-        sprite_2.position = CGPointMake(size.width * 0.85, size.height / 5);
-        sprite_2.size = CGSize(width: 100, height: 80)
-        sprite_2.xScale = -1.0
-        addChild(sprite_2)
-        
-    
+        player1 = PlayerFactory.getPlayer("player1", size: size)
+        player1.add2Scene(self)
+        player2 = PlayerFactory.getPlayer("player2", size: size)
+        player2.add2Scene(self)
     }
     
     //function adding ground object (for contact detection)
@@ -130,21 +98,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             }
             if (playerTurn == 1){
                 var impulseVector1 = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9.3)
-                var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
-                sprite_1.runAction(shoot)
-                delay(0.64) {
                     self.player1.shoot(impulseVector1, scene: self.scene!, position: CGPointMake(self.size.width * 0.13, self.size.height/5))
                     self.arrowLandDelay(2)
-                }
             }
             if (playerTurn == 2){
                 var impulseVector2 =  CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9.3)
-                var shoot = SKAction.animateWithTextures(sheet.Shoot(), timePerFrame: 0.04)
-                sprite_2.runAction(shoot)
-                delay(0.64) {
                     self.player2.shoot(impulseVector2, scene: self.scene!, position: CGPointMake(self.size.width*0.87,self.size.height/5))
                     self.arrowLandDelay(1)
-                }
             }
             lineNode.removeFromParent()
             linerow.removeFromParent()
@@ -206,20 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             
         }
     }
-    
-    
-    
-    
-    /* function to delay |input| time */
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
-    }
-    
+
     /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
@@ -227,48 +174,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         for child in (self.children) {
             if child is Arrow{
                 var arrow = child as! Arrow
-                if(arrow.isFlying) {
-                    arrow.update()
-                }
+                arrow.update()
             }
         }
     }
     func didBeginContact(contact: SKPhysicsContact)
     {
-        var player: Player!
-        var arrow: Arrow!
-        //B hits A
-        
-        //bodyA is the body to be hit (the responder)
-        if contact.bodyA.categoryBitMask == CollisonHelper.PlayerMask {
-            arrow = contact.bodyB.node as! Arrow
-            player = contact.bodyA.node as! Player
-            
-            if(arrow.host != player) {
-                player.shot(self,arrow: arrow)
-            }
-        }
-        //body B is the attacker
-        if contact.bodyB.categoryBitMask == CollisonHelper.ArrowMask {
-            arrow = contact.bodyB.node as! Arrow
-            
-            if(arrow.hitShooterSelf) {
-                arrow.hitShooterSelf = false
-            }
-            else {
-                //stop updating arrow's direction
-                arrow.isFlying = false
-                
-                //avoid more physical effect
-                arrow.physicsBody = nil
-                
-                let fadeout:SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
-                arrow.runAction(fadeout, completion: {
-                    arrow.removeFromParent()
-                })
-            }
-        }
-        
+    
+        CollisonHelper.getInstance().didBeginContact(contact)
     }
     /*Function to determine the duration of time needed to expire before next arrow is shot.  */
     func arrowLandDelay(var nextPlayer:Int){

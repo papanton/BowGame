@@ -10,11 +10,25 @@ import UIKit
 import SpriteKit
 class Arrow: SKSpriteNode {
     
-    var damage :Int!
-    var host : Player!
-    var isFlying = true
-    var hitShooterSelf = true
-    
+    private var damage :Int!
+    private var host : Player!
+    private var isFlying = true
+    func getDamage()-> Int
+    {
+        return damage;
+    }
+    func stop()
+    {
+        isFlying = false
+        physicsBody = nil
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        runAction(fadeout, completion: {
+            self.removeFromParent()})
+    }
+    func isFrom(player : Player)->Bool
+    {
+        return player == self.host;
+    }
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
@@ -51,8 +65,10 @@ class Arrow: SKSpriteNode {
     }
     func update()
     {
-        let val = (physicsBody!.velocity.dy) / (physicsBody!.velocity.dx)
-        self.zRotation = atan(val)
+        if isFlying {
+            let val = (physicsBody!.velocity.dy) / (physicsBody!.velocity.dx)
+            self.zRotation = atan(val)
+        }
     }
     /*   required init?(coder aDecoder: NSCoder) {
     self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow

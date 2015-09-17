@@ -9,7 +9,15 @@ import SpriteKit
 
 
 class ShootAnimation {
-
+    static var instance : ShootAnimation?
+    static func getInstance() ->ShootAnimation
+    {
+        if instance == nil{
+            instance = ShootAnimation()
+        }
+        return instance!
+    }
+    private init(){}
     // sprite names
     let SHOOT_01 = "Shoot/01"
     let SHOOT_02 = "Shoot/02"
