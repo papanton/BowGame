@@ -27,14 +27,14 @@ class SoundEffect
     func playArrow()
     {
         if nil == arrow {
-            arrow = getSound("Bow", type: "mp3")
+            arrow = getSound("sound/Bow", type: "mp3")
         }
         arrow?.play()
     }
     func playScream()
     {
         if nil == scream {
-            scream = getSound("Scream", type: "mp3")
+            scream = getSound("sound/Scream", type: "mp3")
         }
         scream?.play()
     }
