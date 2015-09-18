@@ -20,6 +20,11 @@
 		2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E071BA0C32800F050A4 /* GameViewController.swift */; };
 		2A198E101BA0C32800F050A4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E081BA0C32800F050A4 /* Player.swift */; };
 		2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E091BA0C32800F050A4 /* StartGameScene.swift */; };
+		2A8274691BAB62D900A59823 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 2A8274671BAB62D900A59823 /* sound */; };
+		2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8274681BAB62D900A59823 /* SoundEffect.swift */; };
+		2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1D71BABDB6F009491AC /* GameController.swift */; };
+		2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */; };
+		2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1DE1BABF069009491AC /* Shotable.swift */; };
 		5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5379AC6F1BA9E7C70061BC19 /* Ground.swift */; };
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
@@ -55,6 +60,11 @@
 		2A198E071BA0C32800F050A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2A198E081BA0C32800F050A4 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2A198E091BA0C32800F050A4 /* StartGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameScene.swift; sourceTree = "<group>"; };
+		2A8274671BAB62D900A59823 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
+		2A8274681BAB62D900A59823 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
+		2AA9B1D71BABDB6F009491AC /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootingAngle.swift; sourceTree = "<group>"; };
+		2AA9B1DE1BABF069009491AC /* Shotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shotable.swift; sourceTree = "<group>"; };
 		5379AC6F1BA9E7C70061BC19 /* Ground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		5379AC711BA9E8320061BC19 /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		5379AC731BA9E83E0061BC19 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -101,6 +111,10 @@
 		1369CA8D1B9DFFE400895E88 /* BowGame */ = {
 			isa = PBXGroup;
 			children = (
+				2A8274671BAB62D900A59823 /* sound */,
+				2A8274681BAB62D900A59823 /* SoundEffect.swift */,
+				2AA9B1DD1BABF01D009491AC /* Shotable */,
+				2AA9B1DA1BABE52D009491AC /* GameController */,
 				5379AC711BA9E8320061BC19 /* blood.sks */,
 				5379AC731BA9E83E0061BC19 /* spark.png */,
 				F805C9281BA61F530038B692 /* ShootAnimation.atlasc */,
@@ -109,10 +123,8 @@
 				2A198E031BA0C32800F050A4 /* Arrow.swift */,
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
 				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
-				5379AC6F1BA9E7C70061BC19 /* Ground.swift */,
 				2A198E061BA0C32800F050A4 /* GameScene.swift */,
 				2A198E071BA0C32800F050A4 /* GameViewController.swift */,
-				2A198E081BA0C32800F050A4 /* Player.swift */,
 				2A198E091BA0C32800F050A4 /* StartGameScene.swift */,
 				1369CA981B9DFFE400895E88 /* Main.storyboard */,
 				1369CA9B1B9DFFE400895E88 /* Images.xcassets */,
@@ -146,6 +158,25 @@
 				1369CAA91B9DFFE400895E88 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2AA9B1DA1BABE52D009491AC /* GameController */ = {
+			isa = PBXGroup;
+			children = (
+				2AA9B1D71BABDB6F009491AC /* GameController.swift */,
+				2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */,
+			);
+			name = GameController;
+			sourceTree = "<group>";
+		};
+		2AA9B1DD1BABF01D009491AC /* Shotable */ = {
+			isa = PBXGroup;
+			children = (
+				5379AC6F1BA9E7C70061BC19 /* Ground.swift */,
+				2A198E081BA0C32800F050A4 /* Player.swift */,
+				2AA9B1DE1BABF069009491AC /* Shotable.swift */,
+			);
+			name = Shotable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +265,7 @@
 				5379AC721BA9E8320061BC19 /* blood.sks in Resources */,
 				1369CA9C1B9DFFE400895E88 /* Images.xcassets in Resources */,
 				1369CA9A1B9DFFE400895E88 /* Main.storyboard in Resources */,
+				2A8274691BAB62D900A59823 /* sound in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +285,10 @@
 			files = (
 				2A198E0E1BA0C32800F050A4 /* GameScene.swift in Sources */,
 				2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */,
+				2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */,
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
+				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
+				2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,
 				2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */,
@@ -262,6 +297,7 @@
 				F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */,
 				134A55A01BA503FA00C09E99 /* Constants.swift in Sources */,
 				5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */,
+				2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
