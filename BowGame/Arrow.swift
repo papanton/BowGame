@@ -43,7 +43,7 @@ class Arrow: SKSpriteNode {
         self.physicsBody?.dynamic = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ArrowMask
-        self.physicsBody?.contactTestBitMask = CollisonHelper.PlayerMask | CollisonHelper.GroundMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.collisionBitMask = 0x0
     }
     required init?(coder aDecoder: NSCoder) {

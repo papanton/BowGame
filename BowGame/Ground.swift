@@ -9,7 +9,8 @@
 import UIKit
 import SpriteKit
 
-class Ground: SKNode {
+class Ground: SKNode, Shotable
+{
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -18,8 +19,12 @@ class Ground: SKNode {
         self.position = position
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         self.physicsBody?.dynamic = false
-        self.physicsBody?.categoryBitMask = CollisonHelper.GroundMask
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
 //        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
 //        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
+    }
+    func shot(arrow :Arrow)
+    {
+        arrow.stop()
     }
 }

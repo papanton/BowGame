@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 class PlayerFactory{
-    static func getPlayer(var name : String, size :CGSize) -> Player
+    static func getPlayer(var name : String, sceneSize :CGSize) -> Player
     {
         var sheet = ShootAnimation.getInstance()
         name = name.lowercaseString;
@@ -17,21 +17,25 @@ class PlayerFactory{
         var health = Health()
         var position : CGPoint!
         var xScale : CGFloat = 0.4
+        var shootPosition : CGPoint!
         if(name == "player1"){
-            health.healthbar.position = CGPointMake(size.width*0.05 , size.height * 0.8)
-            playerNode.position = CGPointMake(size.width*0.15, size.height/5)
+            health.healthbar.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
+            playerNode.position = CGPointMake(sceneSize.width*0.15, sceneSize.height/5)
             position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
+            shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/5)
         }
         
         if(name == "player2"){
-            health.healthbar.position = CGPointMake(size.width*0.95 - health.healthbar.frame.size.width, size.height * 0.8)
-            playerNode.position = CGPointMake((size.width*0.85), size.height/5)
+            health.healthbar.position = CGPointMake(sceneSize.width*0.95 - health.healthbar.frame.size.width, sceneSize.height * 0.8)
+            playerNode.position = CGPointMake((sceneSize.width*0.85), sceneSize.height/5)
             playerNode.xScale = -1.0
             position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
+            shootPosition = CGPointMake(sceneSize.width*0.87,sceneSize.height/5)
             xScale = -xScale
             
         }
         var player = Player(health: health, playerNode: playerNode)
+        player.mShootPosition = shootPosition
         player.mBlood.xScale = xScale
         player.mBlood.position = position
         player.mBlood.yScale = 0.4
@@ -43,10 +47,11 @@ class Player : NSObject
 {
     private var mHealth:Health!
     private var mPlayerNode : PlayerNode!
-    var scalePara:Float = 1
-    var playerName : String!
-    var mScene: SKScene!
-    var mBlood = SKEmitterNode(fileNamed: "blood.sks")
+    private var scalePara:Float = 1
+    private var mScene: SKScene!
+    private var mBlood = SKEmitterNode(fileNamed: "blood.sks")
+    private var mShootPosition :CGPoint!
+    
     func add2Scene(scene: SKScene)
     {
         mScene = scene
@@ -58,7 +63,7 @@ class Player : NSObject
         mHealth = health
         mPlayerNode = playerNode
     }
-    func shoot(impulse: CGVector , scene : SKScene, position: CGPoint)
+    func shoot(impulse: CGVector , scene : SKScene)
     {
         
         var shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.04)
@@ -68,17 +73,20 @@ class Player : NSObject
         delay(0.64) {
             self.mPlayerNode.scene?.addChild(arrow);
         //        scene.addChild(arrow)
-            bow.shoot(impulse, arrow: arrow, scene: scene, position: position)
+            bow.shoot(impulse, arrow: arrow, scene: scene, position: self.mShootPosition)
         }
         
     }
     func shot(arrow : Arrow)
     {
-        var xScale : CGFloat!
-        var position : CGPoint!
-        self.mHealth.getHurt(Float(arrow.getDamage()))
-        bleed()
-        SoundEffect.getInstance().playScream()
+        if !arrow.isFrom(self){
+            arrow.stop()
+            var xScale : CGFloat!
+            var position : CGPoint!
+            self.mHealth.getHurt(Float(arrow.getDamage()))
+            bleed()
+            SoundEffect.getInstance().playScream()
+        }
     }
     func bleed()
     {
@@ -143,22 +151,18 @@ private class Health
         addHealth(val)
     }
 }
-class PlayerNode: SKSpriteNode
+private class PlayerNode: SKSpriteNode, Shotable
 {
     private let mPlayerSize = CGSize(width: 100.0, height: 80.0)
     var mPlay : Player!
-    func getPlayer() -> Player
-    {
-        return mPlay
-    }
     private func addPhysicsBody()
     {
         self.physicsBody =
-        SKPhysicsBody(rectangleOfSize: self.size)
+        SKPhysicsBody(rectangleOfSize: CGSize(width: 50.0, height: 80.0))
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
-        self.physicsBody?.categoryBitMask = CollisonHelper.PlayerMask
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
     
@@ -173,7 +177,10 @@ class PlayerNode: SKSpriteNode
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-   
+    func shot(arrow :Arrow)
+    {
+        mPlay.shot(arrow)
+    }
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
         super.init(coder: aDecoder)
