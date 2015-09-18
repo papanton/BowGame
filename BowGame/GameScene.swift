@@ -48,12 +48,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.ground = Ground(size: groundSize, position: groundPosition)
         self.addChild(self.ground)
     }
+    /**
+     *  function adding a random buff
+     *  currently add a specific healing buff
+     */
+    func addBuffs()
+    {
+        var buff_heal = Buff(name: "buff_heal")
+        buff_heal.add2Scene(self)
+    }
     
     
     override func didMoveToView(view: SKView) {
         initworld()
         addPlayers()
         addGround()
+        
+        addBuffs()
     }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */

@@ -43,6 +43,8 @@ class PlayerFactory{
         return player
     }
 }
+
+
 class Player : NSObject
 {
     private var mHealth:Health!
@@ -88,6 +90,9 @@ class Player : NSObject
             SoundEffect.getInstance().playScream()
         }
     }
+    func healed(val : Float){
+        self.mHealth.recover(val)
+    }
     func bleed()
     {
         var blood = SKEmitterNode(fileNamed: "blood.sks")
@@ -113,6 +118,8 @@ class Player : NSObject
     }
 
 }
+
+
 private class Health
 {
     var totalHealth:Float = 100

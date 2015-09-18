@@ -17,6 +17,10 @@ class Arrow: SKSpriteNode {
     {
         return damage;
     }
+    func getHost()-> Player
+    {
+        return host
+    }
     func stop()
     {
         isFlying = false
@@ -32,7 +36,7 @@ class Arrow: SKSpriteNode {
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
-        damage = 10
+        damage = 30
         host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
