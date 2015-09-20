@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class Buff: SKSpriteNode {
+class Buff: SKSpriteNode, Shotable {
     
     private let buffSize = CGSizeMake(50.0, 50.0)
     private var mScene : SKScene!
@@ -19,6 +19,7 @@ class Buff: SKSpriteNode {
         let texture = SKTexture(imageNamed: name)
         type = name
         super.init(texture: texture, color: SKColor.clearColor(), size: buffSize)
+        addPhysicsBody()
     }
     
     
@@ -31,7 +32,7 @@ class Buff: SKSpriteNode {
     private func addPhysicsBody(){
         self.physicsBody = SKPhysicsBody(rectangleOfSize: buffSize)
         self.physicsBody?.dynamic = false
-        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.affectedByGravity = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
@@ -40,12 +41,25 @@ class Buff: SKSpriteNode {
     }
     
     //called when shot
-    func shot(scene : SKScene, arrow : Arrow){
+    func shot(arrow : Arrow){
         var player = arrow.getHost()
         
         if(type == "buff_heal"){
             player.healed(30)
         }
+        else if(type == "buff_damage"){
+            for player_index in GameController.getInstance().getPlayers(){
+                if player != player_index{
+                    player_index.hurted(50)
+                    break
+                }
+            }
+        }
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        arrow.stop()
+        runAction(fadeout, completion: {
+            self.removeFromParent()})
+        
     }
     
     //set the position of the buff
