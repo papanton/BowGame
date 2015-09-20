@@ -93,6 +93,9 @@ class Player : NSObject
     func healed(val : Float){
         self.mHealth.recover(val)
     }
+    func hurted(val : Float){
+        self.mHealth.getHurt(val)
+    }
     func bleed()
     {
         var blood = SKEmitterNode(fileNamed: "blood.sks")

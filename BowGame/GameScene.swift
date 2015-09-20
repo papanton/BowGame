@@ -54,8 +54,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
      */
     func addBuffs()
     {
+/*
+        //adding buff that can increase your blood
         var buff_heal = Buff(name: "buff_heal")
         buff_heal.add2Scene(self)
+*/
+        var buff_heal = Buff(name: "buff_damage")
+        buff_heal.add2Scene(self)
+        
     }
     
     
