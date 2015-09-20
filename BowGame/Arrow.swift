@@ -29,6 +29,13 @@ class Arrow: SKSpriteNode {
         runAction(fadeout, completion: {
             self.removeFromParent()})
     }
+    
+    func slowDown() {
+        self.physicsBody?.velocity.dx *= 0.4
+        self.physicsBody?.velocity.dy *= 0.4
+        
+    }
+    
     func isFrom(player : Player)->Bool
     {
         return player == self.host;
@@ -43,7 +50,7 @@ class Arrow: SKSpriteNode {
     }
     private func addPhysicsBody()
     {
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size);
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.size.width, self.size.height - 5))
         self.physicsBody?.dynamic = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ArrowMask

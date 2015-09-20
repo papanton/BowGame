@@ -35,26 +35,37 @@ class CollisonHelper
         }
         return arrow;
     }
-    private func getShotable(contact: SKPhysicsContact)-> Shotable?
+    private func getShotable(contact: SKPhysicsContact)-> (shotableA:Shotable?, shotableB:Shotable?)
     {
-        var shotable: Shotable?
+        var shotableA: Shotable?
+        var shotableB: Shotable?
         if contact.bodyA.categoryBitMask == CollisonHelper.ShotableMask {
-            shotable = contact.bodyA.node as? Shotable
+            shotableA = contact.bodyA.node as? Shotable
         }
         if contact.bodyB.categoryBitMask == CollisonHelper.ShotableMask {
-            shotable = contact.bodyB.node as? Shotable
+            shotableB = contact.bodyB.node as? Shotable
         }
-       return shotable
+       return (shotableA,shotableB)
     }
     func didBeginContact(contact: SKPhysicsContact)
     {
         
         var arrow: Arrow? = getArrow(contact)
-        var shotable: Shotable? = getShotable(contact)
+        var shotable = getShotable(contact)
+        
+        
         if(arrow != nil){
-            if(shotable != nil) {
-                shotable!.shot(arrow!)
+            if(shotable.shotableA != nil) {
+                shotable.shotableA!.shot(arrow!)
             }
+            else if(shotable.shotableB != nil) {
+                shotable.shotableB!.shot(arrow!)
+            }
+        }
+        
+        if(shotable.shotableA != nil && shotable.shotableB != nil) {
+            shotable.shotableA?.shot(shotable.shotableB!)
+            shotable.shotableB?.shot(shotable.shotableA!)
         }
     }
 

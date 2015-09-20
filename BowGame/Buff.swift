@@ -48,6 +48,10 @@ class Buff: SKSpriteNode {
         }
     }
     
+    func shot(shotable: Shotable) {
+        
+    }
+    
     //set the position of the buff
     func setPosition()
     {

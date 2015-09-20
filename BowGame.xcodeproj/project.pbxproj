@@ -28,6 +28,7 @@
 		5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5379AC6F1BA9E7C70061BC19 /* Ground.swift */; };
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
+		539680DF1BAF2975000906FE /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539680DE1BAF2975000906FE /* Obstacle.swift */; };
 		894287571BACC1A400E519B8 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894287561BACC1A400E519B8 /* Buff.swift */; };
 		F805C92A1BA61F530038B692 /* ShootAnimation.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = F805C9281BA61F530038B692 /* ShootAnimation.atlasc */; };
 		F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805C9291BA61F530038B692 /* ShootAnimation.swift */; };
@@ -69,6 +70,7 @@
 		5379AC6F1BA9E7C70061BC19 /* Ground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		5379AC711BA9E8320061BC19 /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		5379AC731BA9E83E0061BC19 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		539680DE1BAF2975000906FE /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		894287561BACC1A400E519B8 /* Buff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buff.swift; sourceTree = "<group>"; };
 		F805C9281BA61F530038B692 /* ShootAnimation.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ShootAnimation.atlasc; sourceTree = "<group>"; };
 		F805C9291BA61F530038B692 /* ShootAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootAnimation.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				5379AC6F1BA9E7C70061BC19 /* Ground.swift */,
 				2A198E081BA0C32800F050A4 /* Player.swift */,
 				2AA9B1DE1BABF069009491AC /* Shotable.swift */,
+				539680DE1BAF2975000906FE /* Obstacle.swift */,
 			);
 			name = Shotable;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */,
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
+				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,
 				2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,

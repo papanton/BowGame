@@ -27,4 +27,8 @@ class Ground: SKNode, Shotable
     {
         arrow.stop()
     }
+    
+    func shot(shotable: Shotable) {
+        
+    }
 }

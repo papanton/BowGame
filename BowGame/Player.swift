@@ -90,6 +90,16 @@ class Player : NSObject
             SoundEffect.getInstance().playScream()
         }
     }
+    
+    func shot(shotable: Shotable) {
+        if let obstacle = shotable as? Obstacle {
+            self.mHealth.getHurt(Float(obstacle.getDamage()))
+            bleed()
+            SoundEffect.getInstance().playScream()
+        }
+    }
+    
+    
     func healed(val : Float){
         self.mHealth.recover(val)
     }
@@ -164,8 +174,8 @@ private class PlayerNode: SKSpriteNode, Shotable
     var mPlay : Player!
     private func addPhysicsBody()
     {
-        self.physicsBody =
-        SKPhysicsBody(rectangleOfSize: CGSize(width: 50.0, height: 80.0))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0), center: CGPointMake(-20, 0))
+        //SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0))
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
@@ -188,6 +198,11 @@ private class PlayerNode: SKSpriteNode, Shotable
     {
         mPlay.shot(arrow)
     }
+    
+    func shot(shotable: Shotable) {
+        mPlay.shot(shotable)
+    }
+    
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
         super.init(coder: aDecoder)
