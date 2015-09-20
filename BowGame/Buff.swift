@@ -15,6 +15,10 @@ class Buff: SKSpriteNode, Shotable {
     private var mScene : SKScene!
     private var type : String!
     
+    
+    // Buff types could be
+    // buff_heal
+    // buff_power
     init(name : String) {
         let texture = SKTexture(imageNamed: name)
         type = name
@@ -41,13 +45,18 @@ class Buff: SKSpriteNode, Shotable {
     }
     
     //called when shot
+    //cannot add new buff to correct position
     func shot(arrow : Arrow){
         var player = arrow.getHost()
         
         if(type == "buff_heal"){
             player.healed(30)
+        }else
+        if(type == "buff_power"){
+            player.powerup(10)
         }
-        else if(type == "buff_damage"){
+        else
+        if(type == "buff_damage"){
             for player_index in GameController.getInstance().getPlayers(){
                 if player != player_index{
                     player_index.hurted(50)
@@ -55,17 +64,37 @@ class Buff: SKSpriteNode, Shotable {
                 }
             }
         }
+        
+        print("shotbuff")
+        
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
         arrow.stop()
         runAction(fadeout, completion: {
-            self.removeFromParent()})
+            self.removeFromParent()
+        })
         
+        
+        var new_buff : Buff = Buff(name: "buff_heal")
+        //        new_buff.add2Scene(self.mScene)
+
     }
     
-    //set the position of the buff
+    //set the random position of the buff
+    //position is between 0.3-0.7 width and 0.5 - 1 height
     func setPosition()
     {
-        self.position = CGPointMake(mScene.size.width * 0.5, mScene.size.height * 0.8)
+        var minX = mScene.size.width * 0.3
+        var maxX = mScene.size.width * 0.7
+        var rangeX = maxX - minX
+        let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
+
+        var minY = mScene.size.height - self.size.height
+        var maxY = mScene.size.height * 0.5
+        var rangeY = maxY - minY
+        let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
+
+        
+        self.position = CGPointMake(mScene.size.width*0.5, mScene.size.height*0.5)
     }
     
     //add the buff to the GameScene

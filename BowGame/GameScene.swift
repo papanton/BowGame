@@ -28,7 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(background)
     }
     /*
-    Function adding the two players in the scene in their respective positions
+       Function adding the two players in the scene in their respective positions
     */
     func addPlayers()
     {
@@ -54,13 +54,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
      */
     func addBuffs()
     {
-/*
-        //adding buff that can increase your blood
+        var buff_power = Buff(name: "buff_power")
         var buff_heal = Buff(name: "buff_heal")
-        buff_heal.add2Scene(self)
-*/
-        var buff_heal = Buff(name: "buff_damage")
-        buff_heal.add2Scene(self)
+        var buff_damage = Buff(name: "buff_damage")
+
+//      buff_heal.add2Scene(self)
+//      buff_power.add2Scene(self)
+
+        buff_damage.add2Scene(self)
         
     }
     
