@@ -56,8 +56,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     {
         var buff_power = Buff(name: "buff_power")
         var buff_heal = Buff(name: "buff_heal")
-//        buff_heal.add2Scene(self)
-        buff_power.add2Scene(self)
+        var buff_damage = Buff(name: "buff_damage")
+
+//      buff_heal.add2Scene(self)
+//      buff_power.add2Scene(self)
+
+        buff_damage.add2Scene(self)
+        
     }
     
     

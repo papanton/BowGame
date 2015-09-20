@@ -100,6 +100,10 @@ class Player : NSObject
     func getPower() -> Int{
         return self.power
     }
+    func hurted(val : Float){
+        self.mHealth.getHurt(val)
+    }
+
     func bleed()
     {
         var blood = SKEmitterNode(fileNamed: "blood.sks")

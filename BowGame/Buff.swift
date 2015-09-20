@@ -36,7 +36,7 @@ class Buff: SKSpriteNode, Shotable {
     private func addPhysicsBody(){
         self.physicsBody = SKPhysicsBody(rectangleOfSize: buffSize)
         self.physicsBody?.dynamic = false
-        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.affectedByGravity = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
@@ -55,14 +55,28 @@ class Buff: SKSpriteNode, Shotable {
         if(type == "buff_power"){
             player.powerup(10)
         }
-        
+        else
+        if(type == "buff_damage"){
+            for player_index in GameController.getInstance().getPlayers(){
+                if player != player_index{
+                    player_index.hurted(50)
+                    break
+                }
+            }
+        }
         
         print("shotbuff")
+        
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
         arrow.stop()
-        self.removeFromParent()
+        runAction(fadeout, completion: {
+            self.removeFromParent()
+        })
+        
         
         var new_buff : Buff = Buff(name: "buff_heal")
-//        new_buff.add2Scene(self.mScene)
+        //        new_buff.add2Scene(self.mScene)
+
     }
     
     //set the random position of the buff
