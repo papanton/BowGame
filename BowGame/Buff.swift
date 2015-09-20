@@ -9,16 +9,21 @@
 import UIKit
 import SpriteKit
 
-class Buff: SKSpriteNode {
+class Buff: SKSpriteNode, Shotable {
     
     private let buffSize = CGSizeMake(50.0, 50.0)
     private var mScene : SKScene!
     private var type : String!
     
+    
+    // Buff types could be
+    // buff_heal
+    // buff_power
     init(name : String) {
         let texture = SKTexture(imageNamed: name)
         type = name
         super.init(texture: texture, color: SKColor.clearColor(), size: buffSize)
+        addPhysicsBody()
     }
     
     
@@ -40,18 +45,42 @@ class Buff: SKSpriteNode {
     }
     
     //called when shot
-    func shot(scene : SKScene, arrow : Arrow){
+    //cannot add new buff to correct position
+    func shot(arrow : Arrow){
         var player = arrow.getHost()
         
         if(type == "buff_heal"){
             player.healed(30)
+        }else
+        if(type == "buff_power"){
+            player.powerup(10)
         }
+        
+        
+        print("shotbuff")
+        arrow.stop()
+        self.removeFromParent()
+        
+        var new_buff : Buff = Buff(name: "buff_heal")
+//        new_buff.add2Scene(self.mScene)
     }
     
-    //set the position of the buff
+    //set the random position of the buff
+    //position is between 0.3-0.7 width and 0.5 - 1 height
     func setPosition()
     {
-        self.position = CGPointMake(mScene.size.width * 0.5, mScene.size.height * 0.8)
+        var minX = mScene.size.width * 0.3
+        var maxX = mScene.size.width * 0.7
+        var rangeX = maxX - minX
+        let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
+
+        var minY = mScene.size.height - self.size.height
+        var maxY = mScene.size.height * 0.5
+        var rangeY = maxY - minY
+        let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
+
+        
+        self.position = CGPointMake(mScene.size.width*0.5, mScene.size.height*0.5)
     }
     
     //add the buff to the GameScene

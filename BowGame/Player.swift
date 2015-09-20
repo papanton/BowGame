@@ -53,6 +53,7 @@ class Player : NSObject
     private var mScene: SKScene!
     private var mBlood = SKEmitterNode(fileNamed: "blood.sks")
     private var mShootPosition :CGPoint!
+    private var power : Int = 0
     
     func add2Scene(scene: SKScene)
     {
@@ -92,6 +93,12 @@ class Player : NSObject
     }
     func healed(val : Float){
         self.mHealth.recover(val)
+    }
+    func powerup(val : Int){
+        self.power += val
+    }
+    func getPower() -> Int{
+        return self.power
     }
     func bleed()
     {
