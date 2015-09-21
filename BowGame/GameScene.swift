@@ -65,9 +65,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         
         if(buffcount < 1){
-            var buff_damage = Buff(name: "buff_damage")
+            var new_buff = Buff()
             
-            buff_damage.add2Scene(self)
+            new_buff.add2Scene(self)
         }
 
 //        var buff_power = Buff(name: "buff_power")
@@ -117,12 +117,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        if(self.touch_disable == true){
+            return
+        }
+
         for touch: AnyObject in touches
         {
-            if(self.touch_disable == true){
-                break
-            }
-            
             
             endpositionOfTouch = touch.locationInNode(self)
             if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)

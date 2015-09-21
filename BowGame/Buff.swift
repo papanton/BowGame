@@ -19,7 +19,16 @@ class Buff: SKSpriteNode, Shotable {
     // Buff types could be
     // buff_heal
     // buff_power
-    init(name : String) {
+    init() {
+        var id : Int = Int(arc4random_uniform(3))
+        var name : String!
+        if(id == 0){
+            name = "buff_heal"
+        }else if(id == 1){
+            name = "buff_damage"
+        }else{
+            name = "buff_power"
+        }
         let texture = SKTexture(imageNamed: name)
         type = name
         super.init(texture: texture, color: SKColor.clearColor(), size: buffSize)
@@ -72,11 +81,6 @@ class Buff: SKSpriteNode, Shotable {
         runAction(fadeout, completion: {
             self.removeFromParent()
         })
-        
-        
-        var new_buff : Buff = Buff(name: "buff_heal")
-        //        new_buff.add2Scene(self.mScene)
-
     }
     
     //set the random position of the buff
