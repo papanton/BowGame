@@ -25,7 +25,7 @@ class Arrow: SKSpriteNode {
     {
         isFlying = false
         physicsBody = nil
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
             self.removeFromParent()})
     }

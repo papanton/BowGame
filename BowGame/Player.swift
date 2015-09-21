@@ -1,4 +1,4 @@
-//
+		//
 //  Player.swift
 //  Test
 //
@@ -169,6 +169,7 @@ private class Health
         addHealth(val)
     }
 }
+        
 private class PlayerNode: SKSpriteNode, Shotable
 {
     private let mPlayerSize = CGSize(width: 100.0, height: 80.0)
