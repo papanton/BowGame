@@ -19,7 +19,16 @@ class Buff: SKSpriteNode, Shotable {
     // Buff types could be
     // buff_heal
     // buff_power
-    init(name : String) {
+    init() {
+        var id : Int = Int(arc4random_uniform(3))
+        var name : String!
+        if(id == 0){
+            name = "buff_heal"
+        }else if(id == 1){
+            name = "buff_damage"
+        }else{
+            name = "buff_power"
+        }
         let texture = SKTexture(imageNamed: name)
         type = name
         super.init(texture: texture, color: SKColor.clearColor(), size: buffSize)
@@ -67,16 +76,11 @@ class Buff: SKSpriteNode, Shotable {
         
         print("shotbuff")
         
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         arrow.stop()
         runAction(fadeout, completion: {
             self.removeFromParent()
         })
-        
-        
-        var new_buff : Buff = Buff(name: "buff_heal")
-        //        new_buff.add2Scene(self.mScene)
-
     }
     
     //set the random position of the buff
@@ -88,13 +92,13 @@ class Buff: SKSpriteNode, Shotable {
         var rangeX = maxX - minX
         let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
 
-        var minY = mScene.size.height - self.size.height
-        var maxY = mScene.size.height * 0.5
+        var minY = mScene.size.height * 0.5
+        var maxY = mScene.size.height - self.size.height
         var rangeY = maxY - minY
         let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
 
-        
-        self.position = CGPointMake(mScene.size.width*0.5, mScene.size.height*0.5)
+        self.position = CGPointMake(positionX, positionY)
+//        self.position = CGPointMake(mScene.size.width*0.5, mScene.size.height*0.5)
     }
     
     //add the buff to the GameScene
