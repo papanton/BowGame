@@ -110,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             var impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9.3)
             GameController.getInstance().currentPlayer()?.shoot(impulse, scene: self)
             GameController.getInstance().changePlayerWithDelay(1)
-
+            //GameController.getInstance().changePlayer()
             ShootingAngle.getInstance().hide()
         }
     }

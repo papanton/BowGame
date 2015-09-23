@@ -47,6 +47,7 @@ class Obstacle: SKSpriteNode, Shotable {
     {
         arrow.slowDown()
         self.physicsBody?.dynamic = true
+        println("11")
         
     }
     
@@ -61,7 +62,8 @@ class Obstacle: SKSpriteNode, Shotable {
                 self.runAction(fadeout, completion: {
                     self.removeFromParent()})
                 }
-            }
+        }
+        println("22")
     }
     
 }
