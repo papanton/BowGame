@@ -31,6 +31,7 @@
 		894287571BACC1A400E519B8 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894287561BACC1A400E519B8 /* Buff.swift */; };
 		F805C92A1BA61F530038B692 /* ShootAnimation.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = F805C9281BA61F530038B692 /* ShootAnimation.atlasc */; };
 		F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805C9291BA61F530038B692 /* ShootAnimation.swift */; };
+		F81D89971BB31C1300B9718C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81D89961BB31C1300B9718C /* Terrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		894287561BACC1A400E519B8 /* Buff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buff.swift; sourceTree = "<group>"; };
 		F805C9281BA61F530038B692 /* ShootAnimation.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ShootAnimation.atlasc; sourceTree = "<group>"; };
 		F805C9291BA61F530038B692 /* ShootAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootAnimation.swift; sourceTree = "<group>"; };
+		F81D89961BB31C1300B9718C /* Terrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				1369CA9D1B9DFFE400895E88 /* LaunchScreen.xib */,
 				1369CA8E1B9DFFE400895E88 /* Supporting Files */,
 				134A559F1BA503FA00C09E99 /* Constants.swift */,
+				F81D89961BB31C1300B9718C /* Terrain.swift */,
 			);
 			path = BowGame;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */,
 				2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */,
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
+				F81D89971BB31C1300B9718C /* Terrain.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
 				2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
