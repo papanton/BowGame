@@ -5,3 +5,5 @@
 *.xcbkptlist
 
 *.pbxproj
+
+*.xcuserstate
