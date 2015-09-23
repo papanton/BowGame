@@ -38,6 +38,25 @@ class Obstacle: SKSpriteNode, Shotable {
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
     }
     
+    func setObstaclePosition(mScene: SKScene)
+    {
+        var minX = mScene.size.width * 0.3
+        var maxX = mScene.size.width * 0.7
+        var rangeX = maxX - minX
+        let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
+        
+        var minY = mScene.size.height * 0.3
+        var maxY = mScene.size.height * 0.1
+        var rangeY = maxY - minY
+        let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
+        
+        self.position = CGPointMake(positionX, positionY)
+        //        self.position = CGPointMake(mScene.size.width*0.5, mScene.size.height*0.5)
+    }
+
+    
+    
+    
     func getDamage()-> Int
     {
         return damage

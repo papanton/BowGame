@@ -77,7 +77,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     func addObstacle() {
         var obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
-        obstacle.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.3)
+        obstacle.setObstaclePosition(self)
+//        obstacle.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.3)
         self.addChild(obstacle)
     }
     
