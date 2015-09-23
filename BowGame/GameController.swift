@@ -47,6 +47,15 @@ class GameController
             }
         }
     }
+<<<<<<< HEAD
+=======
+    
+    
+    func getPlayers() -> [Player]{
+        return mPlayers
+    }
+    
+>>>>>>> ZhiyangLu
     func addPlayer(player : Player)
     {
         mPlayers.append(player)

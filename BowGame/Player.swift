@@ -1,4 +1,4 @@
-//
+		//
 //  Player.swift
 //  Test
 //
@@ -43,6 +43,11 @@ class PlayerFactory{
         return player
     }
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ZhiyangLu
 class Player : NSObject
 {
     private var mHealth:Health!
@@ -51,6 +56,10 @@ class Player : NSObject
     private var mScene: SKScene!
     private var mBlood = SKEmitterNode(fileNamed: "blood.sks")
     private var mShootPosition :CGPoint!
+<<<<<<< HEAD
+=======
+    private var power : Int = 0
+>>>>>>> ZhiyangLu
     
     func add2Scene(scene: SKScene)
     {
@@ -88,6 +97,7 @@ class Player : NSObject
             SoundEffect.getInstance().playScream()
         }
     }
+<<<<<<< HEAD
     func bleed()
     {
         var blood = SKEmitterNode(fileNamed: "blood.sks")
@@ -113,6 +123,48 @@ class Player : NSObject
     }
 
 }
+=======
+    func healed(val : Float){
+        self.mHealth.recover(val)
+    }
+    func powerup(val : Int){
+        self.power += val
+    }
+    func getPower() -> Int{
+        return self.power
+    }
+    func hurted(val : Float){
+        self.mHealth.getHurt(val)
+    }
+
+    func bleed()
+    {
+        var blood = SKEmitterNode(fileNamed: "blood.sks")
+        blood.xScale = mBlood.xScale
+        blood.position = mBlood.position
+        blood.yScale = mBlood.yScale
+        mPlayerNode.parent?.addChild(blood)
+        let fadeout:SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+        blood.runAction(fadeout, completion: {
+            blood.removeFromParent()
+        })
+        
+    }
+    
+    /* function to delay |input| time */
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+
+}
+
+
+>>>>>>> ZhiyangLu
 private class Health
 {
     var totalHealth:Float = 100
@@ -151,6 +203,10 @@ private class Health
         addHealth(val)
     }
 }
+<<<<<<< HEAD
+=======
+        
+>>>>>>> ZhiyangLu
 private class PlayerNode: SKSpriteNode, Shotable
 {
     private let mPlayerSize = CGSize(width: 100.0, height: 80.0)

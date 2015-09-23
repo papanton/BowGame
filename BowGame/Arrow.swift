@@ -17,11 +17,22 @@ class Arrow: SKSpriteNode {
     {
         return damage;
     }
+<<<<<<< HEAD
+=======
+    func getHost()-> Player
+    {
+        return host
+    }
+>>>>>>> ZhiyangLu
     func stop()
     {
         isFlying = false
         physicsBody = nil
+<<<<<<< HEAD
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+=======
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+>>>>>>> ZhiyangLu
         runAction(fadeout, completion: {
             self.removeFromParent()})
     }
@@ -32,7 +43,7 @@ class Arrow: SKSpriteNode {
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
-        damage = 10
+        damage = 30 + player.getPower()
         host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
