@@ -11,4 +11,5 @@ import UIKit
 protocol Shotable
 {
     func shot(arrow :Arrow)
+    func shot(shotable: Shotable)
 }

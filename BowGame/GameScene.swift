@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     func addGround()
     {
         let groundSize = CGSizeMake(self.size.width, 1.0)
-        let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.1)
+        let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.13)
         self.ground = Ground(size: groundSize, position: groundPosition)
         self.addChild(self.ground)
     }
@@ -75,6 +75,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
     }
     
+    func addObstacle() {
+        var obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
+        obstacle.setObstaclePosition(self)
+//        obstacle.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.3)
+        self.addChild(obstacle)
+    }
     
     override func didMoveToView(view: SKView) {
         initworld()
@@ -82,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         addGround()
         
         addBuffs()
-        
+        addObstacle()
         changeTurn()
     }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
