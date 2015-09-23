@@ -10,3 +10,6 @@
 *.xcuserstate
 
 */.DS_Store
+.DS_Store
+
+BowGame/.DS_Store
