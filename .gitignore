@@ -1,7 +1,15 @@
 
 .DS_Store
+
 *.xcuserstate
 
 *.xcbkptlist
 
 *.pbxproj
+
+*.xcuserstate
+
+*/.DS_Store
+.DS_Store
+
+BowGame/.DS_Store

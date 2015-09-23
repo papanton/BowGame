@@ -1,4 +1,4 @@
-//
+		//
 //  Player.swift
 //  Test
 //
@@ -53,6 +53,7 @@ class Player : NSObject
     private var mScene: SKScene!
     private var mBlood = SKEmitterNode(fileNamed: "blood.sks")
     private var mShootPosition :CGPoint!
+    private var power : Int = 0
     
     func add2Scene(scene: SKScene)
     {
@@ -103,6 +104,16 @@ class Player : NSObject
     func healed(val : Float){
         self.mHealth.recover(val)
     }
+    func powerup(val : Int){
+        self.power += val
+    }
+    func getPower() -> Int{
+        return self.power
+    }
+    func hurted(val : Float){
+        self.mHealth.getHurt(val)
+    }
+
     func bleed()
     {
         var blood = SKEmitterNode(fileNamed: "blood.sks")
@@ -168,6 +179,7 @@ private class Health
         addHealth(val)
     }
 }
+        
 private class PlayerNode: SKSpriteNode, Shotable
 {
     private let mPlayerSize = CGSize(width: 100.0, height: 80.0)

@@ -47,6 +47,12 @@ class GameController
             }
         }
     }
+    
+    
+    func getPlayers() -> [Player]{
+        return mPlayers
+    }
+    
     func addPlayer(player : Player)
     {
         mPlayers.append(player)

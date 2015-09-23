@@ -25,7 +25,7 @@ class Arrow: SKSpriteNode {
     {
         isFlying = false
         physicsBody = nil
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
             self.removeFromParent()
         })
@@ -44,7 +44,7 @@ class Arrow: SKSpriteNode {
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
-        damage = 30
+        damage = 30 + player.getPower()
         host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
