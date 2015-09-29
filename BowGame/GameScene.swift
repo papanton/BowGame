@@ -49,6 +49,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.1)
         self.ground = Ground(size: groundSize, position: groundPosition)
         self.addChild(self.ground)
+        
+        Terrain(scene: self);
     }
     /**
      *  function adding a random buff
