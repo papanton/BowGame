@@ -186,8 +186,9 @@ private class PlayerNode: SKSpriteNode, Shotable
     var mPlay : Player!
     private func addPhysicsBody()
     {
-        self.physicsBody =
-            SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0), center: CGPointMake(-20,  0))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0), center: CGPointMake(-20, 0))
+        //SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0))
+
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
