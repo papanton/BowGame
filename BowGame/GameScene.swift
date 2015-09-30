@@ -47,10 +47,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     //function adding ground object (for contact detection)
     func addGround()
     {
-        let groundSize = CGSizeMake(self.size.width, 1.0)
-        let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.13)
-        self.ground = Ground(size: groundSize, position: groundPosition)
-        self.addChild(self.ground)
+//        let groundSize = CGSizeMake(self.size.width, 1.0)
+//        let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.1)
+//        replace ground by terrain
+//        self.ground = Ground(size: groundSize, position: groundPosition)
+//        self.addChild(self.ground)
         
         Terrain(scene: self);
     }
