@@ -41,10 +41,13 @@ class StartGameScene: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if(touchedNode.name == "startgame"){
-            let gameScene = GameScene(size: size)
-            gameScene.scaleMode = scaleMode
+            var scenesize : CGSize = CGSize(width: size.width * 2, height: size.height)
+            let gameScene = GameScene(size: scenesize)
+            gameScene.scaleMode = SKSceneScaleMode.AspectFit
+            
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(gameScene,transition: transitionType)
+            
         }
 
         if(touchedNode.name == "quit"){
