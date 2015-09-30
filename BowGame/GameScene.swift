@@ -10,9 +10,11 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
+    var camera : SKNode!
     private var ground: Ground!
     var touch_disable:Bool = true
     var turns : Int = 0
+    
     
     func initworld()
     {
@@ -70,8 +72,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             new_buff.add2Scene(self)
         }
 
-//        var buff_power = Buff(name: "buff_power")
-//        var buff_heal = Buff(name: "buff_heal")
         
     }
     
@@ -89,7 +89,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         addBuffs()
         addObstacle()
-        changeTurn()
+        
+        //game start
+        gameStart()
     }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
@@ -97,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
         */
         for touch in (touches as! Set<UITouch>) {
-            
+
             if(self.touch_disable == true){
                 break
             }
@@ -114,6 +116,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 settingsScene.scaleMode = scaleMode
                 let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
                 view?.presentScene(settingsScene,transition: transitionType)
+            }else if(touchedNode.name == "camera"){
+                touchedNode.position = touch.locationInNode(self)
             }
             else {
                 startpositionOfTouch = touch.locationInNode(self)
@@ -130,6 +134,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
         for touch: AnyObject in touches
         {
+            
+            let touchLocation = touch.locationInNode(self)
+            let touchedNode = self.nodeAtPoint(touchLocation)
+            
             
             endpositionOfTouch = touch.locationInNode(self)
             if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
@@ -154,7 +162,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             if(self.touch_disable == true){
                 break
             }
+            let touchLocation = touch.locationInNode(self)
+            let touchedNode = self.nodeAtPoint(touchLocation)
+
+            //setup camera location according to touch movement
+//            setCameraLocation(touchLocation)
             
+
             var  position = touch.locationInNode(self)
             ShootingAngle.getInstance().hide()
             ShootingAngle.getInstance().update(startpositionOfTouch, to: position)
@@ -166,10 +180,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
+        
         for child in (self.children) {
             if child is Arrow{
                 var arrow = child as! Arrow
                 arrow.update()
+                setCameraLocation(arrow.position)
             }
         }
     }
@@ -189,31 +205,77 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
     }
     
+    //center the camera location to the given potin
+    func setCameraLocation(location : CGPoint){
+        var x = 0.5 - location.x / self.size.width
+        if(x > 0.25){
+            x = 0.25
+        }
+        if(x < -0.25){
+            x = -0.25
+        }
+        self.anchorPoint = CGPointMake(x, 0)
+    }
+    
+    func gameStart(){
+        self.touch_disable = true
+        let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        self.turns++
+        self.showStart()
+        
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            self.scaleMode = SKSceneScaleMode.AspectFill
+            self.anchorPoint = CGPointMake(0.25, 0)
+            
+            self.touch_disable = false
+        })
+    }
+    
+    
+    
     func changeTurn(){
         self.touch_disable = true
-        let delay = 2 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            for child in (self.children) {
+                if child is Arrow{
+                    var arrow = child as! Arrow
+                    arrow.removeFromParent()
+                }
+            }
             self.turns++
-            self.showTurns()
-            
+            if(self.turns % 2 == 1){
+                self.anchorPoint = CGPointMake(0.25, 0)
+                self.showTurns(1)
+            }else{
+                self.anchorPoint = CGPointMake(-0.25, 0)
+                self.showTurns(2)
+            }
             self.touch_disable = false
         })
     }
 
     
     //display the turn information on the screen
-    func showTurns(){
+    func showTurns(position : Int){
         var text : SKLabelNode = SKLabelNode()
         text.text = "Turn \(self.turns)"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
-        text.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
+        if(position == 0){
+            text.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
+        }else if(position == 1){
+            text.position = CGPointMake(self.size.width * 0.25, self.size.height * 0.5)
+        }else{
+            text.position = CGPointMake(self.size.width * 0.75, self.size.height * 0.5)
+        }
         text.zPosition = 1
         self.addChild(text)
         
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         text.runAction(fadeout, completion: {
             text.removeFromParent()})
         if(self.turns % 5 == 0){
@@ -221,6 +283,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
     }
     
+    //display the game start information
+    func showStart(){
+        var text : SKLabelNode = SKLabelNode()
+        text.text = "Game Start!"
+        text.fontColor = SKColor.blackColor()
+        text.fontSize = 65
+        text.fontName = "MarkerFelt-Wide"
+        text.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
+        text.zPosition = 1
+        self.addChild(text)
+        
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+        text.runAction(fadeout, completion: {
+            text.removeFromParent()
+            self.showTurns(0)
+        })
+
+
+    }
     
     
     
