@@ -67,6 +67,10 @@ class Terrain: SKShapeNode, Shotable {
         arrow.stop()
     }
     
+    func shot(shotable: Shotable) {
+        
+    }
+    
     func drawLine(scene: GameScene) -> (path: CGPath, body_1: SKPhysicsBody, body_2: SKPhysicsBody) {
         
         var path:CGMutablePathRef = CGPathCreateMutable()

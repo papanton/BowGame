@@ -83,6 +83,11 @@ class Buff: SKSpriteNode, Shotable {
         })
     }
     
+    func shot(shotable: Shotable) {
+        
+    }
+    
+    //set the position of the buff
     //set the random position of the buff
     //position is between 0.3-0.7 width and 0.5 - 1 height
     func setPosition()

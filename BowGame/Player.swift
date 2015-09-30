@@ -91,6 +91,16 @@ class Player : NSObject
             SoundEffect.getInstance().playScream()
         }
     }
+    
+    func shot(shotable: Shotable) {
+        if let obstacle = shotable as? Obstacle {
+            self.mHealth.getHurt(Float(obstacle.getDamage()))
+            bleed()
+            SoundEffect.getInstance().playScream()
+        }
+    }
+    
+    
     func healed(val : Float){
         self.mHealth.recover(val)
     }
@@ -200,6 +210,11 @@ private class PlayerNode: SKSpriteNode, Shotable
     {
         mPlay.shot(arrow)
     }
+    
+    func shot(shotable: Shotable) {
+        mPlay.shot(shotable)
+    }
+    
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
         super.init(coder: aDecoder)
