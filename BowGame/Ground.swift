@@ -17,11 +17,12 @@ class Ground: SKNode, Shotable
     init(size:CGSize,position: CGPoint) {
         super.init()
         self.position = position
+        
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
-//        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
-//        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
     }
     func shot(arrow :Arrow)
     {
