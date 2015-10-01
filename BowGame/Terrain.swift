@@ -50,8 +50,10 @@ class Terrain: SKShapeNode, Shotable {
         
         for var i = 0; i < Int(xSplit) + 1; i++ {
             
-            if (x <= scene.size.width * 0.15 + 20 || x >= scene.size.width * 0.85 ) {
-                hillKeyPoints[i] = CGPointMake(x, scene.size.height * 0.2 - 25)
+            if (x <= scene.size.width * 0.15 + 20) {
+               hillKeyPoints[i] = CGPointMake(x, scene.size.height * 0.4 - 25)
+            } else if(x >= scene.size.width * 0.85) {
+               hillKeyPoints[i] = CGPointMake(x, scene.size.height * 0.2 - 25)
             } else {
                 hillKeyPoints[i] = CGPointMake(x, y)
             }

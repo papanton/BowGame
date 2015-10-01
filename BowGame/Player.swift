@@ -20,7 +20,7 @@ class PlayerFactory{
         var shootPosition : CGPoint!
         if(name == "player1"){
             health.healthbar.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
-            playerNode.position = CGPointMake(sceneSize.width*0.15, sceneSize.height/5)
+            playerNode.position = CGPointMake(sceneSize.width*0.15, sceneSize.height/2)
             position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
             shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/5)
         }
