@@ -18,32 +18,30 @@ class DataCenter: NSObject
         if mInstance == nil{
             mInstance = DataCenter()
             mInstance.managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-            let arrowEntity =  NSEntityDescription.entityForName("ArrowItem",
-                inManagedObjectContext: mInstance.managedContext)
-             mInstance.mArrowItem = ArrowItem(entity: arrowEntity!,insertIntoManagedObjectContext:mInstance.managedContext)
-            mInstance.setArrowItemDamage(100);
         }
         return mInstance!
     }
+    
     func setArrowItemDamage(damage : Int)
     {
-        mArrowItem.setValue("arrow", forKey: "name")
-        mArrowItem.setValue(damage, forKey: "damage")
+        initArrowItem()
+        mArrowItem.name = "arrow"
+        mArrowItem.damage = damage
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save \(error), \(error?.userInfo)")
         }else{
-            println("save successfully!")
+            println("save successfully! \(mArrowItem.damage)")
         }
     }
     func setArrowItem(index : Int)
     {
         setArrowItemDamage(100*(index+1))
     }
-    func getArrowItem()->ArrowItem
+    private func initArrowItem()
     {
         let fetchRequest = NSFetchRequest(entityName:"ArrowItem")
-        let predicate = NSPredicate(format: "name = %@", "name")
+        let predicate = NSPredicate(format: "name = %@", "arrow")
         fetchRequest.returnsObjectsAsFaults = false;
         fetchRequest.predicate = predicate
         var error: NSError?
@@ -51,11 +49,19 @@ class DataCenter: NSObject
         managedContext.executeFetchRequest(fetchRequest,
         error: &error) as? [ArrowItem]
         if let res = fetchedResults {
-            mArrowItem.damage = res[0].damage
-            println("fetched")
+            mArrowItem = res[0]
+            println("fetched \(mArrowItem.name) \(mArrowItem.damage)")
         } else {
+            mArrowItem = ArrowItem.getDefault()
             println("Could not fetch \(error), \(error!.userInfo)")
         }
+    }
+    func getArrowItem()->ArrowItem
+    {
+        if(mArrowItem == nil){
+            initArrowItem()
+        }
+        //println("mArrowItem damage = \(mArrowItem.name) \(mArrowItem.damage)")
         return mArrowItem
     }
 }

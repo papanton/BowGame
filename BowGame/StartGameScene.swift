@@ -93,7 +93,9 @@ class StartGameScene: SKScene {
         let touch = touches.first as! UITouch
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
-        buttonfuncs[touchedNode.name!]?(self)
+        if (touchedNode.name != nil){
+            buttonfuncs[touchedNode.name!]?(self)
+        }
 
        
     }

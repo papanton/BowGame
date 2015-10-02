@@ -7,7 +7,7 @@
     <entity name="BowItem" representedClassName="BowGame.BowItem" syncable="YES"/>
     <entity name="PlayerItem" representedClassName="BowGame.PlayerItem" syncable="YES"/>
     <elements>
-        <element name="ArrowItem" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="ArrowItem" positionX="-414" positionY="-72" width="128" height="73"/>
         <element name="BowItem" positionX="-36" positionY="27" width="128" height="45"/>
         <element name="PlayerItem" positionX="-9" positionY="45" width="128" height="45"/>
     </elements>

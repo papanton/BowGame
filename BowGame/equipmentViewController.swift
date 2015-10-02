@@ -13,6 +13,7 @@ class EquipmentViewController: UIViewController {
     @IBOutlet weak var  mBowRow : UICollectionView!
     @IBOutlet weak var  mArrowRow : UICollectionView!
     @IBOutlet weak var  mPlayerRow : UICollectionView!
+    @IBOutlet weak var  mArrowDamageText : UILabel!
     var  mCellMap : [String : UICollectionView]!
     var  mNameMap : [UICollectionView : String]!
     let mCellName = "EquipmentItem"
@@ -85,6 +86,7 @@ extension EquipmentViewController : UICollectionViewDelegate{
        
         cell.layer.backgroundColor = UIColor.blueColor().CGColor
         cell.changeEquipment(mNameMap[collectionView]!, index: indexPath.item)
+        mArrowDamageText.text = EquipmentItem.mArrowDamage[indexPath.item].description
     }
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
     {

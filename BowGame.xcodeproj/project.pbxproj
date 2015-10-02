@@ -142,7 +142,6 @@
 			children = (
 				2A8274671BAB62D900A59823 /* sound */,
 				2A8274681BAB62D900A59823 /* SoundEffect.swift */,
-				53E925AD1BB31E6E00BB54E5 /* Attacker.swift */,
 				2AA9B1DD1BABF01D009491AC /* Shotable */,
 				2AA9B1DA1BABE52D009491AC /* GameController */,
 				5379AC711BA9E8320061BC19 /* blood.sks */,
@@ -196,10 +195,6 @@
 		2A4795B11BBAF989009A20F0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				1369CA981B9DFFE400895E88 /* Main.storyboard */,
-				2A198E091BA0C32800F050A4 /* StartGameScene.swift */,
-				2A198E071BA0C32800F050A4 /* GameViewController.swift */,
-				2A198E061BA0C32800F050A4 /* GameScene.swift */,
 				2A4795C21BBB3B84009A20F0 /* Equipment */,
 			);
 			name = UI;
@@ -232,7 +227,6 @@
 		2AA9B1DA1BABE52D009491AC /* GameController */ = {
 			isa = PBXGroup;
 			children = (
-				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
 				2AA9B1D71BABDB6F009491AC /* GameController.swift */,
 				2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */,
 			);
@@ -242,6 +236,7 @@
 		2AA9B1DD1BABF01D009491AC /* Shotable */ = {
 			isa = PBXGroup;
 			children = (
+				53E925AD1BB31E6E00BB54E5 /* Attacker.swift */,
 				2AA9B1DE1BABF069009491AC /* Shotable.swift */,
 				894287561BACC1A400E519B8 /* Buff.swift */,
 				5379AC6F1BA9E7C70061BC19 /* Ground.swift */,
@@ -513,6 +508,7 @@
 				INFOPLIST_FILE = BowGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -523,6 +519,7 @@
 				INFOPLIST_FILE = BowGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
