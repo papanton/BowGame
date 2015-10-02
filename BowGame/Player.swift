@@ -161,7 +161,10 @@ private class Health
         }else if(currentHealth <= 60){
             healthbar.fillColor = SKColor.orangeColor()
         }
-        healthbar.xScale = CGFloat(currentHealth / totalHealth)
+        
+        let decreaseSize = SKAction.scaleXTo(CGFloat(currentHealth / totalHealth), duration: 0.25)
+        healthbar.runAction(decreaseSize)
+//        healthbar.xScale = CGFloat(currentHealth / totalHealth)
     }
     private func addHealth(val : Float)
     {
