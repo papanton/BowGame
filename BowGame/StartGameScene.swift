@@ -73,8 +73,7 @@ class StartGameScene: SKScene {
                 view?.presentScene(self.current_game,transition: transitionType)
             }
             
-        }
-        
+        }        
 
         if(touchedNode.name == "quit"){
             exit(0)
@@ -85,5 +84,10 @@ class StartGameScene: SKScene {
     func setCurrentGame(cur : SKScene)
     {
         self.current_game = cur
+    }
+    
+    func removeCurGame()
+    {
+        self.current_game = nil
     }
 }

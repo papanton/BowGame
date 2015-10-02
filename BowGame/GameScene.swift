@@ -26,8 +26,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         addGround()
         addBuffs()
         addObstacle()
-        
-        //game start
         gameStart()
     }
     
@@ -250,8 +248,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         })
     }
     
+    //move to game over view
     func gameOver(){
-        let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size)
+        let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
         gameoverScene.scaleMode = scaleMode
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         self.removeFromParent()
@@ -259,7 +258,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     
-    
+    //called after one player shots
     func changeTurn(){
         
         self.touch_disable = true
