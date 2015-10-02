@@ -44,7 +44,8 @@ class Arrow: SKSpriteNode {
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
-        damage = 30 + player.getPower()
+        println(DataCenter.getInstance().getArrowItem().damage)
+        damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
         host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
