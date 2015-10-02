@@ -10,26 +10,52 @@ import UIKit
 import SpriteKit
 class Arrow: SKSpriteNode {
     
-    var damage :Int!
-    var host : Player!
-    var isFlying = true
-    var hitShooterSelf = true
+    private var damage :Int!
+    private var host : Player!
+    private var isFlying = true
+    func getDamage()-> Int
+    {
+        return damage;
+    }
+    func getHost()-> Player
+    {
+        return host
+    }
+    func stop()
+    {
+        isFlying = false
+        physicsBody = nil
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+        runAction(fadeout, completion: {
+            self.removeFromParent()
+        })
+    }
     
+    func slowDown() {
+        self.physicsBody?.velocity.dx *= 0.4
+        self.physicsBody?.velocity.dy *= 0.4
+        
+    }
+    
+    func isFrom(player : Player)->Bool
+    {
+        return player == self.host;
+    }
     init(player : Player) {
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
-        damage = 10
+        damage = 30 + player.getPower()
         host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
     }
     private func addPhysicsBody()
     {
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size);
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.size.width, self.size.height - 5))
         self.physicsBody?.dynamic = true
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisonHelper.ArrowMask
-        self.physicsBody?.contactTestBitMask = CollisonHelper.PlayerMask | CollisonHelper.GroundMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.collisionBitMask = 0x0
     }
     required init?(coder aDecoder: NSCoder) {
@@ -51,8 +77,10 @@ class Arrow: SKSpriteNode {
     }
     func update()
     {
-        let val = (physicsBody!.velocity.dy) / (physicsBody!.velocity.dx)
-        self.zRotation = atan(val)
+        if isFlying {
+            let val = (physicsBody!.velocity.dy) / (physicsBody!.velocity.dx)
+            self.zRotation = atan(val)
+        }
     }
     /*   required init?(coder aDecoder: NSCoder) {
     self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow

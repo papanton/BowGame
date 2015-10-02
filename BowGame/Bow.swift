@@ -11,6 +11,9 @@ import SpriteKit
 class Bow: SKSpriteNode {
     func shoot(impulse: CGVector, arrow: Arrow,scene : SKScene, position:CGPoint)
     {
+        SoundEffect.getInstance().playArrow()
+        //add buf here.
+        
         arrow.go(impulse, position: position)
     }
 }

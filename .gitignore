@@ -1,15 +1,15 @@
 
 .DS_Store
-<<<<<<< HEAD
-=======
 
+*.xcuserstate
+
+*.xcbkptlist
+
+*.pbxproj
+
+*.xcuserstate
+
+*/.DS_Store
 .DS_Store
->>>>>>> Qiliang
 
-BowGame.xcodeproj/project.xcworkspace/xcuserdata/Lu.xcuserdatad/UserInterfaceState.xcuserstate
-
-*.xcuserstate
-
-*.xcuserstate
-
-*.xcuserstate
+BowGame/.DS_Store
