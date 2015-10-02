@@ -22,7 +22,11 @@ class GameController
         return mInstance!
     }
     private init(){}
-
+    func reset()
+    {
+        mPlayers = [Player]()
+        mCurPlayer = nil
+    }
     func currentPlayer()->Player?
     {
         if mCurPlayer == nil && mPlayers.count > 0{
@@ -38,6 +42,7 @@ class GameController
             self.changePlayer()
         })
     }
+    
     func changePlayer()
     {
         for player in mPlayers{
