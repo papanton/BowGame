@@ -114,6 +114,12 @@ class Player : NSObject
     func hurted(val : Float){
         self.mHealth.getHurt(val)
     }
+    
+    func isDead() -> Bool {
+        
+        return self.mHealth.currentHealth <= 0
+    }
+
 
     func bleed()
     {
@@ -162,7 +168,10 @@ private class Health
         }else if(currentHealth <= 60){
             healthbar.fillColor = SKColor.orangeColor()
         }
-        healthbar.xScale = CGFloat(currentHealth / totalHealth)
+        
+        let decreaseSize = SKAction.scaleXTo(CGFloat(currentHealth / totalHealth), duration: 0.25)
+        healthbar.runAction(decreaseSize)
+//        healthbar.xScale = CGFloat(currentHealth / totalHealth)
     }
     private func addHealth(val : Float)
     {
@@ -189,6 +198,7 @@ private class PlayerNode: SKSpriteNode, Shotable
     {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0), center: CGPointMake(-20, 0))
         //SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0))
+
         self.physicsBody?.dynamic = false
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = true
@@ -215,6 +225,7 @@ private class PlayerNode: SKSpriteNode, Shotable
     func shot(shotable: Shotable) {
         mPlay.shot(shotable)
     }
+    
     
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
