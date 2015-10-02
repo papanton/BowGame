@@ -89,12 +89,6 @@ class StartGameScene: SKScene {
     override func didMoveToView(view: SKView) {
     }
     
-    override func didMoveToView(view: SKView) {
-        /*let startGameButton = SKSpriteNode(color: UIColor.orangeColor(),size: CGSize(width: 500,height: 500))
-        NSLog("Adding button")*/
-
-        
-    }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touch = touches.first as! UITouch
         let touchLocation = touch.locationInNode(self)
