@@ -41,7 +41,8 @@ class StartGameScene: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if(touchedNode.name == "startgame"){
-            var scenesize : CGSize = CGSize(width: size.width * 2, height: size.height)
+            var screensize = UIScreen.mainScreen().bounds.size;
+            var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
             let gameScene = GameScene(size: scenesize)
             gameScene.scaleMode = SKSceneScaleMode.AspectFit
             

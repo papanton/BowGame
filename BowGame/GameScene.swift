@@ -36,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     */
     func addPlayers()
     {
+        GameController.getInstance().reset()
         var player1 = PlayerFactory.getPlayer("player1", sceneSize: size)
         player1.add2Scene(self)
         GameController.getInstance().addPlayer(player1)
@@ -115,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             Checking if first touch was on settings button. Returning on main menu if so.
             */
             if(touchedNode.name == "settings"){
-                let settingsScene = StartGameScene(size: size)
+                let settingsScene = StartGameScene(size: UIScreen.mainScreen().bounds.size)
                 settingsScene.scaleMode = scaleMode
                 let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
                 view?.presentScene(settingsScene,transition: transitionType)
@@ -235,10 +236,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         })
     }
     
+    func gameOver(){
+        let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size)
+        gameoverScene.scaleMode = scaleMode
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        self.removeFromParent()
+        view?.presentScene(gameoverScene,transition: transitionType)
+    }
+    
     
     
     func changeTurn(){
+        
         self.touch_disable = true
+
+        
         let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
@@ -248,6 +260,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                     arrow.removeFromParent()
                 }
             }
+            
+            if(GameController.getInstance().currentPlayer()!.isDead()){
+                self.gameOver()
+                return
+            }
+            
             self.turns++
             if(self.turns % 2 == 1){
                 self.anchorPoint = CGPointMake(0.25, 0)

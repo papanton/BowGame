@@ -113,6 +113,12 @@ class Player : NSObject
     func hurted(val : Float){
         self.mHealth.getHurt(val)
     }
+    
+    func isDead() -> Bool {
+        
+        return self.mHealth.currentHealth <= 0
+    }
+
 
     func bleed()
     {
@@ -218,6 +224,7 @@ private class PlayerNode: SKSpriteNode, Shotable
     func shot(shotable: Shotable) {
         mPlay.shot(shotable)
     }
+    
     
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
