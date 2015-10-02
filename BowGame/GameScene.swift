@@ -11,9 +11,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var camera : SKNode!
+    var mainmenu: StartGameScene!
     private var ground: Ground!
     var touch_disable:Bool = true
     var turns : Int = 0
+    
+    
+    init(size: CGSize, mainmenu: StartGameScene) {
+        super.init(size: size)
+        self.mainmenu = mainmenu
+        self.mainmenu.setCurrentGame(self)
+        initworld()
+        addPlayers()
+        addGround()
+        addBuffs()
+        addObstacle()
+        gameStart()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     
     func initworld()
@@ -36,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     */
     func addPlayers()
     {
+        GameController.getInstance().reset()
         var player1 = PlayerFactory.getPlayer("player1", sceneSize: size)
         player1.add2Scene(self)
         GameController.getInstance().addPlayer(player1)
@@ -86,16 +105,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func didMoveToView(view: SKView) {
-        initworld()
-        addPlayers()
-        addGround()
         
-        addBuffs()
-        addObstacle()
-        
-        //game start
-        gameStart()
+    
     }
+
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         /*
@@ -115,10 +128,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             Checking if first touch was on settings button. Returning on main menu if so.
             */
             if(touchedNode.name == "settings"){
-                let settingsScene = StartGameScene(size: size)
-                settingsScene.scaleMode = scaleMode
+//                let settingsScene = StartGameScene(size: UIScreen.mainScreen().bounds.size)
+//                settingsScene.scaleMode = scaleMode
                 let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-                view?.presentScene(settingsScene,transition: transitionType)
+                view?.presentScene(mainmenu,transition: transitionType)
             }else if(touchedNode.name == "camera"){
                 touchedNode.position = touch.locationInNode(self)
             }
@@ -235,10 +248,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         })
     }
     
+    //move to game over view
+    func gameOver(){
+        let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
+        gameoverScene.scaleMode = scaleMode
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        self.removeFromParent()
+        view?.presentScene(gameoverScene,transition: transitionType)
+    }
     
     
+    //called after one player shots
     func changeTurn(){
+        
         self.touch_disable = true
+
+        
         let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
@@ -248,6 +273,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                     arrow.removeFromParent()
                 }
             }
+            
+            if(GameController.getInstance().currentPlayer()!.isDead()){
+                self.gameOver()
+                return
+            }
+            
             self.turns++
             if(self.turns % 2 == 1){
                 self.anchorPoint = CGPointMake(0.25, 0)
