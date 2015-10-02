@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 class PlayerFactory{
+    
     static func getPlayer(var name : String, sceneSize :CGSize) -> Player
     {
         var sheet = ShootAnimation.getInstance()

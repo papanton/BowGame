@@ -12,72 +12,89 @@ import Darwin
 
 class StartGameScene: SKScene {
     
+    var buttonfuncs = ["Start" : {(s:StartGameScene)->Void in s.startGame()},
+        "Resume" : {(s:StartGameScene)->Void in s.resume()},
+        "Settings" : {(s:StartGameScene)->Void in s.settings()},
+        "Quit" : {(s:StartGameScene)->Void in exit(0)}]
+    
     var current_game : SKScene?
+
+    func createButton(name : String, position : CGPoint)->SKNode
+    {
+        var text : SKLabelNode = SKLabelNode()
+        text.name = name
+        text.text = name
+        text.fontColor = SKColor.blackColor()
+        text.fontSize = 50
+        text.fontName = "MarkerFelt-Wide"
+        text.zPosition = 1
+        text.position = position
+        text.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        return text
+    }
+    func settings()
+    {
+        //changeScene(SettingScene(size: size))
+        var vc = view?.window!.rootViewController!
+        vc?.presentViewController(EquipmentViewController(), animated: true, completion: nil)
+    }
+    func resume()
+    {
+        if(current_game != nil){
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            view?.presentScene(self.current_game,transition: transitionType)
+        }
+    }
+    
 
     override init(size: CGSize) {
         super.init(size: size)
         addButtons()
+        self.backgroundColor = UIColor.whiteColor()
+       
     }
+    func addButtons()
+    {
+        var i = 1;
+        for name in buttonfuncs.keys{
+            var left = (size.width*0.4)
+            var top =  size.height*CGFloat(1.0-0.2*CGFloat(i))
+            var position = CGPointMake(left ,  top)
+            var button = createButton(name, position: position)
+            addChild(button)
+            ++i
+        }
 
+    }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    func addButtons(){
-        let startGameButton = SKSpriteNode(imageNamed: StartButtonImage)
-        startGameButton.position = CGPointMake(size.width/2,size.height*0.80 )
-        startGameButton.name = "startgame"
         
-        let resumeButton = SKSpriteNode(imageNamed: ResumeButtonImage )
-        resumeButton.position = CGPointMake(size.width/2,size.height*0.60 )
-        resumeButton.name = "resumegame"
-        
-        let settingsButton = SKSpriteNode(imageNamed: SettingsButton)
-        settingsButton.position = CGPointMake(size.width/2,size.height*0.40 )
-        
-        let quitButton = SKSpriteNode(imageNamed: QuitButtonImage )
-        quitButton.position = CGPointMake(size.width/2,size.height*0.20 )
-        quitButton.name = "quit"
-        
-        
-        addChild(startGameButton)
-        addChild(settingsButton)
-        addChild(quitButton)
-        addChild(resumeButton)
+    
+    func startGame()
+    {
+        var screensize = UIScreen.mainScreen().bounds.size;
+        var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
+        let gameScene = GameScene(size: scenesize, mainmenu: self)
+
+        changeScene(gameScene)
+    }
+    func changeScene(scene : SKScene)
+    {
+        scene.scaleMode = scaleMode
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(scene,transition: transitionType)
+    }
+    override func didMoveToView(view: SKView) {
     }
     
-    override func didMoveToView(view: SKView) {
-        /*let startGameButton = SKSpriteNode(color: UIColor.orangeColor(),size: CGSize(width: 500,height: 500))
-        NSLog("Adding button")*/
-
-        
-    }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touch = touches.first as! UITouch
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
-        if(touchedNode.name == "startgame"){
-            var screensize = UIScreen.mainScreen().bounds.size;
-            var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
-            let gameScene = GameScene(size: scenesize, mainmenu: self)
-            
-            gameScene.scaleMode = SKSceneScaleMode.AspectFit
-            
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(gameScene,transition: transitionType)
-            
-        }else if(touchedNode.name == "resumegame"){
-            
-            if(current_game != nil){
-                let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-                view?.presentScene(self.current_game,transition: transitionType)
-            }
-            
-        }        
+        buttonfuncs[touchedNode.name!]?(self)
 
-        if(touchedNode.name == "quit"){
-            exit(0)
-        }
        
     }
     
