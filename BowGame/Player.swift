@@ -20,9 +20,12 @@ class PlayerFactory{
         var shootPosition : CGPoint!
         if(name == "player1"){
             health.healthbar.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
+//            player position changed
             playerNode.position = CGPointMake(sceneSize.width*0.15, sceneSize.height/2)
             position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
-            shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/5)
+//            shoot position changed
+//            shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/5)
+            shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/2)
         }
         
         if(name == "player2"){
@@ -186,7 +189,7 @@ private class PlayerNode: SKSpriteNode, Shotable
     var mPlay : Player!
     private func addPhysicsBody()
     {
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0), center: CGPointMake(-20, 0))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10.0, height: 80.0), center: CGPointMake(-20, 0))
         //SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0))
 
         self.physicsBody?.dynamic = false

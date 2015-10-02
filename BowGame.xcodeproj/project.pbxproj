@@ -34,6 +34,9 @@
 		F805C92A1BA61F530038B692 /* ShootAnimation.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = F805C9281BA61F530038B692 /* ShootAnimation.atlasc */; };
 		F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805C9291BA61F530038B692 /* ShootAnimation.swift */; };
 		F81D89971BB31C1300B9718C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81D89961BB31C1300B9718C /* Terrain.swift */; };
+		F83FF9BD1BBE2C5900A72F02 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83FF9BC1BBE2C5900A72F02 /* GameKit.framework */; };
+		F83FF9BF1BBE2C7200A72F02 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83FF9BE1BBE2C7200A72F02 /* SystemConfiguration.framework */; };
+		F83FF9C71BBE2F7800A72F02 /* EasyGameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83FF9C61BBE2F7800A72F02 /* EasyGameCenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,9 @@
 		F805C9281BA61F530038B692 /* ShootAnimation.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ShootAnimation.atlasc; sourceTree = "<group>"; };
 		F805C9291BA61F530038B692 /* ShootAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootAnimation.swift; sourceTree = "<group>"; };
 		F81D89961BB31C1300B9718C /* Terrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
+		F83FF9BC1BBE2C5900A72F02 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		F83FF9BE1BBE2C7200A72F02 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F83FF9C61BBE2F7800A72F02 /* EasyGameCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyGameCenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F83FF9BF1BBE2C7200A72F02 /* SystemConfiguration.framework in Frameworks */,
+				F83FF9BD1BBE2C5900A72F02 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +109,8 @@
 		1369CA821B9DFFE400895E88 = {
 			isa = PBXGroup;
 			children = (
+				F83FF9BE1BBE2C7200A72F02 /* SystemConfiguration.framework */,
+				F83FF9BC1BBE2C5900A72F02 /* GameKit.framework */,
 				1369CA8D1B9DFFE400895E88 /* BowGame */,
 				1369CAA71B9DFFE400895E88 /* BowGameTests */,
 				1369CA8C1B9DFFE400895E88 /* Products */,
@@ -119,6 +129,7 @@
 		1369CA8D1B9DFFE400895E88 /* BowGame */ = {
 			isa = PBXGroup;
 			children = (
+				F83FF9C61BBE2F7800A72F02 /* EasyGameCenter.swift */,
 				2A8274671BAB62D900A59823 /* sound */,
 				2A8274681BAB62D900A59823 /* SoundEffect.swift */,
 				53E925AD1BB31E6E00BB54E5 /* Attacker.swift */,
@@ -307,6 +318,7 @@
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,
 				894287571BACC1A400E519B8 /* Buff.swift in Sources */,
+				F83FF9C71BBE2F7800A72F02 /* EasyGameCenter.swift in Sources */,
 				2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */,
 				2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */,
 				2A198E0D1BA0C32800F050A4 /* CollisionHelp.swift in Sources */,

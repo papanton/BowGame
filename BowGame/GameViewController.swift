@@ -29,6 +29,10 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*** Set Delegate UIViewController ***/
+        EasyGameCenter.sharedInstance(self)
+        
         let scene = StartGameScene(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = true
@@ -38,7 +42,16 @@ class GameViewController: UIViewController {
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
         //skView.showsPhysics = true
-
+    }
+    
+    /**
+    Notifies the view controller that its view was added
+    */
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        /*** Set View Controller delegate, that's when you change UIViewController ***/
+        EasyGameCenter.delegate = self
     }
 
     override func shouldAutorotate() -> Bool {
