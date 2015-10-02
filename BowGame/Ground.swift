@@ -24,9 +24,11 @@ class Ground: SKNode, Shotable
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
     }
-    func shot(arrow :Arrow)
+    func shot(attack : Attacker)
     {
-        arrow.stop()
+        if let arrow = attack as? Arrow {
+            arrow.stop()
+        }
     }
     
     func shot(shotable: Shotable) {

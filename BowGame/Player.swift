@@ -73,7 +73,8 @@ class Player : NSObject
         var shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.04)
         mPlayerNode.runAction(shoot)
         var bow = Bow()
-        var arrow = Arrow(player: self)
+        var arrow = FlappyArrow(player: self)
+        
         delay(0.64) {
             self.mPlayerNode.scene?.addChild(arrow);
         //        scene.addChild(arrow)
@@ -84,12 +85,12 @@ class Player : NSObject
     func shot(arrow : Arrow)
     {
         if !arrow.isFrom(self){
-            arrow.stop()
             var xScale : CGFloat!
             var position : CGPoint!
             self.mHealth.getHurt(Float(arrow.getDamage()))
             bleed()
             SoundEffect.getInstance().playScream()
+            arrow.stop()
         }
     }
     
@@ -217,15 +218,12 @@ private class PlayerNode: SKSpriteNode, Shotable
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    func shot(arrow :Arrow)
+    func shot(attacker :Attacker)
     {
-        mPlay.shot(arrow)
+        if let arrow = attacker as? Arrow{
+            mPlay.shot(arrow)
+        }
     }
-    
-    func shot(shotable: Shotable) {
-        mPlay.shot(shotable)
-    }
-    
     
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow

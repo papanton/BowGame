@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 class EquipmentItem: UICollectionViewCell {
+
+    static let mArrowDamage = [100, 200, 300, 400]
+    static let mItemNumber = ["ArrowItem" : 4, "BowItem":4, "PlayerItem":2]
     let mSetEquipmentFuncs = ["ArrowItem" : {(index : Int)->Void in DataCenter.getInstance().setArrowItem(index)}]
     
     @IBOutlet weak var  mImageView : UIImageView!
@@ -30,9 +33,6 @@ class EquipmentItem: UICollectionViewCell {
     }
     static func itemNum(name : String) -> Int
     {
-        if name == "PlayerItem"{
-            return 2;
-        }
-        return 5;
+        return mItemNumber[name]!
     }
 }

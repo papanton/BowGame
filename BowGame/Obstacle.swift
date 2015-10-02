@@ -70,7 +70,7 @@ class Obstacle: SKSpriteNode, Shotable {
         
     }
     
-    func shot(shotable: Shotable)
+    func shot(attacker : Attacker)
     {
         self.collisionTimes = self.collisionTimes + 1
         if(self.collisionTimes == 2) {
