@@ -10,6 +10,16 @@ import UIKit
 
 class ArrowColletion: NSObject
 {
-    static let mArrowDamage = [100, 200, 300, 400]
-    static let mItemNumber =  mArrowDamage.count
+    var mCollection : [String : ArrowItem]!
+    let mArrowName = ["Arrow", "FlappyArrow"]
+    let mArrowDamage = [10, 20]
+    override init()
+    {
+        super.init()
+        for i in 1 ... mArrowName.count{
+            var arrow = ArrowItem()
+            arrow.damage = mArrowDamage[i-1]
+            arrow.name = mArrowName[i-1]
+        }
+    }
 }
