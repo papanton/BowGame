@@ -41,6 +41,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         addBackground()
         settingsButton()
     }
+    
+    
+    //add Scene background picture
     func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:BackgroundImage)
@@ -49,9 +52,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         background.position = CGPointMake(size.width*0.5,  size.height*0.5)
         self.addChild(background)
     }
-    /*
-       Function adding the two players in the scene in their respective positions
-    */
+    
+    
+    //Function adding the two players in the scene in their respective positions
     func addPlayers()
     {
         GameController.getInstance().reset()
@@ -74,10 +77,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         Terrain(scene: self);
     }
-    /**
-     *  function adding a random buff
-     *  currently add a specific healing buff
-     */
+    
+    //add one Buff to Scene
     func addBuffs()
     {
         
@@ -97,10 +98,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
     }
     
+    //add one Obstacle to Scene
     func addObstacle() {
         var obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
         obstacle.setObstaclePosition(self)
-//        obstacle.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.3)
         self.addChild(obstacle)
     }
     
@@ -211,6 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         CollisonHelper.getInstance().didBeginContact(contact)
     }
     
+    //add setting button to scene
     func settingsButton(){
         
         let settings = SKSpriteNode(imageNamed: InGameSettingButton )
@@ -233,6 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.anchorPoint = CGPointMake(x, 0)
     }
     
+    //show game start information and move view to P1
     func gameStart(){
         self.touch_disable = true
         let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
