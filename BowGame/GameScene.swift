@@ -38,32 +38,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
-        
+/*
         controllBallleft = SKShapeNode(circleOfRadius: self.controllBallradius)
         controllBallleft.fillColor = SKColor.whiteColor()
         controllBallleft.alpha = 0.7
         controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius, y: 120)
         self.addChild(controllBallleft)
+*/
+        controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
         
+        
+/*
         controllPowerleft = SKShapeNode(circleOfRadius: self.controllPowerradius)
         controllPowerleft.fillColor = SKColor.grayColor()
         controllPowerleft.alpha = 0.3
         controllPowerleft.position = CGPoint(x: 100, y: 120)
         self.addChild(controllPowerleft)
+*/
+        controllPowerleft = initControllPowerleft(self.controllPowerradius)
         
-        
+
+/*
         controllBallright = SKShapeNode(circleOfRadius: self.controllBallradius)
         controllBallright.fillColor = SKColor.whiteColor()
         controllBallright.alpha = 0.7
         controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius, y: 120)
         self.addChild(controllBallright)
-        
+*/
+        controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
+/*
         controllPowerright = SKShapeNode(circleOfRadius: self.controllPowerradius)
         controllPowerright.fillColor = SKColor.grayColor()
         controllPowerright.alpha = 0.3
         controllPowerright.position = CGPoint(x: self.size.width - 90, y: 120)
         self.addChild(controllPowerright)
-        
+*/
+        controllPowerright = initControllPowerright(self.controllPowerradius)
+
+/*
         bezierPathleft1 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: true)
         bezierPathleft2 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: false)
         bezierLayerleft1.path = bezierPathleft1.CGPath
@@ -76,7 +88,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bezierLayerleft2.fillColor = UIColor.clearColor().CGColor
         bezierLayerleft2.lineWidth = 5.0
         bezierLayerleft2.lineCap = kCALineCapRound
-        
+*/
+/*
         bezierPathright1 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: true)
         bezierPathright2 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: false)
         bezierLayerright1.path = bezierPathright1.CGPath
@@ -89,6 +102,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bezierLayerright2.fillColor = UIColor.clearColor().CGColor
         bezierLayerright2.lineWidth = 5.0
         bezierLayerright2.lineCap = kCALineCapRound
+*/
+        initbezierleft()
+        initbezierright()
         
         initworld()
         addPlayers()
@@ -102,6 +118,80 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         super.init(coder: aDecoder)
     }
     
+    
+    
+    func initControllBallleft(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
+    {
+        var controllBall = SKShapeNode(circleOfRadius: ballradius)
+        controllBall.fillColor = SKColor.whiteColor()
+        controllBall.alpha = 0.7
+        controllBall.position = CGPoint(x: 100 + powerradius, y: 120)
+        self.addChild(controllBall)
+        return controllBall
+
+    }
+    
+    func initControllBallright(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
+    {
+        var controllBall = SKShapeNode(circleOfRadius: ballradius)
+        controllBall.fillColor = SKColor.whiteColor()
+        controllBall.alpha = 0.7
+        controllBall.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius, y: 120)
+        self.addChild(controllBall)
+        return controllBall
+    }
+    
+    func initControllPowerleft(powerradius: CGFloat) -> SKShapeNode
+    {
+        var controllPower = SKShapeNode(circleOfRadius: powerradius)
+        controllPower.fillColor = SKColor.grayColor()
+        controllPower.alpha = 0.3
+        controllPower.position = CGPoint(x: 100, y: 120)
+        self.addChild(controllPower)
+        return controllPower
+    }
+    
+    func initControllPowerright(powerradius: CGFloat) -> SKShapeNode
+    {
+        var controllPower = SKShapeNode(circleOfRadius: powerradius)
+        controllPower.fillColor = SKColor.grayColor()
+        controllPower.alpha = 0.3
+        controllPower.position = CGPoint(x: self.size.width - 90, y: 120)
+        self.addChild(controllPower)
+        return controllPower
+    }
+    
+    func initbezierleft()
+    {
+        bezierPathleft1 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: true)
+        bezierPathleft2 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: false)
+        bezierLayerleft1.path = bezierPathleft1.CGPath
+        bezierLayerleft1.strokeColor = UIColor.redColor().CGColor
+        bezierLayerleft1.fillColor = UIColor.clearColor().CGColor
+        bezierLayerleft1.lineWidth = 5.0
+        bezierLayerleft1.lineCap = kCALineCapRound
+        bezierLayerleft2.path = bezierPathleft2.CGPath
+        bezierLayerleft2.strokeColor = UIColor.redColor().CGColor
+        bezierLayerleft2.fillColor = UIColor.clearColor().CGColor
+        bezierLayerleft2.lineWidth = 5.0
+        bezierLayerleft2.lineCap = kCALineCapRound
+    }
+    
+    func initbezierright()
+    {
+        bezierPathright1 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: true)
+        bezierPathright2 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: false)
+        bezierLayerright1.path = bezierPathright1.CGPath
+        bezierLayerright1.strokeColor = UIColor.redColor().CGColor
+        bezierLayerright1.fillColor = UIColor.clearColor().CGColor
+        bezierLayerright1.lineWidth = 5.0
+        bezierLayerright1.lineCap = kCALineCapRound
+        bezierLayerright2.path = bezierPathright2.CGPath
+        bezierLayerright2.strokeColor = UIColor.redColor().CGColor
+        bezierLayerright2.fillColor = UIColor.clearColor().CGColor
+        bezierLayerright2.lineWidth = 5.0
+        bezierLayerright2.lineCap = kCALineCapRound
+    }
     
     func initworld()
     {
