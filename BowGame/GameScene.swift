@@ -19,7 +19,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var controllPowerleft: SKShapeNode!
     var controllBallright: SKShapeNode!
     var controllPowerright: SKShapeNode!
-    var controllBallradius : CGFloat = 20
+    var controllBallradius : CGFloat = 30
     var controllPowerradius : CGFloat = 65
     
     var bezierPathleft1: UIBezierPath!
@@ -125,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         var controllBall = SKShapeNode(circleOfRadius: ballradius)
         controllBall.fillColor = SKColor.whiteColor()
         controllBall.alpha = 0.7
-        controllBall.position = CGPoint(x: 100 + powerradius, y: 120)
+        controllBall.position = CGPoint(x: 100 + powerradius - ballradius, y: 120)
         self.addChild(controllBall)
         return controllBall
 
@@ -136,7 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         var controllBall = SKShapeNode(circleOfRadius: ballradius)
         controllBall.fillColor = SKColor.whiteColor()
         controllBall.alpha = 0.7
-        controllBall.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius, y: 120)
+        controllBall.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + ballradius, y: 120)
         self.addChild(controllBall)
         return controllBall
     }
@@ -297,22 +297,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             else {
                 if(self.turns % 2 == 1)
                 {
-                    var x = abs(touchLocation.x - controllPowerleft.position.x)
-                    var y = abs(touchLocation.y - controllPowerleft.position.y)
-                    if(sqrt(x*x + y*y) <= controllPowerradius)
+                    var x1 = abs(touchLocation.x - controllPowerleft.position.x)
+                    var y1 = abs(touchLocation.y - controllPowerleft.position.y)
+                    var x2 = abs(touchLocation.x - controllBallleft.position.x)
+                    var y2 = abs(touchLocation.y - controllBallleft.position.y)
+                    if((sqrt(x1*x1 + y1*y1) <= controllPowerradius) && (sqrt(x2*x2 + y2*y2)<=controllBallradius ))
                     {
-                        shootable = true
                         startpositionOfTouch = controllBallleft.position
+                        shootable = true
+                        
                     }
                 }
                 if(self.turns % 2 == 0)
                 {
-                    var x = abs(touchLocation.x - controllPowerright.position.x)
-                    var y = abs(touchLocation.y - controllPowerright.position.y)
-                    if(sqrt(x*x + y*y) <= controllPowerradius)
+                    var x1 = abs(touchLocation.x - controllPowerright.position.x)
+                    var y1 = abs(touchLocation.y - controllPowerright.position.y)
+                    var x2 = abs(touchLocation.x - controllBallright.position.x)
+                    var y2 = abs(touchLocation.y - controllBallright.position.y)
+                    if((sqrt(x1*x1 + y1*y1) <= controllPowerradius) && (sqrt(x2*x2 + y2*y2) <=
+                        controllBallradius ))
                     {
-                        shootable = true
                         startpositionOfTouch = controllBallright.position
+                        shootable = true
+                        
                     }
                 }
             }
@@ -332,13 +339,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             {
                 bezierLayerleft1.removeFromSuperlayer()
                 bezierLayerleft2.removeFromSuperlayer()
-                controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius, y: 120)
+                controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
             }
             if(self.turns % 2 == 0)
             {
                 bezierLayerright1.removeFromSuperlayer()
                 bezierLayerright2.removeFromSuperlayer()
-                controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius, y: 120)
+                controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
             }
             
             let touchLocation = touch.locationInNode(self)
@@ -373,11 +380,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 break
             }
             let touchLocation = touch.locationInNode(self)
+            let viewLocation = touch.locationInView(view)
             let touchedNode = self.nodeAtPoint(touchLocation)
 
             //setup camera location according to touch movement
             if(!self.shootable){
-                setCameraLocation(touchLocation)
+                moveCameraLocation(viewLocation)
             }
             
             var  position = touch.locationInNode(self)
@@ -478,6 +486,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         self.anchorPoint = CGPointMake(x, 0)
     }
+    func moveCameraLocation(location : CGPoint){
+        var x = location.x / UIScreen.mainScreen().bounds.width - 0.5
+        if(x > 0.25){
+            x = 0.25
+        }
+        if(x < -0.25){
+            x = -0.25
+        }
+        self.anchorPoint = CGPointMake(x, 0)
+    }
+
+    
     
     func gameStart(){
         self.touch_disable = true
