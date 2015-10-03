@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C2043" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ArrowItem" representedClassName="BowGame.ArrowItem" syncable="YES">
+        <attribute name="damage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="BowItem" representedClassName="BowGame.BowItem" syncable="YES"/>
+    <entity name="PlayerItem" representedClassName="BowGame.PlayerItem" syncable="YES"/>
+    <elements>
+        <element name="ArrowItem" positionX="-414" positionY="-72" width="128" height="73"/>
+        <element name="BowItem" positionX="-36" positionY="27" width="128" height="45"/>
+        <element name="PlayerItem" positionX="-9" positionY="45" width="128" height="45"/>
+    </elements>
+</model>

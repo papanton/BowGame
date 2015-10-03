@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-class GameScene: SKScene, SKPhysicsContactDelegate{
+class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shotable{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var camera : SKNode!
@@ -38,71 +38,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
-/*
-        controllBallleft = SKShapeNode(circleOfRadius: self.controllBallradius)
-        controllBallleft.fillColor = SKColor.whiteColor()
-        controllBallleft.alpha = 0.7
-        controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius, y: 120)
-        self.addChild(controllBallleft)
-*/
+
         controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
         
-        
-/*
-        controllPowerleft = SKShapeNode(circleOfRadius: self.controllPowerradius)
-        controllPowerleft.fillColor = SKColor.grayColor()
-        controllPowerleft.alpha = 0.3
-        controllPowerleft.position = CGPoint(x: 100, y: 120)
-        self.addChild(controllPowerleft)
-*/
         controllPowerleft = initControllPowerleft(self.controllPowerradius)
-        
 
-/*
-        controllBallright = SKShapeNode(circleOfRadius: self.controllBallradius)
-        controllBallright.fillColor = SKColor.whiteColor()
-        controllBallright.alpha = 0.7
-        controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius, y: 120)
-        self.addChild(controllBallright)
-*/
         controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
-/*
-        controllPowerright = SKShapeNode(circleOfRadius: self.controllPowerradius)
-        controllPowerright.fillColor = SKColor.grayColor()
-        controllPowerright.alpha = 0.3
-        controllPowerright.position = CGPoint(x: self.size.width - 90, y: 120)
-        self.addChild(controllPowerright)
-*/
         controllPowerright = initControllPowerright(self.controllPowerradius)
 
-/*
-        bezierPathleft1 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: true)
-        bezierPathleft2 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: false)
-        bezierLayerleft1.path = bezierPathleft1.CGPath
-        bezierLayerleft1.strokeColor = UIColor.redColor().CGColor
-        bezierLayerleft1.fillColor = UIColor.clearColor().CGColor
-        bezierLayerleft1.lineWidth = 5.0
-        bezierLayerleft1.lineCap = kCALineCapRound
-        bezierLayerleft2.path = bezierPathleft2.CGPath
-        bezierLayerleft2.strokeColor = UIColor.redColor().CGColor
-        bezierLayerleft2.fillColor = UIColor.clearColor().CGColor
-        bezierLayerleft2.lineWidth = 5.0
-        bezierLayerleft2.lineCap = kCALineCapRound
-*/
-/*
-        bezierPathright1 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: true)
-        bezierPathright2 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: false)
-        bezierLayerright1.path = bezierPathright1.CGPath
-        bezierLayerright1.strokeColor = UIColor.redColor().CGColor
-        bezierLayerright1.fillColor = UIColor.clearColor().CGColor
-        bezierLayerright1.lineWidth = 5.0
-        bezierLayerright1.lineCap = kCALineCapRound
-        bezierLayerright2.path = bezierPathright2.CGPath
-        bezierLayerright2.strokeColor = UIColor.redColor().CGColor
-        bezierLayerright2.fillColor = UIColor.clearColor().CGColor
-        bezierLayerright2.lineWidth = 5.0
-        bezierLayerright2.lineCap = kCALineCapRound
-*/
+
         initbezierleft()
         initbezierright()
         
@@ -220,17 +164,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         var player2 = PlayerFactory.getPlayer("player2", sceneSize: size)
         GameController.getInstance().addPlayer(player2)
         player2.add2Scene(self)
+        GameController.getInstance().addGameControllerObserver(self)
     }
     
     //function adding ground object (for contact detection)
     func addGround()
     {
-//        let groundSize = CGSizeMake(self.size.width, 1.0)
-//        let groundPosition = CGPointMake(self.size.width * 0.5, self.size.height * 0.1)
-//        replace ground by terrain
-//        self.ground = Ground(size: groundSize, position: groundPosition)
-//        self.addChild(self.ground)
-        
+        let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
         Terrain(scene: self);
     }
     /**
@@ -273,16 +217,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         /*
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
         */
+        self.touch_disable == true
         for touch in (touches as! Set<UITouch>) {
-
-            if(self.touch_disable == true){
-                break
-            }
-            
             let touch = touches.first as! UITouch
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
-            
+            if(self.touch_disable == true){
+                for child in (self.children) {
+                    if child is FlappyArrow{
+                        var arrow = child as! FlappyArrow
+                        arrow.flappy()
+                    }
+                }
+                break
+            }
             /*
             Checking if first touch was on settings button. Returning on main menu if so.
             */
@@ -324,17 +272,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 }
             }
         }
-        
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         
-        if(self.touch_disable == true){
-            return
-        }
-
         for touch: AnyObject in touches
         {
+
+            if(self.touch_disable == true){
+                break
+            }
+
             if(self.turns % 2 == 1)
             {
                 bezierLayerleft1.removeFromSuperlayer()
@@ -348,6 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
             }
             
+            //self.touch_disable = true
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
             
@@ -361,11 +310,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 }
                 var impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
                 GameController.getInstance().currentPlayer()?.shoot(impulse, scene: self)
-                GameController.getInstance().changePlayerWithDelay(0)
+                //GameController.getInstance().changePlayerWithDelay(0)
             
                 ShootingAngle.getInstance().hide()
             
-                changeTurn()
+                //changeTurn()
                 self.shootable = false
             }
         }
@@ -374,8 +323,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent)
     {
+
         for touch: AnyObject in touches{
-            
             if(self.touch_disable == true){
                 break
             }
@@ -454,8 +403,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         for child in (self.children) {
             if child is Arrow{
                 var arrow = child as! Arrow
-                arrow.update()
-                setCameraLocation(arrow.position)
+                if arrow.update(){
+                    setCameraLocation(arrow.position)
+                }
             }
         }
     }
@@ -503,66 +453,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.touch_disable = true
         let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
         self.turns++
-	        self.showStart()
+        self.showStart()
         
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             self.scaleMode = SKSceneScaleMode.AspectFill
             self.anchorPoint = CGPointMake(0.25, 0)
-            
+    
             self.touch_disable = false
         })
     }
     
     //move to game over view
     func gameOver(){
-        let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
-        gameoverScene.scaleMode = scaleMode
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-        self.removeFromParent()
-        view?.presentScene(gameoverScene,transition: transitionType)
-    }
-    
-    
-    //called after one player shots
-    func changeTurn(){
-        
-        self.touch_disable = true
 
-        
-        let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            for child in (self.children) {
-                if child is Arrow{
-                    var arrow = child as! Arrow
-                    arrow.removeFromParent()
-                }
-            }
-            
-            if(GameController.getInstance().currentPlayer()!.isDead()){
-                self.gameOver()
-                return
-            }
-            
-            self.turns++
-            if(self.turns % 2 == 1){
-                //person on left
-                self.anchorPoint = CGPointMake(0.25, 0)
-                self.showTurns(1)
-            }else{
-                self.anchorPoint = CGPointMake(-0.25, 0)
-                self.showTurns(2)
-            }
-            self.touch_disable = false
-        })
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
+            gameoverScene.scaleMode = self.scaleMode
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+        }
     }
-
     
     //display the turn information on the screen
     func showTurns(position : Int){
         var text : SKLabelNode = SKLabelNode()
-        text.text = "Turn \(self.turns)"
+        text.text = "Turn \(GameController.getInstance().getTurn())"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
@@ -579,7 +497,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         text.runAction(fadeout, completion: {
             text.removeFromParent()})
-        if(self.turns % 5 == 0){
+        if(GameController.getInstance().getTurn() % 5 == 0){
             addBuffs()
         }
     }
@@ -603,7 +521,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
 
     }
-    
-    
-    
+    func turnChanged(turn : Int)
+    {
+        println("notified")
+        self.touch_disable = true
+        
+        delay(1.0){
+            if(turn % 2 == 1){
+                self.anchorPoint = CGPointMake(0.25, 0)
+                self.showTurns(1)
+            }else{
+                self.anchorPoint = CGPointMake(-0.25, 0)
+                self.showTurns(2)
+            }
+            self.touch_disable = false
+        }
+        self.turns = turn
+    }
+    func shot(attack :Attacker)->Bool
+    {
+        if let arrow = attack as? Arrow {
+            arrow.stop()
+            //GameController.getInstance().afterArrowDead()
+        }
+        return true
+    }
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
 }

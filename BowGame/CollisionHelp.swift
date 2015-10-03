@@ -24,18 +24,26 @@ class CollisonHelper
         return mInstance!
     }
     private init(){}
-    private func getArrow(contact :SKPhysicsContact)->Arrow?
+    private func getAttacker(contact :SKPhysicsContact)->Attacker?
     {
-        var arrow : Arrow?
+        var attacker : Attacker?
         if contact.bodyA.categoryBitMask == CollisonHelper.ArrowMask{
-            arrow = contact.bodyA.node as? Arrow
+            attacker = contact.bodyA.node as? Attacker
         }
         if contact.bodyB.categoryBitMask == CollisonHelper.ArrowMask {
-            arrow = contact.bodyB.node as? Arrow
+            attacker = contact.bodyB.node as? Attacker
         }
-        return arrow;
+        if attacker == nil{
+            if (contact.bodyA.categoryBitMask | CollisonHelper.ArrowMask) != 0{
+                attacker = contact.bodyA.node as? Attacker
+            }
+            if (contact.bodyB.categoryBitMask | CollisonHelper.ArrowMask) != 0 {
+                attacker = contact.bodyB.node as? Attacker
+            }
+        }
+        return attacker;
     }
-    private func getShotable(contact: SKPhysicsContact)-> (shotableA:Shotable?, shotableB:Shotable?)
+    /*private func getShotable(contact: SKPhysicsContact)-> (shotableA:Shotable?, shotableB:Shotable?)
     {
         var shotableA: Shotable?
         var shotableB: Shotable?
@@ -46,27 +54,41 @@ class CollisonHelper
             shotableB = contact.bodyB.node as? Shotable
         }
        return (shotableA,shotableB)
+    }*/
+    private func getShotable(contact: SKPhysicsContact)-> Shotable?
+    {
+        var shotable: Shotable?
+        if contact.bodyA.categoryBitMask == CollisonHelper.ShotableMask {
+            shotable = contact.bodyA.node as? Shotable
+        }
+        if contact.bodyB.categoryBitMask == CollisonHelper.ShotableMask {
+            shotable = contact.bodyB.node as? Shotable
+        }
+        return shotable
     }
+    
     func didBeginContact(contact: SKPhysicsContact)
     {
         
-        var arrow: Arrow? = getArrow(contact)
+        var attacker = getAttacker(contact)
         var shotable = getShotable(contact)
-        
-        
-        if(arrow != nil){
-            if(shotable.shotableA != nil) {
-                shotable.shotableA!.shot(arrow!)
+        if(attacker != nil && shotable != nil){
+           /* if(shotable.shotableA != nil) {
+                shotable.shotableA!.shot(attacker!)
             }
             else if(shotable.shotableB != nil) {
-                shotable.shotableB!.shot(arrow!)
+                shotable.shotableB!.shot(attacker!)
+            }*/
+          //  println(shotable)
+            if shotable!.shot(attacker!) {
+                attacker!.afterAttack()
             }
+            
         }
-        
-        if(shotable.shotableA != nil && shotable.shotableB != nil) {
-            shotable.shotableA?.shot(shotable.shotableB!)
+        /*if(shotable.shotableA != nil && shotable.shotableB != nil) {
+            shotable.shotableA?.shot(z!)
             shotable.shotableB?.shot(shotable.shotableA!)
-        }
+        }*/
     }
 
 }

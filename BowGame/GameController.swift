@@ -9,11 +9,49 @@
 import UIKit
 import SpriteKit
 
+protocol GameControllerObserver
+{
+    func turnChanged(turn:Int)
+    func gameOver()
+}
 class GameController
 {
+    private var mTurn  = 1
+    private var mObservers = [GameControllerObserver]()
     private var mCurPlayer: Player?
     private var mPlayers = [Player]()
     private static var mInstance : GameController!
+    private func notify()
+    {
+        var isGameOver = false
+        for player in mPlayers{
+            if(player.isDead()){
+                isGameOver = true
+                break
+            }
+        }
+        for ob in mObservers{
+            if(isGameOver){
+                ob.gameOver()
+            }else{
+                ob.turnChanged(mTurn)
+            }
+        }
+    }
+    func getTurn()->Int
+    {
+        return mTurn
+    }
+    func afterArrowDead()
+    {
+        ++mTurn;
+        changePlayer()
+        self.notify()
+    }
+    func addGameControllerObserver(ob:GameControllerObserver)
+    {
+        mObservers.append(ob)
+    }
     static func getInstance() ->GameController
     {
         if mInstance == nil{
@@ -24,7 +62,9 @@ class GameController
     private init(){}
     func reset()
     {
+        mTurn = 1
         mPlayers = [Player]()
+        mObservers = [GameControllerObserver]()
         mCurPlayer = nil
     }
     func currentPlayer()->Player?
@@ -43,7 +83,7 @@ class GameController
         })
     }
     
-    func changePlayer()
+    private func changePlayer()
     {
         for player in mPlayers{
             if mCurPlayer != player{

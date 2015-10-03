@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 class PlayerFactory{
+    
     static func getPlayer(var name : String, sceneSize :CGSize) -> Player
     {
         var sheet = ShootAnimation.getInstance()
@@ -73,6 +74,7 @@ class Player : NSObject
         mPlayerNode.runAction(shoot)
         var bow = Bow()
         var arrow = Arrow(player: self)
+        
         delay(0.64) {
             self.mPlayerNode.scene?.addChild(arrow);
         //        scene.addChild(arrow)
@@ -80,25 +82,28 @@ class Player : NSObject
         }
         
     }
-    func shot(arrow : Arrow)
+    func shot(arrow : Arrow)->Bool
     {
+        println("shoot player")
         if !arrow.isFrom(self){
-            arrow.stop()
             var xScale : CGFloat!
             var position : CGPoint!
             self.mHealth.getHurt(Float(arrow.getDamage()))
             bleed()
             SoundEffect.getInstance().playScream()
+            arrow.stop()
+            return true
         }
+        return false
     }
     
-    func shot(shotable: Shotable) {
+    /*func shot(shotable: Shotable) {
         if let obstacle = shotable as? Obstacle {
             self.mHealth.getHurt(Float(obstacle.getDamage()))
             bleed()
             SoundEffect.getInstance().playScream()
         }
-    }
+    }*/
     
     
     func healed(val : Float){
@@ -216,15 +221,13 @@ private class PlayerNode: SKSpriteNode, Shotable
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    func shot(arrow :Arrow)
+    func shot(attacker :Attacker)->Bool
     {
-        mPlay.shot(arrow)
+        if let arrow = attacker as? Arrow{
+            return mPlay.shot(arrow)
+        }
+        return true
     }
-    
-    func shot(shotable: Shotable) {
-        mPlay.shot(shotable)
-    }
-    
     
  /*   required init?(coder aDecoder: NSCoder) {
         self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
