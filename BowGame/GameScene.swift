@@ -75,8 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 //        replace ground by terrain
 //        self.ground = Ground(size: groundSize, position: groundPosition)
 //        self.addChild(self.ground)
-        let collisionframe = CGRectInset(frame, 0, 0)
-        physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+        let collisionframe = CGRectInset(frame, -0.2*frame.width, -0.5 * frame.height)
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
@@ -158,7 +158,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             if(self.touch_disable == true){
                 break
             }
-            self.touch_disable = true
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
             
@@ -173,9 +172,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             GameController.getInstance().currentPlayer()?.shoot(impulse, scene: self)
            
             //GameController.getInstance().changePlayerWithDelay(0)
+            self.touch_disable = true
             
             ShootingAngle.getInstance().hide()
-            //changeTurn()
+            
+
         }
     }
     
@@ -262,6 +263,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     //move to game over view
     func gameOver(){
+
         let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
         gameoverScene.scaleMode = scaleMode
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
@@ -316,7 +318,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     func turnChanged(turn : Int)
     {
         println("notified")
-        self.touch_disable = true
+//        self.touch_disable = true
         
         let delay = 1 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
