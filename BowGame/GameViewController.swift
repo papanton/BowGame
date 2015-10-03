@@ -38,6 +38,9 @@ class GameViewController: UIViewController {
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
         //skView.showsPhysics = true
+        EasyGameCenter.sharedInstance(self)
+        EasyGameCenter.showGameCenterAuthentication()
+
 
     }
 

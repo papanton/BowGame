@@ -34,6 +34,7 @@ class StartGameScene: SKScene {
         
         let settingsButton = SKSpriteNode(imageNamed: SettingsButton)
         settingsButton.position = CGPointMake(size.width/2,size.height*0.40 )
+        settingsButton.name = "settings"
         
         let quitButton = SKSpriteNode(imageNamed: QuitButtonImage )
         quitButton.position = CGPointMake(size.width/2,size.height*0.20 )
@@ -49,6 +50,7 @@ class StartGameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /*let startGameButton = SKSpriteNode(color: UIColor.orangeColor(),size: CGSize(width: 500,height: 500))
         NSLog("Adding button")*/
+        
 
         
     }
@@ -73,7 +75,12 @@ class StartGameScene: SKScene {
                 view?.presentScene(self.current_game,transition: transitionType)
             }
             
-        }        
+        }
+        
+        else if(touchedNode.name == "settings") {
+            
+            //let gameScene = MultiPlayerActions
+        }
 
         if(touchedNode.name == "quit"){
             exit(0)

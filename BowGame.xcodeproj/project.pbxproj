@@ -12,6 +12,9 @@
 		1369CA9C1B9DFFE400895E88 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1369CA9B1B9DFFE400895E88 /* Images.xcassets */; };
 		1369CA9F1B9DFFE400895E88 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1369CA9D1B9DFFE400895E88 /* LaunchScreen.xib */; };
 		1369CAAB1B9DFFE400895E88 /* BowGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369CAAA1B9DFFE400895E88 /* BowGameTests.swift */; };
+		13A75E6D1BBE41400052B810 /* EasyGameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75E6C1BBE41400052B810 /* EasyGameCenter.swift */; };
+		13A75E6F1BBE420E0052B810 /* MultiPlayerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75E6E1BBE420E0052B810 /* MultiPlayerActions.swift */; };
+		13A75E711BBE42550052B810 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75E701BBE42550052B810 /* Packet.swift */; };
 		2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E021BA0C32800F050A4 /* AppDelegate.swift */; };
 		2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E031BA0C32800F050A4 /* Arrow.swift */; };
 		2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E041BA0C32800F050A4 /* Bow.swift */; };
@@ -57,6 +60,9 @@
 		1369CAA41B9DFFE400895E88 /* BowGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BowGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1369CAA91B9DFFE400895E88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1369CAAA1B9DFFE400895E88 /* BowGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowGameTests.swift; sourceTree = "<group>"; };
+		13A75E6C1BBE41400052B810 /* EasyGameCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyGameCenter.swift; sourceTree = "<group>"; };
+		13A75E6E1BBE420E0052B810 /* MultiPlayerActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPlayerActions.swift; sourceTree = "<group>"; };
+		13A75E701BBE42550052B810 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		2A198E021BA0C32800F050A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A198E031BA0C32800F050A4 /* Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
 		2A198E041BA0C32800F050A4 /* Bow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bow.swift; sourceTree = "<group>"; };
@@ -144,6 +150,9 @@
 				1369CA8E1B9DFFE400895E88 /* Supporting Files */,
 				134A559F1BA503FA00C09E99 /* Constants.swift */,
 				F81D89961BB31C1300B9718C /* Terrain.swift */,
+				13A75E6C1BBE41400052B810 /* EasyGameCenter.swift */,
+				13A75E6E1BBE420E0052B810 /* MultiPlayerActions.swift */,
+				13A75E701BBE42550052B810 /* Packet.swift */,
 			);
 			path = BowGame;
 			sourceTree = "<group>";
@@ -238,6 +247,7 @@
 		1369CA831B9DFFE400895E88 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Antonis papantoniou";
 				TargetAttributes = {
@@ -308,6 +318,7 @@
 				53E925AE1BB31E6E00BB54E5 /* Attacker.swift in Sources */,
 				2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
+				13A75E6F1BBE420E0052B810 /* MultiPlayerActions.swift in Sources */,
 				89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,
 				894287571BACC1A400E519B8 /* Buff.swift in Sources */,
@@ -318,6 +329,8 @@
 				134A55A01BA503FA00C09E99 /* Constants.swift in Sources */,
 				5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */,
 				2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */,
+				13A75E711BBE42550052B810 /* Packet.swift in Sources */,
+				13A75E6D1BBE41400052B810 /* EasyGameCenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
