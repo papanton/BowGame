@@ -40,6 +40,7 @@ class GameViewController: UIViewController {
         //skView.showsPhysics = true
         EasyGameCenter.sharedInstance(self)
         EasyGameCenter.showGameCenterAuthentication()
+        EasyGameCenter.debugMode = true
 
 
     }

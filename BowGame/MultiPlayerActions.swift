@@ -1,105 +1,50 @@
-//
-//  ViewController.swift
-//  Easy-Game-Center-Swift
-//
-//  Created by DaRk-_-D0G on 19/03/2558 E.B..
-//  Copyright (c) 2558 ère b. DaRk-_-D0G. All rights reserved.
-//
-
 import UIKit
-import GameKit
+import SpriteKit
+import Darwin
 
-class MultiPlayerActions: UIViewController {
+class MultiPlayerActions: SKScene, EasyGameCenterDelegate {
     
-    @IBOutlet weak var TextLabel: UILabel!
-    /*####################################################################################################*/
-    /*                                          viewDidLoad                                               */
-    /*####################################################################################################*/
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var current_game : SKScene?
+    
+    override init(size: CGSize) {
+        super.init(size: size)
         
-        
+        addButtons()
     }
     
-    /*####################################################################################################*/
-    /*    Set New view controller delegate, is when you change you change UIViewController                 */
-    /*####################################################################################################*/
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        /* Set New view controller delegate */
-        EasyGameCenter.delegate = self
-    }
-    override func didReceiveMemoryWarning() { super.didReceiveMemoryWarning() }
-    /*####################################################################################################*/
-    /*                                          Button                                                    */
-    /*####################################################################################################*/
-    @IBAction func ActionFindPlayer(sender: AnyObject) {
-        EasyGameCenter.findMatchWithMinPlayers(2, maxPlayers: 2)
-    }
-    
-    @IBAction func ActionSendData(sender: AnyObject) {
-        
-        var myStruct = Packet(name: "My Data to Send !", index: 1234567890, numberOfPackets: 1)
-        EasyGameCenter.sendDataToAllPlayers(myStruct.archive(), modeSend: .Reliable)
-        
-    }
-    @IBAction func ActionGetPlayerInMatch(sender: AnyObject) {
-        if let setOfPlayer = EasyGameCenter.getPlayerInMatch() {
-            for player in setOfPlayer{
-                println(player.alias)
-            }
-        }
-    }
-    @IBAction func ActionGetMatch(sender: AnyObject) {
-        if let match = EasyGameCenter.getMatch() {
-            print(match)
-        }
-    }
-    @IBAction func ActionDisconnected(sender: AnyObject) {
-        EasyGameCenter.disconnectMatch()
-    }
-    /*####################################################################################################*/
-    /*                         Delegate Mutliplayer Easy Game Center                                      */
-    /*####################################################################################################*/
-    /**
-    Match Start, Delegate Func of Easy Game Center
-    */
-    func easyGameCenterMatchStarted() {
-        println("\n[MultiPlayerActions] MatchStarted")
-        if let players = EasyGameCenter.getPlayerInMatch() {
-            for player in players{
-                println(player.alias)
-            }
-        }
-        self.TextLabel.text = "Match Started !"
-    }
-    /**
-    Match Recept Data (When you send Data this function is call in the same time), Delegate Func of Easy Game Center
-    */
-    func easyGameCenterMatchRecept(match: GKMatch, didReceiveData data: NSData, fromPlayer playerID: String) {
-        
-        // See Packet
-        let autre =  Packet.unarchive(data)
-        println("\n[MultiPlayerActions] Recept From player = \(playerID)")
-        println("\n[MultiPlayerActions] Recept Packet.name = \(autre.name)")
-        println("\n[MultiPlayerActions] Recept Packet.index = \(autre.index)")
-        
-        self.TextLabel.text = "Recept Date From \(playerID)"
-    }
-    /**
-    Match End / Error (No NetWork example), Delegate Func of Easy Game Center
-    */
-    func easyGameCenterMatchEnded() {
-        println("\n[MultiPlayerActions] MatchEnded")
-        self.TextLabel.text = "Match Ended !"
-    }
-    /**
-    Match Cancel, Delegate Func of Easy Game Center
-    */
-    func easyGameCenterMatchCancel() {
-        println("\n[MultiPlayerActions] Match cancel")
-    }
-    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
 }
 
+
+    
+    func addButtons(){
+        let findPlayerButton = SKSpriteNode(imageNamed: StartButtonImage)
+        findPlayerButton.position = CGPointMake(size.width/2,size.height*0.80 )
+        findPlayerButton.name = "findPlayer"
+        
+        let disconnectButton = SKSpriteNode(imageNamed: ResumeButtonImage )
+        disconnectButton.position = CGPointMake(size.width/2,size.height*0.60 )
+        disconnectButton.name = "disconnectMatch"
+        
+        addChild(findPlayerButton)
+        addChild(disconnectButton)
+   
+    }
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let touch = touches.first as! UITouch
+        let touchLocation = touch.locationInNode(self)
+        let touchedNode = self.nodeAtPoint(touchLocation)
+        
+        if(touchedNode.name == "findPlayer"){
+            EasyGameCenter.findMatchWithMinPlayers(2, maxPlayers: 2)
+
+        }else if(touchedNode.name == "disconnectMatch"){
+            
+            EasyGameCenter.disconnectMatch()
+
+            }
+            
+        }
+            
+}

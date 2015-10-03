@@ -79,7 +79,13 @@ class StartGameScene: SKScene {
         
         else if(touchedNode.name == "settings") {
             
-            //let gameScene = MultiPlayerActions
+            print("HERE")
+            let scene = MultiPlayerActions(size: view!.bounds.size)
+            scene.scaleMode = SKSceneScaleMode.AspectFit
+            
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            view?.presentScene(scene,transition: transitionType)
+
         }
 
         if(touchedNode.name == "quit"){
