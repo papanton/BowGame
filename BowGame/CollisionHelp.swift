@@ -33,6 +33,14 @@ class CollisonHelper
         if contact.bodyB.categoryBitMask == CollisonHelper.ArrowMask {
             attacker = contact.bodyB.node as? Attacker
         }
+        if attacker == nil{
+            if (contact.bodyA.categoryBitMask | CollisonHelper.ArrowMask) != 0{
+                attacker = contact.bodyA.node as? Attacker
+            }
+            if (contact.bodyB.categoryBitMask | CollisonHelper.ArrowMask) != 0 {
+                attacker = contact.bodyB.node as? Attacker
+            }
+        }
         return attacker;
     }
     /*private func getShotable(contact: SKPhysicsContact)-> (shotableA:Shotable?, shotableB:Shotable?)
@@ -62,20 +70,21 @@ class CollisonHelper
     func didBeginContact(contact: SKPhysicsContact)
     {
         
-        var attacker: Attacker? = getAttacker(contact)
+        var attacker = getAttacker(contact)
         var shotable = getShotable(contact)
-        if(attacker != nil){
+        if(attacker != nil && shotable != nil){
            /* if(shotable.shotableA != nil) {
                 shotable.shotableA!.shot(attacker!)
             }
             else if(shotable.shotableB != nil) {
                 shotable.shotableB!.shot(attacker!)
             }*/
-            println("collison")
-            shotable!.shot(attacker!)
-            attacker!.afterAttack()
+          //  println(shotable)
+            if shotable!.shot(attacker!) {
+                attacker!.afterAttack()
+            }
+            
         }
-        
         /*if(shotable.shotableA != nil && shotable.shotableB != nil) {
             shotable.shotableA?.shot(z!)
             shotable.shotableB?.shot(shotable.shotableA!)

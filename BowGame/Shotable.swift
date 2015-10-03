@@ -10,5 +10,5 @@ import UIKit
 
 protocol Shotable
 {
-    func shot(attack :Attacker)
+    func shot(attack :Attacker)->Bool
 }

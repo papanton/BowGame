@@ -82,8 +82,9 @@ class Player : NSObject
         }
         
     }
-    func shot(arrow : Arrow)
+    func shot(arrow : Arrow)->Bool
     {
+        println("shoot player")
         if !arrow.isFrom(self){
             var xScale : CGFloat!
             var position : CGPoint!
@@ -91,16 +92,18 @@ class Player : NSObject
             bleed()
             SoundEffect.getInstance().playScream()
             arrow.stop()
+            return true
         }
+        return false
     }
     
-    func shot(shotable: Shotable) {
+    /*func shot(shotable: Shotable) {
         if let obstacle = shotable as? Obstacle {
             self.mHealth.getHurt(Float(obstacle.getDamage()))
             bleed()
             SoundEffect.getInstance().playScream()
         }
-    }
+    }*/
     
     
     func healed(val : Float){
@@ -218,11 +221,12 @@ private class PlayerNode: SKSpriteNode, Shotable
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    func shot(attacker :Attacker)
+    func shot(attacker :Attacker)->Bool
     {
         if let arrow = attacker as? Arrow{
-            mPlay.shot(arrow)
+            return mPlay.shot(arrow)
         }
+        return true
     }
     
  /*   required init?(coder aDecoder: NSCoder) {

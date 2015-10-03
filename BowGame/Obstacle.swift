@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class Obstacle: SKSpriteNode, Shotable {
+class Obstacle: SKSpriteNode, Shotable, Attacker {
   
     private var type: String!
     private var collisionTimes: Int!
@@ -61,16 +61,14 @@ class Obstacle: SKSpriteNode, Shotable {
     {
         return damage
     }
-    
-    func shot(arrow :Arrow)
+   /* func shot(arrow :Arrow)
     {
         arrow.slowDown()
         self.physicsBody?.dynamic = true
         println("11")
         
-    }
-    
-    func shot(attacker : Attacker)
+    }*/
+    func afterAttack()
     {
         self.collisionTimes = self.collisionTimes + 1
         if(self.collisionTimes == 2) {
@@ -80,9 +78,18 @@ class Obstacle: SKSpriteNode, Shotable {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW,Int64(1.5 * Double(NSEC_PER_SEC))),dispatch_get_main_queue()){
                 self.runAction(fadeout, completion: {
                     self.removeFromParent()})
-                }
+            }
         }
         println("22")
+    }
+    func shot(attacker : Attacker)->Bool
+    {
+        if let arrow = attacker as? Arrow{
+            arrow.slowDown()
+            self.physicsBody?.dynamic = true
+        }
+        println("11")
+        return true
     }
     
 }
