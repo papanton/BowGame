@@ -55,36 +55,35 @@ class Buff: SKSpriteNode, Shotable {
     
     //called when shot
     //cannot add new buff to correct position
-    func shot(arrow : Arrow){
-        var player = arrow.getHost()
-        
-        if(type == "buff_heal"){
-            player.healed(30)
-        }else
-        if(type == "buff_power"){
-            player.powerup(10)
-        }
-        else
-        if(type == "buff_damage"){
-            for player_index in GameController.getInstance().getPlayers(){
-                if player != player_index{
-                    player_index.hurted(50)
-                    break
+    func shot(attack : Attacker)->Bool
+    {
+        if let arrow = attack as? Arrow {
+            var player = arrow.getHost()
+            if(type == "buff_heal"){
+                player.healed(30)
+            }else
+                if(type == "buff_power"){
+                    player.powerup(10)
                 }
+                else
+                    if(type == "buff_damage"){
+                        for player_index in GameController.getInstance().getPlayers(){
+                            if player != player_index{
+                                player_index.hurted(50)
+                                break
+                            }
+                        }
             }
+            
+            print("shotbuff")
+            
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
+            arrow.stop()
         }
-        
-        print("shotbuff")
-        
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-        arrow.stop()
-        runAction(fadeout, completion: {
-            self.removeFromParent()
-        })
-    }
-    
-    func shot(shotable: Shotable) {
-        
+        return true
     }
     
     //set the position of the buff

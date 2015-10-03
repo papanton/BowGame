@@ -8,11 +8,12 @@
 
 import UIKit
 import SpriteKit
-class Arrow: SKSpriteNode {
+class Arrow: SKSpriteNode, Attacker{
     
     private var damage :Int!
     private var host : Player!
-    private var isFlying = true
+    private var isFlying:UInt8 = 1
+    
     func getDamage()-> Int
     {
         return damage;
@@ -21,10 +22,18 @@ class Arrow: SKSpriteNode {
     {
         return host
     }
+    func afterAttack()
+    {
+        if isFlying == 0{
+            GameController.getInstance().afterArrowDead()
+        }
+    }
     func stop()
     {
-        isFlying = false
-        physicsBody = nil
+        //OSAtomicTestAndClear(0, &self.isFlying)
+        isFlying = 0
+        println(self.isFlying)
+        self.physicsBody = nil
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
             self.removeFromParent()
@@ -42,12 +51,18 @@ class Arrow: SKSpriteNode {
         return player == self.host;
     }
     init(player : Player) {
+        host = player
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
-        damage = 30 + player.getPower()
-        host = player
+        //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
+        damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
+        
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     private func addPhysicsBody()
     {
@@ -58,9 +73,7 @@ class Arrow: SKSpriteNode {
         self.physicsBody?.contactTestBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.collisionBitMask = 0x0
     }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+
     func go(impulse : CGVector, position : CGPoint){
         if(impulse.dx < 0) {
             self.xScale = -1
@@ -75,12 +88,21 @@ class Arrow: SKSpriteNode {
         //arrow.runAction(action2)
        
     }
-    func update()
+    private func isValid()->Bool
     {
-        if isFlying {
+       return  parent != nil && position.x >= 0 && position.x <= CGFloat(1.5) * parent!.frame.width && position.y >= 0 && CGFloat(1.5) * position.y <= parent!.frame.height
+    }
+    func update()->Bool
+    {
+        if !isValid() {
+           // removeFromParent()
+           // GameController.getInstance().afterArrowDead()
+        }
+        if isFlying != 0 && physicsBody != nil{
             let val = (physicsBody!.velocity.dy) / (physicsBody!.velocity.dx)
             self.zRotation = atan(val)
         }
+        return isFlying != 0
     }
     /*   required init?(coder aDecoder: NSCoder) {
     self.bow = aDecoder.decodeObjectForKey("BOW") as!  Bow
@@ -90,4 +112,27 @@ class Arrow: SKSpriteNode {
     aCoder.encodeObject(self.bow, forKey: "BOW")
     super.encodeWithCoder(aCoder)
     }*/
+}
+class FlappyArrow : Arrow
+{
+    override func go(impulse: CGVector, position: CGPoint)
+    {
+        var dx = CGFloat(1)
+        if(impulse.dx < 0) {
+            dx = CGFloat(-1.0)
+        }
+        super.go(CGVectorMake(dx, 5), position: position)
+    }
+    func flappy()
+    {
+        if isFlying != 0 && physicsBody != nil{
+            physicsBody!.velocity.dy = 400
+            if(physicsBody!.velocity.dx > 0){
+                physicsBody!.velocity.dx = 100
+            }
+            if(physicsBody!.velocity.dx < 0){
+                physicsBody!.velocity.dx = -100
+            }
+        }
+    }
 }

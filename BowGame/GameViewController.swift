@@ -8,7 +8,7 @@
 
 import UIKit
 import SpriteKit
-
+import CoreData
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
@@ -37,8 +37,8 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
+        //let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         //skView.showsPhysics = true
-
     }
 
     override func shouldAutorotate() -> Bool {

@@ -7,14 +7,14 @@
 //
 
 import SpriteKit
-class GameScene: SKScene, SKPhysicsContactDelegate{
+class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shotable{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var camera : SKNode!
     var mainmenu: StartGameScene!
     private var ground: Ground!
     var touch_disable:Bool = true
-    var turns : Int = 0
+    //var turns : Int = 0
     
     
     init(size: CGSize, mainmenu: StartGameScene) {
@@ -64,6 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         var player2 = PlayerFactory.getPlayer("player2", sceneSize: size)
         GameController.getInstance().addPlayer(player2)
         player2.add2Scene(self)
+        GameController.getInstance().addGameControllerObserver(self)
     }
     
     //function adding ground object (for contact detection)
@@ -74,7 +75,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 //        replace ground by terrain
 //        self.ground = Ground(size: groundSize, position: groundPosition)
 //        self.addChild(self.ground)
-        
+        let collisionframe = CGRectInset(frame, 0, 0)
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
         Terrain(scene: self);
     }
     
@@ -115,16 +120,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         /*
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
         */
+        self.touch_disable == true
         for touch in (touches as! Set<UITouch>) {
-
-            if(self.touch_disable == true){
-                break
-            }
-            
             let touch = touches.first as! UITouch
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
-            
+            if(self.touch_disable == true){
+                for child in (self.children) {
+                    if child is FlappyArrow{
+                        var arrow = child as! FlappyArrow
+                        arrow.flappy()
+                    }
+                }
+                break
+            }
             /*
             Checking if first touch was on settings button. Returning on main menu if so.
             */
@@ -140,18 +149,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 startpositionOfTouch = touch.locationInNode(self)
             }
         }
-        
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         
-        if(self.touch_disable == true){
-            return
-        }
-
         for touch: AnyObject in touches
         {
-            
+            if(self.touch_disable == true){
+                break
+            }
+            self.touch_disable = true
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
             
@@ -162,20 +169,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 break
             }
             var impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9.3)
+            
             GameController.getInstance().currentPlayer()?.shoot(impulse, scene: self)
-            GameController.getInstance().changePlayerWithDelay(0)
+           
+            //GameController.getInstance().changePlayerWithDelay(0)
             
             ShootingAngle.getInstance().hide()
-            
-            changeTurn()
+            //changeTurn()
         }
     }
     
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent)
     {
+
         for touch: AnyObject in touches{
-            
             if(self.touch_disable == true){
                 break
             }
@@ -201,8 +209,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         for child in (self.children) {
             if child is Arrow{
                 var arrow = child as! Arrow
-                arrow.update()
-                setCameraLocation(arrow.position)
+                if arrow.update(){
+                    setCameraLocation(arrow.position)
+                }
             }
         }
     }
@@ -240,13 +249,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.touch_disable = true
         let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        self.turns++
+        //self.turns++
         self.showStart()
         
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             self.scaleMode = SKSceneScaleMode.AspectFill
             self.anchorPoint = CGPointMake(0.25, 0)
-            
+    
             self.touch_disable = false
         })
     }
@@ -260,45 +269,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         view?.presentScene(gameoverScene,transition: transitionType)
     }
     
-    
-    //called after one player shots
-    func changeTurn(){
-        
-        self.touch_disable = true
-
-        
-        let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            for child in (self.children) {
-                if child is Arrow{
-                    var arrow = child as! Arrow
-                    arrow.removeFromParent()
-                }
-            }
-            
-            if(GameController.getInstance().currentPlayer()!.isDead()){
-                self.gameOver()
-                return
-            }
-            
-            self.turns++
-            if(self.turns % 2 == 1){
-                self.anchorPoint = CGPointMake(0.25, 0)
-                self.showTurns(1)
-            }else{
-                self.anchorPoint = CGPointMake(-0.25, 0)
-                self.showTurns(2)
-            }
-            self.touch_disable = false
-        })
-    }
-
-    
     //display the turn information on the screen
     func showTurns(position : Int){
         var text : SKLabelNode = SKLabelNode()
-        text.text = "Turn \(self.turns)"
+        text.text = "Turn \(GameController.getInstance().getTurn())"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
@@ -315,7 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         text.runAction(fadeout, completion: {
             text.removeFromParent()})
-        if(self.turns % 5 == 0){
+        if(GameController.getInstance().getTurn() % 5 == 0){
             addBuffs()
         }
     }
@@ -339,7 +313,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
 
     }
-    
-    
-    
+    func turnChanged(turn : Int)
+    {
+        println("notified")
+        self.touch_disable = true
+        
+        let delay = 1 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+        if(turn % 2 == 1){
+                self.anchorPoint = CGPointMake(0.25, 0)
+                self.showTurns(1)
+            }else{
+                self.anchorPoint = CGPointMake(-0.25, 0)
+                self.showTurns(2)
+            }
+            self.touch_disable = false
+        })
+
+    }
+    func shot(attack :Attacker)->Bool
+    {
+        if let arrow = attack as? Arrow {
+            arrow.stop()
+            //GameController.getInstance().afterArrowDead()
+        }
+        return true
+    }
 }
