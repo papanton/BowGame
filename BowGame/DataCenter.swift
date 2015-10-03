@@ -48,12 +48,14 @@ class DataCenter: NSObject
         let fetchedResults =
         managedContext.executeFetchRequest(fetchRequest,
         error: &error) as? [ArrowItem]
-        if let res = fetchedResults {
-            mArrowItem = res[0]
+        println("initArrowItem")
+        let res = fetchedResults
+        if  res != nil && res!.count > 0 {
+            mArrowItem = res![0]
             println("fetched \(mArrowItem.name) \(mArrowItem.damage)")
         } else {
             mArrowItem = ArrowItem.getDefault()
-            println("Could not fetch \(error), \(error!.userInfo)")
+            println("Get Default Arrow")
         }
     }
     func getArrowItem()->ArrowItem
