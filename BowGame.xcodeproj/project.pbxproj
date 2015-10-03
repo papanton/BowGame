@@ -34,6 +34,7 @@
 		2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1D71BABDB6F009491AC /* GameController.swift */; };
 		2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */; };
 		2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1DE1BABF069009491AC /* Shotable.swift */; };
+		2AF0CADF1BC0840800FBC36A /* ArrowColletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CADE1BC0840800FBC36A /* ArrowColletion.swift */; };
 		5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5379AC6F1BA9E7C70061BC19 /* Ground.swift */; };
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
@@ -88,6 +89,7 @@
 		2AA9B1D71BABDB6F009491AC /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootingAngle.swift; sourceTree = "<group>"; };
 		2AA9B1DE1BABF069009491AC /* Shotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shotable.swift; sourceTree = "<group>"; };
+		2AF0CADE1BC0840800FBC36A /* ArrowColletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowColletion.swift; sourceTree = "<group>"; };
 		5379AC6F1BA9E7C70061BC19 /* Ground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		5379AC711BA9E8320061BC19 /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		5379AC731BA9E83E0061BC19 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				2AA53A921BBE234500CC72A9 /* ArrowItem.swift */,
 				2AA53A891BBDFAD600CC72A9 /* BowGame.xcdatamodeld */,
 				2AA53AC91BBE361B00CC72A9 /* DataCenter.swift */,
+				2AF0CADE1BC0840800FBC36A /* ArrowColletion.swift */,
 			);
 			name = Datas;
 			path = BowGame;
@@ -367,6 +370,7 @@
 				2AA53A831BBDCCFF00CC72A9 /* EquipmentItem.swift in Sources */,
 				53E925AE1BB31E6E00BB54E5 /* Attacker.swift in Sources */,
 				2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */,
+				2AF0CADF1BC0840800FBC36A /* ArrowColletion.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
 				89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,

@@ -12,7 +12,8 @@ import Darwin
 
 class StartGameScene: SKScene {
     
-    var buttonfuncs = ["Start" : {(s:StartGameScene)->Void in s.startGame()},
+    let buttonnames = ["Start", "Resume", "Settings","Quit"]
+    let buttonfuncs = ["Start" : {(s:StartGameScene)->Void in s.startGame()},
         "Resume" : {(s:StartGameScene)->Void in s.resume()},
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Quit" : {(s:StartGameScene)->Void in exit(0)}]
@@ -56,8 +57,9 @@ class StartGameScene: SKScene {
     func addButtons()
     {
         var i = 1;
-        for name in buttonfuncs.keys{
-            var left = (size.width*0.4)
+        var left = (size.width*0.4)
+        for name in buttonnames{
+            println(name)
             var top =  size.height*CGFloat(1.0-0.2*CGFloat(i))
             var position = CGPointMake(left ,  top)
             var button = createButton(name, position: position)
@@ -70,19 +72,16 @@ class StartGameScene: SKScene {
         super.init(coder: aDecoder)
     }
     
-        
-    
     func startGame()
     {
         var screensize = UIScreen.mainScreen().bounds.size;
         var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
         let gameScene = GameScene(size: scenesize, mainmenu: self)
-        
+        gameScene.scaleMode = SKSceneScaleMode.AspectFit
         changeScene(gameScene)
     }
     func changeScene(scene : SKScene)
     {
-        scene.scaleMode = SKSceneScaleMode.AspectFit
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
