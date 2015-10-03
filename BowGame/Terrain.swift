@@ -62,11 +62,13 @@ class Terrain: SKShapeNode, Shotable {
         
     }
     
-    func shot(attacker : Attacker)
+    func shot(attacker : Attacker)->Bool
     {
         if let arrow = attacker as? Arrow{
+            println("shot ground")
             arrow.stop()
         }
+        return true
     }
 
     func drawLine(scene: GameScene) -> (path: CGPath, body_1: SKPhysicsBody, body_2: SKPhysicsBody) {

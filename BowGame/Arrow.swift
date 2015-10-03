@@ -24,18 +24,20 @@ class Arrow: SKSpriteNode, Attacker{
     }
     func afterAttack()
     {
-        
+        if isFlying == 0{
+            GameController.getInstance().afterArrowDead()
+        }
     }
     func stop()
     {
-        OSAtomicTestAndClear(0, &self.isFlying)
-            //isFlying = false
+        //OSAtomicTestAndClear(0, &self.isFlying)
+        isFlying = 0
+        println(self.isFlying)
         self.physicsBody = nil
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
             self.removeFromParent()
         })
-        GameController.getInstance().afterArrowDead()
     }
     
     func slowDown() {
@@ -49,11 +51,11 @@ class Arrow: SKSpriteNode, Attacker{
         return player == self.host;
     }
     init(player : Player) {
+        host = player
         var spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
-        host = player
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
         addPhysicsBody()
         
@@ -86,9 +88,16 @@ class Arrow: SKSpriteNode, Attacker{
         //arrow.runAction(action2)
        
     }
+    private func isValid()->Bool
+    {
+       return  parent != nil && position.x >= 0 && position.x <= CGFloat(1.5) * parent!.frame.width && position.y >= 0 && CGFloat(1.5) * position.y <= parent!.frame.height
+    }
     func update()->Bool
     {
-        
+        if !isValid() {
+           // removeFromParent()
+           // GameController.getInstance().afterArrowDead()
+        }
         if isFlying != 0 && physicsBody != nil{
             let val = (physicsBody!.velocity.dy) / (physicsBody!.velocity.dx)
             self.zRotation = atan(val)

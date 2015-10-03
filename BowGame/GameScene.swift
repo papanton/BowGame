@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
+class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shotable{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var camera : SKNode!
@@ -72,7 +72,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
 //        replace ground by terrain
 //        self.ground = Ground(size: groundSize, position: groundPosition)
 //        self.addChild(self.ground)
-        
+        let collisionframe = CGRectInset(frame, 0, 0)
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
         Terrain(scene: self);
     }
     /**
@@ -315,7 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
 
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            if(turn % 2 == 1){
+        if(turn % 2 == 1){
                 self.anchorPoint = CGPointMake(0.25, 0)
                 self.showTurns(1)
             }else{
@@ -326,5 +330,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         })
 
     }
-    
+    func shot(attack :Attacker)->Bool
+    {
+        if let arrow = attack as? Arrow {
+            arrow.stop()
+            //GameController.getInstance().afterArrowDead()
+        }
+        return true
+    }
 }

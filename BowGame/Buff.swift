@@ -55,12 +55,10 @@ class Buff: SKSpriteNode, Shotable {
     
     //called when shot
     //cannot add new buff to correct position
-    func shot(attack : Attacker)
+    func shot(attack : Attacker)->Bool
     {
         if let arrow = attack as? Arrow {
-            arrow.stop()
             var player = arrow.getHost()
-            
             if(type == "buff_heal"){
                 player.healed(30)
             }else
@@ -80,11 +78,12 @@ class Buff: SKSpriteNode, Shotable {
             print("shotbuff")
             
             let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-            arrow.stop()
             runAction(fadeout, completion: {
                 self.removeFromParent()
             })
+            arrow.stop()
         }
+        return true
     }
     
     //set the position of the buff
