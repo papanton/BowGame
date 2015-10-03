@@ -75,7 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 //        replace ground by terrain
 //        self.ground = Ground(size: groundSize, position: groundPosition)
 //        self.addChild(self.ground)
-        let collisionframe = CGRectInset(frame, -0.2*frame.width, -0.5 * frame.height)
+        let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
+        
         physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
@@ -158,6 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             if(self.touch_disable == true){
                 break
             }
+            //self.touch_disable = true
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
             
@@ -175,8 +177,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             self.touch_disable = true
             
             ShootingAngle.getInstance().hide()
-            
-
+            self.touch_disable = true
+            //changeTurn()
         }
     }
     
@@ -263,12 +265,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     //move to game over view
     func gameOver(){
-
-        let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
-        gameoverScene.scaleMode = scaleMode
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-        self.removeFromParent()
-        view?.presentScene(gameoverScene,transition: transitionType)
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
+            gameoverScene.scaleMode = self.scaleMode
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+        }
     }
     
     //display the turn information on the screen
@@ -320,11 +323,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         println("notified")
 //        self.touch_disable = true
         
-        let delay = 1 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-
-        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-        if(turn % 2 == 1){
+        delay(1.0){
+            if(turn % 2 == 1){
                 self.anchorPoint = CGPointMake(0.25, 0)
                 self.showTurns(1)
             }else{
@@ -332,7 +332,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                 self.showTurns(2)
             }
             self.touch_disable = false
-        })
+        }
 
     }
     func shot(attack :Attacker)->Bool
@@ -342,5 +342,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             //GameController.getInstance().afterArrowDead()
         }
         return true
+    }
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
 }
