@@ -78,11 +78,11 @@ class StartGameScene: SKScene {
         var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
         let gameScene = GameScene(size: scenesize, mainmenu: self)
 
+        gameScene.scaleMode = SKSceneScaleMode.AspectFit
         changeScene(gameScene)
     }
     func changeScene(scene : SKScene)
     {
-        scene.scaleMode = scaleMode
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
