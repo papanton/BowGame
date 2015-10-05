@@ -393,7 +393,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         }
         delay(1.5){
             self.touch_disable = false
-        //    self.isshooting = false
+            self.isshooting = false
         }
         self.turns = turn
     }
