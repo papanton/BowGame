@@ -61,12 +61,10 @@ class Buff: SKSpriteNode, Shotable {
             var player = arrow.getHost()
             if(type == "buff_heal"){
                 player.healed(30)
-            }else
-                if(type == "buff_power"){
+            }else  if(type == "buff_power"){
                     player.powerup(10)
-                }
-                else
-                    if(type == "buff_damage"){
+            }
+            else if(type == "buff_damage"){
                         for player_index in GameController.getInstance().getPlayers(){
                             if player != player_index{
                                 player_index.hurted(50)
