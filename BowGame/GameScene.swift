@@ -21,38 +21,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 
     
     //controller bar
-    var controllBallleft: SKShapeNode!
-    var controllPowerleft: SKShapeNode!
-    var controllBallright: SKShapeNode!
-    var controllPowerright: SKShapeNode!
     var controllBallradius : CGFloat = 30
     var controllPowerradius : CGFloat = 65
-    
-    var bezierPathleft1: UIBezierPath!
-    var bezierPathleft2: UIBezierPath!
-    var bezierLayerleft1 = CAShapeLayer()
-    var bezierLayerleft2 = CAShapeLayer()
-    
-    var bezierPathright1: UIBezierPath!
-    var bezierPathright2: UIBezierPath!
-    var bezierLayerright1 = CAShapeLayer()
-    var bezierLayerright2 = CAShapeLayer()
-    
+    var controllers : Controller!
     
     init(size: CGSize, mainmenu: StartGameScene) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
 
-        controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
-        
-        controllPowerleft = initControllPowerleft(self.controllPowerradius)
-
-        controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
-        controllPowerright = initControllPowerright(self.controllPowerradius)
-        initbezierleft()
-        initbezierright()
-
+        self.controllers = Controller(scene: self)
         
         initworld()
         addPlayers()
@@ -68,84 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     
     
-    func initControllBallleft(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
-    {
-        var controllBall = SKShapeNode(circleOfRadius: ballradius)
-        controllBall.fillColor = SKColor.whiteColor()
-        controllBall.alpha = 0.7
-        controllBall.position = CGPoint(x: 100 + powerradius - ballradius, y: 120)
-        controllBall.name = "controlBallLeft"
-        controllBall.zPosition = 1
-        self.addChild(controllBall)
-        return controllBall
-
-    }
-    
-    func initControllBallright(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
-    {
-        var controllBall = SKShapeNode(circleOfRadius: ballradius)
-        controllBall.fillColor = SKColor.whiteColor()
-        controllBall.alpha = 0.7
-        controllBall.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + ballradius, y: 120)
-        controllBall.name = "controlBallRight"
-        controllBall.zPosition = 1
-        self.addChild(controllBall)
-        return controllBall
-    }
-    
-    func initControllPowerleft(powerradius: CGFloat) -> SKShapeNode
-    {
-        var controllPower = SKShapeNode(circleOfRadius: powerradius)
-        controllPower.fillColor = SKColor.grayColor()
-        controllPower.alpha = 0.3
-        controllPower.position = CGPoint(x: 100, y: 120)
-        self.addChild(controllPower)
-        return controllPower
-    }
-    
-    func initControllPowerright(powerradius: CGFloat) -> SKShapeNode
-    {
-        var controllPower = SKShapeNode(circleOfRadius: powerradius)
-        controllPower.fillColor = SKColor.grayColor()
-        controllPower.alpha = 0.3
-        controllPower.position = CGPoint(x: self.size.width - 90, y: 120)
-        self.addChild(controllPower)
-        return controllPower
-    }
-    
-    func initbezierleft()
-    {
-        bezierPathleft1 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: true)
-        bezierPathleft2 = UIBezierPath(arcCenter: CGPoint(x: controllPowerleft.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerleft.position.y), radius: self.controllPowerradius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI), clockwise: false)
-        bezierLayerleft1.path = bezierPathleft1.CGPath
-        bezierLayerleft1.strokeColor = UIColor.redColor().CGColor
-        bezierLayerleft1.fillColor = UIColor.clearColor().CGColor
-        bezierLayerleft1.lineWidth = 5.0
-        bezierLayerleft1.lineCap = kCALineCapRound
-        bezierLayerleft2.path = bezierPathleft2.CGPath
-        bezierLayerleft2.strokeColor = UIColor.redColor().CGColor
-        bezierLayerleft2.fillColor = UIColor.clearColor().CGColor
-        bezierLayerleft2.lineWidth = 5.0
-        bezierLayerleft2.lineCap = kCALineCapRound
-//        bezierLayerleft1.name == "Layerleft1"
-//        bezierLayerleft1.name == "Layerleft2"
-    }
-    
-    func initbezierright()
-    {
-        bezierPathright1 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: true)
-        bezierPathright2 = UIBezierPath(arcCenter: CGPoint(x: UIScreen.mainScreen().bounds.width - self.size.width + controllPowerright.position.x, y: UIScreen.mainScreen().bounds.height-controllPowerright.position.y), radius: self.controllPowerradius, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI*2), clockwise: false)
-        bezierLayerright1.path = bezierPathright1.CGPath
-        bezierLayerright1.strokeColor = UIColor.redColor().CGColor
-        bezierLayerright1.fillColor = UIColor.clearColor().CGColor
-        bezierLayerright1.lineWidth = 5.0
-        bezierLayerright1.lineCap = kCALineCapRound
-        bezierLayerright2.path = bezierPathright2.CGPath
-        bezierLayerright2.strokeColor = UIColor.redColor().CGColor
-        bezierLayerright2.fillColor = UIColor.clearColor().CGColor
-        bezierLayerright2.lineWidth = 5.0
-        bezierLayerright2.lineCap = kCALineCapRound
-    }
     
     func initworld()
     {
@@ -250,15 +150,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             }
             else if(self.turns % 2 == 1 && touchedNode.name == "controlBallLeft")
             {
-                    self.touch_disable == true
-                    startpositionOfTouch = controllBallleft.position
-                    isshooting = true
+//                startpositionOfTouch = controllBallleft.position
+                startpositionOfTouch = controllers.controllBallleft.position
+                isshooting = true
             }
             else if(self.turns % 2 == 0 && touchedNode.name == "controlBallRight")
             {
-                    self.touch_disable == true
-                    startpositionOfTouch = controllBallright.position
-                    isshooting = true
+//                    startpositionOfTouch = controllBallright.position
+                startpositionOfTouch = controllers.controllBallright.position
+                isshooting = true
                         
             }else{
                 cameraMoveStart(touch)
@@ -277,15 +177,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 
             if(self.turns % 2 == 1)
             {
-                bezierLayerleft1.removeFromSuperlayer()
-                bezierLayerleft2.removeFromSuperlayer()
-                controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
+                controllers.bezierLayerleft1.removeFromSuperlayer()
+                controllers.bezierLayerleft2.removeFromSuperlayer()
+                controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
             }
             if(self.turns % 2 == 0)
             {
-                bezierLayerright1.removeFromSuperlayer()
-                bezierLayerright2.removeFromSuperlayer()
-                controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
+                controllers.bezierLayerright1.removeFromSuperlayer()
+                controllers.bezierLayerright2.removeFromSuperlayer()
+                controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
             }
             
             //self.touch_disable = true
@@ -302,9 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                 }
                 var impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
                 GameController.getInstance().currentPlayer()?.shoot(impulse, scene: self)
-                //GameController.getInstance().changePlayerWithDelay(0)
-            
-                ShootingAngle.getInstance().hide()            
+                ShootingAngle.getInstance().hide()
                 //changeTurn()
                 self.isshooting = false
             }
@@ -334,53 +232,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
           
             if(self.isshooting == true)
             {
-                if(self.turns%2==0)
-                {
-                    //player on the right
-                    var x1 = abs(position.x - controllBallright.position.x)
-                    var y1 = abs(position.y - controllBallright.position.y)
-                    var x2 = abs(position.x - controllPowerright.position.x)
-                    var y2 = abs(position.y - controllPowerright.position.y)
-                    if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
-                    {
-                        endpositionOfTouch = position
-                        bezierLayerright1.removeFromSuperlayer()
-                        bezierLayerright2.removeFromSuperlayer()
-                        bezierLayerright1.strokeEnd = (position.x-controllPowerright.position.x+controllPowerradius) / (controllPowerradius * 2)
-                        bezierLayerright2.strokeEnd = (position.x - controllPowerright.position.x+controllPowerradius) / (controllPowerradius * 2)
-                        self.view!.layer.addSublayer(bezierLayerright1)
-                        self.view!.layer.addSublayer(bezierLayerright2)
-                        controllBallright.removeFromParent()
-                        controllBallright.position = position
-                        self.addChild(controllBallright)
-                    }
-                }
-                if(self.turns%2==1)
-                {
-                    //player on the left
-                    var x1 = abs(position.x - controllBallleft.position.x)
-                    var y1 = abs(position.y - controllBallleft.position.y)
-                    var x2 = abs(position.x - controllPowerleft.position.x)
-                    var y2 = abs(position.y - controllPowerleft.position.y)
-                    if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
-                    {
-                        endpositionOfTouch = position
-                        bezierLayerleft1.removeFromSuperlayer()
-                        bezierLayerleft2.removeFromSuperlayer()
-                        bezierLayerleft1.strokeEnd = (controllPowerleft.position.x + controllPowerradius - position.x) / (controllPowerradius * 2)
-                        bezierLayerleft2.strokeEnd = (controllPowerleft.position.x + controllPowerradius - position.x) / (controllPowerradius * 2)
-                        self.view!.layer.addSublayer(bezierLayerleft1)
-                        self.view!.layer.addSublayer(bezierLayerleft2)
-                        controllBallleft.removeFromParent()
-                        controllBallleft.position = position
-                        self.addChild(controllBallleft)
-                    }
-                }
+                controllers.shooting(position)
             }
-            
-            
-            
-            
             
             //ShootingAngle.getInstance().hide()
             //ShootingAngle.getInstance().update(startpositionOfTouch, to: position)
