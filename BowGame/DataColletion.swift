@@ -11,9 +11,18 @@ import UIKit
 class ArrowColletion: NSObject
 {
     var mCollection : [String : ArrowItem]!
+    var mCollectionMap : [String : ArrowItem]!
     let mArrowName = ["Arrow", "FlappyArrow"]
-    let mArrowDamage = [10, 20]
-    override init()
+    private let mArrowDamage = [10, 20]
+    private var mInstance : ArrowColletion!
+    private func getInstance()->ArrowColletion
+    {
+        if(mInstance == nil){
+            mInstance = ArrowColletion()
+        }
+        return mInstance
+    }
+    private override init()
     {
         super.init()
         for i in 1 ... mArrowName.count{
