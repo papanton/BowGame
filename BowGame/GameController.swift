@@ -21,6 +21,7 @@ class GameController
     private var mCurPlayer: Player?
     private var mPlayers = [Player]()
     private static var mInstance : GameController!
+    private var mCanShooting = true
     private func notify()
     {
         var isGameOver = false
@@ -38,15 +39,16 @@ class GameController
             }
         }
     }
-    func getTurn()->Int
+    /*func getTurn()->Int
     {
         return mTurn
-    }
+    }*/
     func afterArrowDead()
     {
         ++mTurn;
         changePlayer()
         self.notify()
+        mCanShooting = true
     }
     func addGameControllerObserver(ob:GameControllerObserver)
     {
@@ -66,23 +68,27 @@ class GameController
         mPlayers = [Player]()
         mObservers = [GameControllerObserver]()
         mCurPlayer = nil
+        mCanShooting = true
     }
-    func currentPlayer()->Player?
+    func currentPlayerShoot(impulse: CGVector , scene : SKScene)
     {
-        if mCurPlayer == nil && mPlayers.count > 0{
-            mCurPlayer = mPlayers[0]
+        if mCanShooting{
+            if mCurPlayer == nil && mPlayers.count > 0{
+                mCurPlayer = mPlayers[0]
+            }
+            mCurPlayer?.shoot(impulse, scene: scene)
+            mCanShooting = false
         }
-        return mCurPlayer
     }
    
-    func changePlayerWithDelay(seconds :Double){
+    /*func changePlayerWithDelay(seconds :Double){
         let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             self.changePlayer()
         })
     }
-    
+    */
     private func changePlayer()
     {
         for player in mPlayers{
@@ -101,5 +107,17 @@ class GameController
     func addPlayer(player : Player)
     {
         mPlayers.append(player)
+    }
+    /*func enableShooting()
+    {
+        mCanShooting = true
+    }
+    func disableShooting()
+    {
+        mCanShooting = false
+    }*/
+    func canShooting()->Bool
+    {
+        return mCanShooting
     }
 }

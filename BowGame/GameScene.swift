@@ -201,10 +201,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                     break
                 }
                 var impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
-                GameController.getInstance().currentPlayer()?.shoot(impulse, scene: self)
+                GameController.getInstance().currentPlayerShoot(impulse, scene: self)
+                self.touch_disable = true
                 ShootingAngle.getInstance().hide()
                 //changeTurn()
-                self.isshooting = false
             }
         }
     }
@@ -230,7 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             
             var  position = touch.locationInNode(self)
           
-            if(self.isshooting == true)
+            if(self.isshooting == true && !self.touch_disable)
             {
                 controllers.shooting(position)
             }
@@ -336,7 +336,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     //display the turn information on the screen
     func showTurns(position : Int){
         var text : SKLabelNode = SKLabelNode()
-        text.text = "Turn \(GameController.getInstance().getTurn())"
+        text.text = "Turn \(turns)"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
@@ -353,7 +353,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         text.runAction(fadeout, completion: {
             text.removeFromParent()})
-        if(GameController.getInstance().getTurn() % 5 == 0){
+        if(turns % 5 == 0){
             addBuffs()
         }
     }
@@ -390,7 +390,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                 self.anchorPoint = CGPointMake(-0.25, 0)
                 self.showTurns(2)
             }
+        }
+        delay(1.5){
             self.touch_disable = false
+        //    self.isshooting = false
         }
         self.turns = turn
     }
