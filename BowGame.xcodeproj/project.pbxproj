@@ -27,14 +27,15 @@
 		2AA53A831BBDCCFF00CC72A9 /* EquipmentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53A811BBDCCFF00CC72A9 /* EquipmentItem.swift */; };
 		2AA53A841BBDCCFF00CC72A9 /* EquipmentItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AA53A821BBDCCFF00CC72A9 /* EquipmentItem.xib */; };
 		2AA53A8B1BBDFAD600CC72A9 /* BowGame.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53A891BBDFAD600CC72A9 /* BowGame.xcdatamodeld */; };
-		2AA53A931BBE234500CC72A9 /* ArrowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53A921BBE234500CC72A9 /* ArrowItem.swift */; };
-		2AA53AC61BBE289C00CC72A9 /* BowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53AC51BBE289C00CC72A9 /* BowItem.swift */; };
-		2AA53AC81BBE289D00CC72A9 /* PlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53AC71BBE289D00CC72A9 /* PlayerItem.swift */; };
 		2AA53ACA1BBE361B00CC72A9 /* DataCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53AC91BBE361B00CC72A9 /* DataCenter.swift */; };
 		2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1D71BABDB6F009491AC /* GameController.swift */; };
 		2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */; };
 		2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA9B1DE1BABF069009491AC /* Shotable.swift */; };
-		2AF0CADF1BC0840800FBC36A /* ArrowColletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CADE1BC0840800FBC36A /* ArrowColletion.swift */; };
+		2AF0CADF1BC0840800FBC36A /* DataColletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CADE1BC0840800FBC36A /* DataColletion.swift */; };
+		2AF0CAF11BC0970800FBC36A /* ArrowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CAF01BC0970800FBC36A /* ArrowItem.swift */; };
+		2AF0CAF31BC0977B00FBC36A /* PlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CAF21BC0977B00FBC36A /* PlayerItem.swift */; };
+		2AF0CAF51BC0977B00FBC36A /* BowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CAF41BC0977B00FBC36A /* BowItem.swift */; };
+		2AF0CAF71BC0977B00FBC36A /* CurrentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF0CAF61BC0977B00FBC36A /* CurrentItem.swift */; };
 		5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5379AC6F1BA9E7C70061BC19 /* Ground.swift */; };
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
@@ -82,15 +83,17 @@
 		2AA53A6C1BBD97EC00CC72A9 /* EquipmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EquipmentViewController.xib; sourceTree = "<group>"; };
 		2AA53A811BBDCCFF00CC72A9 /* EquipmentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentItem.swift; sourceTree = "<group>"; };
 		2AA53A821BBDCCFF00CC72A9 /* EquipmentItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EquipmentItem.xib; sourceTree = "<group>"; };
-		2AA53A8A1BBDFAD600CC72A9 /* BowGame.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BowGame.xcdatamodel; sourceTree = "<group>"; };
-		2AA53A921BBE234500CC72A9 /* ArrowItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrowItem.swift; path = ../ArrowItem.swift; sourceTree = "<group>"; };
-		2AA53AC51BBE289C00CC72A9 /* BowItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BowItem.swift; path = ../BowItem.swift; sourceTree = "<group>"; };
-		2AA53AC71BBE289D00CC72A9 /* PlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerItem.swift; path = ../PlayerItem.swift; sourceTree = "<group>"; };
+		2AA53A8A1BBDFAD600CC72A9 /* BowGame.xcdatamodel */ = {isa = PBXFileReference; explicitFileType = wrapper.xcdatamodel; path = BowGame.xcdatamodel; sourceTree = "<group>"; };
 		2AA53AC91BBE361B00CC72A9 /* DataCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCenter.swift; sourceTree = "<group>"; };
 		2AA9B1D71BABDB6F009491AC /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		2AA9B1DB1BABE55E009491AC /* ShootingAngle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootingAngle.swift; sourceTree = "<group>"; };
 		2AA9B1DE1BABF069009491AC /* Shotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shotable.swift; sourceTree = "<group>"; };
-		2AF0CADE1BC0840800FBC36A /* ArrowColletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowColletion.swift; sourceTree = "<group>"; };
+		2AF0CADE1BC0840800FBC36A /* DataColletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataColletion.swift; sourceTree = "<group>"; };
+		2AF0CAF01BC0970800FBC36A /* ArrowItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowItem.swift; sourceTree = "<group>"; };
+		2AF0CAF21BC0977B00FBC36A /* PlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerItem.swift; sourceTree = "<group>"; };
+		2AF0CAF41BC0977B00FBC36A /* BowItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BowItem.swift; sourceTree = "<group>"; };
+		2AF0CAF61BC0977B00FBC36A /* CurrentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentItem.swift; sourceTree = "<group>"; };
+		2AF0CAF81BC09B5700FBC36A /* BowGame2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BowGame2.xcdatamodel; sourceTree = "<group>"; };
 		5379AC6F1BA9E7C70061BC19 /* Ground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		5379AC711BA9E8320061BC19 /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		5379AC731BA9E83E0061BC19 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -219,12 +222,13 @@
 		2AA53A851BBDF95C00CC72A9 /* Datas */ = {
 			isa = PBXGroup;
 			children = (
-				2AA53AC71BBE289D00CC72A9 /* PlayerItem.swift */,
-				2AA53AC51BBE289C00CC72A9 /* BowItem.swift */,
-				2AA53A921BBE234500CC72A9 /* ArrowItem.swift */,
+				2AF0CAF41BC0977B00FBC36A /* BowItem.swift */,
+				2AF0CAF21BC0977B00FBC36A /* PlayerItem.swift */,
+				2AF0CAF01BC0970800FBC36A /* ArrowItem.swift */,
+				2AF0CAF61BC0977B00FBC36A /* CurrentItem.swift */,
 				2AA53A891BBDFAD600CC72A9 /* BowGame.xcdatamodeld */,
 				2AA53AC91BBE361B00CC72A9 /* DataCenter.swift */,
-				2AF0CADE1BC0840800FBC36A /* ArrowColletion.swift */,
+				2AF0CADE1BC0840800FBC36A /* DataColletion.swift */,
 			);
 			name = Datas;
 			path = BowGame;
@@ -360,8 +364,6 @@
 			files = (
 				2A198E0E1BA0C32800F050A4 /* GameScene.swift in Sources */,
 				2AA53A8B1BBDFAD600CC72A9 /* BowGame.xcdatamodeld in Sources */,
-				2AA53AC81BBE289D00CC72A9 /* PlayerItem.swift in Sources */,
-				2AA53A931BBE234500CC72A9 /* ArrowItem.swift in Sources */,
 				2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */,
 				2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */,
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
@@ -371,14 +373,17 @@
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
 				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,
 				2AA53A831BBDCCFF00CC72A9 /* EquipmentItem.swift in Sources */,
+				2AF0CAF31BC0977B00FBC36A /* PlayerItem.swift in Sources */,
 				53E925AE1BB31E6E00BB54E5 /* Attacker.swift in Sources */,
 				896F423E1BC2F11A0070DAAD /* Controller.swift in Sources */,
 				2AA9B1DF1BABF069009491AC /* Shotable.swift in Sources */,
-				2AF0CADF1BC0840800FBC36A /* ArrowColletion.swift in Sources */,
+				2AF0CAF71BC0977B00FBC36A /* CurrentItem.swift in Sources */,
+				2AF0CADF1BC0840800FBC36A /* DataColletion.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
 				89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,
-				2AA53AC61BBE289C00CC72A9 /* BowItem.swift in Sources */,
+				2AF0CAF11BC0970800FBC36A /* ArrowItem.swift in Sources */,
+				2AF0CAF51BC0977B00FBC36A /* BowItem.swift in Sources */,
 				894287571BACC1A400E519B8 /* Buff.swift in Sources */,
 				2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */,
 				2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */,
@@ -601,6 +606,7 @@
 		2AA53A891BBDFAD600CC72A9 /* BowGame.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				2AF0CAF81BC09B5700FBC36A /* BowGame2.xcdatamodel */,
 				2AA53A8A1BBDFAD600CC72A9 /* BowGame.xcdatamodel */,
 			);
 			currentVersion = 2AA53A8A1BBDFAD600CC72A9 /* BowGame.xcdatamodel */;
