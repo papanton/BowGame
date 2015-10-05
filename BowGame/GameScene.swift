@@ -150,14 +150,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             }
             else if(self.turns % 2 == 1 && touchedNode.name == "controlBallLeft")
             {
-//                startpositionOfTouch = controllBallleft.position
                 startpositionOfTouch = controllers.controllBallleft.position
+                endpositionOfTouch = controllers.controllBallleft.position
                 isshooting = true
             }
             else if(self.turns % 2 == 0 && touchedNode.name == "controlBallRight")
             {
-//                    startpositionOfTouch = controllBallright.position
                 startpositionOfTouch = controllers.controllBallright.position
+                endpositionOfTouch = controllers.controllBallright.position
                 isshooting = true
                         
             }else{
@@ -225,7 +225,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 
             //setup camera location according to touch movement
             if(!self.isshooting && !self.touch_disable){
-                moveCameraLocation(touch)
+                if(startViewLocation != nil){
+                    moveCameraLocation(touch)
+                }
             }
             
             var  position = touch.locationInNode(self)
