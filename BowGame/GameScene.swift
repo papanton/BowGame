@@ -10,11 +10,17 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shotable{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
-    var camera : SKNode!
     var mainmenu: StartGameScene!
     private var ground: Ground!
     var touch_disable:Bool = true
     var turns : Int = 0
+    var isshooting = false
+
+    var startViewLocation: CGFloat!
+    var startAnchorLocation: CGFloat!
+
+    
+    //controller bar
     var controllBallleft: SKShapeNode!
     var controllPowerleft: SKShapeNode!
     var controllBallright: SKShapeNode!
@@ -32,7 +38,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     var bezierLayerright1 = CAShapeLayer()
     var bezierLayerright2 = CAShapeLayer()
     
-    var shootable = false
     
     init(size: CGSize, mainmenu: StartGameScene) {
         super.init(size: size)
@@ -45,10 +50,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 
         controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
         controllPowerright = initControllPowerright(self.controllPowerradius)
-
-
         initbezierleft()
         initbezierright()
+
         
         initworld()
         addPlayers()
@@ -70,6 +74,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         controllBall.fillColor = SKColor.whiteColor()
         controllBall.alpha = 0.7
         controllBall.position = CGPoint(x: 100 + powerradius - ballradius, y: 120)
+        controllBall.name = "controlBallLeft"
+        controllBall.zPosition = 1
         self.addChild(controllBall)
         return controllBall
 
@@ -81,6 +87,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         controllBall.fillColor = SKColor.whiteColor()
         controllBall.alpha = 0.7
         controllBall.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + ballradius, y: 120)
+        controllBall.name = "controlBallRight"
+        controllBall.zPosition = 1
         self.addChild(controllBall)
         return controllBall
     }
@@ -119,6 +127,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         bezierLayerleft2.fillColor = UIColor.clearColor().CGColor
         bezierLayerleft2.lineWidth = 5.0
         bezierLayerleft2.lineCap = kCALineCapRound
+//        bezierLayerleft1.name == "Layerleft1"
+//        bezierLayerleft1.name == "Layerleft2"
     }
     
     func initbezierright()
@@ -218,11 +228,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         /*
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
         */
-        self.touch_disable == true
         for touch in (touches as! Set<UITouch>) {
             let touch = touches.first as! UITouch
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
+            
             if(self.touch_disable == true){
                 for child in (self.children) {
                     if child is FlappyArrow{
@@ -230,54 +240,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                         arrow.flappy()
                     }
                 }
-                break
+                return
             }
-            /*
-            Checking if first touch was on settings button. Returning on main menu if so.
-            */
+            
+            
             if(touchedNode.name == "settings"){
-//                let settingsScene = StartGameScene(size: UIScreen.mainScreen().bounds.size)
-//                settingsScene.scaleMode = scaleMode
                 let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
                 view?.presentScene(mainmenu,transition: transitionType)
-            }else if(touchedNode.name == "camera"){
-                touchedNode.position = touch.locationInNode(self)
             }
-            else {
-                if(self.turns % 2 == 1)
-                {
-                    var x1 = abs(touchLocation.x - controllPowerleft.position.x)
-                    var y1 = abs(touchLocation.y - controllPowerleft.position.y)
-                    var x2 = abs(touchLocation.x - controllBallleft.position.x)
-                    var y2 = abs(touchLocation.y - controllBallleft.position.y)
-                    if((sqrt(x1*x1 + y1*y1) <= controllPowerradius) && (sqrt(x2*x2 + y2*y2)<=controllBallradius ))
-                    {
-                        startpositionOfTouch = controllBallleft.position
-                        shootable = true
+            else if(self.turns % 2 == 1 && touchedNode.name == "controlBallLeft")
+            {
+                    self.touch_disable == true
+                    startpositionOfTouch = controllBallleft.position
+                    isshooting = true
+            }
+            else if(self.turns % 2 == 0 && touchedNode.name == "controlBallRight")
+            {
+                    self.touch_disable == true
+                    startpositionOfTouch = controllBallright.position
+                    isshooting = true
                         
-                    }
-                }
-                if(self.turns % 2 == 0)
-                {
-                    var x1 = abs(touchLocation.x - controllPowerright.position.x)
-                    var y1 = abs(touchLocation.y - controllPowerright.position.y)
-                    var x2 = abs(touchLocation.x - controllBallright.position.x)
-                    var y2 = abs(touchLocation.y - controllBallright.position.y)
-                    if((sqrt(x1*x1 + y1*y1) <= controllPowerradius) && (sqrt(x2*x2 + y2*y2) <=
-                        controllBallradius ))
-                    {
-                        startpositionOfTouch = controllBallright.position
-                        shootable = true
-                        
-                    }
-                }
+            }else{
+                cameraMoveStart(touch)
             }
         }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         
-        for touch: AnyObject in touches
+        for touch in (touches as! Set<UITouch>)
         {
 
             if(self.touch_disable == true){
@@ -303,7 +294,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             
             
             //endpositionOfTouch = touch.locationInNode(self)
-            if(self.shootable == true)
+            if(self.isshooting == true)
             {
                 if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
                 {
@@ -315,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             
                 ShootingAngle.getInstance().hide()            
                 //changeTurn()
-                self.shootable = false
+                self.isshooting = false
             }
         }
     }
@@ -324,22 +315,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent)
     {
 
-        for touch: AnyObject in touches{
-            if(self.touch_disable == true){
-                break
-            }
+        if(self.touch_disable == true){
+            return
+        }
+
+        for touch in (touches as! Set<UITouch>)
+        {
             let touchLocation = touch.locationInNode(self)
             let viewLocation = touch.locationInView(view)
             let touchedNode = self.nodeAtPoint(touchLocation)
 
             //setup camera location according to touch movement
-            if(!self.shootable){
-                moveCameraLocation(viewLocation)
+            if(!self.isshooting && !self.touch_disable){
+                moveCameraLocation(touch)
             }
             
             var  position = touch.locationInNode(self)
           
-            if(self.shootable == true)
+            if(self.isshooting == true)
             {
                 if(self.turns%2==0)
                 {
@@ -437,15 +430,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         }
         self.anchorPoint = CGPointMake(x, 0)
     }
-    func moveCameraLocation(location : CGPoint){
-        var x = location.x / UIScreen.mainScreen().bounds.width - 0.5
-        if(x > 0.25){
-            x = 0.25
+    func cameraMoveStart(touchLocation : UITouch){
+        self.startViewLocation = touchLocation.locationInView(self.view).x
+        self.startAnchorLocation = self.anchorPoint.x
+
+    }
+
+    func moveCameraLocation(touch : UITouch){
+        
+        let shiftInView = touch.locationInView(self.view).x - startViewLocation
+        let shiftInAnchor = shiftInView / (UIScreen.mainScreen().bounds.width)
+        var anchorPosition: CGFloat = startAnchorLocation + shiftInAnchor;
+        if(anchorPosition > 0.25){
+            anchorPosition = 0.25
+        }else if(anchorPosition < -0.25){
+            anchorPosition = -0.25
         }
-        if(x < -0.25){
-            x = -0.25
-        }
-        self.anchorPoint = CGPointMake(x, 0)
+        self.anchorPoint = CGPointMake(anchorPosition, 0)
     }
 
     
