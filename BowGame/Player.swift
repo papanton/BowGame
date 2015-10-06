@@ -21,6 +21,7 @@ class PlayerFactory{
         var shootPosition : CGPoint!
         if(name == "player1"){
             health.healthbar.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
+            health.healthframe.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
             playerNode.position = CGPointMake(sceneSize.width*0.15, sceneSize.height/5)
             position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
             shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/5)
@@ -28,6 +29,7 @@ class PlayerFactory{
         
         if(name == "player2"){
             health.healthbar.position = CGPointMake(sceneSize.width*0.95 - health.healthbar.frame.size.width, sceneSize.height * 0.8)
+            health.healthframe.position = CGPointMake(sceneSize.width*0.95 - health.healthbar.frame.size.width, sceneSize.height * 0.8)
             playerNode.position = CGPointMake((sceneSize.width*0.85), sceneSize.height/5)
             playerNode.xScale = -1.0
             position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
@@ -157,13 +159,20 @@ private class Health
     var totalHealth:Float = 100
     var currentHealth:Float = 100
     var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
+    var healthframe:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
     init()
     {
         healthbar.fillColor = SKColor.greenColor()
+        healthbar.lineWidth = 0
+        healthframe.fillColor = SKColor.clearColor()
+        healthframe.lineWidth = 3
+        healthframe.strokeColor = SKColor.blackColor()
     }
     func add2Scene(scene: SKScene)
     {
         scene.addChild(healthbar)
+        scene.addChild(healthframe)
+
     }
     private func updateHealthBar()
     {
@@ -171,6 +180,8 @@ private class Health
             healthbar.fillColor = SKColor.redColor()
         }else if(currentHealth <= 60){
             healthbar.fillColor = SKColor.orangeColor()
+        }else{
+            healthbar.fillColor = SKColor.greenColor()
         }
         
         let decreaseSize = SKAction.scaleXTo(CGFloat(currentHealth / totalHealth), duration: 0.25)
