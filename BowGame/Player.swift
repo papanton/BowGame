@@ -73,7 +73,7 @@ class Player : NSObject
         var shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.04)
         mPlayerNode.runAction(shoot)
         var bow = Bow()
-        var arrow = Arrow(player: self)
+        var arrow = ArrowFactory.createArrow(self)
         
         delay(0.64) {
             self.mPlayerNode.scene?.addChild(arrow);

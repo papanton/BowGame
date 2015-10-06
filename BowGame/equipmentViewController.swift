@@ -14,6 +14,9 @@ class EquipmentViewController: UIViewController {
     @IBOutlet weak var  mArrowRow : UICollectionView!
     @IBOutlet weak var  mPlayerRow : UICollectionView!
     @IBOutlet weak var  mArrowDamageText : UILabel!
+    @IBOutlet weak var  mBowText : UILabel!
+    @IBOutlet weak var  mPlayerText : UILabel!
+    var  mLabelMap : [String : UILabel]!
     var  mCellMap : [String : UICollectionView]!
     var  mNameMap : [UICollectionView : String]!
     let mCellName = "EquipmentItem"
@@ -38,6 +41,7 @@ class EquipmentViewController: UIViewController {
         super.viewDidLoad()
 
         mCellMap = ["ArrowItem" : mArrowRow, "BowItem" : mBowRow, "PlayerItem" : mPlayerRow]
+        mLabelMap = ["ArrowItem" : mArrowDamageText, "BowItem" : mBowText, "PlayerItem" : mPlayerText]
         mNameMap = [mArrowRow : "ArrowItem", mBowRow :"BowItem",  mPlayerRow : "PlayerItem"]
 
         for name in mCellMap.keys{
@@ -86,7 +90,9 @@ extension EquipmentViewController : UICollectionViewDelegate{
        
         cell.layer.backgroundColor = UIColor.blueColor().CGColor
         cell.changeEquipment(mNameMap[collectionView]!, index: indexPath.item)
-        mArrowDamageText.text = EquipmentItem.mArrowDamage[indexPath.item].description
+        if(mNameMap[collectionView]! == "ArrowItem"){
+            mLabelMap[mNameMap[collectionView]!]!.text = ArrowColletion.getInstance().mArrowDamage[indexPath.item].description
+        }
     }
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
     {

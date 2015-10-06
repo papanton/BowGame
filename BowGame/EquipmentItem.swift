@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 class EquipmentItem: UICollectionViewCell {
 
-    static let mArrowDamage = [100, 200, 300, 400]
-    static let mItemNumber = ["ArrowItem" : 4, "BowItem":4, "PlayerItem":2]
+    static let mArrowDamage = [10, 20]
+    static let mItemNumber = ["ArrowItem" : 2, "BowItem":4, "PlayerItem":2]
     let mSetEquipmentFuncs = ["ArrowItem" : {(index : Int)->Void in DataCenter.getInstance().setArrowItem(index)}]
     
     @IBOutlet weak var  mImageView : UIImageView!
@@ -25,6 +25,9 @@ class EquipmentItem: UICollectionViewCell {
     {
         if name == "PlayerItem"{
             mImageView.image = UIImage(named: EquipmentItem.PlayerItemNames[index])
+        }
+        if name == "ArrowItem"{
+            mImageView.image = UIImage(named: ArrowColletion.getInstance().mArrowName[index])
         }
     }
     func changeEquipment(name : String, index : Int)

@@ -8,6 +8,18 @@
 
 import UIKit
 import SpriteKit
+
+class ArrowFactory
+{
+    static func createArrow(player: Player)->Arrow
+    {
+        var arrowitem = DataCenter.getInstance().getArrowItem()
+        if(arrowitem.name == "FlappyArrow"){
+            return FlappyArrow(player: player)
+        }
+        return Arrow(player: player)
+    }
+}
 class Arrow: SKSpriteNode, Attacker{
     
     private var damage :Int!
