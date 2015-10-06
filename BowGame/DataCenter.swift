@@ -11,7 +11,8 @@ import CoreData
 class DataCenter: NSObject
 {
     var managedContext: NSManagedObjectContext!
-    private var mArrowItem : ArrowItem!
+    //private var mArrowItem : ArrowItem!
+    private var mCurrentItem : CurrentItem!
     private static var mInstance : DataCenter!
     static func getInstance() ->DataCenter
     {
@@ -22,9 +23,9 @@ class DataCenter: NSObject
         return mInstance!
     }
     
-    func setArrowItemDamage(damage : Int)
+    /*func setArrowItemDamage(damage : Int)
     {
-        initArrowItem()
+        initCurrentItem()
         mArrowItem.name = "arrow"
         mArrowItem.damage = damage
         var error: NSError?
@@ -33,37 +34,48 @@ class DataCenter: NSObject
         }else{
             println("save successfully! \(mArrowItem.damage)")
         }
+    }*/
+    func setCurrentArrow(name : String)
+    {
+        initCurrentItem()
+        mCurrentItem.arrowname = name
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+        }else{
+            println("save successfully! \(mCurrentItem.arrowname)")
+        }
     }
     func setArrowItem(index : Int)
     {
-        setArrowItemDamage(100*(index+1))
+        setCurrentArrow(ArrowColletion.getInstance().mArrowName[index])
     }
-    private func initArrowItem()
+    private func initCurrentItem()
     {
-        let fetchRequest = NSFetchRequest(entityName:"ArrowItem")
-        let predicate = NSPredicate(format: "name = %@", "arrow")
+        let fetchRequest = NSFetchRequest(entityName:"CurrentItem")
+        //let predicate = NSPredicate(format: "arrowname = %@", "arrow")
         fetchRequest.returnsObjectsAsFaults = false;
-        fetchRequest.predicate = predicate
+        //fetchRequest.predicate = predicate
         var error: NSError?
         let fetchedResults =
         managedContext.executeFetchRequest(fetchRequest,
-        error: &error) as? [ArrowItem]
+        error: &error) as? [CurrentItem]
         println("initArrowItem")
         let res = fetchedResults
         if  res != nil && res!.count > 0 {
-            mArrowItem = res![0]
-            println("fetched \(mArrowItem.name) \(mArrowItem.damage)")
+            mCurrentItem = res![0]
+            println("fetched \(mCurrentItem.arrowname)")
         } else {
-            mArrowItem = ArrowItem.getDefault()
+            mCurrentItem = CurrentItem.getDefault()
             println("Get Default Arrow")
         }
     }
     func getArrowItem()->ArrowItem
     {
-        if(mArrowItem == nil){
-            initArrowItem()
+        if(mCurrentItem == nil){
+            initCurrentItem()
         }
         //println("mArrowItem damage = \(mArrowItem.name) \(mArrowItem.damage)")
-        return mArrowItem
+        return ArrowColletion.getInstance().mCollectionMap[mCurrentItem.arrowname]!
     }
 }

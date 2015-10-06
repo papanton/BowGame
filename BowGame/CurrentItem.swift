@@ -8,11 +8,19 @@
 
 import Foundation
 import CoreData
-
+import UIKit
 class CurrentItem: NSManagedObject {
 
     @NSManaged var arrowname: String
     @NSManaged var bowname: String
     @NSManaged var playername: String
+    static func getDefault()->CurrentItem
+    {
+        let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let entity = NSEntityDescription.entityForName("CurrentItem", inManagedObjectContext: managedContext)
+        var ci = CurrentItem(entity: entity!,insertIntoManagedObjectContext:managedContext)
+        ci.arrowname = "arrow"
+        return ci
+    }
 
 }

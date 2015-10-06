@@ -10,12 +10,12 @@ import UIKit
 
 class ArrowColletion: NSObject
 {
-    var mCollection : [String : ArrowItem]!
-    var mCollectionMap : [String : ArrowItem]!
-    let mArrowName = ["Arrow", "FlappyArrow"]
-    private let mArrowDamage = [10, 20]
-    private var mInstance : ArrowColletion!
-    private func getInstance()->ArrowColletion
+    var mCollection = [ArrowItem]()
+    var mCollectionMap = [String : ArrowItem]()
+    let mArrowName = ["arrow", "FlappyArrow"]
+    let mArrowDamage = [10, 20]
+    private static var mInstance : ArrowColletion!
+    static func getInstance()->ArrowColletion
     {
         if(mInstance == nil){
             mInstance = ArrowColletion()
@@ -26,9 +26,11 @@ class ArrowColletion: NSObject
     {
         super.init()
         for i in 1 ... mArrowName.count{
-            var arrow = ArrowItem()
+            var arrow = ArrowItem.getDefault()
             arrow.damage = mArrowDamage[i-1]
             arrow.name = mArrowName[i-1]
+            mCollection.append(arrow)
+            mCollectionMap[arrow.name] = arrow;
         }
     }
 }
