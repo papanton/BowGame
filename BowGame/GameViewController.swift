@@ -27,16 +27,12 @@ extension SKNode {
 
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var userNameField: UITextField!
+    @IBOutlet weak var playAsGuestButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let scene = StartGameScene(size: view.bounds.size)
-        let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsPhysics = true
-        skView.showsNodeCount = true
-        skView.ignoresSiblingOrder = true
-        scene.scaleMode = SKSceneScaleMode.AspectFill
-        skView.presentScene(scene)
+        AppWarpHelper.sharedInstance.initializeWarp()
+        AppWarpHelper.sharedInstance.gameViewController = self
         //let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         //skView.showsPhysics = true
     }
@@ -60,5 +56,36 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    func startGameScene()
+    {
+        var screensize = UIScreen.mainScreen().bounds.size;
+        var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
+
+        let scene = GameScene(size: scenesize, mainmenu: StartGameScene(size: view.bounds.size))
+        let skView = view as! SKView
+        skView.showsFPS = true
+        skView.showsPhysics = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        skView.ignoresSiblingOrder = true
+            
+            /* Set the scale mode to scale to fit the window */
+            AppWarpHelper.sharedInstance.gameScene = scene
+            skView.presentScene(scene)
+        
+    }
+
+    @IBAction func playAsGuest(sender: AnyObject) {
+        userNameField?.resignFirstResponder()
+        
+        var uName = userNameField?.text
+        var uNameLength = uName?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        if uNameLength>0
+        {
+            AppWarpHelper.sharedInstance.playerName = uName!
+            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName!)
+        }
     }
 }

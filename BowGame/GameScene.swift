@@ -88,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
-        Terrain(scene: self);
+        //Terrain(scene: self);
     }
     
     //add one Buff to Scene
@@ -119,6 +119,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     }
     
     override func didMoveToView(view: SKView) {
+        AppWarpHelper.sharedInstance.gameViewController!.userNameField?.hidden = true
+        AppWarpHelper.sharedInstance.gameViewController!.playAsGuestButton?.hidden = true
+
         
     
     }
@@ -204,6 +207,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                 GameController.getInstance().currentPlayerShoot(impulse, scene: self)
                 self.touch_disable = true
                 ShootingAngle.getInstance().hide()
+                
+                var dataDict = NSMutableDictionary()
+                dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
+                var stringImpulse = NSStringFromCGVector(impulse)
+                dataDict.setObject(stringImpulse, forKey: "impulse")
+                AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+
+
                 //changeTurn()
             }
         }
@@ -415,4 +426,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             ),
             dispatch_get_main_queue(), closure)
     }
+    func updateEnemyStatus(dataDict: NSDictionary){
+        
+        var stringImpulse:String = dataDict.objectForKey("impulse") as! String
+        var realImpulse:CGVector = CGVectorFromString(stringImpulse)
+        GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
+
+    }
+
 }
