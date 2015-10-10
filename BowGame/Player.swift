@@ -37,9 +37,9 @@ class PlayerFactory{
         }
         var player = Player(health: health, playerNode: playerNode)
         player.mShootPosition = shootPosition
-        player.mBlood.xScale = xScale
-        player.mBlood.position = position
-        player.mBlood.yScale = 0.4
+        player.mBlood!.xScale = xScale
+        player.mBlood!.position = position
+        player.mBlood!.yScale = 0.4
         playerNode.mPlay = player
         return player
     }
@@ -70,10 +70,10 @@ class Player : NSObject
     func shoot(impulse: CGVector , scene : SKScene)
     {
         
-        var shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.04)
+        let shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.04)
         mPlayerNode.runAction(shoot)
-        var bow = Bow()
-        var arrow = ArrowFactory.createArrow(self)
+        let bow = Bow()
+        let arrow = ArrowFactory.createArrow(self)
         
         delay(0.64) {
             self.mPlayerNode.scene?.addChild(arrow);
@@ -84,7 +84,7 @@ class Player : NSObject
     }
     func shot(arrow : Arrow)->Bool
     {
-        println("shoot player")
+        print("shoot player")
         if !arrow.isFrom(self){
             var xScale : CGFloat!
             var position : CGPoint!
@@ -128,13 +128,13 @@ class Player : NSObject
     func bleed()
     {
         var blood = SKEmitterNode(fileNamed: "blood.sks")
-        blood.xScale = mBlood.xScale
-        blood.position = mBlood.position
-        blood.yScale = mBlood.yScale
-        mPlayerNode.parent?.addChild(blood)
+        blood!.xScale = mBlood!.xScale
+        blood!.position = mBlood!.position
+        blood!.yScale = mBlood!.yScale
+        mPlayerNode.parent?.addChild(blood!)
         let fadeout:SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-        blood.runAction(fadeout, completion: {
-            blood.removeFromParent()
+        blood!.runAction(fadeout, completion: {
+            blood!.removeFromParent()
         })
         
     }
@@ -211,7 +211,7 @@ private class PlayerNode: SKSpriteNode, Shotable
         self.physicsBody?.collisionBitMask = 0x0
     
     }
-    private init(texture : SKTexture) {
+    private init(texture : SKTexture?) {
       //  self.playerName = name
        // let texture = SKTexture(imageNamed: name)
         super.init(texture: texture, color: SKColor.clearColor(),  size: mPlayerSize)

@@ -71,10 +71,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     func addPlayers()
     {
         GameController.getInstance().reset()
-        var player1 = PlayerFactory.getPlayer("player1", sceneSize: size)
+        let player1 = PlayerFactory.getPlayer("player1", sceneSize: size)
         player1.add2Scene(self)
         GameController.getInstance().addPlayer(player1)
-        var player2 = PlayerFactory.getPlayer("player2", sceneSize: size)
+        let player2 = PlayerFactory.getPlayer("player2", sceneSize: size)
         GameController.getInstance().addPlayer(player2)
         player2.add2Scene(self)
         GameController.getInstance().addGameControllerObserver(self)
@@ -103,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         }
         
         if(buffcount < 1){
-            var new_buff = Buff()
+            let new_buff = Buff()
             
             new_buff.add2Scene(self)
         }
@@ -113,7 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     //add one Obstacle to Scene
     func addObstacle() {
-        var obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
+        let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
         obstacle.setObstaclePosition(self)
         self.addChild(obstacle)
     }
@@ -123,13 +123,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         /*
         Impulse vector value must be taken from the finger drag values. Depending on the magnitude of the impulse vector the duration of the arrow delay will be calculated for the animations.
         */
-        for touch in (touches as! Set<UITouch>) {
-            let touch = touches.first as! UITouch
+        for touch in (touches ) {
+            let touch = touches.first!
             let touchLocation = touch.locationInNode(self)
             let touchedNode = self.nodeAtPoint(touchLocation)
             
@@ -166,9 +166,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         }
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        for touch in (touches as! Set<UITouch>)
+        for touch in (touches )
         {
 
             if(self.touch_disable == true){
@@ -200,7 +200,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                 {
                     break
                 }
-                var impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
+                let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
                 GameController.getInstance().currentPlayerShoot(impulse, scene: self)
                 self.touch_disable = true
                 ShootingAngle.getInstance().hide()
@@ -210,14 +210,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     }
     
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent)
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
 
         if(self.touch_disable == true){
             return
         }
 
-        for touch in (touches as! Set<UITouch>)
+        for touch in (touches )
         {
             let touchLocation = touch.locationInNode(self)
             let viewLocation = touch.locationInView(view)
@@ -230,7 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
                 }
             }
             
-            var  position = touch.locationInNode(self)
+            let  position = touch.locationInNode(self)
           
             if(self.isshooting == true && !self.touch_disable)
             {
@@ -250,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         
         for child in (self.children) {
             if child is Arrow{
-                var arrow = child as! Arrow
+                let arrow = child as! Arrow
                 if arrow.update(){
                     setCameraLocation(arrow.position)
                 }
@@ -310,7 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     func gameStart(){
         self.touch_disable = true
         let delay = 3 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         
         self.turns++
         self.showStart()
@@ -337,7 +337,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     //display the turn information on the screen
     func showTurns(position : Int){
-        var text : SKLabelNode = SKLabelNode()
+        let text : SKLabelNode = SKLabelNode()
         text.text = "Turn \(turns)"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
@@ -362,7 +362,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     //display the game start information
     func showStart(){
-        var text : SKLabelNode = SKLabelNode()
+        let text : SKLabelNode = SKLabelNode()
         text.text = "Game Start!"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
@@ -381,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     }
     func turnChanged(turn : Int)
     {
-        println("notified")
+        print("notified")
 //        self.touch_disable = true
         
         delay(1.0){

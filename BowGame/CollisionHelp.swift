@@ -70,8 +70,8 @@ class CollisonHelper
     func didBeginContact(contact: SKPhysicsContact)
     {
         
-        var attacker = getAttacker(contact)
-        var shotable = getShotable(contact)
+        let attacker = getAttacker(contact)
+        let shotable = getShotable(contact)
         if(attacker != nil && shotable != nil){
            /* if(shotable.shotableA != nil) {
                 shotable.shotableA!.shot(attacker!)

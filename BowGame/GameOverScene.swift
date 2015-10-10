@@ -17,7 +17,7 @@ class GameOverScene: SKScene {
         super.init(size: size)
         self.mainmenu = mainmenu
         
-        var text : SKLabelNode = SKLabelNode()
+        let text : SKLabelNode = SKLabelNode()
         text.text = "GAME OVER"
         text.fontColor = SKColor.whiteColor()
         text.fontSize = 65
@@ -39,8 +39,8 @@ class GameOverScene: SKScene {
     }
     
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first!
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if(touchedNode.name == "mainmenu"){
