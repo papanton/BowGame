@@ -88,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
-        Terrain(scene: self);
+        //Terrain(scene: self);
     }
     
     //add one Buff to Scene
