@@ -44,7 +44,7 @@ class Controller: NSObject {
     
     func initControllBallleft(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
     {
-        var controllBall = SKShapeNode(circleOfRadius: ballradius)
+        let controllBall = SKShapeNode(circleOfRadius: ballradius)
         controllBall.fillColor = SKColor.whiteColor()
         controllBall.alpha = 0.7
         controllBall.position = CGPoint(x: 100 + powerradius - ballradius, y: 120)
@@ -57,7 +57,7 @@ class Controller: NSObject {
     
     func initControllBallright(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
     {
-        var controllBall = SKShapeNode(circleOfRadius: ballradius)
+        let controllBall = SKShapeNode(circleOfRadius: ballradius)
         controllBall.fillColor = SKColor.whiteColor()
         controllBall.alpha = 0.7
         controllBall.position = CGPoint(x: self.mScene.size.width - 90 - self.controllPowerradius + ballradius, y: 120)
@@ -69,7 +69,7 @@ class Controller: NSObject {
     
     func initControllPowerleft(powerradius: CGFloat) -> SKShapeNode
     {
-        var controllPower = SKShapeNode(circleOfRadius: powerradius)
+        let controllPower = SKShapeNode(circleOfRadius: powerradius)
         controllPower.fillColor = SKColor.grayColor()
         controllPower.alpha = 0.3
         controllPower.position = CGPoint(x: 100, y: 120)
@@ -79,7 +79,7 @@ class Controller: NSObject {
     
     func initControllPowerright(powerradius: CGFloat) -> SKShapeNode
     {
-        var controllPower = SKShapeNode(circleOfRadius: powerradius)
+        let controllPower = SKShapeNode(circleOfRadius: powerradius)
         controllPower.fillColor = SKColor.grayColor()
         controllPower.alpha = 0.3
         controllPower.position = CGPoint(x: self.mScene.size.width - 90, y: 120)
@@ -123,10 +123,10 @@ class Controller: NSObject {
         if(self.mScene.turns%2==0)
         {
             //player on the right
-            var x1 = abs(position.x - controllBallright.position.x)
-            var y1 = abs(position.y - controllBallright.position.y)
-            var x2 = abs(position.x - controllPowerright.position.x)
-            var y2 = abs(position.y - controllPowerright.position.y)
+            let x1 = abs(position.x - controllBallright.position.x)
+            let y1 = abs(position.y - controllBallright.position.y)
+            let x2 = abs(position.x - controllPowerright.position.x)
+            let y2 = abs(position.y - controllPowerright.position.y)
             if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
             {
                 self.mScene.endpositionOfTouch = position
@@ -144,10 +144,10 @@ class Controller: NSObject {
         if(self.mScene.turns%2==1)
         {
             //player on the left
-            var x1 = abs(position.x - controllBallleft.position.x)
-            var y1 = abs(position.y - controllBallleft.position.y)
-            var x2 = abs(position.x - controllPowerleft.position.x)
-            var y2 = abs(position.y - controllPowerleft.position.y)
+            let x1 = abs(position.x - controllBallleft.position.x)
+            let y1 = abs(position.y - controllBallleft.position.y)
+            let x2 = abs(position.x - controllPowerleft.position.x)
+            let y2 = abs(position.y - controllPowerleft.position.y)
             if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
             {
                 self.mScene.endpositionOfTouch = position

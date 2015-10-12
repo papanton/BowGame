@@ -28,12 +28,12 @@ class EquipmentViewController: UIViewController {
     
     convenience init(){
         
-        var nibNameOrNil = String?("EquipmentViewController")
+        let nibNameOrNil = String?("EquipmentViewController")
         
         self.init(nibName: nibNameOrNil, bundle: nil)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -86,7 +86,7 @@ extension EquipmentViewController : UICollectionViewDataSource {
 extension EquipmentViewController : UICollectionViewDelegate{
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        var cell = collectionView.cellForItemAtIndexPath(indexPath) as!EquipmentItem
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as!EquipmentItem
        
         cell.layer.backgroundColor = UIColor.blueColor().CGColor
         cell.changeEquipment(mNameMap[collectionView]!, index: indexPath.item)
@@ -96,7 +96,7 @@ extension EquipmentViewController : UICollectionViewDelegate{
     }
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
     {
-        var cell = collectionView.cellForItemAtIndexPath(indexPath)!
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)!
         
         cell.layer.backgroundColor = UIColor.clearColor().CGColor
     }

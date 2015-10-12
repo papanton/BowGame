@@ -17,7 +17,7 @@ class ArrowItem: NSManagedObject {
     {
         let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let entity = NSEntityDescription.entityForName("ArrowItem", inManagedObjectContext: managedContext)
-        var ai = ArrowItem(entity: entity!,insertIntoManagedObjectContext:managedContext)
+        let ai = ArrowItem(entity: entity!,insertIntoManagedObjectContext:managedContext)
         ai.damage = 100
         ai.name = "arrow"
         return ai
