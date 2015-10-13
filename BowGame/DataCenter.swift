@@ -40,10 +40,12 @@ class DataCenter: NSObject
         initCurrentItem()
         mCurrentItem.arrowname = name
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save \(error), \(error?.userInfo)")
-        }else{
-            println("save successfully! \(mCurrentItem.arrowname)")
+        do {
+            try managedContext.save()
+            print("save successfully! \(mCurrentItem.arrowname)")
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save \(error), \(error?.userInfo)")
         }
     }
     func setArrowItem(index : Int)
@@ -55,19 +57,23 @@ class DataCenter: NSObject
         let fetchRequest = NSFetchRequest(entityName:"CurrentItem")
         //let predicate = NSPredicate(format: "arrowname = %@", "arrow")
         fetchRequest.returnsObjectsAsFaults = false;
+        let fetchedResults:[CurrentItem]!
         //fetchRequest.predicate = predicate
-        var error: NSError?
-        let fetchedResults =
-        managedContext.executeFetchRequest(fetchRequest,
-        error: &error) as? [CurrentItem]
-        println("initArrowItem")
+        do {
+            try  fetchedResults = managedContext.executeFetchRequest(fetchRequest) as? [CurrentItem]
+
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+            abort()
+        }
+        print("initArrowItem")
         let res = fetchedResults
         if  res != nil && res!.count > 0 {
             mCurrentItem = res![0]
-            println("fetched \(mCurrentItem.arrowname)")
+            print("fetched \(mCurrentItem.arrowname)")
         } else {
             mCurrentItem = CurrentItem.getDefault()
-            println("Get Default Arrow")
+            print("Get Default Arrow")
         }
     }
     func getArrowItem()->ArrowItem

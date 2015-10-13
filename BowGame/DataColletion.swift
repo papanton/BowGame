@@ -26,7 +26,7 @@ class ArrowColletion: NSObject
     {
         super.init()
         for i in 1 ... mArrowName.count{
-            var arrow = ArrowItem.getDefault()
+            let arrow = ArrowItem.getDefault()
             arrow.damage = mArrowDamage[i-1]
             arrow.name = mArrowName[i-1]
             mCollection.append(arrow)
