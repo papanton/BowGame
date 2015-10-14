@@ -18,7 +18,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
 
     var startViewLocation: CGFloat!
     var startAnchorLocation: CGFloat!
+    
+    var world : SKNode!
+    var UI : SKNode!
 
+    
     
     //controller bar
     var controllBallradius : CGFloat = 30
@@ -29,14 +33,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
-
-        self.controllers = Controller(scene: self)
         
         initworld()
         addPlayers()
+        addControllers()
         addGround()
         addBuffs()
         addObstacle()
+
         gameStart()
     }
     
@@ -49,21 +53,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     
     func initworld()
     {
+        
+        self.world = SKNode()
+        self.UI = SKNode()
+        
         self.physicsWorld.gravity = CGVectorMake(0, -9.8);
         self.physicsWorld.contactDelegate = self
         addBackground()
         settingsButton()
+        
+        self.addChild(world)
+        self.addChild(UI)
     }
     
     
-    //add Scene background picture
+    //add Scene background picture to world node
     func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:BackgroundImage)
         let background = SKSpriteNode(texture:backgroundTexture, color: SKColor.clearColor(), size: self.frame.size)
         background.zPosition = -100;
         background.position = CGPointMake(size.width*0.5,  size.height*0.5)
-        self.addChild(background)
+        self.world.addChild(background)
     }
     
     
@@ -78,6 +89,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         GameController.getInstance().addPlayer(player2)
         player2.add2Scene(self)
         GameController.getInstance().addGameControllerObserver(self)
+    }
+    
+    func addControllers()
+    {
+        self.controllers = Controller(scene: self)
+        self.controllers.addLeftController()
+        self.controllers.addRightController()
     }
     
     //function adding ground object (for contact detection)
@@ -302,6 +320,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
             anchorPosition = -0.25
         }
         self.anchorPoint = CGPointMake(anchorPosition, 0)
+        
     }
 
     

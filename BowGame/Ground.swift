@@ -9,13 +9,13 @@
 import UIKit
 import SpriteKit
 
-class Ground: SKNode, Shotable
+class Ground: SKSpriteNode, Shotable
 {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    init(size:CGSize,position: CGPoint) {
-        super.init()
+    init(texture: SKTexture, size:CGSize,position: CGPoint) {
+        super.init(texture: texture, color: SKColor.clearColor(), size: size)
         self.position = position
         
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)

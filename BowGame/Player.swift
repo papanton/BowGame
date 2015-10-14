@@ -57,12 +57,23 @@ class Player : NSObject
     private var mBlood = SKEmitterNode(fileNamed: "blood.sks")
     private var mShootPosition :CGPoint!
     private var power : Int = 0
+    private var mWorld: SKNode!
+    private var mUI: SKNode!
+    
     
     func add2Scene(scene: SKScene)
     {
         mScene = scene
         mScene.addChild(mPlayerNode)
         mHealth.add2Scene(scene)
+    }
+    func add2Scene(scene: SKScene, world: SKNode, UI: SKNode)
+    {
+        mScene = scene
+        mWorld = world
+        mUI = UI
+        mWorld.addChild(mPlayerNode)
+        mHealth.add2Scene(UI)
     }
     private init(health: Health, playerNode : PlayerNode)
     {
@@ -78,8 +89,7 @@ class Player : NSObject
         let arrow = ArrowFactory.createArrow(self)
         
         delay(0.64) {
-            self.mPlayerNode.scene?.addChild(arrow);
-        //        scene.addChild(arrow)
+            self.mWorld.addChild(arrow);
             bow.shoot(impulse, arrow: arrow, scene: scene, position: self.mShootPosition)
         }
         
@@ -173,6 +183,10 @@ private class Health
         scene.addChild(healthbar)
         scene.addChild(healthframe)
 
+    }
+    func add2Scene(UI: SKNode){
+        UI.addChild(healthbar)
+        UI.addChild(healthframe)
     }
     private func updateHealthBar()
     {

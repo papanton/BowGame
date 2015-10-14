@@ -18,6 +18,7 @@ let PlayerImage1 = "player"
 let PlayerImage2 = "Player2"
 let ArrowImage = "arrow"
 let InGameSettingButton = "InGameSettings"
+let GroundTexture1 = "groundtexture1"
 /*
 Main menu images (buttons etc)
 */
