@@ -22,6 +22,7 @@ class GameController
     private var mPlayers = [Player]()
     private static var mInstance : GameController!
     private var mCanShooting = true
+    
     private func notify()
     {
         var isGameOver = false
