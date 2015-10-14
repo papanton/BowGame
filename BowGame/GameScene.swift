@@ -82,12 +82,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
     func addPlayers()
     {
         GameController.getInstance().reset()
-        let player1 = PlayerFactory.getPlayer("player1", sceneSize: size)
+        
+        let player1position = CGPointMake(self.size.width * 0.15, self.size.height / 3)
+        let player1 = PlayerFactory.getPlayer("player1", sceneSize: size, playerposition: player1position)
         player1.add2Scene(self)
         GameController.getInstance().addPlayer(player1)
-        let player2 = PlayerFactory.getPlayer("player2", sceneSize: size)
+        
+        let player2position = CGPointMake(self.size.width * 0.85, self.size.height / 3)
+        let player2 = PlayerFactory.getPlayer("player2", sceneSize: size, playerposition: player2position)
         GameController.getInstance().addPlayer(player2)
         player2.add2Scene(self)
+        
         GameController.getInstance().addGameControllerObserver(self)
     }
     
@@ -252,7 +257,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
           
             if(self.isshooting == true && !self.touch_disable)
             {
-                controllers.shooting(position)
+                self.endpositionOfTouch = position
+                if(turns % 2 == 1)
+                {
+                    controllers.shootingleft(position)
+                }else{
+                    controllers.shootingright(position)
+                }
             }
             
             //ShootingAngle.getInstance().hide()

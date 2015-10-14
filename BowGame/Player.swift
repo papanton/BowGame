@@ -10,43 +10,51 @@ import UIKit
 import SpriteKit
 class PlayerFactory{
     
-    static func getPlayer(var name : String, sceneSize :CGSize) -> Player
+    static func getPlayer(var name : String, sceneSize :CGSize, playerposition : CGPoint) -> Player
     {
-        var sheet = ShootAnimation.getInstance()
+        let sheet = ShootAnimation.getInstance()
         name = name.lowercaseString;
-        var playerNode = PlayerNode( texture: sheet.Shoot_01())
-        var health = Health()
-        var position : CGPoint!
+        var playerNode = PlayerNode(texture: sheet.Shoot_01())
+        var health : Health!
+        var bloodposition : CGPoint!
         var xScale : CGFloat = 0.4
         var shootPosition : CGPoint!
+        
+        playerNode.position = CGPointMake(playerposition.x, playerposition.y + playerNode.size.height / 2)
+        bloodposition = CGPointMake(playerNode.position.x + 10.0, playerNode.position.y + 11.0)
+
+        
         if(name == "player1"){
-            health.healthbar.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
-            health.healthframe.position = CGPointMake(sceneSize.width*0.05 , sceneSize.height * 0.8)
-            playerNode.position = CGPointMake(sceneSize.width*0.15, sceneSize.height/5)
-            position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
-            shootPosition = CGPointMake(sceneSize.width * 0.13, sceneSize.height/5)
+            health = Health()
+            health.healthframe.position = CGPointMake(sceneSize.width*0.05 + health.healthframe.size.width / 2 , sceneSize.height * 0.8)
+            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2, playerNode.position.y)
         }
         
         if(name == "player2"){
-            health.healthbar.position = CGPointMake(sceneSize.width*0.95 - health.healthbar.frame.size.width, sceneSize.height * 0.8)
+            health = Health()
             health.healthframe.position = CGPointMake(sceneSize.width*0.95 - health.healthbar.frame.size.width, sceneSize.height * 0.8)
-            playerNode.position = CGPointMake((sceneSize.width*0.85), sceneSize.height/5)
             playerNode.xScale = -1.0
-            position = CGPointMake(playerNode.position.x + 10.0,playerNode.position.y + 11.0)
-            shootPosition = CGPointMake(sceneSize.width*0.87,sceneSize.height/5)
+            shootPosition = CGPointMake(playerNode.position.x - playerNode.size.width / 2,playerNode.position.y)
             xScale = -xScale
-            
         }
-        var player = Player(health: health, playerNode: playerNode)
+        
+        if(name == "singleplayer"){
+            health = DummyHealth()
+            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2, playerNode.position.y)
+        }
+        
+        
+        let player = Player(health: health, playerNode: playerNode)
         player.mShootPosition = shootPosition
         player.mBlood!.xScale = xScale
-        player.mBlood!.position = position
+        player.mBlood!.position = bloodposition
         player.mBlood!.yScale = 0.4
         playerNode.mPlay = player
         return player
     }
 }
 
+        
 
 class Player : NSObject
 {
@@ -89,10 +97,13 @@ class Player : NSObject
         let arrow = ArrowFactory.createArrow(self)
         
         delay(0.64) {
-            self.mWorld.addChild(arrow);
+            if(self.mWorld != nil){
+                self.mWorld.addChild(arrow)
+            }else{
+                self.mScene.addChild(arrow)
+            }
             bow.shoot(impulse, arrow: arrow, scene: scene, position: self.mShootPosition)
         }
-        
     }
     func shot(arrow : Arrow)->Bool
     {
@@ -162,21 +173,28 @@ class Player : NSObject
     }
 
 }
-
-
+private class DummyHealth : Health
+{
+    override func add2Scene(UI: SKNode){
+    }
+}
+        
 private class Health
 {
     var totalHealth:Float = 100
     var currentHealth:Float = 100
-    var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
-    var healthframe:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 120, 10))
+    var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 170, 10))
+    var healthframe:SKSpriteNode!
+    
     init()
     {
+        
         healthbar.fillColor = SKColor.greenColor()
         healthbar.lineWidth = 0
-        healthframe.fillColor = SKColor.clearColor()
-        healthframe.lineWidth = 3
-        healthframe.strokeColor = SKColor.blackColor()
+        
+        let healthframetexture = SKTexture(imageNamed: HealthBarFrame)
+        let size = CGSizeMake(210, 30)
+        healthframe = SKSpriteNode(texture: healthframetexture, color: SKColor.clearColor(), size: size)
     }
     func add2Scene(scene: SKScene)
     {
@@ -185,7 +203,9 @@ private class Health
 
     }
     func add2Scene(UI: SKNode){
-        UI.addChild(healthbar)
+        healthframe.addChild(healthbar)
+        healthbar.position = CGPointMake(-81, -6)
+//        UI.addChild(healthbar)
         UI.addChild(healthframe)
     }
     private func updateHealthBar()

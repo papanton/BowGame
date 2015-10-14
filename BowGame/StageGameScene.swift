@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class StageGameScene: SKScene, SKPhysicsContactDelegate{
+class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var mainmenu: StartGameScene!
 
@@ -26,9 +26,12 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
     var endpositionOfTouch: CGPoint!
     var startViewLocation: CGFloat!
     var startWorldLocation: CGFloat!
+    
+    var rounds : Int!
 
     var isshooting = false
 
+    var boss : Boss!
 
     
     init(size: CGSize, mainmenu: StartGameScene) {
@@ -36,16 +39,8 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
         
-        initworld()
         
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func initworld()
-    {
+        
         self.world = SKNode()
         self.UI = SKNode()
         self.addChild(world)
@@ -54,24 +49,35 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
         self.physicsWorld.gravity = CGVectorMake(0, -9.8);
         self.physicsWorld.contactDelegate = self
 
+        initworld()
+        initUI()
+        
+        gameStart()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    func initworld()
+    {
+
+        //World
         addBackground()
         addGround()
         addPlayers()
-        addControllers()
-        addSettingButton()
+        addBoss()
         addObstacle()
         
+    }
+    
+    func initUI()
+    {
+        //UI
+        addControllers()
+        addSettingButton()
         
-        //for test
-//        world.position = CGPointMake(300, 0)
-        print(self.world.position.x)
-        print(self.world.position.y)
-        print(self.UI.position.x)
-        print(self.UI.position.y)
-        print(self.world.frame.size.width)
-        print(self.world.frame.size.height)
-        
-}
+    }
     
     func addBackground()
     {
@@ -84,9 +90,19 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
     func addPlayers()
     {
         GameController.getInstance().reset()
-        let player1 = PlayerFactory.getPlayer("player1", sceneSize: size)
+        let playerposition = CGPointMake(self.size.width * 2 * 0.1, self.size.height / 6)
+        let player1 = PlayerFactory.getPlayer("singleplayer", sceneSize: size, playerposition: playerposition)
         player1.add2Scene(self, world: self.world, UI: self.UI)
         GameController.getInstance().addPlayer(player1)
+        
+        GameController.getInstance().addGameControllerObserver(self)
+    }
+    
+    func addBoss()
+    {
+        let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
+        self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
+        boss.add2Scene()
     }
     
     func addGround()
@@ -100,7 +116,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func addControllers(){
-        self.controllers = Controller(UI: self.UI)
+        self.controllers = Controller(UI: self.UI , scene: self)
         controllers.addLeftController()
         
     }
@@ -185,7 +201,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
             if(self.isshooting == true && !self.touch_disable)
             {
                 self.endpositionOfTouch = position
-                controllers.shootleft(position)
+                controllers.shootingleft(position)
             }
         }
     }
@@ -239,7 +255,16 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
     }
 
 
+    //call after the arrow disappears
+    func nextRound()
+    {
+        
+    }
     
+    func startGame()
+    {
+        
+    }
     
 
     
@@ -277,6 +302,88 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate{
             worldLocation = -size.width
         }
         world.position = CGPointMake(worldLocation, 0)
+    }
+    
+    func gameStart(){
+        self.touch_disable = true
+        self.rounds = 1
+        self.world.position = CGPointMake(-self.size.width, 0)
+        
+        let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
+        world.runAction(moveCamera)
+        self.showStart()
+        delay(3.0){
+            self.touch_disable = false
+        }
+    }
+    
+    func showStart(){
+        let text : SKLabelNode = SKLabelNode()
+        text.text = "Game Start!"
+        text.fontColor = SKColor.blackColor()
+        text.fontSize = 65
+        text.fontName = "MarkerFelt-Wide"
+        text.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
+        text.zPosition = 1
+        self.addChild(text)
+        
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 2.0)
+        text.runAction(fadeout, completion: {
+            text.removeFromParent()
+            self.showTurns()
+        })
+
+    }
+
+    
+    
+    func turnChanged(turn:Int)
+    {
+        print("turnChanged() called")
+        
+        self.rounds = turn
+        delay(1.0){
+            let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 0.5)
+            self.world.runAction(moveCamera)
+            self.showTurns()
+        }
+        delay(1.5){
+            self.touch_disable = false
+            self.isshooting = false
+        }
+
+    }
+    
+    func showTurns(){
+        let text : SKLabelNode = SKLabelNode()
+        text.text = "Round \(self.rounds)"
+        text.fontColor = SKColor.blackColor()
+        text.fontSize = 65
+        text.fontName = "MarkerFelt-Wide"
+        text.position = CGPointMake(self.size.width / 2, self.size.height / 2)
+        text.zPosition = 1
+        self.UI.addChild(text)
+        
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+        text.runAction(fadeout, completion: {
+            text.removeFromParent()})
+        
+    }
+
+    
+    func gameOver()
+    {
+        
+    }
+
+
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
 
 

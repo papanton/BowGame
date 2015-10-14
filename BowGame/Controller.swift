@@ -27,7 +27,7 @@ class Controller: NSObject {
     var bezierLayerright2 = CAShapeLayer()
     
     
-    var mScene: GameScene!
+    var mScene: SKScene!
     var mUI: SKNode!
 
     init(scene : GameScene){
@@ -35,9 +35,10 @@ class Controller: NSObject {
         self.mScene = scene
     }
     
-    init(UI: SKNode)
+    init(UI: SKNode, scene : SKScene)
     {
         super.init()
+        self.mScene = scene
         self.mUI = UI
         
     }
@@ -66,8 +67,13 @@ class Controller: NSObject {
         controllBall.position = CGPoint(x: 100 + powerradius - ballradius, y: 120)
         controllBall.name = "controlBallLeft"
         controllBall.zPosition = 1
-//        self.mScene.addChild(controllBall)
-        self.mUI.addChild(controllBall)
+        if(self.mUI != nil)
+        {
+            self.mUI.addChild(controllBall)
+        }else{
+            
+            self.mScene.addChild(controllBall)
+        }
         return controllBall
         
     }
@@ -80,8 +86,13 @@ class Controller: NSObject {
         controllBall.position = CGPoint(x: self.mScene.size.width - 90 - self.controllPowerradius + ballradius, y: 120)
         controllBall.name = "controlBallRight"
         controllBall.zPosition = 1
-        self.mScene.addChild(controllBall)
-        self.mUI.addChild(controllBall)
+        if(self.mUI != nil)
+        {
+            self.mUI.addChild(controllBall)
+        }else{
+            
+            self.mScene.addChild(controllBall)
+        }
         return controllBall
     }
     
@@ -91,8 +102,13 @@ class Controller: NSObject {
         controllPower.fillColor = SKColor.grayColor()
         controllPower.alpha = 0.3
         controllPower.position = CGPoint(x: 100, y: 120)
-//        self.mScene.addChild(controllPower)
-        self.mUI.addChild(controllPower)
+        
+        if(self.mUI != nil)
+        {
+            self.mUI.addChild(controllPower)
+        }else{
+            self.mScene.addChild(controllPower)
+        }
         return controllPower
     }
     
@@ -102,7 +118,14 @@ class Controller: NSObject {
         controllPower.fillColor = SKColor.grayColor()
         controllPower.alpha = 0.3
         controllPower.position = CGPoint(x: self.mScene.size.width - 90, y: 120)
-        self.mScene.addChild(controllPower)
+        
+        if(self.mUI != nil)
+        {
+            self.mUI.addChild(controllPower)
+        }else{
+            self.mScene.addChild(controllPower)
+        }
+        
         return controllPower
     }
     
@@ -138,7 +161,7 @@ class Controller: NSObject {
         bezierLayerright2.lineCap = kCALineCapRound
     }
     
-    func shootleft(position : CGPoint)
+    func shootingleft(position : CGPoint)
     {
         let x1 = abs(position.x - controllBallleft.position.x)
         let y1 = abs(position.y - controllBallleft.position.y)
@@ -150,60 +173,41 @@ class Controller: NSObject {
             bezierLayerleft2.removeFromSuperlayer()
             bezierLayerleft1.strokeEnd = (controllPowerleft.position.x + controllPowerradius - position.x) / (controllPowerradius * 2)
             bezierLayerleft2.strokeEnd = (controllPowerleft.position.x + controllPowerradius - position.x) / (controllPowerradius * 2)
-//            self.mScene.view!.layer.addSublayer(bezierLayerleft1)
-//            self.mScene.view!.layer.addSublayer(bezierLayerleft2)
+            self.mScene.view!.layer.addSublayer(bezierLayerleft1)
+            self.mScene.view!.layer.addSublayer(bezierLayerleft2)
             controllBallleft.removeFromParent()
             controllBallleft.position = position
-            self.mUI.addChild(controllBallleft)
-        }
-    }
-    
-    func shooting(position : CGPoint){
-        if(self.mScene.turns%2==0)
-        {
-            //player on the right
-            let x1 = abs(position.x - controllBallright.position.x)
-            let y1 = abs(position.y - controllBallright.position.y)
-            let x2 = abs(position.x - controllPowerright.position.x)
-            let y2 = abs(position.y - controllPowerright.position.y)
-            if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
-            {
-                self.mScene.endpositionOfTouch = position
-                bezierLayerright1.removeFromSuperlayer()
-                bezierLayerright2.removeFromSuperlayer()
-                bezierLayerright1.strokeEnd = (position.x-controllPowerright.position.x+controllPowerradius) / (controllPowerradius * 2)
-                bezierLayerright2.strokeEnd = (position.x - controllPowerright.position.x+controllPowerradius) / (controllPowerradius * 2)
-                self.mScene.view!.layer.addSublayer(bezierLayerright1)
-                self.mScene.view!.layer.addSublayer(bezierLayerright2)
-                controllBallright.removeFromParent()
-                controllBallright.position = position
-                self.mScene.addChild(controllBallright)
-            }
-        }
-        if(self.mScene.turns%2==1)
-        {
-            //player on the left
-            let x1 = abs(position.x - controllBallleft.position.x)
-            let y1 = abs(position.y - controllBallleft.position.y)
-            let x2 = abs(position.x - controllPowerleft.position.x)
-            let y2 = abs(position.y - controllPowerleft.position.y)
-            if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
-            {
-                self.mScene.endpositionOfTouch = position
-                bezierLayerleft1.removeFromSuperlayer()
-                bezierLayerleft2.removeFromSuperlayer()
-                bezierLayerleft1.strokeEnd = (controllPowerleft.position.x + controllPowerradius - position.x) / (controllPowerradius * 2)
-                bezierLayerleft2.strokeEnd = (controllPowerleft.position.x + controllPowerradius - position.x) / (controllPowerradius * 2)
-                self.mScene.view!.layer.addSublayer(bezierLayerleft1)
-                self.mScene.view!.layer.addSublayer(bezierLayerleft2)
-                controllBallleft.removeFromParent()
-                controllBallleft.position = position
+            if(self.mUI != nil){
+                self.mUI.addChild(controllBallleft)
+            }else{
                 self.mScene.addChild(controllBallleft)
             }
         }
-
     }
     
-    
+    func shootingright(position : CGPoint)
+    {
+        let x1 = abs(position.x - controllBallright.position.x)
+        let y1 = abs(position.y - controllBallright.position.y)
+        let x2 = abs(position.x - controllPowerright.position.x)
+        let y2 = abs(position.y - controllPowerright.position.y)
+        if((sqrt(x1*x1 + y1*y1) <= controllBallradius) && (sqrt(x2*x2 + y2*y2) <= controllPowerradius))
+        {
+            bezierLayerright1.removeFromSuperlayer()
+            bezierLayerright2.removeFromSuperlayer()
+            bezierLayerright1.strokeEnd = (position.x-controllPowerright.position.x+controllPowerradius) / (controllPowerradius * 2)
+            bezierLayerright2.strokeEnd = (position.x - controllPowerright.position.x+controllPowerradius) / (controllPowerradius * 2)
+            self.mScene.view!.layer.addSublayer(bezierLayerright1)
+            self.mScene.view!.layer.addSublayer(bezierLayerright2)
+            controllBallright.removeFromParent()
+            controllBallright.position = position
+            if(self.mUI != nil){
+                self.mUI.addChild(controllBallright)
+            }else{
+                self.mScene.addChild(controllBallright)
+            }
+        }
+    }
+
 
 }
