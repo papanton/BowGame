@@ -13,7 +13,7 @@ class ArrowFactory
 {
     static func createArrow(player: Player)->Arrow
     {
-        var arrowitem = DataCenter.getInstance().getArrowItem()
+        let arrowitem = DataCenter.getInstance().getArrowItem()
         if(arrowitem.name == "FlappyArrow"){
             return FlappyArrow(player: player)
         }
@@ -44,7 +44,7 @@ class Arrow: SKSpriteNode, Attacker{
     {
         //OSAtomicTestAndClear(0, &self.isFlying)
         isFlying = 0
-        println(self.isFlying)
+        print(self.isFlying)
         self.physicsBody = nil
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
@@ -64,7 +64,7 @@ class Arrow: SKSpriteNode, Attacker{
     }
     init(player : Player) {
         host = player
-        var spriteSize = CGSize(width: 30.0, height: 10.0)
+        let spriteSize = CGSize(width: 30.0, height: 10.0)
         let texture = SKTexture(imageNamed: ArrowImage)
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()

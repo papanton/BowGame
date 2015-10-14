@@ -18,7 +18,7 @@ class CurrentItem: NSManagedObject {
     {
         let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let entity = NSEntityDescription.entityForName("CurrentItem", inManagedObjectContext: managedContext)
-        var ci = CurrentItem(entity: entity!,insertIntoManagedObjectContext:managedContext)
+        let ci = CurrentItem(entity: entity!,insertIntoManagedObjectContext:managedContext)
         ci.arrowname = "arrow"
         return ci
     }

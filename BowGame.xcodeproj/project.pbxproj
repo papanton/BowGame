@@ -300,6 +300,8 @@
 		1369CA831B9DFFE400895E88 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Antonis papantoniou";
 				TargetAttributes = {
