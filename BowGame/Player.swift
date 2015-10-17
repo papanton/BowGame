@@ -26,13 +26,16 @@ class PlayerFactory{
         
         if(name == "player1"){
             health = Health()
-            health.healthframe.position = CGPointMake(sceneSize.width*0.05 + health.healthframe.size.width / 2 , sceneSize.height * 0.8)
+            health.healthframe.position = CGPointMake(sceneSize.width*0.05 + health.healthframe.size.width / 2 , sceneSize.height * 0.85)
             shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2, playerNode.position.y)
         }
         
         if(name == "player2"){
             health = Health()
-            health.healthframe.position = CGPointMake(sceneSize.width*0.95 - health.healthbar.frame.size.width, sceneSize.height * 0.8)
+            
+            health.healthframe.xScale = -1
+            health.healthframe.position = CGPointMake(sceneSize.width*0.95 + health.healthframe.size.width / 2, sceneSize.height * 0.85)
+
             playerNode.xScale = -1.0
             shootPosition = CGPointMake(playerNode.position.x - playerNode.size.width / 2,playerNode.position.y)
             xScale = -xScale

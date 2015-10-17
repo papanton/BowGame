@@ -76,7 +76,7 @@ class StartGameScene: SKScene {
     func startGame()
     {
         let screensize = UIScreen.mainScreen().bounds.size;
-        let scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
+        let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
         let gameScene = GameScene(size: scenesize, mainmenu: self)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
         changeScene(gameScene)
