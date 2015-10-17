@@ -53,6 +53,7 @@ class PlayerFactory{
         player.mBlood!.position = bloodposition
         player.mBlood!.yScale = 0.4
         playerNode.mPlay = player
+        GameController.getInstance().addPlayer(player)
         return player
     }
 }

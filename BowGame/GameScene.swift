@@ -61,6 +61,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func initworld()
     {
+        GameController.getInstance().reset()
+        GameController.getInstance().addGameControllerObserver(self)
         addBackground()
         addGround()
         addBorder()
@@ -108,19 +110,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //Function adding the two players in the scene in their respective positions
     func addPlayers()
     {
-        GameController.getInstance().reset()
         
         let player1position = CGPointMake(self.size.width * 2 * 0.1, self.size.height / 6)
         let player1 = PlayerFactory.getPlayer("player1", sceneSize: self.size, playerposition: player1position)
         player1.add2Scene(self, world: self.world, UI: self.UI)
-        GameController.getInstance().addPlayer(player1)
         
         let player2position = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
         let player2 = PlayerFactory.getPlayer("player2", sceneSize: self.size, playerposition: player2position)
         player2.add2Scene(self, world: self.world, UI: self.UI)
-        GameController.getInstance().addPlayer(player2)
-        
-        GameController.getInstance().addGameControllerObserver(self)
     }
     
     
