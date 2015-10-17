@@ -96,10 +96,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         let leftBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
         self.world.addChild(leftBorder)
         
-        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width, 1.0))
+        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
         self.world.addChild(rightBorder)
         
-        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width, 1.0),position: CGPointMake(self.size.width * 0.5, 0))
+        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
         self.world.addChild(bottomBorder)
        
     }
