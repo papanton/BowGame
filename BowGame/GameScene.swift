@@ -63,6 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         addBackground()
         addGround()
+        addBorder()
         addPlayers()
         addObstacle()
     }
@@ -72,6 +73,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addControllers()
         addSettingButton()
     }
+    
+    
     
     
     //add Scene background picture to world node
@@ -85,6 +88,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         print(background.frame.width)
         print(background.frame.height)
+    }
+    
+    func addBorder()
+    {
+        let texture = SKTexture()
+        let leftBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
+        self.world.addChild(leftBorder)
+        
+        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width, 1.0))
+        self.world.addChild(rightBorder)
+        
+        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width, 1.0),position: CGPointMake(self.size.width * 0.5, 0))
+        self.world.addChild(bottomBorder)
+       
     }
     
     
