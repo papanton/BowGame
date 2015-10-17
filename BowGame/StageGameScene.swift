@@ -62,6 +62,8 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func initworld()
     {
 
+        GameController.getInstance().reset()
+        GameController.getInstance().addGameControllerObserver(self)
         //World
         addBackground()
         addGround()
@@ -109,13 +111,9 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func addPlayers()
     {
-        GameController.getInstance().reset()
         let playerposition = CGPointMake(self.size.width * 2 * 0.1, self.size.height / 6)
         let player1 = PlayerFactory.getPlayer("singleplayer", sceneSize: size, playerposition: playerposition)
         player1.add2Scene(self, world: self.world, UI: self.UI)
-        GameController.getInstance().addPlayer(player1)
-        
-        GameController.getInstance().addGameControllerObserver(self)
     }
     
     func addBoss()
