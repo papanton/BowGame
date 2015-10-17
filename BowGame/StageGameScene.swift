@@ -76,7 +76,6 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         //UI
         addControllers()
         addSettingButton()
-        
     }
     
     func addBackground()
@@ -86,6 +85,9 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         background.zPosition = -100;
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
+        
+        print(background.frame.width)
+        print(background.frame.height)
     }
     func addPlayers()
     {
@@ -112,6 +114,13 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         ground.position = CGPointMake(size.width, 0)
         self.world.addChild(ground)
         
+        let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
+
+        
         
     }
     
@@ -122,7 +131,8 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     //add setting button to UI
-    func addSettingButton(){
+    func addSettingButton()
+    {
         
         let settings = SKSpriteNode(imageNamed: InGameSettingButton )
         settings.position = CGPointMake(size.width*0.95,size.height*0.95)
@@ -179,7 +189,9 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        
         if(self.touch_disable == true)
         {
             return
@@ -212,9 +224,6 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         }
         
         
-        //self.touch_disable = true
-        
-        //endpositionOfTouch = touch.locationInNode(self)
         if(self.isshooting == true)
         {
             controllers.bezierLayerleft1.removeFromSuperlayer()
@@ -227,9 +236,8 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
-//            self.touch_disable = true
+
             ShootingAngle.getInstance().hide()
-            //changeTurn()
         }
     }
 
