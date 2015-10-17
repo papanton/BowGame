@@ -40,14 +40,14 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
     
     func setObstaclePosition(mScene: SKScene)
     {
-        var minX = mScene.size.width * 0.3
-        var maxX = mScene.size.width * 0.7
-        var rangeX = maxX - minX
+        let minX = mScene.size.width * 0.3
+        let maxX = mScene.size.width * 0.7
+        let rangeX = maxX - minX
         let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
         
-        var minY = mScene.size.height * 0.3
-        var maxY = mScene.size.height * 0.1
-        var rangeY = maxY - minY
+        let minY = mScene.size.height * 0.3
+        let maxY = mScene.size.height * 0.1
+        let rangeY = maxY - minY
         let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
         
         self.position = CGPointMake(positionX, positionY)
@@ -80,7 +80,7 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
                     self.removeFromParent()})
             }
         }
-        println("22")
+        print("22")
     }
     func shot(attacker : Attacker)->Bool
     {
@@ -88,7 +88,7 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
             arrow.slowDown()
             self.physicsBody?.dynamic = true
         }
-        println("11")
+        print("11")
         return true
     }
     

@@ -20,7 +20,7 @@ class Buff: SKSpriteNode, Shotable {
     // buff_heal
     // buff_power
     init() {
-        var id : Int = Int(arc4random_uniform(3))
+        let id : Int = Int(arc4random_uniform(3))
         var name : String!
         if(id == 0){
             name = "buff_heal"
@@ -58,7 +58,7 @@ class Buff: SKSpriteNode, Shotable {
     func shot(attack : Attacker)->Bool
     {
         if let arrow = attack as? Arrow {
-            var player = arrow.getHost()
+            let player = arrow.getHost()
             if(type == "buff_heal"){
                 player.healed(30)
             }else  if(type == "buff_power"){
@@ -73,7 +73,7 @@ class Buff: SKSpriteNode, Shotable {
                         }
             }
             
-            print("shotbuff")
+            print("shotbuff", terminator: "")
             
             let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
             runAction(fadeout, completion: {
@@ -89,14 +89,14 @@ class Buff: SKSpriteNode, Shotable {
     //position is between 0.3-0.7 width and 0.5 - 1 height
     func setPosition()
     {
-        var minX = mScene.size.width * 0.3
-        var maxX = mScene.size.width * 0.7
-        var rangeX = maxX - minX
+        let minX = mScene.size.width * 0.3
+        let maxX = mScene.size.width * 0.7
+        let rangeX = maxX - minX
         let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
 
-        var minY = mScene.size.height * 0.5
-        var maxY = mScene.size.height - self.size.height
-        var rangeY = maxY - minY
+        let minY = mScene.size.height * 0.5
+        let maxY = mScene.size.height - self.size.height
+        let rangeY = maxY - minY
         let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
 
         self.position = CGPointMake(positionX, positionY)

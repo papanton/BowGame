@@ -22,17 +22,23 @@ class GameController
     private var mPlayers = [Player]()
     private static var mInstance : GameController!
     private var mCanShooting = true
-    private func notify()
+    
+    func isGameOver()->Bool
     {
         var isGameOver = false
         for player in mPlayers{
             if(player.isDead()){
                 isGameOver = true
-                break
+            break
             }
         }
+        return isGameOver
+    }
+    private func notify()
+    {
+
         for ob in mObservers{
-            if(isGameOver){
+            if(isGameOver()){
                 ob.gameOver()
             }else{
                 ob.turnChanged(mTurn)

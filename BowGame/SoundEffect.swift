@@ -41,15 +41,20 @@ class SoundEffect
 
     private func getSound(file:String, type:String) -> AVAudioPlayer  {
         //1
-        var path = NSBundle.mainBundle().pathForResource(file, ofType:type)
-        var url = NSURL.fileURLWithPath(path!)
+        let path = NSBundle.mainBundle().pathForResource(file, ofType:type)
+        let url = NSURL.fileURLWithPath(path!)
         
         //2
         var error: NSError?
         
         //3
         var audioPlayer:AVAudioPlayer?
-        audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOfURL: url)
+        } catch let error1 as NSError {
+            error = error1
+            audioPlayer = nil
+        }
         
         //4
         return audioPlayer!

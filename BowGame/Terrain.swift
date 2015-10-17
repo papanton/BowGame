@@ -19,7 +19,7 @@ class Terrain: SKShapeNode, Shotable {
     init(scene: GameScene) {
         super.init()
         generateHills(scene)
-        var bodySet = drawLine(scene)
+        let bodySet = drawLine(scene)
         self.path = bodySet.path
 
         self.fillColor = UIColor.brownColor()
@@ -56,7 +56,7 @@ class Terrain: SKShapeNode, Shotable {
                 hillKeyPoints[i] = CGPointMake(x, y)
             }
             x += winSize.width / xSplit
-            var temp = random() % Int(winSize.height / ySplit)
+            let temp = random() % Int(winSize.height / ySplit)
             y = CGFloat(temp)
         }
         
@@ -65,7 +65,7 @@ class Terrain: SKShapeNode, Shotable {
     func shot(attacker : Attacker)->Bool
     {
         if let arrow = attacker as? Arrow{
-            println("shot ground")
+            print("shot ground")
             arrow.stop()
         }
         return true
@@ -73,8 +73,8 @@ class Terrain: SKShapeNode, Shotable {
 
     func drawLine(scene: GameScene) -> (path: CGPath, body_1: SKPhysicsBody, body_2: SKPhysicsBody) {
         
-        var path:CGMutablePathRef = CGPathCreateMutable()
-        var curve:CGMutablePathRef = CGPathCreateMutable()
+        let path:CGMutablePathRef = CGPathCreateMutable()
+        let curve:CGMutablePathRef = CGPathCreateMutable()
         
         
         CGPathMoveToPoint(path, nil, hillKeyPoints[0]!.x, hillKeyPoints[0]!.y)
@@ -84,13 +84,13 @@ class Terrain: SKShapeNode, Shotable {
             CGPathAddLineToPoint(path, nil, hillKeyPoints[i]!.x, hillKeyPoints[i]!.y)
             
             
-            var p0:CGPoint = hillKeyPoints[i-1]!;
-            var p1:CGPoint = hillKeyPoints[i]!;
-            var hSegments: CGFloat = CGFloat(floorf(Float((p1.x-p0.x)/kHillSegmentWidth)));
-            var dx:CGFloat = (p1.x - p0.x) / hSegments;
-            var da:CGFloat = CGFloat(M_PI) / hSegments;
-            var ymid:CGFloat = (p0.y + p1.y) / 2;
-            var ampl:CGFloat = (p0.y - p1.y) / 2;
+            let p0:CGPoint = hillKeyPoints[i-1]!;
+            let p1:CGPoint = hillKeyPoints[i]!;
+            let hSegments: CGFloat = CGFloat(floorf(Float((p1.x-p0.x)/kHillSegmentWidth)));
+            let dx:CGFloat = (p1.x - p0.x) / hSegments;
+            let da:CGFloat = CGFloat(M_PI) / hSegments;
+            let ymid:CGFloat = (p0.y + p1.y) / 2;
+            let ampl:CGFloat = (p0.y - p1.y) / 2;
             
             var pt0:CGPoint = CGPointMake(0, 0)
             var pt1:CGPoint = CGPointMake(0, 0)

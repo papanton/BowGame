@@ -12,8 +12,9 @@ import Darwin
 
 class StartGameScene: SKScene {
     
-    let buttonnames = ["Start", "Resume", "Settings","Quit"]
-    let buttonfuncs = ["Start" : {(s:StartGameScene)->Void in s.startGame()},
+    let buttonnames = ["Stages", "Start", "Resume", "Settings","Quit"]
+    let buttonfuncs = ["Stages": {(s:StartGameScene)->Void in s.startStage()},
+        "Start" : {(s:StartGameScene)->Void in s.startGame()},
         "Resume" : {(s:StartGameScene)->Void in s.resume()},
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Quit" : {(s:StartGameScene)->Void in exit(0)}]
@@ -22,7 +23,7 @@ class StartGameScene: SKScene {
 
     func createButton(name : String, position : CGPoint)->SKNode
     {
-        var text : SKLabelNode = SKLabelNode()
+        let text : SKLabelNode = SKLabelNode()
         text.name = name
         text.text = name
         text.fontColor = SKColor.blackColor()
@@ -36,14 +37,14 @@ class StartGameScene: SKScene {
     func settings()
     {
         //changeScene(SettingScene(size: size))
-        var vc = view?.window!.rootViewController!
+        let vc = view?.window!.rootViewController!
         vc?.presentViewController(EquipmentViewController(), animated: true, completion: nil)
     }
     func resume()
     {
         if(current_game != nil){
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(self.current_game,transition: transitionType)
+            view?.presentScene(self.current_game!,transition: transitionType)
         }
     }
     
@@ -57,12 +58,12 @@ class StartGameScene: SKScene {
     func addButtons()
     {
         var i = 1;
-        var left = (size.width*0.4)
+        let left = (size.width*0.4)
         for name in buttonnames{
-            println(name)
-            var top =  size.height*CGFloat(1.0-0.2*CGFloat(i))
-            var position = CGPointMake(left ,  top)
-            var button = createButton(name, position: position)
+            print(name)
+            let top =  size.height*CGFloat(1.0-0.18*CGFloat(i))
+            let position = CGPointMake(left ,  top)
+            let button = createButton(name, position: position)
             addChild(button)
             ++i
         }
@@ -74,12 +75,22 @@ class StartGameScene: SKScene {
     
     func startGame()
     {
-        var screensize = UIScreen.mainScreen().bounds.size;
-        var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
+        let screensize = UIScreen.mainScreen().bounds.size;
+        let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
         let gameScene = GameScene(size: scenesize, mainmenu: self)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
         changeScene(gameScene)
     }
+    
+    func startStage()
+    {
+        let screensize = UIScreen.mainScreen().bounds.size;
+        let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
+        let gameScene = StageGameScene(size: scenesize, mainmenu: self)
+        gameScene.scaleMode = SKSceneScaleMode.AspectFit
+        changeScene(gameScene)
+    }
+    
     func changeScene(scene : SKScene)
     {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
@@ -88,8 +99,8 @@ class StartGameScene: SKScene {
     override func didMoveToView(view: SKView) {
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first!
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if (touchedNode.name != nil){
