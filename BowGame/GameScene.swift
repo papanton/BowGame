@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         addGround()
         addBuffs()
         addObstacle()
+//        addArrowPanel()
 
         gameStart()
     }
@@ -132,6 +133,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver, Shot
         }
 
         
+    }
+    
+    //add arrow panel
+    func addArrowPanel() {
+        let arrowCell = ArrowCell.init()
+        self.addChild(arrowCell)
+        arrowCell.xScale = 0.2
+        arrowCell.yScale = 0.2
+        arrowCell.position = CGPointMake(300, 300)
     }
     
     //add one Obstacle to Scene

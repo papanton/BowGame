@@ -49,6 +49,8 @@
 		F805C92A1BA61F530038B692 /* ShootAnimation.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = F805C9281BA61F530038B692 /* ShootAnimation.atlasc */; };
 		F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805C9291BA61F530038B692 /* ShootAnimation.swift */; };
 		F81D89971BB31C1300B9718C /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81D89961BB31C1300B9718C /* Terrain.swift */; };
+		F87E85891BD2F46C00215B5C /* ArrowPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87E85881BD2F46C00215B5C /* ArrowPanel.swift */; settings = {ASSET_TAGS = (); }; };
+		F87E858B1BD2F55D00215B5C /* bowarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F87E858A1BD2F55D00215B5C /* bowarrow.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		F805C9281BA61F530038B692 /* ShootAnimation.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ShootAnimation.atlasc; sourceTree = "<group>"; };
 		F805C9291BA61F530038B692 /* ShootAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootAnimation.swift; sourceTree = "<group>"; };
 		F81D89961BB31C1300B9718C /* Terrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
+		F87E85881BD2F46C00215B5C /* ArrowPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowPanel.swift; sourceTree = "<group>"; };
+		F87E858A1BD2F55D00215B5C /* bowarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bowarrow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,8 @@
 				F805C9291BA61F530038B692 /* ShootAnimation.swift */,
 				2A198E021BA0C32800F050A4 /* AppDelegate.swift */,
 				2A198E031BA0C32800F050A4 /* Arrow.swift */,
+				F87E858A1BD2F55D00215B5C /* bowarrow.png */,
+				F87E85881BD2F46C00215B5C /* ArrowPanel.swift */,
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
 				2A4795B11BBAF989009A20F0 /* UI */,
 				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
@@ -344,6 +350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F87E858B1BD2F55D00215B5C /* bowarrow.png in Resources */,
 				F805C92A1BA61F530038B692 /* ShootAnimation.atlasc in Resources */,
 				5379AC741BA9E83E0061BC19 /* spark.png in Resources */,
 				2AA53A841BBDCCFF00CC72A9 /* EquipmentItem.xib in Resources */,
@@ -377,6 +384,7 @@
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
 				F81D89971BB31C1300B9718C /* Terrain.swift in Sources */,
 				2AA53ACA1BBE361B00CC72A9 /* DataCenter.swift in Sources */,
+				F87E85891BD2F46C00215B5C /* ArrowPanel.swift in Sources */,
 				2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
 				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,

@@ -68,6 +68,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addPlayers()
         addBoss()
         addObstacle()
+        addArrowPanel()
         
     }
     
@@ -144,6 +145,15 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.world.addChild(obstacle)
     }
     
+    func addArrowPanel()
+    {
+        let arrowCell = ArrowCell.init()
+        self.addChild(arrowCell)
+        arrowCell.position = CGPointMake(300, 300)
+        arrowCell.xScale = 0.2
+        arrowCell.yScale = 0.2
+        
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first!
@@ -159,7 +169,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
             return
         }
-        
+        print(isFirstResponder())
         print(touchedNode.name)
         
         if(touchedNode.name == "settings"){
@@ -171,7 +181,11 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             startpositionOfTouch = controllers.controllBallleft.position
             endpositionOfTouch = controllers.controllBallleft.position
             isshooting = true
-        }else{
+        }
+        else if(touchedNode.name == "arrowCell") {
+            print("touched")
+        }
+        else{
             cameraMoveStart(touch)
         }
 
