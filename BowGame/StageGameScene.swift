@@ -20,7 +20,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var controllPowerradius : CGFloat = 65
     var controllers : Controller!
     
-    var touch_disable:Bool = false
+    var touch_disable:Bool = true
     
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
@@ -254,6 +254,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
 
+            self.touch_disable = true
             ShootingAngle.getInstance().hide()
         }
     }

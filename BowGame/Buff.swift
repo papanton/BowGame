@@ -13,6 +13,7 @@ class Buff: SKSpriteNode, Shotable {
     
     private let buffSize = CGSizeMake(50.0, 50.0)
     private var mScene : SKScene!
+    private var mWorld : SKNode!
     private var type : String!
     
     
@@ -104,11 +105,12 @@ class Buff: SKSpriteNode, Shotable {
     }
     
     //add the buff to the GameScene
-    func add2Scene(scene : SKScene)
+    func add2Scene(scene : SKScene, world : SKNode)
     {
         mScene = scene
+        mWorld = world
         setPosition()
-        mScene.addChild(self)
+        mWorld.addChild(self)
     }
     
 }
