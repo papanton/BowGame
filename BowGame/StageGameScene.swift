@@ -68,6 +68,7 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addPlayers()
         addBoss()
         addObstacle()
+        addBorder()
         
     }
     
@@ -87,6 +88,22 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
     }
+    
+    func addBorder()
+    {
+        let texture = SKTexture()
+        let leftBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
+        self.world.addChild(leftBorder)
+        
+        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
+        self.world.addChild(rightBorder)
+        
+        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
+        self.world.addChild(bottomBorder)
+        
+    }
+    
+    
     func addPlayers()
     {
         GameController.getInstance().reset()
