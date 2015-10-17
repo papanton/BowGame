@@ -165,6 +165,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
     }
     
+    //add arrow panel
+    func addArrowPanel() {
+        let arrowCell = ArrowCell.init()
+        self.addChild(arrowCell)
+        arrowCell.xScale = 0.2
+        arrowCell.yScale = 0.2
+        arrowCell.position = CGPointMake(300, 300)
+    }
+    
     //add one Obstacle to Scene
     func addObstacle() {
         let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
