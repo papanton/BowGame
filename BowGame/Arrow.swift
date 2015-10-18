@@ -13,7 +13,7 @@ class ArrowFactory
 {
     static func createArrow(player: Player)->Arrow
     {
-        return NonStopArrow(player: player)
+       // return NonStopArrow(player: player)
         let arrowitem = DataCenter.getInstance().getArrowItem()
         if(arrowitem.name == "FlappyArrow"){
             return FlappyArrow(player: player)

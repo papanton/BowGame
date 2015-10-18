@@ -26,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var startAnchorLocation: CGFloat!
     var startWorldLocation: CGFloat!
 
-    var turns : Int = 0
+    var rounds : Int = 0
     
     var isshooting = false
 
@@ -200,16 +200,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
-        else if(touchedNode.name == "controlBallLeft" && self.turns % 2 == 1)
-        {
-            startpositionOfTouch = controllers.controllBallleft.position
-            endpositionOfTouch = controllers.controllBallleft.position
-            isshooting = true
-        }else if(touchedNode.name == "controlBallRight" && self.turns % 2 == 0)
-        {
-            startpositionOfTouch = controllers.controllBallright.position
-            endpositionOfTouch = controllers.controllBallright.position
-            isshooting = true
+        else if(touchedNode.name == "controlBallLeft" ) {
+            leftControllerOnTouchBegin()
+        }else if(touchedNode.name == "controlBallRight"){
+           rightControllerOnTouchBegin()
         }else{
             cameraMoveStart(touch)
         }
@@ -238,18 +232,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             if(self.isshooting == true && !self.touch_disable)
             {
                 self.endpositionOfTouch = position
-                if(turns % 2 == 1)
-                {
-                    controllers.shootingleft(position)
-                }else{
-                    controllers.shootingright(position)
-                }
+                controllerShoot(position)
             }
             
         }
     }
-
-    
+    func leftControllerOnTouchBegin()
+    {
+        startpositionOfTouch = controllers.controllBallleft.position
+        endpositionOfTouch = controllers.controllBallleft.position
+        isshooting = true
+    }
+    func rightControllerOnTouchBegin()
+    {
+        startpositionOfTouch = controllers.controllBallright.position
+        endpositionOfTouch = controllers.controllBallright.position
+        isshooting = true
+    }
+    func controllerShoot(position: CGPoint){ }
+    func leftControllerOnTouchEnded()
+    {
+        controllers.bezierLayerleft1.removeFromSuperlayer()
+        controllers.bezierLayerleft2.removeFromSuperlayer()
+        controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
+    }
+    func rightControllerOnTouchEnded()
+    {
+        controllers.bezierLayerright1.removeFromSuperlayer()
+        controllers.bezierLayerright2.removeFromSuperlayer()
+        controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
+    }
+    func controllerOnTouchEnded(){}
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         if(self.touch_disable == true){
@@ -259,19 +272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
 
         if(self.isshooting == true)
         {
-            if(self.turns % 2 == 1)
-            {
-                controllers.bezierLayerleft1.removeFromSuperlayer()
-                controllers.bezierLayerleft2.removeFromSuperlayer()
-                controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
-            }
-            if(self.turns % 2 == 0)
-            {
-                controllers.bezierLayerright1.removeFromSuperlayer()
-                controllers.bezierLayerright2.removeFromSuperlayer()
-                controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
-            }
-            
+            controllerOnTouchEnded()
             if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
             {
                 return
@@ -348,7 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //show game start information and move view to P1
     func gameStart(){
         self.touch_disable = true
-        self.turns++
+        self.rounds++
         self.world.position = CGPointMake(-self.size.width, 0)
         
         let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
@@ -393,7 +394,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //display the turn information on the screen
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
-        text.text = "Round \(self.turns)"
+        text.text = "Round \(self.rounds)"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
@@ -411,7 +412,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         print("turnChanged() called")
 
-        self.turns = turn
+        self.rounds = turn
         delay(1.0){
             if(turn % 2 == 1)
             {

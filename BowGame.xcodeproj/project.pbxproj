@@ -20,6 +20,7 @@
 		2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E071BA0C32800F050A4 /* GameViewController.swift */; };
 		2A198E101BA0C32800F050A4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E081BA0C32800F050A4 /* Player.swift */; };
 		2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E091BA0C32800F050A4 /* StartGameScene.swift */; };
+		2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */; settings = {ASSET_TAGS = (); }; };
 		2A8274691BAB62D900A59823 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 2A8274671BAB62D900A59823 /* sound */; };
 		2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8274681BAB62D900A59823 /* SoundEffect.swift */; };
 		2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA53A6B1BBD97EC00CC72A9 /* EquipmentViewController.swift */; };
@@ -81,6 +82,7 @@
 		2A198E071BA0C32800F050A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2A198E081BA0C32800F050A4 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2A198E091BA0C32800F050A4 /* StartGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameScene.swift; sourceTree = "<group>"; };
+		2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutiplayerScene.swift; sourceTree = "<group>"; };
 		2A8274671BAB62D900A59823 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		2A8274681BAB62D900A59823 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		2AA53A6B1BBD97EC00CC72A9 /* EquipmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
 				2A4795B11BBAF989009A20F0 /* UI */,
 				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
+				2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */,
 				2A198E061BA0C32800F050A4 /* GameScene.swift */,
 				898238801BCDD20200B769F0 /* StageGameScene.swift */,
 				896F423D1BC2F11A0070DAAD /* Controller.swift */,
@@ -403,6 +406,7 @@
 				2AF0CAF51BC0977B00FBC36A /* BowItem.swift in Sources */,
 				894287571BACC1A400E519B8 /* Buff.swift in Sources */,
 				2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */,
+				2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */,
 				2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */,
 				2A198E0D1BA0C32800F050A4 /* CollisionHelp.swift in Sources */,
 				F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */,
