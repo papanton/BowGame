@@ -77,7 +77,7 @@ class StartGameScene: SKScene {
     {
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-        let gameScene = GameScene(size: scenesize, mainmenu: self)
+        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
         changeScene(gameScene)
     }
