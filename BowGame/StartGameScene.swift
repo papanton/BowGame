@@ -10,19 +10,35 @@ import UIKit
 import SpriteKit
 import Darwin
 
-class StartGameScene: SKScene {
+class StartGameScene: SKScene, UITextFieldDelegate {
     
-    let buttonnames = ["Start", "Resume", "Settings","Quit"]
-    let buttonfuncs = ["Start" : {(s:StartGameScene)->Void in s.startGame()},
+    let playerName = "test"
+    let buttonnames = ["Stages", "Start", "Resume", "Settings","Quit"]
+    let buttonfuncs = ["Stages": {(s:StartGameScene)->Void in s.startStage()},
+        "Start" : {(s:StartGameScene)->Void in s.startGame()},
         "Resume" : {(s:StartGameScene)->Void in s.resume()},
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Quit" : {(s:StartGameScene)->Void in exit(0)}]
     
     var current_game : SKScene?
+    var textField: UITextField!
+
+    
+    
+    func addTextField() {
+        let screensize = UIScreen.mainScreen().bounds.size;
+        
+        textField = UITextField(frame : CGRect(x:20, y:(screensize.height/2.25), width:(screensize.width/10), height:(screensize.height/15) ))
+        self.view!.addSubview(textField)
+        textField.backgroundColor = UIColor.blueColor()
+        textField.textAlignment = .Center
+        textField.font = UIFont(name: "Helvetica Neue", size: 23)
+    }
+    
 
     func createButton(name : String, position : CGPoint)->SKNode
     {
-        var text : SKLabelNode = SKLabelNode()
+        let text : SKLabelNode = SKLabelNode()
         text.name = name
         text.text = name
         text.fontColor = SKColor.blackColor()
@@ -36,14 +52,14 @@ class StartGameScene: SKScene {
     func settings()
     {
         //changeScene(SettingScene(size: size))
-        var vc = view?.window!.rootViewController!
+        let vc = view?.window!.rootViewController!
         vc?.presentViewController(EquipmentViewController(), animated: true, completion: nil)
     }
     func resume()
     {
         if(current_game != nil){
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(self.current_game,transition: transitionType)
+            view?.presentScene(self.current_game!,transition: transitionType)
         }
     }
     
@@ -57,12 +73,12 @@ class StartGameScene: SKScene {
     func addButtons()
     {
         var i = 1;
-        var left = (size.width*0.4)
+        let left = (size.width*0.4)
         for name in buttonnames{
-            println(name)
-            var top =  size.height*CGFloat(1.0-0.2*CGFloat(i))
-            var position = CGPointMake(left ,  top)
-            var button = createButton(name, position: position)
+            print(name)
+            let top =  size.height*CGFloat(1.0-0.18*CGFloat(i))
+            let position = CGPointMake(left ,  top)
+            let button = createButton(name, position: position)
             addChild(button)
             ++i
         }
@@ -74,22 +90,51 @@ class StartGameScene: SKScene {
     
     func startGame()
     {
-        var screensize = UIScreen.mainScreen().bounds.size;
-        var scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
-        let gameScene = GameScene(size: scenesize, mainmenu: self)
+        let name = textField.text!
+
+        textField.resignFirstResponder()
+
+        let screensize = UIScreen.mainScreen().bounds.size;
+        let scenesize : CGSize = CGSize(width: screensize.width * 2, height: screensize.height)
+        let scene = GameScene(size: scenesize, mainmenu: self,  localPlayer: name)
+        scene.scaleMode = SKSceneScaleMode.AspectFit
+        textField.removeFromSuperview()
+        AppWarpHelper.sharedInstance.gameScene = scene
+    
+        changeScene(scene)
+    }
+    
+    func startStage()
+    {
+
+        let screensize = UIScreen.mainScreen().bounds.size;
+        let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
+        let gameScene = StageGameScene(size: scenesize, mainmenu: self)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
+        textField.removeFromSuperview()
+
         changeScene(gameScene)
     }
+    
     func changeScene(scene : SKScene)
     {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
     override func didMoveToView(view: SKView) {
+        addTextField()
+        
+
+
+
+        AppWarpHelper.sharedInstance.initializeWarp()
+        AppWarpHelper.sharedInstance.startGameScene = self
+
+        
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first!
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if (touchedNode.name != nil){
@@ -108,4 +153,7 @@ class StartGameScene: SKScene {
     {
         self.current_game = nil
     }
+ 
+    
+   
 }
