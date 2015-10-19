@@ -79,7 +79,7 @@ class Buff: SKSpriteNode, Shotable {
             runAction(fadeout, completion: {
                 self.removeFromParent()
             })
-            arrow.tryStop()
+            arrow.stop()
         }
         return true
     }

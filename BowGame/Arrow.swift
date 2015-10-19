@@ -13,7 +13,6 @@ class ArrowFactory
 {
     static func createArrow(player: Player)->Arrow
     {
-       // return NonStopArrow(player: player)
         let arrowitem = DataCenter.getInstance().getArrowItem()
         if(arrowitem.name == "FlappyArrow"){
             return FlappyArrow(player: player)
@@ -40,9 +39,6 @@ class Arrow: SKSpriteNode, Attacker{
         if isFlying == 0{
             GameController.getInstance().afterArrowDead()
         }
-    }
-    func tryStop(){
-        stop()
     }
     func stop()
     {
@@ -152,12 +148,4 @@ class FlappyArrow : Arrow
         }
     }
     
-}
-class NonStopArrow : Arrow
-{
-    override func tryStop(){
-    }
-    override func slowDown() {
-    }
-
 }
