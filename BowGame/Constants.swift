@@ -21,6 +21,7 @@ let InGameSettingButton = "InGameSettings"
 let GroundTexture1 = "groundtexture1"
 let HealthBarFrame = "healthbarframelong"
 let Boss1 = "boss1"
+let BombImage = "bomb"
 /*
 Main menu images (buttons etc)
 */
