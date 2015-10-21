@@ -22,6 +22,9 @@ let GroundTexture1 = "groundtexture1"
 let HealthBarFrame = "healthbarframelong"
 let Boss1 = "boss1"
 let BombImage = "bomb"
+let Woodbox = "woodbox"
+let Stone = "stone"
+let StoneBroken = "stonebroken"
 /*
 Main menu images (buttons etc)
 */

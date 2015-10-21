@@ -62,6 +62,33 @@ class StageGameScene: GameScene{
         arrowCell.yScale = 0.2
         
     }
+    
+    //add obstacles in stage game scene
+    override func addObstacle() {
+        let startposition = CGPointMake(self.size.width, self.size.height / 6)
+        let stone1 = stone(position: CGPointMake(startposition.x, startposition.y))
+        let stone2 = stone(position: CGPointMake(startposition.x + 50, startposition.y))
+        let stone3 = stone(position: CGPointMake(startposition.x + 100, startposition.y))
+        let stone4 = stone(position: CGPointMake(startposition.x + 150, startposition.y))
+        let stone5 = stone(position: CGPointMake(startposition.x + 50, startposition.y + 50))
+        let stone6 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 50))
+        let stone7 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 100))
+        
+        let box1 = woodbox(position: CGPointMake(startposition.x, startposition.y + 50))
+        let box2 = woodbox(position: CGPointMake(startposition.x, startposition.y + 100))
+        
+        
+        self.world.addChild(box1)
+        self.world.addChild(box2)
+        self.world.addChild(stone1)
+        self.world.addChild(stone2)
+        self.world.addChild(stone3)
+        self.world.addChild(stone4)
+        self.world.addChild(stone5)
+        self.world.addChild(stone6)
+        self.world.addChild(stone7)
+    }
+    
     override func controllerShoot(position : CGPoint)
     {
         controllers.shootingleft(position)
