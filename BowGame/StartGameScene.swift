@@ -11,7 +11,6 @@ import SpriteKit
 import Darwin
 
 class StartGameScene: SKScene {
-    
     let buttonnames = ["Single", "Multiple", "Settings", "Exit"]
     let buttonImage = ["Single" : "singleplayerbutton", "Multiple" : "multipleplayerbutton", "Settings" : "settingsbutton","Exit" : "exitbutton"]
     let buttonfuncs = ["Single": {(s:StartGameScene)->Void in s.startStage()},
@@ -20,7 +19,20 @@ class StartGameScene: SKScene {
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Exit" : {(s:StartGameScene)->Void in exit(0)}]
     
+    var textField: UITextField!
+    let playerName = "test"
+
     var current_game : SKScene?
+
+    func addTextField() {
+        let screensize = UIScreen.mainScreen().bounds.size;
+        
+        textField = UITextField(frame : CGRect(x:20, y:(screensize.height/2.25), width:(screensize.width/10), height:(screensize.height/15) ))
+        self.view!.addSubview(textField)
+        textField.backgroundColor = UIColor.blueColor()
+        textField.textAlignment = .Center
+        textField.font = UIFont(name: "Helvetica Neue", size: 23)
+    }
 
     func createButton(name : String, position : CGPoint)->SKNode
     {
@@ -79,19 +91,31 @@ class StartGameScene: SKScene {
     
     func startGame()
     {
+        let name = textField.text!
+        
+        textField.resignFirstResponder()
+
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self)
+
+        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: name)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
+        textField.removeFromSuperview()
+        AppWarpHelper.sharedInstance.gameScene = gameScene
+
         changeScene(gameScene)
     }
     
     func startStage()
     {
+        let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-        let gameScene = StageGameScene(size: scenesize, mainmenu: self)
+        
+        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName )
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
+        textField.removeFromSuperview()
+
         changeScene(gameScene)
     }
     
@@ -100,7 +124,16 @@ class StartGameScene: SKScene {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
+    override func didMoveToView(view: SKView) {
+        addTextField()
+        
+        AppWarpHelper.sharedInstance.initializeWarp()
+        AppWarpHelper.sharedInstance.startGameScene = self
+        
+        
+    }
     
+
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first!
         let touchLocation = touch.locationInNode(self)

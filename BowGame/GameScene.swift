@@ -30,13 +30,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var isshooting = false
 
-    
+    var localPlayer = "test"
 
-    init(size: CGSize, mainmenu: StartGameScene) {
+
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
-        
+        self.localPlayer = localPlayer
+
         
         self.world = SKNode()
         self.UI = SKNode()
@@ -283,6 +285,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
+            
+            //Multiplayer update enemy player
+            var dataDict = NSMutableDictionary()
+            dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
+            var stringImpulse = NSStringFromCGVector(impulse)
+            dataDict.setObject(stringImpulse, forKey: "impulse")
+            
+            AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
         }
     }
     
@@ -302,6 +312,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
         }
     }
+    
+    override func didMoveToView(view: SKView) {
+        playAsGuest()
+        
+    }
+    
     func didBeginContact(contact: SKPhysicsContact)
     {
         //please use CollisonHelper to do the contact tasks.
@@ -432,4 +448,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             self.isshooting = false
         }
     }
+    
+    func updateEnemyStatus(dataDict: NSDictionary){
+        
+        let stringImpulse:String = dataDict.objectForKey("impulse") as! String
+        let realImpulse:CGVector = CGVectorFromString(stringImpulse)
+        GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
+        
+    }
+    func playAsGuest()
+    {
+        
+        let uName:String = localPlayer as String
+        let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        if uNameLength>0
+        {
+            AppWarpHelper.sharedInstance.playerName = uName
+            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
+        }
+    }
+    
 }
