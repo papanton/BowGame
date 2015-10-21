@@ -31,6 +31,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var isshooting = false
 
     var localPlayer = "test"
+    
+    var panel : ArrowPanel!
 
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
@@ -70,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addBorder()
         addPlayers()
         addObstacle()
+        addArrowPanel()
     }
     
     func initUI()
@@ -164,20 +167,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
     }
     
-    //add arrow panel
-    func addArrowPanel() {
-        let arrowCell = ArrowCell.init()
-        self.addChild(arrowCell)
-        arrowCell.xScale = 0.2
-        arrowCell.yScale = 0.2
-        arrowCell.position = CGPointMake(300, 300)
-    }
-    
     //add one Obstacle to Scene
     func addObstacle() {
         let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
         obstacle.setObstaclePosition(self)
         self.world.addChild(obstacle)
+    }
+    
+    //add arrow panel
+    func addArrowPanel()
+    {
+        panel = ArrowPanel.init()
+        panel.initCell(self)
+        
+        
+        panel.position = CGPointMake(170, 335)
+        panel.xScale = 0.2
+        panel.yScale = 0.2
+        
+        self.addChild(panel)
+        
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -206,6 +216,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             leftControllerOnTouchBegin()
         }else if(touchedNode.name == "controlBallRight"){
            rightControllerOnTouchBegin()
+        }else if(touchedNode.name == "arrowPanel") {
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+        }else if(touchedNode.name == "arrowCell") {
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            if (arrow.selected == false) {
+                arrow.selected = true
+                
+                for cell in panel.cells {
+                    if (!cell.isEqual(arrow)) {
+                        cell.selected = false
+                    }
+                }
+            }
+            if (panel.expanded) {
+                panel.resume()
+            }
         }else{
             cameraMoveStart(touch)
         }
