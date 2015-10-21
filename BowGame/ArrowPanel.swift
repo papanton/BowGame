@@ -23,7 +23,7 @@ class ArrowPanel: SKSpriteNode {
         
     }
     
-    func initCell(scene:StageGameScene) {
+    func initCell(scene:GameScene) {
         for (var i = 0; i < 5; i++) {
             let cell = ArrowCell.init()
             cell.position = CGPointMake(170, 335)

@@ -26,17 +26,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var startAnchorLocation: CGFloat!
     var startWorldLocation: CGFloat!
 
-    var turns : Int = 0
+    var rounds : Int = 0
     
     var isshooting = false
 
+    var localPlayer = "test"
     
+    var panel : ArrowPanel!
 
-    init(size: CGSize, mainmenu: StartGameScene) {
+
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
-        
+        self.localPlayer = localPlayer
+
         
         self.world = SKNode()
         self.UI = SKNode()
@@ -61,11 +65,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func initworld()
     {
+        GameController.getInstance().reset()
+        GameController.getInstance().addGameControllerObserver(self)
         addBackground()
         addGround()
         addBorder()
         addPlayers()
         addObstacle()
+        addArrowPanel()
     }
     
     func initUI()
@@ -108,19 +115,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //Function adding the two players in the scene in their respective positions
     func addPlayers()
     {
-        GameController.getInstance().reset()
         
         let player1position = CGPointMake(self.size.width * 2 * 0.1, self.size.height / 6)
         let player1 = PlayerFactory.getPlayer("player1", sceneSize: self.size, playerposition: player1position)
         player1.add2Scene(self, world: self.world, UI: self.UI)
-        GameController.getInstance().addPlayer(player1)
         
         let player2position = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
         let player2 = PlayerFactory.getPlayer("player2", sceneSize: self.size, playerposition: player2position)
         player2.add2Scene(self, world: self.world, UI: self.UI)
-        GameController.getInstance().addPlayer(player2)
-        
-        GameController.getInstance().addGameControllerObserver(self)
     }
     
     
@@ -165,20 +167,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
     }
     
-    //add arrow panel
-    func addArrowPanel() {
-        let arrowCell = ArrowCell.init()
-        self.addChild(arrowCell)
-        arrowCell.xScale = 0.2
-        arrowCell.yScale = 0.2
-        arrowCell.position = CGPointMake(300, 300)
-    }
-    
     //add one Obstacle to Scene
     func addObstacle() {
         let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
         obstacle.setObstaclePosition(self)
         self.world.addChild(obstacle)
+    }
+    
+    //add arrow panel
+    func addArrowPanel()
+    {
+        panel = ArrowPanel.init()
+        panel.initCell(self)
+        
+        
+        panel.position = CGPointMake(170, 335)
+        panel.xScale = 0.2
+        panel.yScale = 0.2
+        
+        self.addChild(panel)
+        
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -189,9 +198,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         if(self.touch_disable == true){
             for child in (self.world.children) {
-                if child is FlappyArrow{
-                    let arrow = child as! FlappyArrow
-                    arrow.flappy()
+                if child is ClickObersever{
+                    let co = child as! ClickObersever
+                    co.onClick()
                 }
             }
             return
@@ -203,16 +212,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
-        else if(touchedNode.name == "controlBallLeft" && self.turns % 2 == 1)
-        {
-            startpositionOfTouch = controllers.controllBallleft.position
-            endpositionOfTouch = controllers.controllBallleft.position
-            isshooting = true
-        }else if(touchedNode.name == "controlBallRight" && self.turns % 2 == 0)
-        {
-            startpositionOfTouch = controllers.controllBallright.position
-            endpositionOfTouch = controllers.controllBallright.position
-            isshooting = true
+        else if(touchedNode.name == "controlBallLeft" ) {
+            leftControllerOnTouchBegin()
+        }else if(touchedNode.name == "controlBallRight"){
+           rightControllerOnTouchBegin()
+        }else if(touchedNode.name == "arrowPanel") {
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+        }else if(touchedNode.name == "arrowCell") {
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            if (arrow.selected == false) {
+                arrow.selected = true
+                
+                for cell in panel.cells {
+                    if (!cell.isEqual(arrow)) {
+                        cell.selected = false
+                    }
+                }
+            }
+            if (panel.expanded) {
+                panel.resume()
+            }
         }else{
             cameraMoveStart(touch)
         }
@@ -241,18 +265,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             if(self.isshooting == true && !self.touch_disable)
             {
                 self.endpositionOfTouch = position
-                if(turns % 2 == 1)
-                {
-                    controllers.shootingleft(position)
-                }else{
-                    controllers.shootingright(position)
-                }
+                controllerShoot(position)
             }
             
         }
     }
-
-    
+    func leftControllerOnTouchBegin()
+    {
+        startpositionOfTouch = controllers.controllBallleft.position
+        endpositionOfTouch = controllers.controllBallleft.position
+        isshooting = true
+    }
+    func rightControllerOnTouchBegin()
+    {
+        startpositionOfTouch = controllers.controllBallright.position
+        endpositionOfTouch = controllers.controllBallright.position
+        isshooting = true
+    }
+    func controllerShoot(position: CGPoint){ }
+    func leftControllerOnTouchEnded()
+    {
+        controllers.bezierLayerleft1.removeFromSuperlayer()
+        controllers.bezierLayerleft2.removeFromSuperlayer()
+        controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
+    }
+    func rightControllerOnTouchEnded()
+    {
+        controllers.bezierLayerright1.removeFromSuperlayer()
+        controllers.bezierLayerright2.removeFromSuperlayer()
+        controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
+    }
+    func controllerOnTouchEnded(){}
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         if(self.touch_disable == true){
@@ -262,19 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
 
         if(self.isshooting == true)
         {
-            if(self.turns % 2 == 1)
-            {
-                controllers.bezierLayerleft1.removeFromSuperlayer()
-                controllers.bezierLayerleft2.removeFromSuperlayer()
-                controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
-            }
-            if(self.turns % 2 == 0)
-            {
-                controllers.bezierLayerright1.removeFromSuperlayer()
-                controllers.bezierLayerright2.removeFromSuperlayer()
-                controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
-            }
-            
+            controllerOnTouchEnded()
             if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
             {
                 return
@@ -285,6 +316,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
+            
+            //Multiplayer update enemy player
+            var dataDict = NSMutableDictionary()
+            dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
+            var stringImpulse = NSStringFromCGVector(impulse)
+            dataDict.setObject(stringImpulse, forKey: "impulse")
+            
+            AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
         }
     }
     
@@ -304,6 +343,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
         }
     }
+    
+    override func didMoveToView(view: SKView) {
+        playAsGuest()
+        
+    }
+    
     func didBeginContact(contact: SKPhysicsContact)
     {
         //please use CollisonHelper to do the contact tasks.
@@ -351,7 +396,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //show game start information and move view to P1
     func gameStart(){
         self.touch_disable = true
-        self.turns++
+        self.rounds++
         self.world.position = CGPointMake(-self.size.width, 0)
         
         let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
@@ -396,7 +441,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //display the turn information on the screen
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
-        text.text = "Round \(self.turns)"
+        text.text = "Round \(self.rounds)"
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
@@ -414,7 +459,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         print("turnChanged() called")
 
-        self.turns = turn
+        self.rounds = turn
         delay(1.0){
             if(turn % 2 == 1)
             {
@@ -435,13 +480,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         }
     }
     
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func updateEnemyStatus(dataDict: NSDictionary){
+        
+        let stringImpulse:String = dataDict.objectForKey("impulse") as! String
+        let realImpulse:CGVector = CGVectorFromString(stringImpulse)
+        GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
+        
     }
+    func playAsGuest()
+    {
+        
+        let uName:String = localPlayer as String
+        let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        if uNameLength>0
+        {
+            AppWarpHelper.sharedInstance.playerName = uName
+            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
+        }
+    }
+    
 }
