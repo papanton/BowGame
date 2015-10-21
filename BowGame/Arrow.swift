@@ -232,7 +232,8 @@ class ArrowThrowsBombs : Arrow{
         mCanThrow = false
         delay(0.25){
             if self.isFlying == 1{
-                let bomb = Obstacle(name: BombImage, size: CGSizeMake(20, 20), damage: 0)
+
+                let bomb = Obstacle(name: BombImage, damage: 0, position: self.position, size: CGSizeMake(20, 20))
                 print("throws bomb \n")
                 bomb.physicsBody?.dynamic = true
                 bomb.position = self.position

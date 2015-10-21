@@ -14,8 +14,8 @@ class StageGameScene: GameScene{
     var boss : Boss!
 
 
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer)
+    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -27,7 +27,6 @@ class StageGameScene: GameScene{
 
         //World
         super.initworld()
-        addArrowPanel()
         addBoss()
     }
     
@@ -53,15 +52,33 @@ class StageGameScene: GameScene{
         
     }
     
-    override func addArrowPanel()
-    {
-        let arrowCell = ArrowCell.init()
-        self.addChild(arrowCell)
-        arrowCell.position = CGPointMake(300, 300)
-        arrowCell.xScale = 0.2
-        arrowCell.yScale = 0.2
+    
+    //add obstacles in stage game scene
+    override func addObstacle() {
+        let startposition = CGPointMake(self.size.width, self.size.height / 6)
+        let stone1 = stone(position: CGPointMake(startposition.x, startposition.y))
+        let stone2 = stone(position: CGPointMake(startposition.x + 50, startposition.y))
+        let stone3 = stone(position: CGPointMake(startposition.x + 100, startposition.y))
+        let stone4 = stone(position: CGPointMake(startposition.x + 150, startposition.y))
+        let stone5 = stone(position: CGPointMake(startposition.x + 50, startposition.y + 50))
+        let stone6 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 50))
+        let stone7 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 100))
         
+        let box1 = woodbox(position: CGPointMake(startposition.x, startposition.y + 50))
+        let box2 = woodbox(position: CGPointMake(startposition.x, startposition.y + 100))
+        
+        
+        self.world.addChild(box1)
+        self.world.addChild(box2)
+        self.world.addChild(stone1)
+        self.world.addChild(stone2)
+        self.world.addChild(stone3)
+        self.world.addChild(stone4)
+        self.world.addChild(stone5)
+        self.world.addChild(stone6)
+        self.world.addChild(stone7)
     }
+    
     override func controllerShoot(position : CGPoint)
     {
         controllers.shootingleft(position)
@@ -97,8 +114,27 @@ class StageGameScene: GameScene{
             endpositionOfTouch = controllers.controllBallleft.position
             isshooting = true
         }
-        else if(touchedNode.name == "arrowCell") {
-            print("touched")
+        else if(touchedNode.name == "arrowPanel") {
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+        } else if(touchedNode.name == "arrowCell") {
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            if (arrow.selected == false) {
+                arrow.selected = true
+                
+                for cell in panel.cells {
+                    if (!cell.isEqual(arrow)) {
+                        cell.selected = false
+                    }
+                }
+            }
+            if (panel.expanded) {
+                panel.resume()
+            }
         }
         else{
             cameraMoveStart(touch)
@@ -156,6 +192,7 @@ class StageGameScene: GameScene{
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
 
+            self.touch_disable = true
             ShootingAngle.getInstance().hide()
         }
     }
