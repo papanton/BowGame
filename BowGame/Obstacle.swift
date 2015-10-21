@@ -14,30 +14,40 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
     private var type: String!
     private var collisionTimes: Int!
     private var damage : Int!
+    private var obstacletexture : SKTexture!
+    private var obstaclesize : CGSize!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     
-    
-    init(name: String, size: CGSize, damage: Int) {
-        let texture = SKTexture(imageNamed: name)
+    //init a obstacle with give name, possible damage and its init position
+    init(name: String, damage: Int, position: CGPoint, size: CGSize) {
+        obstacletexture = SKTexture(imageNamed: name)
+        obstaclesize = size
         self.type = name
         self.damage = damage
-        super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(size.width, size.height))
+        super.init(texture: obstacletexture, color: UIColor.clearColor(), size: obstaclesize)
         self.collisionTimes = 0
+        self.position = CGPointMake(position.x, position.y + self.size.height / 2)
+        
         self.addPhysicsBody()
     }
     
+    //init physicsBody to the obstacle
     private func addPhysicsBody() {
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.size.width-35, self.size.height))
+        self.physicsBody = SKPhysicsBody(texture: obstacletexture, size: obstaclesize)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
     }
     
+    /**
+     *  give a random position to the obstacle
+     *  not used now
+     */
     func setObstaclePosition(mScene: SKScene)
     {
         let minX = mScene.size.width * 0.3
@@ -51,23 +61,15 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
         let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
         
         self.position = CGPointMake(positionX, positionY)
-        //        self.position = CGPointMake(mScene.size.width*0.5, mScene.size.height*0.5)
     }
 
-    
-    
-    
+    //return the damage of the obstacle
     func getDamage()-> Int
     {
         return damage
     }
-   /* func shot(arrow :Arrow)
-    {
-        arrow.slowDown()
-        self.physicsBody?.dynamic = true
-        println("11")
-        
-    }*/
+
+    
     func afterAttack()
     {
         self.collisionTimes = self.collisionTimes + 1
@@ -91,5 +93,73 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
         print("11")
         return true
     }
-    
 }
+
+class woodbox : Obstacle {
+    
+    private var woodbox_size : CGSize!
+    init(position : CGPoint)
+    {
+        woodbox_size = CGSizeMake(50, 50)
+        super.init(name: Woodbox, damage: 0, position: position, size: woodbox_size)
+    }
+    
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //wood box disappears after shot
+    override func shot(attacker: Attacker) -> Bool {
+        print("shot wood box")
+        
+        if let arrow = attacker as? Arrow{
+            arrow.stop()
+            
+        }
+        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+        runAction(fadeout, completion: {
+            self.removeFromParent()
+        })
+
+        return true
+    }
+}
+
+class stone : Obstacle {
+    private var stone_size : CGSize!
+    init(position : CGPoint)
+    {
+        self.stone_size = CGSizeMake(50, 50)
+        super.init(name: Stone, damage: 0, position: position, size: stone_size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //wood box disappears after shot
+    override func shot(attacker: Attacker) -> Bool {
+        print("shot wood box")
+        
+        if let arrow = attacker as? Arrow{
+            arrow.stop()
+            
+        }
+        if(self.collisionTimes == 0)
+        {
+            self.collisionTimes = self.collisionTimes + 1
+            self.texture = SKTexture(imageNamed: StoneBroken)
+        }
+        else{
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
+        }
+        
+        return true
+    }
+
+}
+
