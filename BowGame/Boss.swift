@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class Boss : NSObject{
+class Boss : NSObject, Shotable{
     
     private var name : String!
     private var health : Health!
@@ -39,11 +39,14 @@ class Boss : NSObject{
         mUI.addChild(health.healthframe)
     }
     
-    func shot(arrow : Arrow)->Bool
+    func shot(attacker : Attacker)->Bool
     {
-        print("shoot boss")
-        self.health.decreaseHealth(Float(arrow.getDamage()))
-        arrow.stop()
+        if(attacker is Arrow){
+            print("shoot boss")
+            let arrow = attacker as! Arrow
+            self.health.decreaseHealth(Float(arrow.getDamage()))
+            arrow.stop()
+        }
         
         return true;
     }

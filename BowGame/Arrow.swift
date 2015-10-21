@@ -13,6 +13,7 @@ class ArrowFactory
 {
     static func createArrow(player: Player)->Arrow
     {
+        return ArrowThrowsBombs(player: player)
         let arrowitem = DataCenter.getInstance().getArrowItem()
         if(arrowitem.name == "FlappyArrow"){
             return FlappyArrow(player: player)
@@ -39,6 +40,9 @@ class Arrow: SKSpriteNode, Attacker{
         if isFlying == 0{
             GameController.getInstance().afterArrowDead()
         }
+    }
+    func tryStop(){
+        stop()
     }
     func stop()
     {
@@ -125,7 +129,18 @@ class Arrow: SKSpriteNode, Attacker{
     super.encodeWithCoder(aCoder)
     }*/
 }
-class FlappyArrow : Arrow
+
+class NonStopArrow : Arrow
+{
+    override func tryStop(){
+    }
+    override func slowDown() {
+    }
+
+}
+
+//different types of arrows
+class FlappyArrow : Arrow, ClickObersever
 {
     override func go(impulse: CGVector, position: CGPoint)
     {
@@ -135,7 +150,7 @@ class FlappyArrow : Arrow
         }
         super.go(CGVectorMake(dx, 5), position: position)
     }
-    func flappy()
+    func onClick()
     {
         if isFlying != 0 && physicsBody != nil{
             physicsBody!.velocity.dy = 400
@@ -147,5 +162,85 @@ class FlappyArrow : Arrow
             }
         }
     }
-    
 }
+
+class SplitableArrow : Arrow, ClickObersever
+{
+    private var mIsSplitted = false
+    private var deadArrowNum = 0
+    private func childArrowDead()
+    {
+        if !mIsSplitted || (3 == ++deadArrowNum){
+            GameController.getInstance().afterArrowDead()
+        }
+    }
+    func onClick()
+    {
+        if !mIsSplitted && (isFlying == 1){
+            split()
+            mIsSplitted = true
+        }
+    }
+    private func split()
+    {
+        let  children = [SplittedArrow(player: host), SplittedArrow(player: host)]
+        for child in children{
+            child.mOrigin = self
+            child.position = position
+            child.xScale = xScale
+            parent?.addChild(child)
+        }
+        setChildPosition(children[0], sign: 1)
+        setChildPosition(children[1], sign: -1)
+    }
+    private func setChildPosition(child : SplittedArrow, sign : CGFloat)
+    {
+        child.position.y += sign*50
+        child.physicsBody?.velocity.dx = (physicsBody?.velocity.dx)!
+        child.physicsBody?.velocity.dy = (physicsBody?.velocity.dy)! + sign*150
+    }
+    override func afterAttack()
+    {
+        if isFlying == 0{
+            childArrowDead()
+        }
+    }
+    //the arrow is already splitted from SplitableArrow
+    private class SplittedArrow : Arrow
+    {
+        var mOrigin : SplitableArrow!
+        override func afterAttack()
+        {
+            if isFlying == 0{
+                mOrigin.childArrowDead()
+            }
+        }
+    }
+}
+class ArrowThrowsBombs : Arrow{
+    private var mCanThrow = true
+    override func update() -> Bool {
+        let canUpdate = super.update()
+        if canUpdate && mCanThrow{
+            throwsBombs()
+            return isFlying == 1
+        }
+        return isFlying == 1
+    }
+    private func throwsBombs()
+    {
+        mCanThrow = false
+        delay(0.25){
+            if self.isFlying == 1{
+                let bomb = Obstacle(name: BombImage, size: CGSizeMake(20, 20), damage: 0)
+                print("throws bomb \n")
+                bomb.physicsBody?.dynamic = true
+                bomb.position = self.position
+                bomb.position.x -= 25 * self.xScale
+                self.parent?.addChild(bomb)
+                self.mCanThrow = true
+            }
+        }
+    }
+}
+
