@@ -163,3 +163,29 @@ class stone : Obstacle {
 
 }
 
+class Icebox : Obstacle {
+    private var ice_size : CGSize!
+    init(position : CGPoint)
+    {
+        self.ice_size = CGSizeMake(50, 50)
+        super.init(name: Ice, damage: 0, position: position, size: ice_size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //wood box disappears after shot
+    override func shot(attacker: Attacker) -> Bool {
+        print("shot ice box")
+        
+        if let arrow = attacker as? Arrow{
+            arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
+            arrow.update()
+        }
+        
+        return true
+    }
+    
+}
+

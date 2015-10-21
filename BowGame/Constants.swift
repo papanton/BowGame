@@ -20,11 +20,22 @@ let ArrowImage = "arrow"
 let InGameSettingButton = "InGameSettings"
 let GroundTexture1 = "groundtexture1"
 let HealthBarFrame = "healthbarframelong"
-let Boss1 = "boss1"
+
 let BombImage = "bomb"
+
+
+/*
+Boss texture
+*/
+let Boss1 = "pigboss1"
+
+/*
+Obstacle textures
+*/
 let Woodbox = "woodbox"
 let Stone = "stone"
 let StoneBroken = "stonebroken"
+let Ice = "icebox"
 /*
 Main menu images (buttons etc)
 */

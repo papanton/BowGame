@@ -62,22 +62,21 @@ private class Health {
     {
         if(name == "firstboss")
         {
-            totalHealth = 100
-            currentHealth = 100
-            
-            //init healthbar frame
-            let healthframetexture = SKTexture(imageNamed: HealthBarFrame)
-            let size = CGSizeMake(280, 40)
-            healthframe = SKSpriteNode(texture: healthframetexture, color: SKColor.clearColor(), size: size)
-            healthframe.position = CGPointMake(UIsize.width / 2, UIsize.height - healthframe.size.height)
-            
-            //init healthbar
-            healthbar = SKShapeNode(rect: CGRectMake(0, 0, 230, 13))
-            healthbar.fillColor = SKColor.greenColor()
-            healthbar.lineWidth = 0
-            healthbar.position = CGPointMake(UIsize.width / 2 - healthbar.frame.width / 2, UIsize.height - healthframe.size.height - healthbar.frame.height * 0.7)
+            totalHealth = 30
+            currentHealth = 30
         }
         
+        //init healthbar frame
+        let healthframetexture = SKTexture(imageNamed: HealthBarFrame)
+        let size = CGSizeMake(280, 40)
+        healthframe = SKSpriteNode(texture: healthframetexture, color: SKColor.clearColor(), size: size)
+        healthframe.position = CGPointMake(UIsize.width / 2, UIsize.height - healthframe.size.height)
+        
+        //init healthbar
+        healthbar = SKShapeNode(rect: CGRectMake(0, 0, 230, 13))
+        healthbar.fillColor = SKColor.greenColor()
+        healthbar.lineWidth = 0
+        healthbar.position = CGPointMake(UIsize.width / 2 - healthbar.frame.width / 2, UIsize.height - healthframe.size.height - healthbar.frame.height * 0.7)
     }
     
     private func addHealth(val : Float)
@@ -124,7 +123,7 @@ private class BossNode: SKSpriteNode, Shotable {
         self.mBoss = mBoss
         if(name == "firstboss")
         {
-            bosssize = CGSizeMake(120, 130)
+            bosssize = CGSizeMake(224 * 0.7, 169 * 0.7)
             bosstexture = SKTexture(imageNamed: Boss1)
         }
         
