@@ -24,7 +24,8 @@ class StartGameScene: SKScene {
 
     var current_game : SKScene?
 
-    
+    var tempFlagVal = 0
+
     func addTextField() {
         let screensize = UIScreen.mainScreen().bounds.size;
         
@@ -65,6 +66,8 @@ class StartGameScene: SKScene {
 
     override init(size: CGSize) {
         super.init(size: size)
+        AppWarpHelper.sharedInstance.initializeWarp()
+
         addBackground()
         addButtons()
     }
@@ -93,7 +96,6 @@ class StartGameScene: SKScene {
     func startGame()
     {
         
-        AppWarpHelper.sharedInstance.initializeWarp()
         AppWarpHelper.sharedInstance.startGameScene = self
         
         playerName = textField.text!
@@ -109,9 +111,7 @@ class StartGameScene: SKScene {
         }
         
 
-        
-
-
+       
     }
     
     func startMultiplayerGame(){
@@ -128,6 +128,7 @@ class StartGameScene: SKScene {
         AppWarpHelper.sharedInstance.gameScene = gameScene
          changeScene(gameScene)
 
+        
     }
     
     func startStage()
@@ -152,7 +153,7 @@ class StartGameScene: SKScene {
     }
     override func didMoveToView(view: SKView) {
         addTextField()
-        
+        playerName = ""
         
         
     }

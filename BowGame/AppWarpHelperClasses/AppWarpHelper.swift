@@ -12,8 +12,8 @@ import UIKit
 class AppWarpHelper: NSObject
 {
 
-    var api_key = "8a4a3002bc9e8a37a787ff33d78084f41c0c356dfa59eaa409edae3701c10641"
-    var secret_key = "13e409dd52c4b82d8218495c0c129a793ec0dd85444eaa98c289b4a413f13534"
+    var api_key = "b1f88f28628ed99e69807f7bba8b65dc9f30f488c6985cab705840d63be8e734"
+    var secret_key = "7420f2ee4e8e0081f8bb86e111de8954e32506e658520cd18f35cbe9ad1d2361"
     var roomId = ""
     var enemyName: String = ""
     var playerName: String = ""
@@ -22,6 +22,8 @@ class AppWarpHelper: NSObject
     var startGameScene: StartGameScene? = nil
     var gameScene: GameScene? = nil
     
+    var tempFlagVal = 0
+
     class var sharedInstance:AppWarpHelper{
         struct Static{
             static var instance:AppWarpHelper?
@@ -54,6 +56,10 @@ class AppWarpHelper: NSObject
         
         
         let roomListener: RoomListener = RoomListener()
+        tempFlagVal = tempFlagVal + 1
+        print("THIS FUNCTION HAS BEEN RUN " + String(tempFlagVal) + "  TIMES")
+        
+
         warpClient.addRoomRequestListener(roomListener)
     }
     func disconnectFromServer(){

@@ -30,8 +30,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var isshooting = false
 
-    var localPlayer = "test"
-
+    var localPlayer = "local"
+    var enemyPlayer = "temp"
+    
     var multiPlayerON = false
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
@@ -457,6 +458,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func updateEnemyStatus(dataDict: NSDictionary){
         
+        enemyPlayer =  dataDict.objectForKey("userName") as! String
+        print(enemyPlayer)
         let stringImpulse:String = dataDict.objectForKey("impulse") as! String
         let realImpulse:CGVector = CGVectorFromString(stringImpulse)
         GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
