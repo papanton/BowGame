@@ -188,9 +188,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         if(self.touch_disable == true){
             for child in (self.world.children) {
-                if child is FlappyArrow{
-                    let arrow = child as! FlappyArrow
-                    arrow.flappy()
+                if child is ClickObersever{
+                    let co = child as! ClickObersever
+                    co.onClick()
                 }
             }
             return
@@ -449,17 +449,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         }
     }
     
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
-    }
-    
-    
     func updateEnemyStatus(dataDict: NSDictionary){
         
         let stringImpulse:String = dataDict.objectForKey("impulse") as! String
@@ -479,6 +468,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         }
     }
     
-    
-
 }
