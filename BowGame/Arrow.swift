@@ -13,10 +13,13 @@ class ArrowFactory
 {
     static func createArrow(player: Player)->Arrow
     {
-        return ArrowThrowsBombs(player: player)
         let arrowitem = DataCenter.getInstance().getArrowItem()
         if(arrowitem.name == "FlappyArrow"){
             return FlappyArrow(player: player)
+        }else if(arrowitem.name == "ArrowThrowsBombs"){
+            return ArrowThrowsBombs(player: player)
+        }else if(arrowitem.name == "SplitableArrow"){
+            return SplitableArrow(player: player)
         }
         return Arrow(player: player)
     }

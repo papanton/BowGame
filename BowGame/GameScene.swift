@@ -229,7 +229,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
         }else if(touchedNode.name == "arrowCell") {
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
-            if (arrow.selected == false) {
+            arrow.onSelected()
+            /*if (arrow.selected == false) {
                 arrow.selected = true
                 
                 for cell in panel.cells {
@@ -237,7 +238,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                         cell.selected = false
                     }
                 }
-            }
+            }*/
             if (panel.expanded) {
                 panel.resume()
             }
