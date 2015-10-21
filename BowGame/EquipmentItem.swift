@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 class EquipmentItem: UICollectionViewCell {
 
-    static let mArrowDamage = [10, 20]
-    static let mItemNumber = ["ArrowItem" : 2, "BowItem":4, "PlayerItem":2]
-    let mSetEquipmentFuncs = ["ArrowItem" : {(index : Int)->Void in DataCenter.getInstance().setArrowItem(index)}]
+    static let mArrowDamage = ArrowColletion.getInstance().mArrowDamage
+    static let mItemNumber = ["ArrowItem" : ArrowColletion.getInstance().mArrowName.count, "BowItem":4, "PlayerItem":2]
+    let mSetEquipmentFuncs = ["ArrowItem" : {(index : Int)->Void in DataCenter.getInstance().setArrowItemByIndex(index)}]
     
     @IBOutlet weak var  mImageView : UIImageView!
     static let PlayerItemNames = [PlayerImage1, PlayerImage2]
@@ -28,6 +28,7 @@ class EquipmentItem: UICollectionViewCell {
         }
         if name == "ArrowItem"{
             mImageView.image = UIImage(named: ArrowColletion.getInstance().mArrowName[index])
+            print("index \(index)")
         }
     }
     func changeEquipment(name : String, index : Int)
