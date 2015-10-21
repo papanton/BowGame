@@ -30,17 +30,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var isshooting = false
 
-    var localPlayer = "test"
+    var localPlayer = "local"
+    var enemyPlayer = "temp"
     
-    var panel : ArrowPanel!
+    var multiPlayerON = false
 
-
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
         self.localPlayer = localPlayer
-
+        self.multiPlayerON = multiPlayerON
         
         self.world = SKNode()
         self.UI = SKNode()
@@ -209,6 +209,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         print(touchedNode.name)
         
         if(touchedNode.name == "settings"){
+            
+            AppWarpHelper.sharedInstance.disconnectFromServer()
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
@@ -318,12 +320,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             ShootingAngle.getInstance().hide()
             
             //Multiplayer update enemy player
+            
+            if multiPlayerON {
             var dataDict = NSMutableDictionary()
             dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
             var stringImpulse = NSStringFromCGVector(impulse)
             dataDict.setObject(stringImpulse, forKey: "impulse")
             
             AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+            }
         }
     }
     
@@ -345,7 +350,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     override func didMoveToView(view: SKView) {
-        playAsGuest()
+        //playAsGuest()
         
     }
     
@@ -482,6 +487,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func updateEnemyStatus(dataDict: NSDictionary){
         
+        enemyPlayer =  dataDict.objectForKey("userName") as! String
+        print(enemyPlayer)
         let stringImpulse:String = dataDict.objectForKey("impulse") as! String
         let realImpulse:CGVector = CGVectorFromString(stringImpulse)
         GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
