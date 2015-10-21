@@ -60,4 +60,8 @@ class ConnectionListener: NSObject,ConnectionRequestListener
             print("onConnectDone Unknown Error")
         }
     }
+    
+    func onDisconnectDone(event: ConnectEvent!) {
+        print("Disconnected")
+    }
 }

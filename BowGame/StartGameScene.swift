@@ -20,10 +20,11 @@ class StartGameScene: SKScene {
         "Exit" : {(s:StartGameScene)->Void in exit(0)}]
     
     var textField: UITextField!
-    let playerName = "test"
+    var playerName = "test"
 
     var current_game : SKScene?
 
+    
     func addTextField() {
         let screensize = UIScreen.mainScreen().bounds.size;
         
@@ -91,19 +92,42 @@ class StartGameScene: SKScene {
     
     func startGame()
     {
-        let name = textField.text!
+        
+        AppWarpHelper.sharedInstance.initializeWarp()
+        AppWarpHelper.sharedInstance.startGameScene = self
+        
+        playerName = textField.text!
         
         textField.resignFirstResponder()
 
+        let uName:String = playerName   as String
+        let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        if uNameLength>0
+        {
+            AppWarpHelper.sharedInstance.playerName = uName
+            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
+        }
+        
+
+        
+
+
+    }
+    
+    func startMultiplayerGame(){
+        
+        textField.removeFromSuperview()
+
+        
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-
-        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: name)
+        
+        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: true)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
-        textField.removeFromSuperview()
+        
         AppWarpHelper.sharedInstance.gameScene = gameScene
+         changeScene(gameScene)
 
-        changeScene(gameScene)
     }
     
     func startStage()
@@ -112,9 +136,11 @@ class StartGameScene: SKScene {
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
         
-        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName )
+        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: false )
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
         textField.removeFromSuperview()
+
+        
 
         changeScene(gameScene)
     }
@@ -127,8 +153,6 @@ class StartGameScene: SKScene {
     override func didMoveToView(view: SKView) {
         addTextField()
         
-        AppWarpHelper.sharedInstance.initializeWarp()
-        AppWarpHelper.sharedInstance.startGameScene = self
         
         
     }

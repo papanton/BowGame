@@ -24,4 +24,9 @@ class ZoneListener: NSObject,ZoneRequestListener
             
         }
     }
+ 
+    func onDeleteRoomDone(roomEvent: RoomEvent!) {
+        print("room deleted")
+    }
+
 }

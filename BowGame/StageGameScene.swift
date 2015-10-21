@@ -14,8 +14,8 @@ class StageGameScene: GameScene{
     var boss : Boss!
 
 
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer)
+    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
     }
     
     required init?(coder aDecoder: NSCoder) {
