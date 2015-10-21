@@ -37,7 +37,6 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
-        //let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         skView.showsPhysics = true
     }
 

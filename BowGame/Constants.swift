@@ -21,6 +21,7 @@ let InGameSettingButton = "InGameSettings"
 let GroundTexture1 = "groundtexture1"
 let HealthBarFrame = "healthbarframelong"
 let Boss1 = "boss1"
+let BombImage = "bomb"
 /*
 Main menu images (buttons etc)
 */
@@ -42,4 +43,14 @@ struct Category {
     static let Player: UInt32 = 1
     static let Arrow: UInt32 = 2
     
+}
+
+
+func delay(delay:Double, closure:()->()) {
+    dispatch_after(
+        dispatch_time(
+            DISPATCH_TIME_NOW,
+            Int64(delay * Double(NSEC_PER_SEC))
+        ),
+        dispatch_get_main_queue(), closure)
 }
