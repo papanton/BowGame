@@ -11,13 +11,31 @@ import SpriteKit
 
 // panel to hold multiple arrow cells
 class ArrowPanel: SKSpriteNode {
-    var expanded = false
+    var expanded:Bool = false
+    var scaleFactor:CGFloat = 0.2
+    var cells = [ArrowCell]()
     
     init() {
         let texture = SKTexture(imageNamed: "bowarrow.png")
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
+        self.size = CGSizeMake(150, 150)
         self.name = "arrowPanel"
+        
     }
+    
+    func initCell(scene:StageGameScene) {
+        for (var i = 0; i < 5; i++) {
+            let cell = ArrowCell.init()
+            cell.position = CGPointMake(170, 335)
+            cell.xScale = scaleFactor
+            cell.yScale = scaleFactor
+            cells.append(cell)
+
+            scene.addChild(cell)
+        }
+    }
+    
+    
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -25,10 +43,35 @@ class ArrowPanel: SKSpriteNode {
     
     func expand() {
         expanded = true
+        
+        // horizontal direction
+//        for (var i = 0; i < cells.count; i++) {
+//            let move = SKAction.moveByX((CGFloat)(150.0 * scaleFactor * CGFloat(i)), y: 0, duration: 0.2)
+//            cells[i].runAction(move)
+//        }
+        
+        // vertical direction
+        for (var i = 0; i < cells.count; i++) {
+            let move = SKAction.moveByX(0, y: -150.0 * scaleFactor * CGFloat(i), duration: 0.2)
+            cells[i].runAction(move)
+        }
     }
     
     func resume() {
         expanded = false
+        
+        // expand in horizontal direction
+//        for (var i = 0; i < cells.count; i++) {
+//            let move = SKAction.moveByX((CGFloat)(-150.0 * scaleFactor * CGFloat(i)), y: 0, duration: 0.2)
+//            cells[i].runAction(move)
+//        }
+        
+        // vertical direction
+        for (var i = 0; i < cells.count; i++) {
+            let move = SKAction.moveByX(0, y: 150.0 * scaleFactor * CGFloat(i), duration: 0.2)
+            
+            cells[i].runAction(move)
+        }
     }
 }
 
@@ -36,6 +79,7 @@ class ArrowPanel: SKSpriteNode {
 
 // A cell that contains a single arrow
 class ArrowCell: SKSpriteNode {
+    var selected:Bool = false
     init() {
         let texture = SKTexture(imageNamed: "bowarrow.png")
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())

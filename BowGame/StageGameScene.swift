@@ -32,7 +32,9 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var isshooting = false
 
     var boss : Boss!
-
+    var panel : ArrowPanel!
+    
+    
     
     init(size: CGSize, mainmenu: StartGameScene) {
         super.init(size: size)
@@ -174,11 +176,16 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func addArrowPanel()
     {
-        let arrowCell = ArrowCell.init()
-        self.addChild(arrowCell)
-        arrowCell.position = CGPointMake(300, 300)
-        arrowCell.xScale = 0.2
-        arrowCell.yScale = 0.2
+        panel = ArrowPanel.init()
+        panel.initCell(self)
+        
+        
+        panel.position = CGPointMake(170, 335)
+        panel.xScale = 0.2
+        panel.yScale = 0.2
+        
+        self.addChild(panel)
+        
         
     }
     
@@ -209,8 +216,27 @@ class StageGameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             endpositionOfTouch = controllers.controllBallleft.position
             isshooting = true
         }
-        else if(touchedNode.name == "arrowCell") {
-            print("touched")
+        else if(touchedNode.name == "arrowPanel") {
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+        } else if(touchedNode.name == "arrowCell") {
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            if (arrow.selected == false) {
+                arrow.selected = true
+                
+                for cell in panel.cells {
+                    if (!cell.isEqual(arrow)) {
+                        cell.selected = false
+                    }
+                }
+            }
+            if (panel.expanded) {
+                panel.resume()
+            }
         }
         else{
             cameraMoveStart(touch)
