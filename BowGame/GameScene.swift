@@ -34,6 +34,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var enemyPlayer = "temp"
     
     var multiPlayerON = false
+    
+    var panel:ArrowPanel!
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
