@@ -25,6 +25,8 @@ let BombImage = "bomb"
 let Woodbox = "woodbox"
 let Stone = "stone"
 let StoneBroken = "stonebroken"
+let CanonStone = "CanonStone"
+let BangTexture = "BangTexture"
 /*
 Main menu images (buttons etc)
 */

@@ -20,7 +20,7 @@ class ArrowPanel: SKSpriteNode {
     init() {
         let texture = SKTexture(imageNamed: "bowarrow.png")
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
-        self.size = CGSizeMake(150, 150)
+        self.size = CGSizeMake(250, 250)
         self.name = "arrowPanel"
         
     }
@@ -53,7 +53,7 @@ class ArrowPanel: SKSpriteNode {
         
         // vertical direction
         for (var i = 0; i < cells.count; i++) {
-            let move = SKAction.moveByX(0, y: -150.0 * scaleFactor * CGFloat(i), duration: 0.2)
+            let move = SKAction.moveByX(0, y: -250.0 * scaleFactor * CGFloat(i), duration: 0.2)
             cells[i].runAction(move)
         }
     }
@@ -69,7 +69,7 @@ class ArrowPanel: SKSpriteNode {
         
         // vertical direction
         for (var i = 0; i < cells.count; i++) {
-            let move = SKAction.moveByX(0, y: 150.0 * scaleFactor * CGFloat(i), duration: 0.2)
+            let move = SKAction.moveByX(0, y: 250.0 * scaleFactor * CGFloat(i), duration: 0.2)
             
             cells[i].runAction(move)
         }
@@ -85,7 +85,7 @@ class ArrowCell: SKSpriteNode {
     init(arrowName : String) {
         let texture = SKTexture(imageNamed: arrowName)
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
-        self.size = CGSizeMake(150, 150)
+        self.size = CGSizeMake(250, 250)
         self.name = "arrowCell"
         mArrowName = arrowName
     }

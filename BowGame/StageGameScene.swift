@@ -77,8 +77,24 @@ class StageGameScene: GameScene{
         self.world.addChild(stone5)
         self.world.addChild(stone6)
         self.world.addChild(stone7)
-    }
     
+        addCanon()
+        addBlackHole()
+    }
+    func addBlackHole()
+    {
+        let bh = BlackHole(position: CGPointMake(400,200))
+        world.addChild(bh)
+    }
+    func addCanon()
+    {
+        let canon = Canon()
+        canon.position.x = size.width/2
+        canon.position.y = 80;
+        world.addChild(canon)
+        canon.startFire()
+        
+    }
     override func controllerShoot(position : CGPoint)
     {
         controllers.shootingleft(position)
