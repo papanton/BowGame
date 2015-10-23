@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "FlappyArrow.png"
+      "filename" : "flappyarrow.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

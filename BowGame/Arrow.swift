@@ -13,10 +13,13 @@ class ArrowFactory
 {
     static func createArrow(player: Player)->Arrow
     {
-        return ArrowThrowsBombs(player: player)
         let arrowitem = DataCenter.getInstance().getArrowItem()
         if(arrowitem.name == "FlappyArrow"){
             return FlappyArrow(player: player)
+        }else if(arrowitem.name == "ArrowThrowsBombs"){
+            return ArrowThrowsBombs(player: player)
+        }else if(arrowitem.name == "SplitableArrow"){
+            return SplitableArrow(player: player)
         }
         return Arrow(player: player)
     }
@@ -35,9 +38,27 @@ class Arrow: SKSpriteNode, Attacker{
     {
         return host
     }
+    private func bang()
+    {
+        print("bang")
+        let firetext = SKTexture(imageNamed: BangTexture)
+        let fire = SKSpriteNode(texture: firetext)
+        fire.size = CGSizeMake(50, 50)
+        fire.position = position
+        fire.alpha = 0.0;
+        // SKAction.fadeInWithDuration(canon,1)
+        parent?.addChild(fire)
+        let fadein: SKAction = SKAction.fadeAlphaTo(1, duration: 1)
+
+        fire.runAction(fadein, completion: {
+            fire.removeFromParent()
+            print("removed")
+        })
+    }
     func afterAttack()
     {
         if isFlying == 0{
+            bang()
             GameController.getInstance().afterArrowDead()
         }
     }
@@ -68,7 +89,7 @@ class Arrow: SKSpriteNode, Attacker{
     }
     init(player : Player) {
         host = player
-        let spriteSize = CGSize(width: 30.0, height: 10.0)
+        let spriteSize = CGSize(width: 50.0, height: 50.0)
         let texture = SKTexture(imageNamed: ArrowImage)
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
@@ -148,6 +169,12 @@ class FlappyArrow : Arrow, ClickObersever
         if(impulse.dx < 0) {
             dx = CGFloat(-1.0)
         }
+        let flappy1 = SKTexture(imageNamed: "FlappyArrow")
+        let flappy2 = SKTexture(imageNamed: "FlappyArrow2")
+        let one = SKAction.animateWithTextures([flappy1,flappy2], timePerFrame: 0.4)
+        let forever = SKAction.repeatActionForever(one)
+        runAction(forever)
+
         super.go(CGVectorMake(dx, 5), position: position)
     }
     func onClick()
