@@ -24,12 +24,18 @@ class StageGameScene: GameScene{
     
     override func initworld()
     {
-
         //World
         super.initworld()
         addBoss()
     }
-    
+    //init environment of the game world
+    //specific in each stage scene
+    override func addObstacle() {}
+    override func addBackground() {}
+    func addBoss() {}
+    func addBlackHole() {}
+    func addCanon() {}
+
     
     override func addPlayers()
     {
@@ -37,21 +43,8 @@ class StageGameScene: GameScene{
         let player1 = PlayerFactory.getPlayer("singleplayer", sceneSize: size, playerposition: playerposition)
         player1.add2Scene(self, world: self.world, UI: self.UI)
     }
-
-    //init parts of the game world
-//    override func addObstacle() {
-//        
-//    }
-    func addBoss()
-    {
-    }
-    func addBlackHole()
-    {
-    }
-    func addCanon()
-    {
-    }
-
+    
+    //init ui controllers
     override func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
         controllers.addLeftController()

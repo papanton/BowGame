@@ -19,6 +19,8 @@ class Boss : NSObject, Shotable{
     private var mScene : SKScene!
     private var bossposition : CGPoint!
     
+    //current boss name choice:
+    //firstboss, whiteboss2
     init(name : String, scene : SKScene, UI : SKNode, world : SKNode, position : CGPoint)
     {
         super.init()
@@ -64,6 +66,14 @@ private class Health {
         {
             totalHealth = 30
             currentHealth = 30
+        }else if(name == "whiteboss2")
+        {
+            totalHealth = 60
+            currentHealth = 60
+        }else if(name == "beeboss")
+        {
+            totalHealth = 40
+            currentHealth = 40
         }
         
         //init healthbar frame
@@ -125,6 +135,12 @@ private class BossNode: SKSpriteNode, Shotable {
         {
             bosssize = CGSizeMake(224 * 0.7, 169 * 0.7)
             bosstexture = SKTexture(imageNamed: Boss1)
+        }else if(name == "whiteboss2"){
+            bosssize = CGSizeMake(230 * 0.7, 231 * 0.7)
+            bosstexture = SKTexture(imageNamed: "whiteboss2")
+        }else if(name == "beeboss"){
+            bosssize = CGSizeMake(200 * 0.7, 250 * 0.7)
+            bosstexture = SKTexture(imageNamed: "beeboss")
         }
         
         super.init(texture: bosstexture, color: SKColor.clearColor(), size: bosssize)

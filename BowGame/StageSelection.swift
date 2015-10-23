@@ -21,7 +21,9 @@ class StageSelection: SKScene {
         "test": {(s:StageSelection)->Void in s.goTestStage()},
 
     ]
-
+    let playerName = "temp"
+    let screensize = UIScreen.mainScreen().bounds.size;
+    let scenesize : CGSize = CGSize(width: UIScreen.mainScreen().bounds.size.width, height: UIScreen.mainScreen().bounds.size.height)
     
     init(size: CGSize, mainmenu : StartGameScene)
     {
@@ -53,6 +55,7 @@ class StageSelection: SKScene {
         back.position = CGPointMake(back.size.width + back.size.width / 2, self.size.height - back.size
             .height - back.size.height / 2)
         back.name = "back"
+        back.zPosition = 2
         self.addChild(back)
     }
     
@@ -88,18 +91,24 @@ class StageSelection: SKScene {
         self.removeFromParent()
     }
     
-    //go to correspoding stages
+    //functions go to correspoding stages
     func goStageOne()
     {
         print("select stage 1")
+        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        changeScene(gameScene)
     }
     func goStageTwo()
     {
         print("select stage 2")
+        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        changeScene(gameScene)
     }
     func goStageThree()
     {
         print("select stage 3")
+        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        changeScene(gameScene)
     }
     func goTestStage()
     {
@@ -111,6 +120,7 @@ class StageSelection: SKScene {
         
         changeScene(gameScene)
     }
+    
     
     //select stages by touch begin
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

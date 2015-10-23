@@ -1,5 +1,5 @@
 //
-//  TestScene.swift
+//  StageOne.swift
 //  BowGame
 //
 //  Created by Zhiyang Lu on 10/23/15.
@@ -9,8 +9,7 @@
 import UIKit
 import SpriteKit
 
-class TestScene: StageGameScene {
-    
+class StageOne: StageGameScene {
     override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
     }
@@ -29,7 +28,7 @@ class TestScene: StageGameScene {
         
         print(background.frame.width)
         print(background.frame.height)
-
+        
     }
     
     override func addGround()
@@ -56,33 +55,9 @@ class TestScene: StageGameScene {
     
     override func addObstacle()
     {
-        let startposition = CGPointMake(self.size.width, self.size.height / 6)
-        let stone1 = stone(position: CGPointMake(startposition.x, startposition.y))
-        let stone2 = stone(position: CGPointMake(startposition.x + 50, startposition.y))
-        let stone3 = stone(position: CGPointMake(startposition.x + 100, startposition.y))
-        let stone4 = stone(position: CGPointMake(startposition.x + 150, startposition.y))
-        let stone5 = stone(position: CGPointMake(startposition.x + 50, startposition.y + 50))
-        let stone6 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 50))
-        let stone7 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 100))
         
-        let box1 = woodbox(position: CGPointMake(startposition.x, startposition.y + 50))
-        let box2 = woodbox(position: CGPointMake(startposition.x, startposition.y + 100))
-        
-        
-        self.world.addChild(box1)
-        self.world.addChild(box2)
-        self.world.addChild(stone1)
-        self.world.addChild(stone2)
-        self.world.addChild(stone3)
-        self.world.addChild(stone4)
-        self.world.addChild(stone5)
-        self.world.addChild(stone6)
-        self.world.addChild(stone7)
-        
-        addCanon()
-        addBlackHole()
-
     }
+    
     override func addBlackHole()
     {
         let bh = BlackHole(position: CGPointMake(400,200))
@@ -97,5 +72,6 @@ class TestScene: StageGameScene {
         canon.startFire()
     }
 
-    
+
+
 }
