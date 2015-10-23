@@ -24,12 +24,18 @@ class StageGameScene: GameScene{
     
     override func initworld()
     {
-
         //World
         super.initworld()
         addBoss()
     }
-    
+    //init environment of the game world
+    //specific in each stage scene
+    override func addObstacle() {}
+    override func addBackground() {}
+    func addBoss() {}
+    func addBlackHole() {}
+    func addCanon() {}
+
     
     override func addPlayers()
     {
@@ -38,61 +44,10 @@ class StageGameScene: GameScene{
         player1.add2Scene(self, world: self.world, UI: self.UI)
     }
     
-    func addBoss()
-    {
-        let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
-        self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
-        boss.add2Scene()
-    }
-    
-    
+    //init ui controllers
     override func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
         controllers.addLeftController()
-        
-    }
-    
-    
-    //add obstacles in stage game scene
-    override func addObstacle() {
-        let startposition = CGPointMake(self.size.width, self.size.height / 6)
-        let stone1 = stone(position: CGPointMake(startposition.x, startposition.y))
-        let stone2 = stone(position: CGPointMake(startposition.x + 50, startposition.y))
-        let stone3 = stone(position: CGPointMake(startposition.x + 100, startposition.y))
-        let stone4 = stone(position: CGPointMake(startposition.x + 150, startposition.y))
-        let stone5 = stone(position: CGPointMake(startposition.x + 50, startposition.y + 50))
-        let stone6 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 50))
-        let stone7 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 100))
-        
-        let box1 = woodbox(position: CGPointMake(startposition.x, startposition.y + 50))
-        let box2 = woodbox(position: CGPointMake(startposition.x, startposition.y + 100))
-        
-        
-        self.world.addChild(box1)
-        self.world.addChild(box2)
-        self.world.addChild(stone1)
-        self.world.addChild(stone2)
-        self.world.addChild(stone3)
-        self.world.addChild(stone4)
-        self.world.addChild(stone5)
-        self.world.addChild(stone6)
-        self.world.addChild(stone7)
-    
-        addCanon()
-        addBlackHole()
-    }
-    func addBlackHole()
-    {
-        let bh = BlackHole(position: CGPointMake(400,200))
-        world.addChild(bh)
-    }
-    func addCanon()
-    {
-        let canon = Canon()
-        canon.position.x = size.width/2
-        canon.position.y = 80;
-        world.addChild(canon)
-        canon.startFire()
         
     }
     override func controllerShoot(position : CGPoint)
@@ -228,16 +183,6 @@ class StageGameScene: GameScene{
         }
     }
     
-    //call after the arrow disappears
-    func nextRound()
-    {
-        
-    }
-    
-    func startGame()
-    {
-        
-    }
 
     override func turnChanged(turn:Int)
     {
