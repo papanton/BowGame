@@ -133,17 +133,17 @@ class StartGameScene: SKScene {
     
     func startStage()
     {
-        let playerName = "temp"
+//        let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
+//        
+//        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: false )
         
-        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: false )
-        gameScene.scaleMode = SKSceneScaleMode.AspectFit
+        let stageSelect = StageSelection(size: scenesize, mainmenu: self)
+        
+        stageSelect.scaleMode = SKSceneScaleMode.AspectFit
         textField.removeFromSuperview()
-
-        
-
-        changeScene(gameScene)
+        changeScene(stageSelect)
     }
     
     func changeScene(scene : SKScene)
