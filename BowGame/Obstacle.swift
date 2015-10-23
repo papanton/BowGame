@@ -82,7 +82,7 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
                     self.removeFromParent()})
             }
         }
-        print("22")
+        //print("22")
     }
     func shot(attacker : Attacker)->Bool
     {
@@ -90,7 +90,7 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
             arrow.slowDown()
             self.physicsBody?.dynamic = true
         }
-        print("11")
+        //print("11")
         return true
     }
 }

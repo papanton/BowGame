@@ -12,9 +12,10 @@ import SpriteKit
 class StageGameScene: GameScene{
     
     var boss : Boss!
-    
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer)
+
+
+    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,37 +56,45 @@ class StageGameScene: GameScene{
     //add obstacles in stage game scene
     override func addObstacle() {
         let startposition = CGPointMake(self.size.width, self.size.height / 6)
-//        let stone1 = stone(position: CGPointMake(startposition.x, startposition.y))
-//        let stone2 = stone(position: CGPointMake(startposition.x + 50, startposition.y))
-//        let stone3 = stone(position: CGPointMake(startposition.x + 100, startposition.y))
-//        let stone4 = stone(position: CGPointMake(startposition.x + 150, startposition.y))
-//        let stone5 = stone(position: CGPointMake(startposition.x + 50, startposition.y + 50))
-//        let stone6 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 50))
-//        let stone7 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 100))
-//        
-//        let box1 = woodbox(position: CGPointMake(startposition.x, startposition.y + 50))
-//        let box2 = woodbox(position: CGPointMake(startposition.x, startposition.y + 100))
+        let stone1 = stone(position: CGPointMake(startposition.x, startposition.y))
+        let stone2 = stone(position: CGPointMake(startposition.x + 50, startposition.y))
+        let stone3 = stone(position: CGPointMake(startposition.x + 100, startposition.y))
+        let stone4 = stone(position: CGPointMake(startposition.x + 150, startposition.y))
+        let stone5 = stone(position: CGPointMake(startposition.x + 50, startposition.y + 50))
+        let stone6 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 50))
+        let stone7 = stone(position: CGPointMake(startposition.x + 150, startposition.y + 100))
         
-
-        let ice1 = Icebox(position: CGPointMake(startposition.x, startposition.y))
-        let ice2 = Icebox(position: CGPointMake(startposition.x+50, startposition.y))
-        let ice3 = Icebox(position: CGPointMake(startposition.x+100, startposition.y))
+        let box1 = woodbox(position: CGPointMake(startposition.x, startposition.y + 50))
+        let box2 = woodbox(position: CGPointMake(startposition.x, startposition.y + 100))
         
-        self.world.addChild(ice1)
-        self.world.addChild(ice2)
-        self.world.addChild(ice3)
         
-//        self.world.addChild(box1)
-//        self.world.addChild(box2)
-//        self.world.addChild(stone1)
-//        self.world.addChild(stone2)
-//        self.world.addChild(stone3)
-//        self.world.addChild(stone4)
-//        self.world.addChild(stone5)
-//        self.world.addChild(stone6)
-//        self.world.addChild(stone7)
-    }
+        self.world.addChild(box1)
+        self.world.addChild(box2)
+        self.world.addChild(stone1)
+        self.world.addChild(stone2)
+        self.world.addChild(stone3)
+        self.world.addChild(stone4)
+        self.world.addChild(stone5)
+        self.world.addChild(stone6)
+        self.world.addChild(stone7)
     
+        addCanon()
+        addBlackHole()
+    }
+    func addBlackHole()
+    {
+        let bh = BlackHole(position: CGPointMake(400,200))
+        world.addChild(bh)
+    }
+    func addCanon()
+    {
+        let canon = Canon()
+        canon.position.x = size.width/2
+        canon.position.y = 80;
+        world.addChild(canon)
+        canon.startFire()
+        
+    }
     override func controllerShoot(position : CGPoint)
     {
         controllers.shootingleft(position)

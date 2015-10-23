@@ -1,10 +1,4 @@
-//
-//  NotificationListener.swift
-//  FightNinja
-//
-//  Created by Shephertz on 20/06/14.
-//  Copyright (c) 2014 Shephertz. All rights reserved.
-//
+
 
 import UIKit
 
@@ -30,9 +24,12 @@ class NotificationListener: NSObject,NotifyListener
         
     }
     
-    func onUserJoinedRoom(roomData: RoomData!, username: String!)
-    {
-        
+    func onUserJoinedRoom(roomData: RoomData!, username: String!){
+        //AppWarpHelper.sharedInstance.startGameScene!.startMultiplayerGame()
+
+        print(username)
+        print("Joined the room")
+    
     }
     
 }

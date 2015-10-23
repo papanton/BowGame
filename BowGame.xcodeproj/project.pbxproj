@@ -26,6 +26,8 @@
 		2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E071BA0C32800F050A4 /* GameViewController.swift */; };
 		2A198E101BA0C32800F050A4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E081BA0C32800F050A4 /* Player.swift */; };
 		2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E091BA0C32800F050A4 /* StartGameScene.swift */; };
+		2A1A59811BD884F2008825FD /* Canon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59801BD884F2008825FD /* Canon.swift */; settings = {ASSET_TAGS = (); }; };
+		2A1A59831BD89EFA008825FD /* BlackHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59821BD89EFA008825FD /* BlackHole.swift */; settings = {ASSET_TAGS = (); }; };
 		2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */; settings = {ASSET_TAGS = (); }; };
 		2A8274691BAB62D900A59823 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 2A8274671BAB62D900A59823 /* sound */; };
 		2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8274681BAB62D900A59823 /* SoundEffect.swift */; };
@@ -94,6 +96,8 @@
 		2A198E071BA0C32800F050A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2A198E081BA0C32800F050A4 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2A198E091BA0C32800F050A4 /* StartGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameScene.swift; sourceTree = "<group>"; };
+		2A1A59801BD884F2008825FD /* Canon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canon.swift; sourceTree = "<group>"; };
+		2A1A59821BD89EFA008825FD /* BlackHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackHole.swift; sourceTree = "<group>"; };
 		2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutiplayerScene.swift; sourceTree = "<group>"; };
 		2A8274671BAB62D900A59823 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		2A8274681BAB62D900A59823 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
@@ -278,11 +282,13 @@
 		2A8EFD741BD6F32C008E170B /* Elements */ = {
 			isa = PBXGroup;
 			children = (
+				2A1A59801BD884F2008825FD /* Canon.swift */,
 				89CCF8081BCF037100ED6B7C /* Boss.swift */,
 				539680DE1BAF2975000906FE /* Obstacle.swift */,
 				2A198E031BA0C32800F050A4 /* Arrow.swift */,
 				2A198E081BA0C32800F050A4 /* Player.swift */,
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
+				2A1A59821BD89EFA008825FD /* BlackHole.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -439,6 +445,7 @@
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
 				F81D89971BB31C1300B9718C /* Terrain.swift in Sources */,
 				2AA53ACA1BBE361B00CC72A9 /* DataCenter.swift in Sources */,
+				2A1A59811BD884F2008825FD /* Canon.swift in Sources */,
 				F87E85891BD2F46C00215B5C /* ArrowPanel.swift in Sources */,
 				2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
@@ -460,6 +467,7 @@
 				2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */,
 				2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */,
 				2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */,
+				2A1A59831BD89EFA008825FD /* BlackHole.swift in Sources */,
 				2A198E0D1BA0C32800F050A4 /* CollisionHelp.swift in Sources */,
 				F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */,
 				89CCF8091BCF037100ED6B7C /* Boss.swift in Sources */,
@@ -529,6 +537,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -573,6 +582,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
