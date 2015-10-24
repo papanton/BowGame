@@ -57,6 +57,8 @@ class StageOne: StageGameScene {
     override func addObstacle() {
         let woodBoard = WoodBoard(size: CGSizeMake(20, 200), position: CGPointMake(self.size.width * 0.8, self.size.height/6), flag:true)
         woodBoard.add2Scene(self, world: self.world)
+        let woodBoard2 = WoodBoard(size: CGSizeMake(20, 240), position: CGPointMake(self.size.width * 1.5, self.size.height/6), flag:true)
+        woodBoard2.add2Scene(self, world: self.world)
     }
     
     
