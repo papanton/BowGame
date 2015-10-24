@@ -23,6 +23,8 @@ class AppWarpHelper: NSObject
     var gameScene: GameScene? = nil
     
     var tempFlagVal = 0
+    
+    var isRoomOwner = false
 
     class var sharedInstance:AppWarpHelper{
         struct Static{
@@ -174,11 +176,11 @@ class AppWarpHelper: NSObject
                     
                     return
                 }
+                let userName : (String!) = responseDict.objectForKey("userName") as! String
                 
                 
                 if enemyName.isEmpty
                 {
-                    let userName : (String!) = responseDict.objectForKey("userName") as! String
                     let isEqual = playerName.hasPrefix(userName)
                     if !isEqual
                     {
@@ -188,8 +190,6 @@ class AppWarpHelper: NSObject
                 }
                 else
                 {
-                    
-                    let userName : (String!) = responseDict.objectForKey("userName") as! String
                     let isEqual = enemyName.hasPrefix(userName)
                     if isEqual
                     {
