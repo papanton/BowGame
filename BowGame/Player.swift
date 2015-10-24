@@ -20,14 +20,14 @@ class PlayerFactory{
         var xScale : CGFloat = 0.4
         var shootPosition : CGPoint!
         
-        playerNode.position = CGPointMake(playerposition.x, playerposition.y + playerNode.size.height / 2)
+        playerNode.position = CGPointMake(playerposition.x, playerposition.y + playerNode.size.height / 2 - 20)
         bloodposition = CGPointMake(playerNode.position.x + 10.0, playerNode.position.y + 11.0)
 
         
         if(name == "player1"){
             health = Health()
             health.healthframe.position = CGPointMake(sceneSize.width*0.05 + health.healthframe.size.width / 2 , sceneSize.height * 0.85)
-            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2, playerNode.position.y+50)
+            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2 - 20, playerNode.position.y + playerNode.position.y / 2)
         }
         
         if(name == "player2"){
@@ -37,13 +37,13 @@ class PlayerFactory{
             health.healthframe.position = CGPointMake(sceneSize.width*0.95 + health.healthframe.size.width / 2, sceneSize.height * 0.85)
 
             playerNode.xScale = -1.0
-            shootPosition = CGPointMake(playerNode.position.x - playerNode.size.width / 2,playerNode.position.y+50)
+            shootPosition = CGPointMake(playerNode.position.x - playerNode.size.width / 2 + 20,playerNode.position.y + playerNode.position.y / 2)
             xScale = -xScale
         }
         
         if(name == "singleplayer"){
             health = DummyHealth()
-            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2, playerNode.position.y+50)
+            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2 - 20, playerNode.position.y + playerNode.position.y / 2)
         }
         
         
@@ -245,11 +245,11 @@ private class Health
         
 private class PlayerNode: SKSpriteNode, Shotable
 {
-    private let mPlayerSize = CGSize(width: 100.0, height: 80.0)
+    private let mPlayerSize = CGSize(width: 100 * 1.5, height: 80 * 1.5)
     var mPlay : Player!
     private func addPhysicsBody()
     {
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0), center: CGPointMake(-20, 0))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 80), center: CGPointMake(-30, 0))
         //SKPhysicsBody(rectangleOfSize: CGSize(width: 20.0, height: 80.0))
 
         self.physicsBody?.dynamic = false
