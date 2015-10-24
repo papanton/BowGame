@@ -53,10 +53,13 @@ class StageOne: StageGameScene {
         boss.add2Scene()
     }
     
-    override func addObstacle()
-    {
-        
+    
+    override func addObstacle() {
+        let woodBoard = WoodBoard(size: CGSizeMake(20, 200), position: CGPointMake(self.size.width * 0.8, self.size.height/6), flag:true)
+        woodBoard.add2Scene(self, world: self.world)
     }
+    
+    
     
     override func addBlackHole()
     {
