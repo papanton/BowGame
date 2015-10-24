@@ -70,11 +70,14 @@ class Arrow: SKSpriteNode, Attacker{
         //OSAtomicTestAndClear(0, &self.isFlying)
         isFlying = 0
         print(self.isFlying)
-        self.physicsBody = nil
+        self.physicsBody?.velocity = CGVectorMake(0, 0)
+        self.physicsBody?.restitution = 0
+        
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
             self.removeFromParent()
         })
+        self.physicsBody?.dynamic = false
     }
     
     func slowDown() {
