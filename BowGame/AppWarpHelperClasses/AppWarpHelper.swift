@@ -81,6 +81,8 @@ class AppWarpHelper: NSObject
         self.roomId = ""
         self.playerName = ""
         self.enemyName = ""
+            
+        isRoomOwner = false
         }
     }
     
