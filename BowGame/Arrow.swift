@@ -92,8 +92,8 @@ class Arrow: SKSpriteNode, Attacker{
     }
     init(player : Player) {
         host = player
-        let spriteSize = CGSize(width: 50.0, height: 50.0)
-        let texture = SKTexture(imageNamed: ArrowImage)
+        let spriteSize = CGSize(width: 128 * 0.4, height: 23 * 0.4)
+        let texture = SKTexture(imageNamed: "normalarrow")
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
