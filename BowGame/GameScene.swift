@@ -330,7 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 return
             }
-            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x), (startpositionOfTouch.y - endpositionOfTouch.y))
+            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
             
