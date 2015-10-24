@@ -49,7 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.addChild(world)
         self.addChild(UI)
         
-        self.physicsWorld.gravity = CGVectorMake(0, -9.8)
+        self.physicsWorld.gravity = CGVectorMake(0, -2.8)
         self.physicsWorld.contactDelegate = self
         
         initworld()
@@ -171,9 +171,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     //add one Obstacle to Scene
     func addObstacle() {
-//        let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
-//        obstacle.setObstaclePosition(self)
-//        self.world.addChild(obstacle)
+
+        
     }
     
     //add arrow panel
@@ -331,7 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 return
             }
-            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
+            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x), (startpositionOfTouch.y - endpositionOfTouch.y))
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
             
