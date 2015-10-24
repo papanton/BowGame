@@ -225,9 +225,14 @@ class WoodBoard : Obstacle {
         
             part1.add2Scene(self.mScene,world:self.mWorld)
             part2.add2Scene(self.mScene,world:self.mWorld)
+            self.removeFromParent()
         }
-        self.removeFromParent()
-
+        else {
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
+        }
         return true
     }
     

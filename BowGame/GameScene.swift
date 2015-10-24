@@ -219,18 +219,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
             
-            AppWarpHelper.sharedInstance.disconnectFromServer()
+//            AppWarpHelper.sharedInstance.disconnectFromServer()
             
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
         else if(touchedNode.name == "controlBallLeft" ) {
+            print("touchLeft: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
             if (multiPlayerON && !AppWarpHelper.sharedInstance.isRoomOwner) {
                 return
             }
             
             leftControllerOnTouchBegin()
         }else if(touchedNode.name == "controlBallRight"){
+            print("touchRight: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
             if (multiPlayerON && AppWarpHelper.sharedInstance.isRoomOwner) {
                 return
             }
