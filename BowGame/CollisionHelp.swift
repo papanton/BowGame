@@ -80,6 +80,8 @@ class CollisonHelper
                 shotable.shotableB!.shot(attacker!)
             }*/
           //  println(shotable)
+            
+            
             if shotable!.shot(attacker!) {
                 attacker!.afterAttack()
             }

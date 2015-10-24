@@ -189,3 +189,47 @@ class Icebox : Obstacle {
     
 }
 
+class WoodBoard : Obstacle {
+    private var board_size : CGSize!
+    private var mScene: SKScene!
+    private var mWorld: SKNode!
+    private var rootFlag : Bool!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    init(size: CGSize, position: CGPoint, flag: Bool) {
+        self.board_size = size
+        super.init(name: Board, damage: 0, position: position, size: board_size)
+        self.rootFlag = flag
+    }
+    
+    func add2Scene(scene: SKScene, world: SKNode)
+    {
+        if(!self.rootFlag) {
+            self.physicsBody?.dynamic = true
+        }
+        self.mScene = scene;
+        self.mWorld = world;
+        self.mWorld.addChild(self)
+    }
+    
+    override func shot(attacker: Attacker) -> Bool {
+        if let arrow = attacker as? Arrow{
+            arrow.slowDown()
+        }
+        if(self.rootFlag == true) {
+            let part1 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: self.position,flag: false)
+            let part2 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: CGPointMake(self.position.x, self.position.y + self.size.height/2 + 5), flag: false)
+            part2.zRotation = -10
+        
+            part1.add2Scene(self.mScene,world:self.mWorld)
+            part2.add2Scene(self.mScene,world:self.mWorld)
+        }
+        self.removeFromParent()
+
+        return true
+    }
+    
+}
+

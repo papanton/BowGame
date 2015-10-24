@@ -38,6 +38,7 @@ let StoneBroken = "stonebroken"
 let Ice = "icebox"
 let CanonStone = "CanonStone"
 let BangTexture = "BangTexture"
+let Board = "Board"
 
 /*
 Main menu images (buttons etc)
