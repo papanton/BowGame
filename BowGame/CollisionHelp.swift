@@ -81,7 +81,6 @@ class CollisonHelper
             }*/
           //  println(shotable)
             
-            
             if shotable!.shot(attacker!) {
                 attacker!.afterAttack()
             }
