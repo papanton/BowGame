@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SpriteKit
 
 class AppWarpHelper: NSObject
 {
@@ -35,7 +35,13 @@ class AppWarpHelper: NSObject
             }
             return Static.instance!
     }
-
+    
+    
+    func stopGame()
+    {
+        warpClient.stopGame()
+    }
+    
     func initializeWarp()
     {
         WarpClient.initWarp(api_key, secretKey: secret_key)
@@ -71,8 +77,8 @@ class AppWarpHelper: NSObject
         warpClient.deleteRoom(roomId)
         warpClient.disconnect()
         self.roomId = ""
-        self.playerName = ""
-        self.enemyName = ""
+//        self.playerName = ""
+//        self.enemyName = ""
         }
     }
     
@@ -136,6 +142,40 @@ class AppWarpHelper: NSObject
             {
                 print("receivedEnemyStatus...3")
                 
+                let quitSignal:(String?) = responseDict.objectForKey("QuitGame") as? String
+                
+                // enemy quit game
+                if quitSignal != nil {
+                    
+                    let sender : String = (responseDict
+                    .objectForKey("Sender") as? String)!
+                    
+                    let alert = UIAlertView()
+                    
+                    print("sender name:")
+                    print(sender)
+                    print(playerName)
+                    print(enemyName)
+                    
+                    if sender.hasPrefix(playerName) {
+                        alert.message = "You've quit the game!"
+                    } else {
+                        alert.message = "Your enemy has quited the game!"
+                    }
+                    
+                    alert.title = "Alert"
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                    
+                    
+                    let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+                    gameScene?.view?.presentScene((gameScene?.mainmenu)!, transition: transitionType)
+                    disconnectFromServer()
+                    
+                    return
+                }
+                
+                
                 if enemyName.isEmpty
                 {
                     let userName : (String!) = responseDict.objectForKey("userName") as! String
@@ -161,4 +201,5 @@ class AppWarpHelper: NSObject
         }
         
     }
+
 }
