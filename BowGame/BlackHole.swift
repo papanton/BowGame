@@ -14,7 +14,7 @@ class BlackHole: Obstacle
     init(position: CGPoint)
     {
         super.init(name: "BackHole1", damage: 0, position: position, size : CGSizeMake(70, 70))
-        physicsBody?.dynamic = false
+        physicsBody?.affectedByGravity = false
         let backhole1 = SKTexture(imageNamed: "BackHole1")
         let backhole2 = SKTexture(imageNamed: "BackHole2")
         let animation = SKAction.animateWithTextures([backhole1,backhole2], timePerFrame: 0.2)
@@ -24,5 +24,8 @@ class BlackHole: Obstacle
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func shot(attack: Attacker) -> Bool {
+        return false
     }
 }

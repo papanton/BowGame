@@ -172,6 +172,7 @@ class AppWarpHelper: NSObject
                     
                     let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
                     gameScene?.view?.presentScene((gameScene?.mainmenu)!, transition: transitionType)
+                    
                     disconnectFromServer()
                     
                     return
