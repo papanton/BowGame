@@ -32,7 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
 
     var localPlayer = "local"
     var enemyPlayer = "temp"
-    
+
     var multiPlayerON = false
     
     var panel:ArrowPanel!
@@ -212,13 +212,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         if(touchedNode.name == "settings"){
             
+            if multiPlayerON {
+                let dataDict = NSMutableDictionary()
+                dataDict.setObject(NSString(string: "true"), forKey: "QuitGame")
+                dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "Sender")
+                
+                AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+            }
+            
             AppWarpHelper.sharedInstance.disconnectFromServer()
+            
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
         else if(touchedNode.name == "controlBallLeft" ) {
+            if (multiPlayerON && !AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
+            
             leftControllerOnTouchBegin()
         }else if(touchedNode.name == "controlBallRight"){
+            if (multiPlayerON && AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
            rightControllerOnTouchBegin()
         }else if(touchedNode.name == "arrowPanel") {
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
