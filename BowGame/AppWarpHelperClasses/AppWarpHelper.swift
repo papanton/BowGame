@@ -79,8 +79,8 @@ class AppWarpHelper: NSObject
         warpClient.deleteRoom(roomId)
         warpClient.disconnect()
         self.roomId = ""
-//        self.playerName = ""
-//        self.enemyName = ""
+        self.playerName = ""
+        self.enemyName = ""
         }
     }
     
