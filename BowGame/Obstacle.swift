@@ -163,3 +163,78 @@ class stone : Obstacle {
 
 }
 
+class Icebox : Obstacle {
+    private var ice_size : CGSize!
+    init(position : CGPoint)
+    {
+        self.ice_size = CGSizeMake(50, 50)
+        super.init(name: Ice, damage: 0, position: position, size: ice_size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //wood box disappears after shot
+    override func shot(attacker: Attacker) -> Bool {
+        print("shot ice box")
+        
+        if let arrow = attacker as? Arrow{
+            arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
+            arrow.update()
+        }
+        
+        return true
+    }
+    
+}
+
+class WoodBoard : Obstacle {
+    private var board_size : CGSize!
+    private var mScene: SKScene!
+    private var mWorld: SKNode!
+    private var rootFlag : Bool!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    init(size: CGSize, position: CGPoint, flag: Bool) {
+        self.board_size = size
+        super.init(name: Board, damage: 0, position: position, size: board_size)
+        self.rootFlag = flag
+    }
+    
+    func add2Scene(scene: SKScene, world: SKNode)
+    {
+        if(!self.rootFlag) {
+            self.physicsBody?.dynamic = true
+        }
+        self.mScene = scene;
+        self.mWorld = world;
+        self.mWorld.addChild(self)
+    }
+    
+    override func shot(attacker: Attacker) -> Bool {
+        if let arrow = attacker as? Arrow{
+            arrow.slowDown()
+        }
+        if(self.rootFlag == true) {
+            let part1 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: self.position,flag: false)
+            let part2 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: CGPointMake(self.position.x, self.position.y + self.size.height/2 + 5), flag: false)
+            part2.zRotation = -10
+        
+            part1.add2Scene(self.mScene,world:self.mWorld)
+            part2.add2Scene(self.mScene,world:self.mWorld)
+            self.removeFromParent()
+        }
+        else {
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
+        }
+        return true
+    }
+    
+}
+
