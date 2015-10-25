@@ -35,7 +35,6 @@ class Boss : NSObject, Shotable{
         GameController.getInstance().setBoss(self)
     }
     func isDead() -> Bool {
-        
         return health.currentHealth <= 0
     }
     func add2Scene(){
