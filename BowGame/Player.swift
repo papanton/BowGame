@@ -147,7 +147,6 @@ class Player : NSObject
     }
     
     func isDead() -> Bool {
-        
         return self.mHealth.currentHealth <= 0
     }
 

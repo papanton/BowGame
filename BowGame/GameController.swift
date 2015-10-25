@@ -36,7 +36,7 @@ class GameController
             break
             }
         }
-        if (mBoss != nil && mBoss?.isDead() != nil) {
+        if mBoss != nil && mBoss!.isDead(){
             isGameOver = true
         }
         return isGameOver
