@@ -32,8 +32,12 @@ class Boss : NSObject, Shotable{
         self.bossposition = position
         bossnode = BossNode(name: name, mBoss: self)
         health = Health(name: name, UIsize: mScene.size)
+        GameController.getInstance().setBoss(self)
     }
-    
+    func isDead() -> Bool {
+        
+        return health.currentHealth <= 0
+    }
     func add2Scene(){
         bossnode.position = CGPointMake(bossposition.x, bossposition.y + bossnode.size.height / 2)
         mWorld.addChild(bossnode)

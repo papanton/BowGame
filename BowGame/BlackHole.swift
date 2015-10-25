@@ -46,7 +46,7 @@ class BlackHole: Obstacle
             disappear()
             appear(arrow, pos: CGPointMake(((parent?.scene?.size.width)!*2)-100, 300))
             reshootAnimation(arrow)
-            delay(3){
+            delay(3.5){
                self.disappear()
                self.appear(nil, pos: temp)
             }
