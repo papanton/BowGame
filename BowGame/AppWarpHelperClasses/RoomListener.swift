@@ -26,13 +26,9 @@ class RoomListener: NSObject,RoomRequestListener
             AppWarpHelper.sharedInstance.isNewRoomCreated = true
             
             print("onJoinRoomDone Failed")
-<<<<<<< HEAD
-            WarpClient.getInstance().createRoomWithRoomName("R1", roomOwner: "Rajeev", properties: nil, maxUsers: 2)
-=======
             WarpClient.getInstance().createRoomWithRoomName("R1", roomOwner: AppWarpHelper.sharedInstance.playerName, properties: nil, maxUsers: 2)
             
             AppWarpHelper.sharedInstance.isRoomOwner = true
->>>>>>> master
         }
     }
     
