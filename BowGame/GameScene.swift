@@ -219,7 +219,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
             
-//            AppWarpHelper.sharedInstance.disconnectFromServer()
+           AppWarpHelper.sharedInstance.disconnectFromServer()
             
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
@@ -472,7 +472,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //display the turn information on the screen
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
+        if(!multiPlayerON){
         text.text = "Round \(self.rounds)"
+        }
+        else if (multiPlayerON){
+            if(self.rounds%2 == 0){
+                text.text = "Player 2 Turn"
+            }
+            else {
+                text.text = "Player 1 Turn"
+            }
+        }
+        
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
