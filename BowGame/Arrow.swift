@@ -172,8 +172,8 @@ class FlappyArrow : Arrow, ClickObersever
         if(impulse.dx < 0) {
             dx = CGFloat(-1.0)
         }
-        let flappy1 = SKTexture(imageNamed: "FlappyArrow")
-        let flappy2 = SKTexture(imageNamed: "FlappyArrow2")
+        let flappy1 = SKTexture(imageNamed: "normalarrow")
+        let flappy2 = SKTexture(imageNamed: "normalarrow")
         let one = SKAction.animateWithTextures([flappy1,flappy2], timePerFrame: 0.4)
         let forever = SKAction.repeatActionForever(one)
         runAction(forever)
@@ -263,7 +263,7 @@ class ArrowThrowsBombs : Arrow{
         delay(0.5){
             if self.isFlying == 1{
 
-                let bomb = Obstacle(name: BombImage, damage: 0, position: self.position, size: CGSizeMake(20, 20))
+                let bomb = Obstacle(name: BombImage, damage: 0, position: self.position, size: CGSizeMake(200/10, 177/10))
                 print("throws bomb \n")
                 bomb.physicsBody?.dynamic = true
                 bomb.position = self.position
