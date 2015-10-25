@@ -32,7 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
 
     var localPlayer = "local"
     var enemyPlayer = "temp"
-    
+
     var multiPlayerON = false
     
     var panel:ArrowPanel!
@@ -49,7 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.addChild(world)
         self.addChild(UI)
         
-        self.physicsWorld.gravity = CGVectorMake(0, -9.8)
+        self.physicsWorld.gravity = CGVectorMake(0, -2.8)
         self.physicsWorld.contactDelegate = self
         
         initworld()
@@ -74,11 +74,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addBorder()
         addPlayers()
         addObstacle()
-        addArrowPanel()
     }
     
     func initUI()
     {
+        addArrowPanel()
         addControllers()
         addSettingButton()
     }
@@ -171,9 +171,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     //add one Obstacle to Scene
     func addObstacle() {
-//        let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
-//        obstacle.setObstaclePosition(self)
-//        self.world.addChild(obstacle)
+
+        
     }
     
     //add arrow panel
@@ -212,13 +211,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         if(touchedNode.name == "settings"){
             
-            AppWarpHelper.sharedInstance.disconnectFromServer()
+            if multiPlayerON {
+                let dataDict = NSMutableDictionary()
+                dataDict.setObject(NSString(string: "true"), forKey: "QuitGame")
+                dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "Sender")
+                
+                AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+            }
+            
+//            AppWarpHelper.sharedInstance.disconnectFromServer()
+            
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
         else if(touchedNode.name == "controlBallLeft" ) {
+            print("touchLeft: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
+            if (multiPlayerON && !AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
+            
             leftControllerOnTouchBegin()
         }else if(touchedNode.name == "controlBallRight"){
+            print("touchRight: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
+            if (multiPlayerON && AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
            rightControllerOnTouchBegin()
         }else if(touchedNode.name == "arrowPanel") {
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
@@ -315,7 +338,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 return
             }
-            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
+            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
             

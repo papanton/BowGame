@@ -70,11 +70,14 @@ class Arrow: SKSpriteNode, Attacker{
         //OSAtomicTestAndClear(0, &self.isFlying)
         isFlying = 0
         print(self.isFlying)
-        self.physicsBody = nil
+        self.physicsBody?.velocity = CGVectorMake(0, 0)
+        self.physicsBody?.restitution = 0
+        
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
         runAction(fadeout, completion: {
             self.removeFromParent()
         })
+        self.physicsBody?.dynamic = false
     }
     
     func slowDown() {
@@ -89,8 +92,8 @@ class Arrow: SKSpriteNode, Attacker{
     }
     init(player : Player) {
         host = player
-        let spriteSize = CGSize(width: 50.0, height: 50.0)
-        let texture = SKTexture(imageNamed: ArrowImage)
+        let spriteSize = CGSize(width: 128 * 0.4, height: 23 * 0.4)
+        let texture = SKTexture(imageNamed: "normalarrow")
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
@@ -257,14 +260,15 @@ class ArrowThrowsBombs : Arrow{
     private func throwsBombs()
     {
         mCanThrow = false
-        delay(0.25){
+        delay(0.5){
             if self.isFlying == 1{
 
                 let bomb = Obstacle(name: BombImage, damage: 0, position: self.position, size: CGSizeMake(20, 20))
                 print("throws bomb \n")
                 bomb.physicsBody?.dynamic = true
                 bomb.position = self.position
-                bomb.position.x -= 25 * self.xScale
+                bomb.position.y -= 50
+                bomb.position.x -= 50 * self.xScale
                 self.parent?.addChild(bomb)
                 self.mCanThrow = true
             }

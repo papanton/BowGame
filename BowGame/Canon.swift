@@ -13,7 +13,7 @@ class Canon: SKSpriteNode
     init() {
         let name = "Canon"
         let texture = SKTexture(imageNamed: name)
-        super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(50,50) )
+        super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(70,50) )
         position = CGPointMake(position.x, position.y + self.size.height / 2)
     }
     required init?(coder aDecoder: NSCoder) {
@@ -46,6 +46,7 @@ class Canon: SKSpriteNode
         bomb.position = position
         //bomb.position.x -= 25 * xScale
         parent?.addChild(bomb)
+        bomb.physicsBody?.affectedByGravity = false
         bomb.physicsBody?.applyImpulse(CGVectorMake(0, 10))
     }
     func fireSequence()->SKAction
