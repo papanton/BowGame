@@ -23,6 +23,8 @@ class AppWarpHelper: NSObject
     var gameScene: GameScene? = nil
     
     var tempFlagVal = 0
+    
+    var isNewRoomCreated = false
 
     class var sharedInstance:AppWarpHelper{
         struct Static{

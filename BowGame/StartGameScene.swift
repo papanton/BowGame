@@ -26,6 +26,10 @@ class StartGameScene: SKScene {
 
     var tempFlagVal = 0
 
+    
+    var alertController:UIAlertController!
+    
+    
     func addTextField() {
         let screensize = UIScreen.mainScreen().bounds.size;
         
@@ -70,6 +74,7 @@ class StartGameScene: SKScene {
 
         addBackground()
         addButtons()
+        addAlertController()
     }
     func addButtons()
     {
@@ -109,9 +114,9 @@ class StartGameScene: SKScene {
             AppWarpHelper.sharedInstance.playerName = uName
             AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
-        
 
-       
+        self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        
     }
     
     func startMultiplayerGame(){
@@ -124,7 +129,7 @@ class StartGameScene: SKScene {
         
         let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: true)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
-        
+        self.view?.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {})
         AppWarpHelper.sharedInstance.gameScene = gameScene
          changeScene(gameScene)
 
@@ -179,4 +184,15 @@ class StartGameScene: SKScene {
     {
         self.current_game = nil
     }
+    
+    
+    func addAlertController(){
+         alertController = UIAlertController(title: "Connecting...",
+            message: "Waiting for other player ...",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel",
+            style: UIAlertActionStyle.Default,
+            handler: {(alert: UIAlertAction!) in  AppWarpHelper.sharedInstance.disconnectFromServer()}))
+    }
+    
 }

@@ -325,9 +325,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             //Multiplayer update enemy player
             
             if multiPlayerON {
-            var dataDict = NSMutableDictionary()
+            let dataDict = NSMutableDictionary()
             dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
-            var stringImpulse = NSStringFromCGVector(impulse)
+            let stringImpulse = NSStringFromCGVector(impulse)
             dataDict.setObject(stringImpulse, forKey: "impulse")
             
             AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)

@@ -14,7 +14,7 @@ class PlayerFactory{
     {
         let sheet = ShootAnimation.getInstance()
         name = name.lowercaseString;
-        var playerNode = PlayerNode(texture: sheet.Shoot_01())
+        let playerNode = PlayerNode(texture: sheet.Shoot_01())
         var health : Health!
         var bloodposition : CGPoint!
         var xScale : CGFloat = 0.4
@@ -154,7 +154,7 @@ class Player : NSObject
 
     func bleed()
     {
-        var blood = SKEmitterNode(fileNamed: "blood.sks")
+        let blood = SKEmitterNode(fileNamed: "blood.sks")
         blood!.xScale = mBlood!.xScale
         blood!.position = mBlood!.position
         blood!.yScale = mBlood!.yScale
