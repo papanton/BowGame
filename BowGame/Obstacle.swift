@@ -235,6 +235,30 @@ class WoodBoard : Obstacle {
         }
         return true
     }
+}
+
+class Rock : Obstacle {
+    private var rock_size : CGSize!
+    init(position : CGPoint)
+    {
+        self.rock_size = CGSizeMake(222 / 3, 234 / 3)
+        super.init(name: "rock", damage: 0, position: position, size: rock_size)
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //wood box disappears after shot
+    override func shot(attacker: Attacker) -> Bool {
+        print("shot rock")
+        
+        if let arrow = attacker as? Arrow{
+            arrow.tryStop()
+        }
+        
+        return true
+    }
+
 }
 
