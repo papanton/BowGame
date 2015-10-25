@@ -20,9 +20,13 @@ class GameController
     private var mObservers = [GameControllerObserver]()
     private var mCurPlayer: Player?
     private var mPlayers = [Player]()
+    private var mBoss : Boss?
     private static var mInstance : GameController!
     private var mCanShooting = true
-    
+    func setBoss(boss : Boss)
+    {
+        mBoss = boss
+    }
     func isGameOver()->Bool
     {
         var isGameOver = false
@@ -31,6 +35,9 @@ class GameController
                 isGameOver = true
             break
             }
+        }
+        if (mBoss != nil && mBoss?.isDead() != nil) {
+            isGameOver = true
         }
         return isGameOver
     }
@@ -75,6 +82,7 @@ class GameController
         mObservers = [GameControllerObserver]()
         mCurPlayer = nil
         mCanShooting = true
+        mBoss = nil
     }
     func currentPlayerShoot(impulse: CGVector , scene : SKScene)
     {
