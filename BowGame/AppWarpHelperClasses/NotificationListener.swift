@@ -25,11 +25,15 @@ class NotificationListener: NSObject,NotifyListener
     }
     
     func onUserJoinedRoom(roomData: RoomData!, username: String!){
-        //AppWarpHelper.sharedInstance.startGameScene!.startMultiplayerGame()
 
         print(username)
         print("Joined the room")
+        if (AppWarpHelper.sharedInstance.roomId == roomData.roomId && username != AppWarpHelper.sharedInstance.playerName && AppWarpHelper.sharedInstance.isNewRoomCreated){
+            AppWarpHelper.sharedInstance.startGameScene!.startMultiplayerGame()
+
+        }
     
     }
+    
     
 }
