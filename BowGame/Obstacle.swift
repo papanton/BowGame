@@ -93,6 +93,15 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
         //print("11")
         return true
     }
+    func stop() {
+        physicsBody?.dynamic = false
+    }
+    func tryStop() {
+         stop()
+    }
+    func isFrom(player: Player) -> Bool {
+        return false
+    }
 }
 
 class woodbox : Obstacle {

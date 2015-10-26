@@ -11,6 +11,10 @@ import UIKit
 protocol Attacker
 {
     func afterAttack( )
+    func getDamage( ) -> Int
+    func tryStop( )
+    func stop( )
+    func isFrom(player : Player)->Bool
 }
 
 protocol Shotable

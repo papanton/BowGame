@@ -109,16 +109,14 @@ class Player : NSObject
             bow.shoot(impulse, arrow: arrow, scene: scene, position: self.mShootPosition)
         }
     }
-    func shot(arrow : Arrow)->Bool
+    func shot(attacker :Attacker)->Bool
     {
         print("shoot player")
-        if !arrow.isFrom(self){
-            var xScale : CGFloat!
-            var position : CGPoint!
-            self.mHealth.getHurt(Float(arrow.getDamage()))
+        if !attacker.isFrom(self){
+            self.mHealth.getHurt(Float(attacker.getDamage()))
             bleed()
             SoundEffect.getInstance().playScream()
-            arrow.stop()
+            attacker.stop()
             return true
         }
         return false
@@ -271,10 +269,7 @@ private class PlayerNode: SKSpriteNode, Shotable
     }
     func shot(attacker :Attacker)->Bool
     {
-        if let arrow = attacker as? Arrow{
-            return mPlay.shot(arrow)
-        }
-        return true
+        return mPlay.shot(attacker)
     }
     
  /*   required init?(coder aDecoder: NSCoder) {
