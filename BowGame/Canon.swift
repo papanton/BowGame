@@ -43,7 +43,9 @@ class Canon: SKSpriteNode
     {
         let bomb = CanonBomb(pos: position)
         parent?.addChild(bomb)
-        
+        delay(0.6){
+            bomb.removeFromParent()
+        }
         bomb.physicsBody?.applyImpulse(CGVectorMake(0, 10))
     }
     func fireSequence()->SKAction
@@ -79,23 +81,6 @@ private class CanonBomb : Obstacle
     }
     override func isAlive() -> Bool {
         return parent != nil
-    }
-    private func bang()
-    {
-        let firetext = SKTexture(imageNamed: BangTexture)
-        let fire = SKSpriteNode(texture: firetext)
-        fire.size = CGSizeMake(50, 50)
-        fire.position = position
-        fire.alpha = 0.0;
-        // SKAction.fadeInWithDuration(canon,1)
-        parent?.addChild(fire)
-        let fadein: SKAction = SKAction.fadeAlphaTo(1, duration: 1)
-        removeFromParent()
-        fire.runAction(fadein, completion: {
-            fire.removeFromParent()
-            
-            print("removed")
-        })
     }
 }
 
