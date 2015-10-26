@@ -170,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				13F795631BDD80CC00642501 /* AVFoundation.framework */,
-				2AA53A851BBDF95C00CC72A9 /* Datas */,
 				1369CA8D1B9DFFE400895E88 /* BowGame */,
 				1369CAA71B9DFFE400895E88 /* BowGameTests */,
 				1369CA8C1B9DFFE400895E88 /* Products */,
@@ -272,6 +271,7 @@
 		2A8EFD721BD6F233008E170B /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2AA53A851BBDF95C00CC72A9 /* Datas */,
 				2A8EFD751BD6F3A3008E170B /* Interfaces.swift */,
 				134A559F1BA503FA00C09E99 /* Constants.swift */,
 				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
@@ -323,7 +323,6 @@
 				2AF0CADE1BC0840800FBC36A /* DataColletion.swift */,
 			);
 			name = Datas;
-			path = BowGame;
 			sourceTree = "<group>";
 		};
 		2AA9B1DA1BABE52D009491AC /* GameController */ = {
