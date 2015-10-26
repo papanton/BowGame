@@ -161,9 +161,17 @@ private class BossNode: SKSpriteNode, Shotable {
         self.physicsBody?.collisionBitMask = 0x0
 
     }
-    
+
     func shot(attacker: Attacker) -> Bool {
         if attacker.isAlive(){
+            var sequence = [SKAction]()
+            for i in 1...3{
+                sequence.append(SKAction.rotateByAngle(CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+                sequence.append(SKAction.rotateByAngle(-CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+            }
+            //let action = SKAction.repeatActionForever(SKAction.sequence(sequence))
+            runAction(SKAction.sequence(sequence))
+            
             return mBoss.shot(attacker)
         }
         return false
