@@ -179,7 +179,7 @@ class Icebox : Obstacle {
     private var ice_size : CGSize!
     init(position : CGPoint)
     {
-        self.ice_size = CGSizeMake(50, 10)
+        self.ice_size = CGSizeMake(50, 50)
         super.init(name: Ice, damage: 0, position: position, size: ice_size)
     }
     
