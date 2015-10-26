@@ -18,7 +18,7 @@ class ArrowPanel: SKSpriteNode {
     let mArrowName = ArrowColletion.getInstance().mArrowName
     
     init() {
-        let texture = SKTexture(imageNamed: "transparent.png")
+        let texture = SKTexture(imageNamed: "transparent")
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
         self.size = CGSizeMake(250, 250)
         self.name = "arrowPanel"
@@ -126,6 +126,16 @@ class ArrowPanel: SKSpriteNode {
             cells[0].alpha = 0.3
         }
         cells[0].mNumLabel.text = String(cells[0].mArrowNum)
+    }
+    
+    func remindOutofArrow() {
+        var sequence = [SKAction]()
+        for i in 1...3{
+            sequence.append(SKAction.rotateByAngle(CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+            sequence.append(SKAction.rotateByAngle(-CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+        }
+        //let action = SKAction.repeatActionForever(SKAction.sequence(sequence))
+        cells[0].runAction(SKAction.sequence(sequence))
     }
 }
 
