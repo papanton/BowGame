@@ -81,7 +81,18 @@ class TestScene: StageGameScene {
         
         addCanon()
         addBlackHole()
+        addReflection()
 
+    }
+    func addReflection(){
+        
+        for i in 1 ... 10{
+            let ice1 = Icebox(position: CGPointMake(CGFloat(i) * 50, 300))
+            let ice2 = Icebox(position: CGPointMake(500, CGFloat(i) * 50))
+            ice2.zRotation = CGFloat(M_PI/2)
+            world.addChild(ice1)
+            world.addChild(ice2)
+        }
     }
     override func addBlackHole()
     {

@@ -46,6 +46,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         self.world = SKNode()
         self.UI = SKNode()
+//        self.UI.zPosition = 100;
+        self.world.zPosition = -1;
         self.addChild(world)
         self.addChild(UI)
         
@@ -102,13 +104,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func addBorder()
     {
         let texture = SKTexture()
-        let leftBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
+        let leftBorder = Bound(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
         self.world.addChild(leftBorder)
         
-        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
+        let rightBorder = Bound(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
         self.world.addChild(rightBorder)
         
-        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
+        let bottomBorder = Bound(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
         self.world.addChild(bottomBorder)
        
     }
@@ -185,7 +187,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel.position = CGPointMake(170, 335)
         panel.xScale = 0.2
         panel.yScale = 0.2
-        
         self.addChild(panel)
         
         
@@ -219,7 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
             
-//            AppWarpHelper.sharedInstance.disconnectFromServer()
+           AppWarpHelper.sharedInstance.disconnectFromServer()
             
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
@@ -348,9 +349,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             //Multiplayer update enemy player
             
             if multiPlayerON {
-            var dataDict = NSMutableDictionary()
+            let dataDict = NSMutableDictionary()
             dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
-            var stringImpulse = NSStringFromCGVector(impulse)
+            let stringImpulse = NSStringFromCGVector(impulse)
             dataDict.setObject(stringImpulse, forKey: "impulse")
             
             AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
@@ -472,7 +473,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //display the turn information on the screen
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
+        if(!multiPlayerON){
         text.text = "Round \(self.rounds)"
+        }
+        else if (multiPlayerON){
+            if(self.rounds%2 == 0){
+                text.text = "Player 2 Turn"
+            }
+            else {
+                text.text = "Player 1 Turn"
+            }
+        }
+        
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"

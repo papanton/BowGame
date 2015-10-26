@@ -32,8 +32,11 @@ class Boss : NSObject, Shotable{
         self.bossposition = position
         bossnode = BossNode(name: name, mBoss: self)
         health = Health(name: name, UIsize: mScene.size)
+        GameController.getInstance().setBoss(self)
     }
-    
+    func isDead() -> Bool {
+        return health.currentHealth <= 0
+    }
     func add2Scene(){
         bossnode.position = CGPointMake(bossposition.x, bossposition.y + bossnode.size.height / 2)
         mWorld.addChild(bossnode)
@@ -43,13 +46,11 @@ class Boss : NSObject, Shotable{
     
     func shot(attacker : Attacker)->Bool
     {
-        if(attacker is Arrow){
-            print("shoot boss")
-            let arrow = attacker as! Arrow
-            self.health.decreaseHealth(Float(arrow.getDamage()))
-            arrow.stop()
+        if attacker.isAlive(){
+            self.health.decreaseHealth(Float(attacker.getDamage()))
+            print("shoot boss health = \(health.currentHealth)")
+            attacker.stop()
         }
-        
         return true;
     }
 }
@@ -164,10 +165,6 @@ private class BossNode: SKSpriteNode, Shotable {
     }
     
     func shot(attacker: Attacker) -> Bool {
-        
-        if let arrow = attacker as? Arrow{
-            return mBoss.shot(arrow)
-        }
-        return true
+        return mBoss.shot(attacker)
     }
 }
