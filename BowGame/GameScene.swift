@@ -184,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel.initCell(self)
         
         
-        panel.position = CGPointMake(170, 335)
+        panel.position = CGPointMake(120, 335)
         panel.xScale = 0.2
         panel.yScale = 0.2
         self.addChild(panel)
@@ -253,7 +253,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
         }else if(touchedNode.name == "arrowCell") {
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
-            arrow.onSelected()
+            if(arrow.mArrowNum != 0) {
+                arrow.onSelected()
             /*if (arrow.selected == false) {
                 arrow.selected = true
                 
@@ -263,8 +264,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                     }
                 }
             }*/
-            if (panel.expanded) {
-                panel.resume()
+                if (arrow.mArrowPanel.expanded) {
+                    arrow.mArrowPanel.switchCell(arrow.mArrowName)
+                    arrow.mArrowPanel.resume()
+                }
             }
         }else{
             cameraMoveStart(touch)
@@ -303,7 +306,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         startpositionOfTouch = controllers.controllBallleft.position
         endpositionOfTouch = controllers.controllBallleft.position
-        isshooting = true
+        if(self.panel.cells[0].mArrowNum > 0) {
+            isshooting = true
+        }
     }
     func rightControllerOnTouchBegin()
     {
@@ -345,6 +350,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
+            
+            self.panel.updateArrowNum()
             
             //Multiplayer update enemy player
             

@@ -12,13 +12,11 @@
 		1369CA9C1B9DFFE400895E88 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1369CA9B1B9DFFE400895E88 /* Images.xcassets */; };
 		1369CA9F1B9DFFE400895E88 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1369CA9D1B9DFFE400895E88 /* LaunchScreen.xib */; };
 		1369CAAB1B9DFFE400895E88 /* BowGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369CAAA1B9DFFE400895E88 /* BowGameTests.swift */; };
-		1379F1941BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1379F18D1BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework */; settings = {ASSET_TAGS = (); }; };
 		1379F1951BD6EE52009F1C01 /* AppWarpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F18E1BD6EE52009F1C01 /* AppWarpHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1961BD6EE52009F1C01 /* ConnectionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1901BD6EE52009F1C01 /* ConnectionListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1971BD6EE52009F1C01 /* NotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1911BD6EE52009F1C01 /* NotificationListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1981BD6EE52009F1C01 /* RoomListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1921BD6EE52009F1C01 /* RoomListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1991BD6EE52009F1C01 /* ZoneListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1931BD6EE52009F1C01 /* ZoneListener.swift */; settings = {ASSET_TAGS = (); }; };
-		13F795641BDD80CC00642501 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F795631BDD80CC00642501 /* AVFoundation.framework */; };
 		2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E021BA0C32800F050A4 /* AppDelegate.swift */; };
 		2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E031BA0C32800F050A4 /* Arrow.swift */; };
 		2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E041BA0C32800F050A4 /* Bow.swift */; };
@@ -50,6 +48,7 @@
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
 		539680DF1BAF2975000906FE /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539680DE1BAF2975000906FE /* Obstacle.swift */; };
+		5396E8651BDDFE0800EEAD9D /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1379F18D1BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework */; };
 		894287571BACC1A400E519B8 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894287561BACC1A400E519B8 /* Buff.swift */; };
 		89696E2D1BDD5F560027FA3D /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89696E2C1BDD5F560027FA3D /* Bound.swift */; settings = {ASSET_TAGS = (); }; };
 		896F423E1BC2F11A0070DAAD /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896F423D1BC2F11A0070DAAD /* Controller.swift */; };
@@ -151,8 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13F795641BDD80CC00642501 /* AVFoundation.framework in Frameworks */,
-				1379F1941BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework in Frameworks */,
+				5396E8651BDDFE0800EEAD9D /* AppWarp_iOS_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +405,7 @@
 				TargetAttributes = {
 					1369CA8A1B9DFFE400895E88 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 28Y2YPE73K;
 					};
 					1369CAA31B9DFFE400895E88 = {
 						CreatedOnToolsVersion = 6.4;
@@ -641,6 +640,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
@@ -649,6 +650,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -660,6 +662,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
@@ -668,6 +672,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
