@@ -7,20 +7,28 @@
 //
 
 import UIKit
-
+import SpriteKit
 
 class AppWarpHelper: NSObject
 {
 
-    var api_key = "cad2bfab6310acd9696187b98682925125e469ab0d0d585db0b00609f461b791"
-    var secret_key = "55811709916e7ce4405cde0cdc5a254cf4b506fbafdae05760a73100b8080b67"
+    var api_key = "b1f88f28628ed99e69807f7bba8b65dc9f30f488c6985cab705840d63be8e734"
+    var secret_key = "7420f2ee4e8e0081f8bb86e111de8954e32506e658520cd18f35cbe9ad1d2361"
     var roomId = ""
     var enemyName: String = ""
     var playerName: String = ""
+    var warpClient:WarpClient!
     
     var startGameScene: StartGameScene? = nil
     var gameScene: GameScene? = nil
     
+    var tempFlagVal = 0
+    
+    var isNewRoomCreated = false
+
+    var isRoomOwner = false
+
+
     class var sharedInstance:AppWarpHelper{
         struct Static{
             static var instance:AppWarpHelper?
@@ -32,11 +40,17 @@ class AppWarpHelper: NSObject
             }
             return Static.instance!
     }
-
+    
+    
+    func stopGame()
+    {
+        warpClient.stopGame()
+    }
+    
     func initializeWarp()
     {
         WarpClient.initWarp(api_key, secretKey: secret_key)
-        let warpClient:WarpClient = WarpClient.getInstance()
+         warpClient = WarpClient.getInstance()
         warpClient.enableTrace(true)
         warpClient.setRecoveryAllowance(60);
         
@@ -50,8 +64,29 @@ class AppWarpHelper: NSObject
         let notificationListener:NotificationListener = NotificationListener()
         warpClient.addNotificationListener(notificationListener)
         
+        
+        
         let roomListener: RoomListener = RoomListener()
+        tempFlagVal = tempFlagVal + 1
+        print("THIS FUNCTION HAS BEEN RUN " + String(tempFlagVal) + "  TIMES")
+        
+
         warpClient.addRoomRequestListener(roomListener)
+    }
+    func disconnectFromServer(){
+        //let warpClient:WarpClient = WarpClient.getInstance()
+
+        if(roomId.characters.count > 0){
+        warpClient.unsubscribeRoom(roomId)
+        warpClient.leaveRoom(roomId)
+        warpClient.deleteRoom(roomId)
+        warpClient.disconnect()
+        self.roomId = ""
+        self.playerName = ""
+        self.enemyName = ""
+            
+        isRoomOwner = false
+        }
     }
     
     func connectWithAppWarpWithUserName(userName:String)
@@ -59,11 +94,12 @@ class AppWarpHelper: NSObject
         let uNameLength = userName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
-            let warpClient:WarpClient = WarpClient.getInstance()
+            //let warpClient:WarpClient = WarpClient.getInstance()
             warpClient.connectWithUserName(userName)
         }
     }
     
+
     
     func updatePlayerDataToServer(dataDict:NSMutableDictionary)
     {
@@ -80,10 +116,10 @@ class AppWarpHelper: NSObject
             return
         }
         
-        if WarpClient.getInstance().getConnectionState()==0
+        if warpClient.getConnectionState()==0
         {
             print("updatePlayerDataToServer")
-            WarpClient.getInstance().sendUpdatePeers(convertedData)
+            warpClient.sendUpdatePeers(convertedData)
         }
     }
     
@@ -113,9 +149,44 @@ class AppWarpHelper: NSObject
             {
                 print("receivedEnemyStatus...3")
                 
+                let quitSignal:(String?) = responseDict.objectForKey("QuitGame") as? String
+                
+                // enemy quit game
+                if quitSignal != nil {
+                    
+                    let sender : String = (responseDict
+                    .objectForKey("Sender") as? String)!
+                    
+                    let alert = UIAlertView()
+                    
+                    print("sender name:")
+                    print(sender)
+                    print(playerName)
+                    print(enemyName)
+                    
+                    if sender.hasPrefix(playerName) {
+                        alert.message = "You've quit the game!"
+                    } else {
+                        alert.message = "Your enemy has quited the game!"
+                    }
+                    
+                    alert.title = "Alert"
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                    
+                    
+                    let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+                    gameScene?.view?.presentScene((gameScene?.mainmenu)!, transition: transitionType)
+                    
+                    disconnectFromServer()
+                    
+                    return
+                }
+                let userName : (String!) = responseDict.objectForKey("userName") as! String
+                
+                
                 if enemyName.isEmpty
                 {
-                    let userName : (String!) = responseDict.objectForKey("userName") as! String
                     let isEqual = playerName.hasPrefix(userName)
                     if !isEqual
                     {
@@ -125,8 +196,6 @@ class AppWarpHelper: NSObject
                 }
                 else
                 {
-                    
-                    let userName : (String!) = responseDict.objectForKey("userName") as! String
                     let isEqual = enemyName.hasPrefix(userName)
                     if isEqual
                     {
@@ -138,4 +207,5 @@ class AppWarpHelper: NSObject
         }
         
     }
+
 }

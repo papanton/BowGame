@@ -18,7 +18,8 @@ class Ground: SKSpriteNode, Shotable
         super.init(texture: texture, color: SKColor.clearColor(), size: size)
         self.position = position
         
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        self.physicsBody = SKPhysicsBody(texture: texture, size: size)
+        
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask

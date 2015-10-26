@@ -30,22 +30,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var isshooting = false
 
-    var localPlayer = "test"
+    var localPlayer = "local"
+    var enemyPlayer = "temp"
 
+    var multiPlayerON = false
+    
+    var panel:ArrowPanel!
 
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
         self.localPlayer = localPlayer
-
+        self.multiPlayerON = multiPlayerON
         
         self.world = SKNode()
         self.UI = SKNode()
+//        self.UI.zPosition = 100;
+        self.world.zPosition = -1;
         self.addChild(world)
         self.addChild(UI)
         
-        self.physicsWorld.gravity = CGVectorMake(0, -9.8)
+        self.physicsWorld.gravity = CGVectorMake(0, -2.8)
         self.physicsWorld.contactDelegate = self
         
         initworld()
@@ -74,6 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func initUI()
     {
+        addArrowPanel()
         addControllers()
         addSettingButton()
     }
@@ -97,13 +104,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func addBorder()
     {
         let texture = SKTexture()
-        let leftBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
+        let leftBorder = Bound(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
         self.world.addChild(leftBorder)
         
-        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
+        let rightBorder = Bound(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
         self.world.addChild(rightBorder)
         
-        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
+        let bottomBorder = Bound(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
         self.world.addChild(bottomBorder)
        
     }
@@ -164,20 +171,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
     }
     
-    //add arrow panel
-    func addArrowPanel() {
-        let arrowCell = ArrowCell.init()
-        self.addChild(arrowCell)
-        arrowCell.xScale = 0.2
-        arrowCell.yScale = 0.2
-        arrowCell.position = CGPointMake(300, 300)
-    }
-    
     //add one Obstacle to Scene
     func addObstacle() {
-        let obstacle = Obstacle(name: "wooden board", size: CGSizeMake(40,100),damage: 10)
-        obstacle.setObstaclePosition(self)
-        self.world.addChild(obstacle)
+
+        
+    }
+    
+    //add arrow panel
+    func addArrowPanel()
+    {
+        panel = ArrowPanel.init()
+        panel.initCell(self)
+        
+        
+        panel.position = CGPointMake(170, 335)
+        panel.xScale = 0.2
+        panel.yScale = 0.2
+        self.addChild(panel)
+        
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -199,13 +211,61 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         print(touchedNode.name)
         
         if(touchedNode.name == "settings"){
+            
+            if multiPlayerON {
+                let dataDict = NSMutableDictionary()
+                dataDict.setObject(NSString(string: "true"), forKey: "QuitGame")
+                dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "Sender")
+                
+                AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+            }
+            
+           AppWarpHelper.sharedInstance.disconnectFromServer()
+            
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
         }
         else if(touchedNode.name == "controlBallLeft" ) {
+            print("touchLeft: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
+            if (multiPlayerON && !AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
+            
             leftControllerOnTouchBegin()
         }else if(touchedNode.name == "controlBallRight"){
+            print("touchRight: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
+            if (multiPlayerON && AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
            rightControllerOnTouchBegin()
+        }else if(touchedNode.name == "arrowPanel") {
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+        }else if(touchedNode.name == "arrowCell") {
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            arrow.onSelected()
+            /*if (arrow.selected == false) {
+                arrow.selected = true
+                
+                for cell in panel.cells {
+                    if (!cell.isEqual(arrow)) {
+                        cell.selected = false
+                    }
+                }
+            }*/
+            if (panel.expanded) {
+                panel.resume()
+            }
         }else{
             cameraMoveStart(touch)
         }
@@ -279,7 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 return
             }
-            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
+            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
             
@@ -287,12 +347,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             ShootingAngle.getInstance().hide()
             
             //Multiplayer update enemy player
-            var dataDict = NSMutableDictionary()
+            
+            if multiPlayerON {
+            let dataDict = NSMutableDictionary()
             dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
-            var stringImpulse = NSStringFromCGVector(impulse)
+            let stringImpulse = NSStringFromCGVector(impulse)
             dataDict.setObject(stringImpulse, forKey: "impulse")
             
             AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+            }
         }
     }
     
@@ -314,7 +377,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     override func didMoveToView(view: SKView) {
-        playAsGuest()
+        //playAsGuest()
         
     }
     
@@ -410,7 +473,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //display the turn information on the screen
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
+        if(!multiPlayerON){
         text.text = "Round \(self.rounds)"
+        }
+        else if (multiPlayerON){
+            if(self.rounds%2 == 0){
+                text.text = "Player 2 Turn"
+            }
+            else {
+                text.text = "Player 1 Turn"
+            }
+        }
+        
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"
@@ -451,6 +525,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func updateEnemyStatus(dataDict: NSDictionary){
         
+        enemyPlayer =  dataDict.objectForKey("userName") as! String
+        print(enemyPlayer)
         let stringImpulse:String = dataDict.objectForKey("impulse") as! String
         let realImpulse:CGVector = CGVectorFromString(stringImpulse)
         GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)

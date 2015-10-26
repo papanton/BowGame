@@ -14,8 +14,8 @@ class StageGameScene: GameScene{
     var boss : Boss!
 
 
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer)
+    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,13 +24,18 @@ class StageGameScene: GameScene{
     
     override func initworld()
     {
-
         //World
         super.initworld()
-        addArrowPanel()
         addBoss()
     }
-    
+    //init environment of the game world
+    //specific in each stage scene
+    override func addObstacle() {}
+    override func addBackground() {}
+    func addBoss(){}
+    func addBlackHole() {}
+    func addCanon() {}
+
     
     override func addPlayers()
     {
@@ -39,27 +44,10 @@ class StageGameScene: GameScene{
         player1.add2Scene(self, world: self.world, UI: self.UI)
     }
     
-    func addBoss()
-    {
-        let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
-        self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
-        boss.add2Scene()
-    }
-    
-    
+    //init ui controllers
     override func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
         controllers.addLeftController()
-        
-    }
-    
-    override func addArrowPanel()
-    {
-        let arrowCell = ArrowCell.init()
-        self.addChild(arrowCell)
-        arrowCell.position = CGPointMake(300, 300)
-        arrowCell.xScale = 0.2
-        arrowCell.yScale = 0.2
         
     }
     override func controllerShoot(position : CGPoint)
@@ -97,8 +85,27 @@ class StageGameScene: GameScene{
             endpositionOfTouch = controllers.controllBallleft.position
             isshooting = true
         }
-        else if(touchedNode.name == "arrowCell") {
-            print("touched")
+        else if(touchedNode.name == "arrowPanel") {
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+        } else if(touchedNode.name == "arrowCell") {
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            if (arrow.selected == false) {
+                arrow.selected = true
+                
+                for cell in panel.cells {
+                    if (!cell.isEqual(arrow)) {
+                        cell.selected = false
+                    }
+                }
+            }
+            if (panel.expanded) {
+                panel.resume()
+            }
         }
         else{
             cameraMoveStart(touch)
@@ -156,6 +163,7 @@ class StageGameScene: GameScene{
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
 
+            self.touch_disable = true
             ShootingAngle.getInstance().hide()
         }
     }
@@ -175,16 +183,6 @@ class StageGameScene: GameScene{
         }
     }
     
-    //call after the arrow disappears
-    func nextRound()
-    {
-        
-    }
-    
-    func startGame()
-    {
-        
-    }
 
     override func turnChanged(turn:Int)
     {

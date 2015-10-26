@@ -18,6 +18,7 @@
 		1379F1971BD6EE52009F1C01 /* NotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1911BD6EE52009F1C01 /* NotificationListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1981BD6EE52009F1C01 /* RoomListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1921BD6EE52009F1C01 /* RoomListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1991BD6EE52009F1C01 /* ZoneListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1931BD6EE52009F1C01 /* ZoneListener.swift */; settings = {ASSET_TAGS = (); }; };
+		13F795641BDD80CC00642501 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F795631BDD80CC00642501 /* AVFoundation.framework */; };
 		2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E021BA0C32800F050A4 /* AppDelegate.swift */; };
 		2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E031BA0C32800F050A4 /* Arrow.swift */; };
 		2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E041BA0C32800F050A4 /* Bow.swift */; };
@@ -26,6 +27,8 @@
 		2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E071BA0C32800F050A4 /* GameViewController.swift */; };
 		2A198E101BA0C32800F050A4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E081BA0C32800F050A4 /* Player.swift */; };
 		2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E091BA0C32800F050A4 /* StartGameScene.swift */; };
+		2A1A59811BD884F2008825FD /* Canon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59801BD884F2008825FD /* Canon.swift */; settings = {ASSET_TAGS = (); }; };
+		2A1A59831BD89EFA008825FD /* BlackHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59821BD89EFA008825FD /* BlackHole.swift */; settings = {ASSET_TAGS = (); }; };
 		2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */; settings = {ASSET_TAGS = (); }; };
 		2A8274691BAB62D900A59823 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 2A8274671BAB62D900A59823 /* sound */; };
 		2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8274681BAB62D900A59823 /* SoundEffect.swift */; };
@@ -48,9 +51,15 @@
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
 		539680DF1BAF2975000906FE /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539680DE1BAF2975000906FE /* Obstacle.swift */; };
 		894287571BACC1A400E519B8 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894287561BACC1A400E519B8 /* Buff.swift */; };
+		89696E2D1BDD5F560027FA3D /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89696E2C1BDD5F560027FA3D /* Bound.swift */; settings = {ASSET_TAGS = (); }; };
 		896F423E1BC2F11A0070DAAD /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896F423D1BC2F11A0070DAAD /* Controller.swift */; };
 		898238811BCDD20200B769F0 /* StageGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898238801BCDD20200B769F0 /* StageGameScene.swift */; settings = {ASSET_TAGS = (); }; };
+		89A4C4791BDAE24600094A84 /* TestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C4781BDAE24600094A84 /* TestScene.swift */; settings = {ASSET_TAGS = (); }; };
+		89A4C47B1BDAE62300094A84 /* StageOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47A1BDAE62300094A84 /* StageOne.swift */; settings = {ASSET_TAGS = (); }; };
+		89A4C47D1BDAE7E300094A84 /* StageTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47C1BDAE7E300094A84 /* StageTwo.swift */; settings = {ASSET_TAGS = (); }; };
+		89A4C47F1BDAE7F200094A84 /* StageThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47E1BDAE7F200094A84 /* StageThree.swift */; settings = {ASSET_TAGS = (); }; };
 		89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B9217A1BBE1F200073E10C /* GameOverScene.swift */; };
+		89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8385C1BDAD1B00016111E /* StageSelection.swift */; settings = {ASSET_TAGS = (); }; };
 		89CCF8091BCF037100ED6B7C /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCF8081BCF037100ED6B7C /* Boss.swift */; settings = {ASSET_TAGS = (); }; };
 		F805C92A1BA61F530038B692 /* ShootAnimation.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = F805C9281BA61F530038B692 /* ShootAnimation.atlasc */; };
 		F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805C9291BA61F530038B692 /* ShootAnimation.swift */; };
@@ -86,6 +95,7 @@
 		1379F1921BD6EE52009F1C01 /* RoomListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomListener.swift; sourceTree = "<group>"; };
 		1379F1931BD6EE52009F1C01 /* ZoneListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoneListener.swift; sourceTree = "<group>"; };
 		1379F19A1BD6EE81009F1C01 /* BowGame-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BowGame-Bridging-Header.h"; sourceTree = "<group>"; };
+		13F795631BDD80CC00642501 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2A198E021BA0C32800F050A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A198E031BA0C32800F050A4 /* Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
 		2A198E041BA0C32800F050A4 /* Bow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bow.swift; sourceTree = "<group>"; };
@@ -94,6 +104,8 @@
 		2A198E071BA0C32800F050A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2A198E081BA0C32800F050A4 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2A198E091BA0C32800F050A4 /* StartGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameScene.swift; sourceTree = "<group>"; };
+		2A1A59801BD884F2008825FD /* Canon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canon.swift; sourceTree = "<group>"; };
+		2A1A59821BD89EFA008825FD /* BlackHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackHole.swift; sourceTree = "<group>"; };
 		2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutiplayerScene.swift; sourceTree = "<group>"; };
 		2A8274671BAB62D900A59823 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		2A8274681BAB62D900A59823 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
@@ -117,9 +129,15 @@
 		5379AC731BA9E83E0061BC19 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		539680DE1BAF2975000906FE /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		894287561BACC1A400E519B8 /* Buff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buff.swift; sourceTree = "<group>"; };
+		89696E2C1BDD5F560027FA3D /* Bound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bound.swift; sourceTree = "<group>"; };
 		896F423D1BC2F11A0070DAAD /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		898238801BCDD20200B769F0 /* StageGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageGameScene.swift; sourceTree = "<group>"; };
+		89A4C4781BDAE24600094A84 /* TestScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScene.swift; sourceTree = "<group>"; };
+		89A4C47A1BDAE62300094A84 /* StageOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageOne.swift; sourceTree = "<group>"; };
+		89A4C47C1BDAE7E300094A84 /* StageTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageTwo.swift; sourceTree = "<group>"; };
+		89A4C47E1BDAE7F200094A84 /* StageThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageThree.swift; sourceTree = "<group>"; };
 		89B9217A1BBE1F200073E10C /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		89C8385C1BDAD1B00016111E /* StageSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageSelection.swift; sourceTree = "<group>"; };
 		89CCF8081BCF037100ED6B7C /* Boss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boss.swift; sourceTree = "<group>"; };
 		F805C9281BA61F530038B692 /* ShootAnimation.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ShootAnimation.atlasc; sourceTree = "<group>"; };
 		F805C9291BA61F530038B692 /* ShootAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootAnimation.swift; sourceTree = "<group>"; };
@@ -133,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13F795641BDD80CC00642501 /* AVFoundation.framework in Frameworks */,
 				1379F1941BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,7 +169,7 @@
 		1369CA821B9DFFE400895E88 = {
 			isa = PBXGroup;
 			children = (
-				2AA53A851BBDF95C00CC72A9 /* Datas */,
+				13F795631BDD80CC00642501 /* AVFoundation.framework */,
 				1369CA8D1B9DFFE400895E88 /* BowGame */,
 				1369CAA71B9DFFE400895E88 /* BowGameTests */,
 				1369CA8C1B9DFFE400895E88 /* Products */,
@@ -252,6 +271,7 @@
 		2A8EFD721BD6F233008E170B /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2AA53A851BBDF95C00CC72A9 /* Datas */,
 				2A8EFD751BD6F3A3008E170B /* Interfaces.swift */,
 				134A559F1BA503FA00C09E99 /* Constants.swift */,
 				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
@@ -265,12 +285,14 @@
 		2A8EFD731BD6F23F008E170B /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				89A4C4801BDAE80B00094A84 /* stages */,
 				2A198E071BA0C32800F050A4 /* GameViewController.swift */,
 				2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */,
 				2A198E061BA0C32800F050A4 /* GameScene.swift */,
 				898238801BCDD20200B769F0 /* StageGameScene.swift */,
 				2A198E091BA0C32800F050A4 /* StartGameScene.swift */,
 				89B9217A1BBE1F200073E10C /* GameOverScene.swift */,
+				89C8385C1BDAD1B00016111E /* StageSelection.swift */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -278,11 +300,13 @@
 		2A8EFD741BD6F32C008E170B /* Elements */ = {
 			isa = PBXGroup;
 			children = (
+				2A1A59801BD884F2008825FD /* Canon.swift */,
 				89CCF8081BCF037100ED6B7C /* Boss.swift */,
 				539680DE1BAF2975000906FE /* Obstacle.swift */,
 				2A198E031BA0C32800F050A4 /* Arrow.swift */,
 				2A198E081BA0C32800F050A4 /* Player.swift */,
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
+				2A1A59821BD89EFA008825FD /* BlackHole.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -299,7 +323,6 @@
 				2AF0CADE1BC0840800FBC36A /* DataColletion.swift */,
 			);
 			name = Datas;
-			path = BowGame;
 			sourceTree = "<group>";
 		};
 		2AA9B1DA1BABE52D009491AC /* GameController */ = {
@@ -316,9 +339,21 @@
 			isa = PBXGroup;
 			children = (
 				894287561BACC1A400E519B8 /* Buff.swift */,
+				89696E2C1BDD5F560027FA3D /* Bound.swift */,
 				5379AC6F1BA9E7C70061BC19 /* Ground.swift */,
 			);
 			name = Shotable;
+			sourceTree = "<group>";
+		};
+		89A4C4801BDAE80B00094A84 /* stages */ = {
+			isa = PBXGroup;
+			children = (
+				89A4C47A1BDAE62300094A84 /* StageOne.swift */,
+				89A4C47C1BDAE7E300094A84 /* StageTwo.swift */,
+				89A4C47E1BDAE7F200094A84 /* StageThree.swift */,
+				89A4C4781BDAE24600094A84 /* TestScene.swift */,
+			);
+			name = stages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -431,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A198E0E1BA0C32800F050A4 /* GameScene.swift in Sources */,
+				89A4C47B1BDAE62300094A84 /* StageOne.swift in Sources */,
 				2AA53A8B1BBDFAD600CC72A9 /* BowGame.xcdatamodeld in Sources */,
 				2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */,
 				2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */,
@@ -439,7 +475,10 @@
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
 				F81D89971BB31C1300B9718C /* Terrain.swift in Sources */,
 				2AA53ACA1BBE361B00CC72A9 /* DataCenter.swift in Sources */,
+				2A1A59811BD884F2008825FD /* Canon.swift in Sources */,
+				89A4C4791BDAE24600094A84 /* TestScene.swift in Sources */,
 				F87E85891BD2F46C00215B5C /* ArrowPanel.swift in Sources */,
+				89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */,
 				2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
 				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,
@@ -460,14 +499,18 @@
 				2A198E111BA0C32800F050A4 /* StartGameScene.swift in Sources */,
 				2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */,
 				2A198E0F1BA0C32800F050A4 /* GameViewController.swift in Sources */,
+				2A1A59831BD89EFA008825FD /* BlackHole.swift in Sources */,
 				2A198E0D1BA0C32800F050A4 /* CollisionHelp.swift in Sources */,
 				F805C92B1BA61F530038B692 /* ShootAnimation.swift in Sources */,
 				89CCF8091BCF037100ED6B7C /* Boss.swift in Sources */,
+				89A4C47F1BDAE7F200094A84 /* StageThree.swift in Sources */,
 				134A55A01BA503FA00C09E99 /* Constants.swift in Sources */,
 				2A8EFD761BD6F3A3008E170B /* Interfaces.swift in Sources */,
 				1379F1961BD6EE52009F1C01 /* ConnectionListener.swift in Sources */,
 				5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */,
 				2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */,
+				89696E2D1BDD5F560027FA3D /* Bound.swift in Sources */,
+				89A4C47D1BDAE7E300094A84 /* StageTwo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,7 +572,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -573,6 +618,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -601,6 +647,7 @@
 				);
 				INFOPLIST_FILE = BowGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -619,6 +666,7 @@
 				);
 				INFOPLIST_FILE = BowGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -639,6 +687,7 @@
 				);
 				INFOPLIST_FILE = BowGameTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BowGame.app/BowGame";
 			};
@@ -654,6 +703,7 @@
 				);
 				INFOPLIST_FILE = BowGameTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BowGame.app/BowGame";
 			};

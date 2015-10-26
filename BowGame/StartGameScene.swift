@@ -20,10 +20,16 @@ class StartGameScene: SKScene {
         "Exit" : {(s:StartGameScene)->Void in exit(0)}]
     
     var textField: UITextField!
-    let playerName = "test"
+    var playerName = "test"
 
     var current_game : SKScene?
 
+    var tempFlagVal = 0
+
+    
+    var alertController:UIAlertController!
+    
+    
     func addTextField() {
         let screensize = UIScreen.mainScreen().bounds.size;
         
@@ -64,8 +70,11 @@ class StartGameScene: SKScene {
 
     override init(size: CGSize) {
         super.init(size: size)
+        AppWarpHelper.sharedInstance.initializeWarp()
+
         addBackground()
         addButtons()
+        addAlertController()
     }
     func addButtons()
     {
@@ -91,32 +100,55 @@ class StartGameScene: SKScene {
     
     func startGame()
     {
-        let name = textField.text!
+        
+        AppWarpHelper.sharedInstance.startGameScene = self
+        
+        playerName = textField.text!
         
         textField.resignFirstResponder()
 
+        let uName:String = playerName   as String
+        let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        if uNameLength>0
+        {
+            AppWarpHelper.sharedInstance.playerName = uName
+            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
+        }
+
+        self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+    
+    func startMultiplayerGame(){
+        
+        textField.removeFromSuperview()
+
+        
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-
-        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: name)
+        
+        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: true)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
-        textField.removeFromSuperview()
+        self.view?.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {})
         AppWarpHelper.sharedInstance.gameScene = gameScene
+         changeScene(gameScene)
 
-        changeScene(gameScene)
+        
     }
     
     func startStage()
     {
-        let playerName = "temp"
+//        let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
+//        
+//        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: false )
         
-        let gameScene = StageGameScene(size: scenesize, mainmenu: self, localPlayer: playerName )
-        gameScene.scaleMode = SKSceneScaleMode.AspectFit
+        let stageSelect = StageSelection(size: scenesize, mainmenu: self)
+        
+        stageSelect.scaleMode = SKSceneScaleMode.AspectFit
         textField.removeFromSuperview()
-
-        changeScene(gameScene)
+        changeScene(stageSelect)
     }
     
     func changeScene(scene : SKScene)
@@ -126,9 +158,7 @@ class StartGameScene: SKScene {
     }
     override func didMoveToView(view: SKView) {
         addTextField()
-        
-        AppWarpHelper.sharedInstance.initializeWarp()
-        AppWarpHelper.sharedInstance.startGameScene = self
+        playerName = ""
         
         
     }
@@ -154,4 +184,15 @@ class StartGameScene: SKScene {
     {
         self.current_game = nil
     }
+    
+    
+    func addAlertController(){
+         alertController = UIAlertController(title: "Connecting...",
+            message: "Waiting for other player ...",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel",
+            style: UIAlertActionStyle.Default,
+            handler: {(alert: UIAlertAction!) in  AppWarpHelper.sharedInstance.disconnectFromServer()}))
+    }
+    
 }
