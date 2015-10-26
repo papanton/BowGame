@@ -166,12 +166,12 @@ class FlappyArrow : Arrow, ClickObersever
         let forever = SKAction.repeatActionForever(one)
         runAction(forever)
 
-        super.go(CGVectorMake(dx, 5), position: position)
+        super.go(CGVectorMake(dx, 2), position: position)
     }
     func onClick()
     {
         if isFlying != 0 && physicsBody != nil{
-            physicsBody!.velocity.dy = 400
+            physicsBody!.velocity.dy = 300
             if(physicsBody!.velocity.dx > 0){
                 physicsBody!.velocity.dx = 100
             }
