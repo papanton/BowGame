@@ -130,6 +130,7 @@ private class BossNode: SKSpriteNode, Shotable {
     init(name : String, mBoss : Boss)
     {
         self.mBoss = mBoss
+        var newanimation : SKAction!
         if(name == "firstboss")
         {
             bosssize = CGSizeMake(224 * 0.7, 169 * 0.7)
@@ -140,9 +141,19 @@ private class BossNode: SKSpriteNode, Shotable {
         }else if(name == "beeboss"){
             bosssize = CGSizeMake(200 * 0.7, 250 * 0.7)
             bosstexture = SKTexture(imageNamed: "beeboss")
+            let beetexture1 : SKTexture = SKTexture(imageNamed: "beeboss2")
+            var animation = SKAction.animateWithTextures([bosstexture,beetexture1], timePerFrame: 0.2)
+            newanimation = SKAction.repeatActionForever(animation)
+            
+            //self.runAction(newanimation)
+            //self.addChild(bh)
         }
         
         super.init(texture: bosstexture, color: SKColor.clearColor(), size: bosssize)
+        if(name == "beeboss")
+        {
+            self.runAction(newanimation)
+        }
         addPhysicsBody()
     }
     
