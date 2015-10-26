@@ -10,13 +10,13 @@ import UIKit
 import SpriteKit
 
 class StageOne: StageGameScene {
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
+    
+//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
+//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, selectionScene : selectionScene)
+//    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
     
     override func addBackground()
     {
@@ -25,10 +25,6 @@ class StageOne: StageGameScene {
         background.zPosition = -100;
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
-        
-        print(background.frame.width)
-        print(background.frame.height)
-        
     }
     
     override func addGround()
@@ -81,6 +77,13 @@ class StageOne: StageGameScene {
     {
         super.addArrowPanel()
         panel.setArrowNum(10, bomb: 1, flappy: 0, split: 2, ignore: 0)
+    }
+    
+    override func restartGame() {
+        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
     }
 
 }
