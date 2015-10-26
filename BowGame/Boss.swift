@@ -46,11 +46,9 @@ class Boss : NSObject, Shotable{
     
     func shot(attacker : Attacker)->Bool
     {
-        if attacker.isAlive(){
-            self.health.decreaseHealth(Float(attacker.getDamage()))
-            print("shoot boss health = \(health.currentHealth)")
-            attacker.stop()
-        }
+        self.health.decreaseHealth(Float(attacker.getDamage()))
+        print("shoot boss health = \(health.currentHealth)")
+        attacker.stop()
         return true;
     }
 }
@@ -165,6 +163,9 @@ private class BossNode: SKSpriteNode, Shotable {
     }
     
     func shot(attacker: Attacker) -> Bool {
-        return mBoss.shot(attacker)
+        if attacker.isAlive(){
+            return mBoss.shot(attacker)
+        }
+        return false
     }
 }
