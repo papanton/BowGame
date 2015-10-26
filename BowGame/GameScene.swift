@@ -183,8 +183,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel = ArrowPanel.init()
         panel.initCell(self)
         
-        
         panel.position = CGPointMake(170, 335)
+        panel.zPosition = 5
         panel.xScale = 0.2
         panel.yScale = 0.2
         self.addChild(panel)
@@ -220,7 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
             
-//            AppWarpHelper.sharedInstance.disconnectFromServer()
+           AppWarpHelper.sharedInstance.disconnectFromServer()
             
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(mainmenu,transition: transitionType)
@@ -253,7 +253,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
         }else if(touchedNode.name == "arrowCell") {
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
-            arrow.onSelected()
+            if(arrow.mArrowNum != 0) {
+                arrow.onSelected()
             /*if (arrow.selected == false) {
                 arrow.selected = true
                 
@@ -263,8 +264,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                     }
                 }
             }*/
-            if (panel.expanded) {
-                panel.resume()
+                if (arrow.mArrowPanel.expanded) {
+                    arrow.mArrowPanel.switchCell(arrow.mArrowName)
+                    arrow.mArrowPanel.resume()
+                }
             }
         }else{
             cameraMoveStart(touch)
@@ -303,7 +306,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         startpositionOfTouch = controllers.controllBallleft.position
         endpositionOfTouch = controllers.controllBallleft.position
-        isshooting = true
+        if(self.panel.cells[0].mArrowNum > 0) {
+            isshooting = true
+        }
     }
     func rightControllerOnTouchBegin()
     {
@@ -345,6 +350,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
+            
+            self.panel.updateArrowNum()
             
             //Multiplayer update enemy player
             
@@ -473,7 +480,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     //display the turn information on the screen
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
+        if(!multiPlayerON){
         text.text = "Round \(self.rounds)"
+        }
+        else if (multiPlayerON){
+            if(self.rounds%2 == 0){
+                text.text = "Player 2 Turn"
+            }
+            else {
+                text.text = "Player 1 Turn"
+            }
+        }
+        
         text.fontColor = SKColor.blackColor()
         text.fontSize = 65
         text.fontName = "MarkerFelt-Wide"

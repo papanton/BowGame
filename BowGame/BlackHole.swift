@@ -46,7 +46,7 @@ class BlackHole: Obstacle
             disappear()
             appear(arrow, pos: CGPointMake(((parent?.scene?.size.width)!*2)-100, 300))
             reshootAnimation(arrow)
-            delay(3){
+            delay(3.5){
                self.disappear()
                self.appear(nil, pos: temp)
             }
@@ -72,7 +72,7 @@ class BlackHole: Obstacle
     func reshoot(arrow : Arrow)
     {
         arrow.physicsBody?.dynamic = true
-        arrow.go(CGVectorMake(0, -50), position: arrow.position)
+        arrow.go(CGVectorMake(0, -5), position: arrow.position)
     }
     func reshootAnimation(arrow : Arrow)
     {

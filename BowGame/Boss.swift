@@ -32,8 +32,11 @@ class Boss : NSObject, Shotable{
         self.bossposition = position
         bossnode = BossNode(name: name, mBoss: self)
         health = Health(name: name, UIsize: mScene.size)
+        GameController.getInstance().setBoss(self)
     }
-    
+    func isDead() -> Bool {
+        return health.currentHealth <= 0
+    }
     func add2Scene(){
         bossnode.position = CGPointMake(bossposition.x, bossposition.y + bossnode.size.height / 2)
         mWorld.addChild(bossnode)
@@ -43,13 +46,9 @@ class Boss : NSObject, Shotable{
     
     func shot(attacker : Attacker)->Bool
     {
-        if(attacker is Arrow){
-            print("shoot boss")
-            let arrow = attacker as! Arrow
-            self.health.decreaseHealth(Float(arrow.getDamage()))
-            arrow.stop()
-        }
-        
+        self.health.decreaseHealth(Float(attacker.getDamage()))
+        print("shoot boss health = \(health.currentHealth)")
+        attacker.stop()
         return true;
     }
 }
@@ -162,12 +161,19 @@ private class BossNode: SKSpriteNode, Shotable {
         self.physicsBody?.collisionBitMask = 0x0
 
     }
-    
+
     func shot(attacker: Attacker) -> Bool {
-        
-        if let arrow = attacker as? Arrow{
-            return mBoss.shot(arrow)
+        if attacker.isAlive(){
+            var sequence = [SKAction]()
+            for i in 1...3{
+                sequence.append(SKAction.rotateByAngle(CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+                sequence.append(SKAction.rotateByAngle(-CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+            }
+            //let action = SKAction.repeatActionForever(SKAction.sequence(sequence))
+            runAction(SKAction.sequence(sequence))
+            
+            return mBoss.shot(attacker)
         }
-        return true
+        return false
     }
 }
