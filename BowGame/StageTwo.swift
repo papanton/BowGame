@@ -72,6 +72,13 @@ class StageTwo: StageGameScene {
         addLandWithBox2(position4)
     }
     
+    
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(10, bomb: 1, flappy: 2, split: 2, ignore: 0)
+    }
+    
     func addLandWithBox(position : CGPoint)
     {
         let island : Ground = Ground(texture: SKTexture(imageNamed: "forest_land1"), size: CGSizeMake(232 / 2, 84 / 2), position: position)

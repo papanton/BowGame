@@ -311,7 +311,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         endpositionOfTouch = controllers.controllBallleft.position
         if(self.panel.cells[0].mArrowNum > 0) {
             isshooting = true
+        } else {
+            self.panel.remindOutofArrow()
         }
+        
     }
     func rightControllerOnTouchBegin()
     {
