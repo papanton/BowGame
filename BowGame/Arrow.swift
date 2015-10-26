@@ -30,7 +30,10 @@ class Arrow: SKSpriteNode, Attacker{
     private var deadTime = 0
     private var host : Player!
     private var isFlying:UInt8 = 1
-    
+    func isAlive()->Bool
+    {
+        return isFlying == 1
+    }
     func getDamage()-> Int
     {
         return damage;
@@ -216,7 +219,12 @@ class SplitableArrow : Arrow, ClickObersever
     }
     override func afterAttack()
     {
-        if isFlying == 0{
+        if isFlying == 0 && deadTime == 0{
+            deadTime++
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
             childArrowDead()
         }
     }
@@ -226,7 +234,12 @@ class SplitableArrow : Arrow, ClickObersever
         var mOrigin : SplitableArrow!
         override func afterAttack()
         {
-            if isFlying == 0{
+            if isFlying == 0 && deadTime == 0{
+                deadTime++
+                let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+                runAction(fadeout, completion: {
+                    self.removeFromParent()
+                })
                 mOrigin.childArrowDead()
             }
         }
@@ -275,6 +288,9 @@ class Bomb : Obstacle
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func isAlive() -> Bool {
+        return parent != nil
     }
     private func bang()
     {

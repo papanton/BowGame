@@ -15,6 +15,7 @@ protocol Attacker
     func tryStop( )
     func stop( )
     func isFrom(player : Player)->Bool
+    func isAlive()->Bool
 }
 
 protocol Shotable

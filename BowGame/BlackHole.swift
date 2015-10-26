@@ -72,7 +72,7 @@ class BlackHole: Obstacle
     func reshoot(arrow : Arrow)
     {
         arrow.physicsBody?.dynamic = true
-        arrow.go(CGVectorMake(0, -50), position: arrow.position)
+        arrow.go(CGVectorMake(0, -5), position: arrow.position)
     }
     func reshootAnimation(arrow : Arrow)
     {

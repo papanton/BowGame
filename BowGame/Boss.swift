@@ -46,9 +46,11 @@ class Boss : NSObject, Shotable{
     
     func shot(attacker : Attacker)->Bool
     {
-        print("shoot boss")
-        self.health.decreaseHealth(Float(attacker.getDamage()))
-        attacker.stop()
+        if attacker.isAlive(){
+            self.health.decreaseHealth(Float(attacker.getDamage()))
+            print("shoot boss health = \(health.currentHealth)")
+            attacker.stop()
+        }
         return true;
     }
 }
