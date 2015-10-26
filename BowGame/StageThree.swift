@@ -24,19 +24,29 @@ class StageThree: StageGameScene {
         let background = SKSpriteNode(texture:backgroundTexture, color: SKColor.clearColor(), size: CGSizeMake(self.frame.width * 2, self.frame.height))
         background.zPosition = -100;
         background.position = CGPointMake(size.width,  size.height*0.5)
+
+        let decorate = SKSpriteNode(texture: SKTexture(imageNamed: "Sign_4"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
+
         self.world.addChild(background)
-        
-        print(background.frame.width)
-        print(background.frame.height)
+        self.world.addChild(decorate)
         
     }
     
     override func addGround()
     {
         let groundTexture = SKTexture(imageNamed: "snow_ground")
-        let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 3), position: CGPointMake(0, 0))
-        ground.position = CGPointMake(size.width, 0)
+        let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 3), position: CGPointMake(size.width, 0))
         self.world.addChild(ground)
+        
+        let ground2size = CGSizeMake(311, 87)
+        let ground2 = Ground(texture: SKTexture(imageNamed: "snow_ground3"), size: ground2size, position: CGPointMake(382 + ground2size.width / 2, size.height / 6 + ground2size.height / 2))
+        self.world.addChild(ground2)
+
+        let ground3size = CGSizeMake(327, 136)
+        let ground3 = Ground(texture: SKTexture(imageNamed: "snow_ground3"), size: ground3size, position: CGPointMake(580 + ground3size.width / 2, size.height / 6 + ground3size.height / 2))
+        self.world.addChild(ground3)
+
         
         let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
@@ -54,22 +64,50 @@ class StageThree: StageGameScene {
 
     
     override func addObstacle() {
-        let startposition = CGPointMake(self.size.width * 0.7, self.size.height / 6)
-        let obsize = CGPointMake(50, 50)
-
-        
-        
-        for(var i = 0; i < 6; i++){
-            if(i == 0 || i == 5){
-                let stone1 = stone(position: CGPointMake(startposition.x + CGFloat(i) * obsize.x, startposition.y))
-                let stone2 = stone(position: CGPointMake(startposition.x + CGFloat(i) * obsize.x, startposition.y + 50))
-                self.world.addChild(stone2)
-                self.world.addChild(stone1)
-            }else{
-                let ice = Icebox(position: CGPointMake(startposition.x + CGFloat(i) * obsize.x, 300))
-                self.world.addChild(ice)
-            }
+        addComponent1()
+        addComponent2()
+        addComponent3()
+    }
+    
+    private func addComponent1()
+    {
+        let start = CGPointMake(382 + 25, self.size.height / 6 + 87)
+        let box1 = woodbox(position: start)
+        let box2 = woodbox(position: CGPointMake(start.x + 100, start.y))
+        let box3 = woodbox(position: CGPointMake(start.x + 50, start.y + 50))
+        self.world.addChild(box1)
+        self.world.addChild(box2)
+        self.world.addChild(box3)
+    }
+    
+    private func addComponent2()
+    {
+        for(var i = 0; i < 3; i++){
+            let ice = Icebox(position: CGPointMake(self.size.width * 2 - 25, self.size.height / 6 + CGFloat(i * 50)))
+            self.world.addChild(ice)
         }
+        
+        let start = CGPointMake(self.size.width * 2 - 325, self.size.height / 6)
+        for(var i = 0; i < 3; i++){
+            let ice1 = Icebox(position: CGPointMake(start.x + CGFloat(i * 25), start.y + CGFloat(i * 50)))
+            let ice2 = Icebox(position: CGPointMake(start.x + CGFloat(i * 25) + 50, start.y + CGFloat(i * 50)))
+            self.world.addChild(ice1)
+            self.world.addChild(ice2)
+        }
+        for(var i = 0; i < 5; i++){
+            let box = woodbox(position: CGPointMake(start.x + 75 + CGFloat(i * 50), start.y + 150))
+            self.world.addChild(box)
+        }
+    }
+    
+    private func addComponent3()
+    {
+        let start = CGPointMake(650 + 25, self.size.height / 6 + 136)
+        let box1 = woodbox(position: start)
+        let box2 = woodbox(position: CGPointMake(start.x + 150, start.y))
+        self.world.addChild(box1)
+        self.world.addChild(box2)
+
     }
     
     override func restartGame() {

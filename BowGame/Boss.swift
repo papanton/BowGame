@@ -136,7 +136,7 @@ private class BossNode: SKSpriteNode, Shotable {
             bosssize = CGSizeMake(224 * 0.7, 169 * 0.7)
             bosstexture = SKTexture(imageNamed: Boss1)
         }else if(name == "whiteboss2"){
-            bosssize = CGSizeMake(230 * 0.7, 231 * 0.7)
+            bosssize = CGSizeMake(230 * 0.6, 231 * 0.6)
             bosstexture = SKTexture(imageNamed: "whiteboss2")
         }else if(name == "beeboss"){
             bosssize = CGSizeMake(200 * 0.7, 250 * 0.7)

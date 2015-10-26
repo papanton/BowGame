@@ -25,10 +25,6 @@ class StageOne: StageGameScene {
         background.zPosition = -100;
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
-        
-        print(background.frame.width)
-        print(background.frame.height)
-        
     }
     
     override func addGround()

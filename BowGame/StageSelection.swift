@@ -73,8 +73,10 @@ class StageSelection: SKScene {
         
         let stages = [stage1,stage2,stage3,test]
         var i = 1.0
+        var offset : CGFloat = 5
         for button in stages{
-            button.position = CGPointMake((button.size.width + 20) * CGFloat(i), self.size.height * 0.2)
+            offset = offset * -1
+            button.position = CGPointMake((button.size.width + 20) * CGFloat(i), self.size.height * 0.2 + offset)
             button.zPosition = 2
             self.addChild(button)
             i = i + 1

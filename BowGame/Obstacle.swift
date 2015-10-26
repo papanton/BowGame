@@ -192,7 +192,13 @@ class Icebox : Obstacle {
         print("shot ice box")
         
         if let arrow = attacker as? Arrow{
-            arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
+            if(self.position.x < arrow.position.x && arrow.position.x < self.position.x + 50)
+            {
+                arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
+            }else{
+                arrow.physicsBody?.velocity.dx = -(arrow.physicsBody?.velocity.dx)!
+                arrow.xScale = -arrow.xScale
+            }
             arrow.update()
         }
         

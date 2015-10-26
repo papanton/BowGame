@@ -26,8 +26,9 @@ class StageTwo: StageGameScene {
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
         
-        print(background.frame.width)
-        print(background.frame.height)
+        let decorate = SKSpriteNode(texture: SKTexture(imageNamed: "Sign_1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
+        self.world.addChild(decorate)
         
     }
     
