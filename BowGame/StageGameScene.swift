@@ -32,7 +32,7 @@ class StageGameScene: GameScene{
     //specific in each stage scene
     override func addObstacle() {}
     override func addBackground() {}
-    func addBoss() {}
+    func addBoss(){}
     func addBlackHole() {}
     func addCanon() {}
 

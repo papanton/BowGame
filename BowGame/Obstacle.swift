@@ -21,7 +21,10 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
         super.init(coder: aDecoder)
     }
     
-    
+    func isAlive()->Bool
+    {
+        return collisionTimes < 2
+    }
     //init a obstacle with give name, possible damage and its init position
     init(name: String, damage: Int, position: CGPoint, size: CGSize) {
         obstacletexture = SKTexture(imageNamed: name)
@@ -92,6 +95,15 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
         }
         //print("11")
         return true
+    }
+    func stop() {
+        physicsBody?.dynamic = false
+    }
+    func tryStop() {
+         stop()
+    }
+    func isFrom(player: Player) -> Bool {
+        return false
     }
 }
 
@@ -167,7 +179,7 @@ class Icebox : Obstacle {
     private var ice_size : CGSize!
     init(position : CGPoint)
     {
-        self.ice_size = CGSizeMake(50, 50)
+        self.ice_size = CGSizeMake(50, 10)
         super.init(name: Ice, damage: 0, position: position, size: ice_size)
     }
     
@@ -235,6 +247,30 @@ class WoodBoard : Obstacle {
         }
         return true
     }
+}
+
+class Rock : Obstacle {
+    private var rock_size : CGSize!
+    init(position : CGPoint)
+    {
+        self.rock_size = CGSizeMake(222 / 3, 234 / 3)
+        super.init(name: "rock", damage: 0, position: position, size: rock_size)
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //wood box disappears after shot
+    override func shot(attacker: Attacker) -> Bool {
+        print("shot rock")
+        
+        if let arrow = attacker as? Arrow{
+            arrow.tryStop()
+        }
+        
+        return true
+    }
+
 }
 

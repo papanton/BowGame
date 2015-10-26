@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "ResumeGame.png"
+      "filename" : "normalarrow.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

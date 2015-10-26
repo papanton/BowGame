@@ -24,7 +24,10 @@ class AppWarpHelper: NSObject
     
     var tempFlagVal = 0
     
+    var isNewRoomCreated = false
+
     var isRoomOwner = false
+
 
     class var sharedInstance:AppWarpHelper{
         struct Static{

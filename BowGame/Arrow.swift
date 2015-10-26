@@ -27,9 +27,13 @@ class ArrowFactory
 class Arrow: SKSpriteNode, Attacker{
     
     private var damage :Int!
+    private var deadTime = 0
     private var host : Player!
     private var isFlying:UInt8 = 1
-    
+    func isAlive()->Bool
+    {
+        return isFlying == 1
+    }
     func getDamage()-> Int
     {
         return damage;
@@ -38,27 +42,15 @@ class Arrow: SKSpriteNode, Attacker{
     {
         return host
     }
-    private func bang()
-    {
-        print("bang")
-        let firetext = SKTexture(imageNamed: BangTexture)
-        let fire = SKSpriteNode(texture: firetext)
-        fire.size = CGSizeMake(50, 50)
-        fire.position = position
-        fire.alpha = 0.0;
-        // SKAction.fadeInWithDuration(canon,1)
-        parent?.addChild(fire)
-        let fadein: SKAction = SKAction.fadeAlphaTo(1, duration: 1)
 
-        fire.runAction(fadein, completion: {
-            fire.removeFromParent()
-            print("removed")
-        })
-    }
     func afterAttack()
     {
-        if isFlying == 0{
-            bang()
+        if isFlying == 0 && deadTime == 0{
+            deadTime++
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
             GameController.getInstance().afterArrowDead()
         }
     }
@@ -73,10 +65,6 @@ class Arrow: SKSpriteNode, Attacker{
         self.physicsBody?.velocity = CGVectorMake(0, 0)
         self.physicsBody?.restitution = 0
         
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-        runAction(fadeout, completion: {
-            self.removeFromParent()
-        })
         self.physicsBody?.dynamic = false
     }
     
@@ -92,8 +80,8 @@ class Arrow: SKSpriteNode, Attacker{
     }
     init(player : Player) {
         host = player
-        let spriteSize = CGSize(width: 50.0, height: 50.0)
-        let texture = SKTexture(imageNamed: ArrowImage)
+        let spriteSize = CGSize(width: 128 * 0.4, height: 23 * 0.4)
+        let texture = SKTexture(imageNamed: "normalarrow")
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
@@ -172,8 +160,8 @@ class FlappyArrow : Arrow, ClickObersever
         if(impulse.dx < 0) {
             dx = CGFloat(-1.0)
         }
-        let flappy1 = SKTexture(imageNamed: "FlappyArrow")
-        let flappy2 = SKTexture(imageNamed: "FlappyArrow2")
+        let flappy1 = SKTexture(imageNamed: "normalarrow")
+        let flappy2 = SKTexture(imageNamed: "normalarrow")
         let one = SKAction.animateWithTextures([flappy1,flappy2], timePerFrame: 0.4)
         let forever = SKAction.repeatActionForever(one)
         runAction(forever)
@@ -231,7 +219,12 @@ class SplitableArrow : Arrow, ClickObersever
     }
     override func afterAttack()
     {
-        if isFlying == 0{
+        if isFlying == 0 && deadTime == 0{
+            deadTime++
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
             childArrowDead()
         }
     }
@@ -241,38 +234,88 @@ class SplitableArrow : Arrow, ClickObersever
         var mOrigin : SplitableArrow!
         override func afterAttack()
         {
-            if isFlying == 0{
+            if isFlying == 0 && deadTime == 0{
+                deadTime++
+                let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+                runAction(fadeout, completion: {
+                    self.removeFromParent()
+                })
                 mOrigin.childArrowDead()
             }
         }
     }
 }
-class ArrowThrowsBombs : Arrow{
-    private var mCanThrow = true
-    override func update() -> Bool {
-        let canUpdate = super.update()
-        if canUpdate && mCanThrow{
-            throwsBombs()
-            return isFlying == 1
+class ArrowThrowsBombs : Arrow, ClickObersever{
+    private var mBombNum = 2
+    override func afterAttack() {
+        delay(1){
+             super.afterAttack()
         }
-        return isFlying == 1
+
     }
+    func onClick()
+    {
+        if mBombNum > 0{
+            throwsBombs()
+            --mBombNum
+        }
+    }
+
     private func throwsBombs()
     {
-        mCanThrow = false
-        delay(0.5){
-            if self.isFlying == 1{
-
-                let bomb = Obstacle(name: BombImage, damage: 0, position: self.position, size: CGSizeMake(20, 20))
-                print("throws bomb \n")
-                bomb.physicsBody?.dynamic = true
-                bomb.position = self.position
-                bomb.position.y -= 50
-                bomb.position.x -= 50 * self.xScale
-                self.parent?.addChild(bomb)
-                self.mCanThrow = true
-            }
-        }
+        let bomb = Bomb(arrow: self)
+        print("throws bomb \n")
+        bomb.physicsBody?.dynamic = true
+        bomb.position = self.position
+        bomb.position.y -= 50
+        bomb.position.x -= 50 * self.xScale
+        self.parent?.addChild(bomb)
+    }
+}
+class Bomb : Obstacle
+{
+    var mArrow : Arrow!
+    init(arrow : ArrowThrowsBombs)
+    {
+        super.init(name: BombImage, damage: 10, position: arrow.position, size: CGSizeMake(200/10, 177/10))
+        physicsBody?.categoryBitMask = CollisonHelper.ArrowMask
+        physicsBody?.contactTestBitMask = CollisonHelper.ShotableMask
+        physicsBody?.collisionBitMask = 0x0
+        physicsBody?.dynamic = true
+        position.y -= 50
+        position.x -= 50 * arrow.xScale
+        mArrow = arrow
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override func isAlive() -> Bool {
+        return parent != nil
+    }
+    private func bang()
+    {
+        let firetext = SKTexture(imageNamed: BangTexture)
+        let fire = SKSpriteNode(texture: firetext)
+        fire.size = CGSizeMake(50, 50)
+        fire.position = position
+        fire.alpha = 0.0;
+        // SKAction.fadeInWithDuration(canon,1)
+        parent?.addChild(fire)
+        let fadein: SKAction = SKAction.fadeAlphaTo(1, duration: 1)
+        removeFromParent()
+        fire.runAction(fadein, completion: {
+            fire.removeFromParent()
+            
+            print("removed")
+        })
+    }
+    override func afterAttack()
+    {
+        physicsBody?.dynamic = false
+        bang()
+    }
+    override func isFrom(player: Player) -> Bool {
+        return mArrow.isFrom(player)
     }
 }
 
