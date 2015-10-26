@@ -149,6 +149,7 @@ class StartGameScene: SKScene {
         stageSelect.scaleMode = SKSceneScaleMode.AspectFit
         textField.removeFromSuperview()
         changeScene(stageSelect)
+        DataCenter.getInstance().setArrowItemByName("arrow")
     }
     
     func changeScene(scene : SKScene)

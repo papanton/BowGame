@@ -171,7 +171,7 @@ class FlappyArrow : Arrow, ClickObersever
     func onClick()
     {
         if isFlying != 0 && physicsBody != nil{
-            physicsBody!.velocity.dy = 300
+            physicsBody!.velocity.dy = 200
             if(physicsBody!.velocity.dx > 0){
                 physicsBody!.velocity.dx = 100
             }
