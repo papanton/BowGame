@@ -183,8 +183,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel = ArrowPanel.init()
         panel.initCell(self)
         
-        
-        panel.position = CGPointMake(120, 335)
+        panel.position = CGPointMake(170, 335)
+        panel.zPosition = 5
         panel.xScale = 0.2
         panel.yScale = 0.2
         self.addChild(panel)
