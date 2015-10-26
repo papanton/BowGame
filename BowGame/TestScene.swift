@@ -11,12 +11,12 @@ import SpriteKit
 
 class TestScene: StageGameScene {
     
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
+//    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
 
     
     override func addBackground()
@@ -107,6 +107,14 @@ class TestScene: StageGameScene {
         world.addChild(canon)
         canon.startFire()
     }
+    
+    override func restartGame() {
+        let gameScene = TestScene(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
+    }
+
 
     
 }

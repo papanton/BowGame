@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.addChild(world)
         self.addChild(UI)
         
-        self.physicsWorld.gravity = CGVectorMake(0, -2.8)
+        self.physicsWorld.gravity = CGVectorMake(0, -3.3)
         self.physicsWorld.contactDelegate = self
         
         initworld()
@@ -155,10 +155,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func addSettingButton()
     {
         
-        let settings = SKSpriteNode(imageNamed: InGameSettingButton )
-        settings.position = CGPointMake(size.width*0.95,size.height*0.95)
+        let settings = SKSpriteNode(imageNamed: "backbutton")
+        settings.position = CGPointMake(30, size.height - 30)
         settings.name = "settings"
-        settings.size = CGSize(width: 16, height: 16)
+        settings.size = CGSize(width: 30, height: 30)
         self.UI.addChild(settings)
         
     }
@@ -210,7 +210,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         print(touchedNode.name)
         
-        if(touchedNode.name == "settings"){
+        if(touchedNode.name == "restartbutton"){
+            restartGame()
+        }
+        else if(touchedNode.name == "settings"){
             
             if multiPlayerON {
                 let dataDict = NSMutableDictionary()
@@ -549,6 +552,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             AppWarpHelper.sharedInstance.playerName = uName
             AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
+    }
+    
+    func restartGame(){
+        
     }
     
 }
