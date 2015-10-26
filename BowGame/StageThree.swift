@@ -66,7 +66,7 @@ class StageThree: StageGameScene {
                 self.world.addChild(stone2)
                 self.world.addChild(stone1)
             }else{
-                let ice = Icebox(position: CGPointMake(startposition.x + CGFloat(i) * obsize.x, startposition.y))
+                let ice = Icebox(position: CGPointMake(startposition.x + CGFloat(i) * obsize.x, 300))
                 self.world.addChild(ice)
             }
         }

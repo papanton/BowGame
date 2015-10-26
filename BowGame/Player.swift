@@ -111,13 +111,15 @@ class Player : NSObject
     }
     func shot(attacker :Attacker)->Bool
     {
-        print("shoot player")
-        if !attacker.isFrom(self){
-            self.mHealth.getHurt(Float(attacker.getDamage()))
-            bleed()
-            SoundEffect.getInstance().playScream()
-            attacker.stop()
-            return true
+        if attacker.isAlive(){
+            print("shoot player")
+            if !attacker.isFrom(self){
+                self.mHealth.getHurt(Float(attacker.getDamage()))
+                bleed()
+                SoundEffect.getInstance().playScream()
+                attacker.stop()
+                return true
+            }
         }
         return false
     }

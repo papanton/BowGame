@@ -21,7 +21,10 @@ class Obstacle: SKSpriteNode, Shotable, Attacker {
         super.init(coder: aDecoder)
     }
     
-    
+    func isAlive()->Bool
+    {
+        return collisionTimes < 2
+    }
     //init a obstacle with give name, possible damage and its init position
     init(name: String, damage: Int, position: CGPoint, size: CGSize) {
         obstacletexture = SKTexture(imageNamed: name)
@@ -176,7 +179,7 @@ class Icebox : Obstacle {
     private var ice_size : CGSize!
     init(position : CGPoint)
     {
-        self.ice_size = CGSizeMake(50, 50)
+        self.ice_size = CGSizeMake(50, 10)
         super.init(name: Ice, damage: 0, position: position, size: ice_size)
     }
     
