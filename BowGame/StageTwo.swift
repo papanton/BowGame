@@ -36,6 +36,7 @@ class StageTwo: StageGameScene {
         let groundTexture = SKTexture(imageNamed: "forest_ground")
         let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 3), position: CGPointMake(size.width, 0))
         let ground2 : Ground = Ground(texture: SKTexture(imageNamed: "forest_land3"), size: CGSizeMake(228 * 0.8, 152 * 0.8), position: CGPointMake(size.width * 1.5, self.size.height / 6 + 152 * 0.2))
+        ground2.zPosition = -2
         self.world.addChild(ground2)
         self.world.addChild(ground)
         
