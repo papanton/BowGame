@@ -18,7 +18,7 @@ class ArrowPanel: SKSpriteNode {
     let mArrowName = ArrowColletion.getInstance().mArrowName
     
     init() {
-        let texture = SKTexture(imageNamed: "bowarrow.png")
+        let texture = SKTexture(imageNamed: "transparent.png")
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
         self.size = CGSizeMake(250, 250)
         self.name = "arrowPanel"
