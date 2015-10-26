@@ -51,9 +51,8 @@ class StageSelection: SKScene {
     //add back button to return the main menu
     func addBackButton()
     {
-        let back = SKSpriteNode(texture: SKTexture(imageNamed: "backbutton"), color: UIColor.clearColor(), size: CGSizeMake(50, 50))
-        back.position = CGPointMake(back.size.width, self.size.height - back.size
-            .height)
+        let back = SKSpriteNode(texture: SKTexture(imageNamed: "backbutton"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        back.position = CGPointMake(30, self.size.height - 30)
         back.name = "back"
         back.zPosition = 2
         self.addChild(back)

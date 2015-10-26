@@ -157,7 +157,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         let settings = SKSpriteNode(imageNamed: "backbutton")
         settings.position = CGPointMake(30, size.height - 30)
-        settings.name = "settings"
+        settings.name = "back"
         settings.size = CGSize(width: 30, height: 30)
         self.UI.addChild(settings)
         
@@ -213,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         if(touchedNode.name == "restartbutton"){
             restartGame()
         }
-        else if(touchedNode.name == "settings"){
+        else if(touchedNode.name == "back"){
             
             if multiPlayerON {
                 let dataDict = NSMutableDictionary()
@@ -223,10 +223,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
             
-           AppWarpHelper.sharedInstance.disconnectFromServer()
+            AppWarpHelper.sharedInstance.disconnectFromServer()
             
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(mainmenu,transition: transitionType)
+            backToPreviousScene()
         }
         else if(touchedNode.name == "controlBallLeft" ) {
             print("touchLeft: ")
@@ -557,8 +556,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         }
     }
     
-    func restartGame(){
-        
+    func restartGame(){}
+    
+    func backToPreviousScene()
+    {
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(mainmenu,transition: transitionType)
     }
     
 }

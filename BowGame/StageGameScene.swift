@@ -215,6 +215,10 @@ class StageGameScene: GameScene{
             self.touch_disable = false
             self.isshooting = false
         }
-
+    }
+    
+    override func backToPreviousScene() {
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(selectionScene,transition: transitionType)
     }
 }
