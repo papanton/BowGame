@@ -76,7 +76,11 @@ class StageOne: StageGameScene {
         world.addChild(canon)
         canon.startFire()
     }
-
-
+    
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(1, bomb: 1, flappy: 1, split: 1, ignore: 1)
+    }
 
 }

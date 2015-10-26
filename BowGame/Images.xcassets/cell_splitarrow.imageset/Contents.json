@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "Start.png"
+      "filename" : "cell_splitarrow.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

@@ -27,7 +27,7 @@ class PlayerFactory{
         if(name == "player1"){
             health = Health()
             health.healthframe.position = CGPointMake(sceneSize.width*0.05 + health.healthframe.size.width / 2 , sceneSize.height * 0.85)
-            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2 - 20, playerNode.position.y + playerNode.position.y / 2)
+            shootPosition = CGPointMake(playerNode.position.x, playerNode.position.y + playerNode.position.y / 2 - 10)
         }
         
         if(name == "player2"){
@@ -37,13 +37,13 @@ class PlayerFactory{
             health.healthframe.position = CGPointMake(sceneSize.width*0.95 + health.healthframe.size.width / 2, sceneSize.height * 0.85)
 
             playerNode.xScale = -1.0
-            shootPosition = CGPointMake(playerNode.position.x - playerNode.size.width / 2 + 20,playerNode.position.y + playerNode.position.y / 2)
+            shootPosition = CGPointMake(playerNode.position.x, playerNode.position.y + playerNode.position.y / 2 - 10)
             xScale = -xScale
         }
         
         if(name == "singleplayer"){
             health = DummyHealth()
-            shootPosition = CGPointMake(playerNode.position.x + playerNode.size.width / 2 - 20, playerNode.position.y + playerNode.position.y / 2)
+            shootPosition = CGPointMake(playerNode.position.x, playerNode.position.y + playerNode.position.y / 2 - 10)
         }
         
         
@@ -109,17 +109,17 @@ class Player : NSObject
             bow.shoot(impulse, arrow: arrow, scene: scene, position: self.mShootPosition)
         }
     }
-    func shot(arrow : Arrow)->Bool
+    func shot(attacker :Attacker)->Bool
     {
-        print("shoot player")
-        if !arrow.isFrom(self){
-            var xScale : CGFloat!
-            var position : CGPoint!
-            self.mHealth.getHurt(Float(arrow.getDamage()))
-            bleed()
-            SoundEffect.getInstance().playScream()
-            arrow.stop()
-            return true
+        if attacker.isAlive(){
+            print("shoot player")
+            if !attacker.isFrom(self){
+                self.mHealth.getHurt(Float(attacker.getDamage()))
+                bleed()
+                SoundEffect.getInstance().playScream()
+                attacker.stop()
+                return true
+            }
         }
         return false
     }
@@ -147,7 +147,6 @@ class Player : NSObject
     }
     
     func isDead() -> Bool {
-        
         return self.mHealth.currentHealth <= 0
     }
 
@@ -272,10 +271,7 @@ private class PlayerNode: SKSpriteNode, Shotable
     }
     func shot(attacker :Attacker)->Bool
     {
-        if let arrow = attacker as? Arrow{
-            return mPlay.shot(arrow)
-        }
-        return true
+        return mPlay.shot(attacker)
     }
     
  /*   required init?(coder aDecoder: NSCoder) {

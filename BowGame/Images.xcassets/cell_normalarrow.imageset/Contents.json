@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "Quit.png"
+      "filename" : "cell_normalarrow.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

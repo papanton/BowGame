@@ -46,6 +46,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         self.world = SKNode()
         self.UI = SKNode()
+//        self.UI.zPosition = 100;
+        self.world.zPosition = -1;
         self.addChild(world)
         self.addChild(UI)
         
@@ -102,13 +104,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func addBorder()
     {
         let texture = SKTexture()
-        let leftBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
+        let leftBorder = Bound(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(0, 1.0))
         self.world.addChild(leftBorder)
         
-        let rightBorder = Ground(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
+        let rightBorder = Bound(texture: texture,size: CGSizeMake(1.0, self.size.height * 8),position: CGPointMake(self.size.width * 2, 1.0))
         self.world.addChild(rightBorder)
         
-        let bottomBorder = Ground(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
+        let bottomBorder = Bound(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
         self.world.addChild(bottomBorder)
        
     }
@@ -182,10 +184,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel.initCell(self)
         
         
-        panel.position = CGPointMake(170, 335)
+        panel.position = CGPointMake(120, 335)
         panel.xScale = 0.2
         panel.yScale = 0.2
-        
         self.addChild(panel)
         
         
@@ -252,7 +253,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
         }else if(touchedNode.name == "arrowCell") {
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
-            arrow.onSelected()
+            if(arrow.mArrowNum != 0) {
+                arrow.onSelected()
             /*if (arrow.selected == false) {
                 arrow.selected = true
                 
@@ -262,8 +264,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                     }
                 }
             }*/
-            if (panel.expanded) {
-                panel.resume()
+                if (arrow.mArrowPanel.expanded) {
+                    arrow.mArrowPanel.switchCell(arrow.mArrowName)
+                    arrow.mArrowPanel.resume()
+                }
             }
         }else{
             cameraMoveStart(touch)
@@ -302,7 +306,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         startpositionOfTouch = controllers.controllBallleft.position
         endpositionOfTouch = controllers.controllBallleft.position
-        isshooting = true
+        if(self.panel.cells[0].mArrowNum > 0) {
+            isshooting = true
+        }
     }
     func rightControllerOnTouchBegin()
     {
@@ -344,6 +350,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
+            
+            self.panel.updateArrowNum()
             
             //Multiplayer update enemy player
             

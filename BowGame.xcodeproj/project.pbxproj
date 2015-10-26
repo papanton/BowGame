@@ -12,13 +12,11 @@
 		1369CA9C1B9DFFE400895E88 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1369CA9B1B9DFFE400895E88 /* Images.xcassets */; };
 		1369CA9F1B9DFFE400895E88 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1369CA9D1B9DFFE400895E88 /* LaunchScreen.xib */; };
 		1369CAAB1B9DFFE400895E88 /* BowGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369CAAA1B9DFFE400895E88 /* BowGameTests.swift */; };
-		1379F1941BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1379F18D1BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework */; settings = {ASSET_TAGS = (); }; };
 		1379F1951BD6EE52009F1C01 /* AppWarpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F18E1BD6EE52009F1C01 /* AppWarpHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1961BD6EE52009F1C01 /* ConnectionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1901BD6EE52009F1C01 /* ConnectionListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1971BD6EE52009F1C01 /* NotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1911BD6EE52009F1C01 /* NotificationListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1981BD6EE52009F1C01 /* RoomListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1921BD6EE52009F1C01 /* RoomListener.swift */; settings = {ASSET_TAGS = (); }; };
 		1379F1991BD6EE52009F1C01 /* ZoneListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1931BD6EE52009F1C01 /* ZoneListener.swift */; settings = {ASSET_TAGS = (); }; };
-		13F795641BDD80CC00642501 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F795631BDD80CC00642501 /* AVFoundation.framework */; };
 		2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E021BA0C32800F050A4 /* AppDelegate.swift */; };
 		2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E031BA0C32800F050A4 /* Arrow.swift */; };
 		2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E041BA0C32800F050A4 /* Bow.swift */; };
@@ -50,7 +48,9 @@
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
 		539680DF1BAF2975000906FE /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539680DE1BAF2975000906FE /* Obstacle.swift */; };
+		5396E8651BDDFE0800EEAD9D /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1379F18D1BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework */; };
 		894287571BACC1A400E519B8 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894287561BACC1A400E519B8 /* Buff.swift */; };
+		89696E2D1BDD5F560027FA3D /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89696E2C1BDD5F560027FA3D /* Bound.swift */; settings = {ASSET_TAGS = (); }; };
 		896F423E1BC2F11A0070DAAD /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896F423D1BC2F11A0070DAAD /* Controller.swift */; };
 		898238811BCDD20200B769F0 /* StageGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898238801BCDD20200B769F0 /* StageGameScene.swift */; settings = {ASSET_TAGS = (); }; };
 		89A4C4791BDAE24600094A84 /* TestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C4781BDAE24600094A84 /* TestScene.swift */; settings = {ASSET_TAGS = (); }; };
@@ -128,6 +128,7 @@
 		5379AC731BA9E83E0061BC19 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		539680DE1BAF2975000906FE /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		894287561BACC1A400E519B8 /* Buff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buff.swift; sourceTree = "<group>"; };
+		89696E2C1BDD5F560027FA3D /* Bound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bound.swift; sourceTree = "<group>"; };
 		896F423D1BC2F11A0070DAAD /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		898238801BCDD20200B769F0 /* StageGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageGameScene.swift; sourceTree = "<group>"; };
 		89A4C4781BDAE24600094A84 /* TestScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScene.swift; sourceTree = "<group>"; };
@@ -149,8 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13F795641BDD80CC00642501 /* AVFoundation.framework in Frameworks */,
-				1379F1941BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework in Frameworks */,
+				5396E8651BDDFE0800EEAD9D /* AppWarp_iOS_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				13F795631BDD80CC00642501 /* AVFoundation.framework */,
-				2AA53A851BBDF95C00CC72A9 /* Datas */,
 				1369CA8D1B9DFFE400895E88 /* BowGame */,
 				1369CAA71B9DFFE400895E88 /* BowGameTests */,
 				1369CA8C1B9DFFE400895E88 /* Products */,
@@ -270,6 +269,7 @@
 		2A8EFD721BD6F233008E170B /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2AA53A851BBDF95C00CC72A9 /* Datas */,
 				2A8EFD751BD6F3A3008E170B /* Interfaces.swift */,
 				134A559F1BA503FA00C09E99 /* Constants.swift */,
 				2A198E051BA0C32800F050A4 /* CollisionHelp.swift */,
@@ -321,7 +321,6 @@
 				2AF0CADE1BC0840800FBC36A /* DataColletion.swift */,
 			);
 			name = Datas;
-			path = BowGame;
 			sourceTree = "<group>";
 		};
 		2AA9B1DA1BABE52D009491AC /* GameController */ = {
@@ -338,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				894287561BACC1A400E519B8 /* Buff.swift */,
+				89696E2C1BDD5F560027FA3D /* Bound.swift */,
 				5379AC6F1BA9E7C70061BC19 /* Ground.swift */,
 			);
 			name = Shotable;
@@ -405,6 +405,7 @@
 				TargetAttributes = {
 					1369CA8A1B9DFFE400895E88 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 28Y2YPE73K;
 					};
 					1369CAA31B9DFFE400895E88 = {
 						CreatedOnToolsVersion = 6.4;
@@ -507,6 +508,7 @@
 				1379F1961BD6EE52009F1C01 /* ConnectionListener.swift in Sources */,
 				5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */,
 				2AA9B1D81BABDB6F009491AC /* GameController.swift in Sources */,
+				89696E2D1BDD5F560027FA3D /* Bound.swift in Sources */,
 				89A4C47D1BDAE7E300094A84 /* StageTwo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -638,6 +640,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
@@ -646,6 +650,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -657,6 +662,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
@@ -665,6 +672,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
