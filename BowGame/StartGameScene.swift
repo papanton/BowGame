@@ -107,7 +107,7 @@ class StartGameScene: SKScene {
         
         textField.resignFirstResponder()
 
-        let uName:String = playerName   as String
+        let uName:String = playerName as String
         let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
