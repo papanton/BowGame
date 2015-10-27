@@ -41,12 +41,11 @@ class Canon: SKSpriteNode
     
     func fire()
     {
-        let bomb = Obstacle(name: CanonStone, damage: 0, position: position, size: CGSizeMake(20, 20))
-        bomb.physicsBody?.dynamic = true
-        bomb.position = position
-        //bomb.position.x -= 25 * xScale
+        let bomb = CanonBomb(pos: position)
         parent?.addChild(bomb)
-        bomb.physicsBody?.affectedByGravity = false
+        delay(0.6){
+            bomb.removeFromParent()
+        }
         bomb.physicsBody?.applyImpulse(CGVectorMake(0, 10))
     }
     func fireSequence()->SKAction
@@ -66,3 +65,22 @@ class Canon: SKSpriteNode
     {
     }
 }
+private class CanonBomb : Obstacle
+{
+    init(pos : CGPoint)
+    {
+        super.init(name: CanonStone, damage: 0, position: pos, size: CGSizeMake(20, 20))
+        physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        physicsBody?.collisionBitMask = 0x0
+        physicsBody?.dynamic = true
+        physicsBody?.affectedByGravity = false
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override func isAlive() -> Bool {
+        return parent != nil
+    }
+}
+

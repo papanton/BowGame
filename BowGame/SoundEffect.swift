@@ -12,6 +12,8 @@ class SoundEffect
 {
     private var arrow : AVAudioPlayer?
     private var scream : AVAudioPlayer?
+    private var bombDropping : AVAudioPlayer?
+    private var bombExplosion : AVAudioPlayer?
     private static var instance : SoundEffect?
     static func getInstance()->SoundEffect
     {
@@ -38,7 +40,27 @@ class SoundEffect
         }
         scream?.play()
     }
-
+    func stopBombDropping()
+    {
+        if nil != bombDropping {
+            bombDropping?.stop()
+        }
+        
+    }
+    func playBombDropping()
+    {
+        if nil == bombDropping {
+            bombDropping = getSound("sound/BombDropping", type: "mp3")
+        }
+        bombDropping?.play()
+    }
+    func playBombExplosion()
+    {
+        if nil == bombExplosion {
+            bombExplosion = getSound("sound/BombExplosion", type: "mp3")
+        }
+        bombExplosion?.play()
+    }
     private func getSound(file:String, type:String) -> AVAudioPlayer  {
         //1
         let path = NSBundle.mainBundle().pathForResource(file, ofType:type)

@@ -51,9 +51,8 @@ class StageSelection: SKScene {
     //add back button to return the main menu
     func addBackButton()
     {
-        let back = SKSpriteNode(texture: SKTexture(imageNamed: "backbutton"), color: UIColor.clearColor(), size: CGSizeMake(50, 50))
-        back.position = CGPointMake(back.size.width + back.size.width / 2, self.size.height - back.size
-            .height - back.size.height / 2)
+        let back = SKSpriteNode(texture: SKTexture(imageNamed: "backbutton"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        back.position = CGPointMake(30, self.size.height - 30)
         back.name = "back"
         back.zPosition = 2
         self.addChild(back)
@@ -74,8 +73,10 @@ class StageSelection: SKScene {
         
         let stages = [stage1,stage2,stage3,test]
         var i = 1.0
+        var offset : CGFloat = 5
         for button in stages{
-            button.position = CGPointMake((button.size.width + 20) * CGFloat(i), self.size.height * 0.2)
+            offset = offset * -1
+            button.position = CGPointMake((button.size.width + 20) * CGFloat(i), self.size.height * 0.2 + offset)
             button.zPosition = 2
             self.addChild(button)
             i = i + 1
@@ -95,19 +96,19 @@ class StageSelection: SKScene {
     func goStageOne()
     {
         print("select stage 1")
-        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
         changeScene(gameScene)
     }
     func goStageTwo()
     {
         print("select stage 2")
-        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
         changeScene(gameScene)
     }
     func goStageThree()
     {
         print("select stage 3")
-        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
         changeScene(gameScene)
     }
     func goTestStage()
@@ -116,7 +117,7 @@ class StageSelection: SKScene {
         let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-        let gameScene = TestScene(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false )
+        let gameScene = TestScene(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
         
         changeScene(gameScene)
     }
