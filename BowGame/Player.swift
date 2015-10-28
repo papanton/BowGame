@@ -116,7 +116,7 @@ class Player : NSObject
             if !attacker.isFrom(self){
                 self.mHealth.getHurt(Float(attacker.getDamage()))
                 bleed()
-                SoundEffect.getInstance().playScream()
+//                SoundEffect.getInstance().playScream()
                 attacker.stop()
                 return true
             }

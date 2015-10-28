@@ -37,7 +37,7 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
-        skView.showsPhysics = true
+//        skView.showsPhysics = true
     }
 
     override func shouldAutorotate() -> Bool {
