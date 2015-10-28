@@ -63,9 +63,9 @@ class StartGameScene: SKScene {
     }
     func addBackground()
     {
-        let background = SKSpriteNode(imageNamed: BackgroundImage)
+        let background = SKSpriteNode(texture: SKTexture(imageNamed: BackgroundImage), color: UIColor.clearColor(), size: CGSizeMake(self.size.width * 2, self.size.height))
         background.position = CGPoint(x: 0.0, y: background.size.height/2)
-        addChild(background)
+        self.addChild(background)
     }
 
     override init(size: CGSize) {
