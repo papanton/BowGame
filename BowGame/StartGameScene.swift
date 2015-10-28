@@ -107,16 +107,16 @@ class StartGameScene: SKScene {
         
         textField.resignFirstResponder()
 
-        let uName:String = playerName   as String
+        let uName:String = playerName as String
         let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
             AppWarpHelper.sharedInstance.playerName = uName
             AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
-
-        self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
         
+        self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        DataCenter.getInstance().setArrowItemByName("arrow")
     }
     
     func startMultiplayerGame(){
@@ -133,7 +133,7 @@ class StartGameScene: SKScene {
         AppWarpHelper.sharedInstance.gameScene = gameScene
          changeScene(gameScene)
 
-        
+        DataCenter.getInstance().setArrowItemByName("arrow")
     }
     
     func startStage()
@@ -149,6 +149,7 @@ class StartGameScene: SKScene {
         stageSelect.scaleMode = SKSceneScaleMode.AspectFit
         textField.removeFromSuperview()
         changeScene(stageSelect)
+        DataCenter.getInstance().setArrowItemByName("arrow")
     }
     
     func changeScene(scene : SKScene)

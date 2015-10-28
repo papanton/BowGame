@@ -179,7 +179,7 @@ class Icebox : Obstacle {
     private var ice_size : CGSize!
     init(position : CGPoint)
     {
-        self.ice_size = CGSizeMake(50, 10)
+        self.ice_size = CGSizeMake(50, 50)
         super.init(name: Ice, damage: 0, position: position, size: ice_size)
     }
     
@@ -192,7 +192,13 @@ class Icebox : Obstacle {
         print("shot ice box")
         
         if let arrow = attacker as? Arrow{
-            arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
+            if(self.position.x < arrow.position.x && arrow.position.x < self.position.x + 50)
+            {
+                arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
+            }else{
+                arrow.physicsBody?.velocity.dx = -(arrow.physicsBody?.velocity.dx)!
+                arrow.xScale = -arrow.xScale
+            }
             arrow.update()
         }
         

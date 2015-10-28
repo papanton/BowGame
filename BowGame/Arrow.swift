@@ -171,7 +171,7 @@ class FlappyArrow : Arrow, ClickObersever
     func onClick()
     {
         if isFlying != 0 && physicsBody != nil{
-            physicsBody!.velocity.dy = 300
+            physicsBody!.velocity.dy = 200
             if(physicsBody!.velocity.dx > 0){
                 physicsBody!.velocity.dx = 100
             }
@@ -285,6 +285,7 @@ class Bomb : Obstacle
         position.y -= 50
         position.x -= 50 * arrow.xScale
         mArrow = arrow
+        SoundEffect.getInstance().playBombDropping()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -301,17 +302,20 @@ class Bomb : Obstacle
         fire.alpha = 0.0;
         // SKAction.fadeInWithDuration(canon,1)
         parent?.addChild(fire)
+        SoundEffect.getInstance().stopBombDropping()
+        SoundEffect.getInstance().playBombExplosion()
         let fadein: SKAction = SKAction.fadeAlphaTo(1, duration: 1)
         removeFromParent()
         fire.runAction(fadein, completion: {
             fire.removeFromParent()
-            
             print("removed")
         })
     }
     override func afterAttack()
     {
         physicsBody?.dynamic = false
+        physicsBody?.categoryBitMask = 0
+        physicsBody?.contactTestBitMask = 0
         bang()
     }
     override func isFrom(player: Player) -> Bool {

@@ -27,9 +27,9 @@ class GameOverScene: SKScene {
         self.addChild(text)
         
         
-        let returnButton = SKSpriteNode(imageNamed: "Mainmenu" )
+        let returnButton = SKSpriteNode(imageNamed: "backbutton" )
         returnButton.position = CGPointMake(size.width/2,size.height*0.20 )
-        returnButton.name = "mainmenu"
+        returnButton.name = "backbutton"
         
         
         self.addChild(returnButton)
@@ -43,7 +43,7 @@ class GameOverScene: SKScene {
         let touch = touches.first!
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
-        if(touchedNode.name == "mainmenu"){
+        if(touchedNode.name == "backbutton"){
             mainmenu.removeCurGame()
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(self.mainmenu,transition: transitionType)
