@@ -43,7 +43,7 @@ class StageSelection: SKScene {
     //add background for stage selection
     func addBackground()
     {
-        let background = SKSpriteNode(imageNamed: "snowbg")
+        let background = SKSpriteNode(texture: SKTexture(imageNamed: "snowbg"), color: UIColor.clearColor(), size: CGSizeMake(self.size.width * 2, self.size.height))
         background.position = CGPoint(x: 0.0, y: background.size.height/2)
         self.addChild(background)
     }
