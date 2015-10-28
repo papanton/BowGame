@@ -31,9 +31,9 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         let scene = StartGameScene(size: view.bounds.size)
         let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsPhysics = true
-        skView.showsNodeCount = true
+//        skView.showsFPS = true
+//        skView.showsPhysics = true
+//        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
