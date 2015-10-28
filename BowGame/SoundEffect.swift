@@ -14,6 +14,7 @@ class SoundEffect
     private var scream : AVAudioPlayer?
     private var bombDropping : AVAudioPlayer?
     private var bombExplosion : AVAudioPlayer?
+    private var backgroundMusic : AVAudioPlayer?
     private static var instance : SoundEffect?
     static func getInstance()->SoundEffect
     {
@@ -61,6 +62,24 @@ class SoundEffect
         }
         bombExplosion?.play()
     }
+    func playBGM()
+    {
+        if (nil == backgroundMusic) {
+            backgroundMusic = getSound("sound/Background", type: "mp3")
+            backgroundMusic?.numberOfLoops = -1
+        }
+        backgroundMusic?.play()
+    }
+    
+    func stopBMG()
+    {
+        if (backgroundMusic != nil) {
+            backgroundMusic?.stop()
+            backgroundMusic?.currentTime = 0
+        }
+    }
+    
+    
     private func getSound(file:String, type:String) -> AVAudioPlayer  {
         //1
         let path = NSBundle.mainBundle().pathForResource(file, ofType:type)
