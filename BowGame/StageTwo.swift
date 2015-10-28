@@ -11,12 +11,12 @@ import SpriteKit
 
 class StageTwo: StageGameScene {
     
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
+//    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
     
     override func addBackground()
     {
@@ -26,8 +26,9 @@ class StageTwo: StageGameScene {
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
         
-        print(background.frame.width)
-        print(background.frame.height)
+        let decorate = SKSpriteNode(texture: SKTexture(imageNamed: "Sign_1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
+        self.world.addChild(decorate)
         
     }
     
@@ -36,6 +37,7 @@ class StageTwo: StageGameScene {
         let groundTexture = SKTexture(imageNamed: "forest_ground")
         let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 3), position: CGPointMake(size.width, 0))
         let ground2 : Ground = Ground(texture: SKTexture(imageNamed: "forest_land3"), size: CGSizeMake(228 * 0.8, 152 * 0.8), position: CGPointMake(size.width * 1.5, self.size.height / 6 + 152 * 0.2))
+        ground2.zPosition = -2
         self.world.addChild(ground2)
         self.world.addChild(ground)
         
@@ -106,6 +108,13 @@ class StageTwo: StageGameScene {
         self.world.addChild(box1)
         self.world.addChild(box2)
     }
+    override func restartGame() {
+        let gameScene = StageTwo(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
+    }
+
     
 
 }

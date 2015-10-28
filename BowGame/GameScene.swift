@@ -36,6 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var multiPlayerON = false
     
     var panel:ArrowPanel!
+    
+    var soundEffect:SoundEffect?
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
@@ -51,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.addChild(world)
         self.addChild(UI)
         
-        self.physicsWorld.gravity = CGVectorMake(0, -2.8)
+        self.physicsWorld.gravity = CGVectorMake(0, -3.3)
         self.physicsWorld.contactDelegate = self
         
         initworld()
@@ -76,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addBorder()
         addPlayers()
         addObstacle()
+        addBGM()
     }
     
     func initUI()
@@ -85,7 +88,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addSettingButton()
     }
     
-    
+    func addBGM()
+    {
+        soundEffect = SoundEffect.getInstance()
+        soundEffect!.playBGM()
+    }
     
     
     //add Scene background picture to world node
@@ -155,10 +162,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func addSettingButton()
     {
         
-        let settings = SKSpriteNode(imageNamed: InGameSettingButton )
-        settings.position = CGPointMake(size.width*0.95,size.height*0.95)
-        settings.name = "settings"
-        settings.size = CGSize(width: 16, height: 16)
+        let settings = SKSpriteNode(imageNamed: "backbutton")
+        settings.position = CGPointMake(30, size.height - 30)
+        settings.name = "back"
+        settings.size = CGSize(width: 30, height: 30)
         self.UI.addChild(settings)
         
     }
@@ -210,7 +217,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         print(touchedNode.name)
         
-        if(touchedNode.name == "settings"){
+        if(touchedNode.name == "restartbutton"){
+            restartGame()
+        }
+        else if(touchedNode.name == "back"){
             
             if multiPlayerON {
                 let dataDict = NSMutableDictionary()
@@ -220,10 +230,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
             
-           AppWarpHelper.sharedInstance.disconnectFromServer()
+            AppWarpHelper.sharedInstance.disconnectFromServer()
             
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(mainmenu,transition: transitionType)
+            backToPreviousScene()
         }
         else if(touchedNode.name == "controlBallLeft" ) {
             print("touchLeft: ")
@@ -475,6 +484,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.soundEffect?.stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
         }
@@ -553,5 +563,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
     }
+    
+    func restartGame(){}
+    
+    func backToPreviousScene()
+    {
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        soundEffect?.stopBMG()
+        view?.presentScene(mainmenu,transition: transitionType)
+    }
+    
     
 }

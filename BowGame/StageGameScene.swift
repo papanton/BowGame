@@ -12,15 +12,18 @@ import SpriteKit
 class StageGameScene: GameScene{
     
     var boss : Boss!
+    var selectionScene : StageSelection!
 
-
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
+        super.init(size: size, mainmenu: mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
+        self.selectionScene = selectionScene
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    
     
     override func initworld()
     {
@@ -28,6 +31,20 @@ class StageGameScene: GameScene{
         super.initworld()
         addBoss()
     }
+    override func initUI() {
+        super.initUI()
+        addRestartButton()
+    }
+    
+    func addRestartButton()
+    {
+        let restart = SKSpriteNode(imageNamed: "restartbutton")
+        restart.position = CGPointMake(size.width - 30, size.height - 30)
+        restart.name = "restartbutton"
+        restart.size = CGSize(width: 30, height: 30)
+        self.UI.addChild(restart)
+    }
+
     //init environment of the game world
     //specific in each stage scene
     override func addObstacle() {}
@@ -198,6 +215,11 @@ class StageGameScene: GameScene{
             self.touch_disable = false
             self.isshooting = false
         }
-
+    }
+    
+    override func backToPreviousScene() {
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        self.soundEffect?.stopBMG()
+        view?.presentScene(selectionScene,transition: transitionType)
     }
 }
