@@ -219,6 +219,7 @@ class StageGameScene: GameScene{
     
     override func backToPreviousScene() {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        self.soundEffect?.stopBMG()
         view?.presentScene(selectionScene,transition: transitionType)
     }
 }

@@ -36,6 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var multiPlayerON = false
     
     var panel:ArrowPanel!
+    
+    var soundEffect:SoundEffect?
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
@@ -76,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addBorder()
         addPlayers()
         addObstacle()
+        addBGM()
     }
     
     func initUI()
@@ -85,7 +88,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addSettingButton()
     }
     
-    
+    func addBGM()
+    {
+        soundEffect = SoundEffect.getInstance()
+        soundEffect!.playBGM()
+    }
     
     
     //add Scene background picture to world node
@@ -477,6 +484,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.soundEffect?.stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
         }
@@ -561,7 +569,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func backToPreviousScene()
     {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        soundEffect?.stopBMG()
         view?.presentScene(mainmenu,transition: transitionType)
     }
+    
     
 }
