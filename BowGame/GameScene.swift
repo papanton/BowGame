@@ -25,7 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var startViewLocation: CGFloat!
     var startAnchorLocation: CGFloat!
     var startWorldLocation: CGFloat!
-
+    
     var rounds : Int = 0
     
     var isshooting = false
@@ -154,8 +154,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
-        controllers.addLeftController()
-        controllers.addRightController()
+        controllers.initLeftController()
+        controllers.initRightController()
     }
     
     //add setting button to scene
@@ -234,7 +234,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             backToPreviousScene()
         }
-        else if(touchedNode.name == "controlBallLeft" ) {
+        else if(touchedNode.name == "controller_left" ) {
             print("touchLeft: ")
             print(multiPlayerON)
             print(AppWarpHelper.sharedInstance.isRoomOwner)
@@ -244,7 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
             
             leftControllerOnTouchBegin()
-        }else if(touchedNode.name == "controlBallRight"){
+        }else if(touchedNode.name == "controller_right"){
             print("touchRight: ")
             print(multiPlayerON)
             print(AppWarpHelper.sharedInstance.isRoomOwner)
@@ -307,15 +307,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 self.endpositionOfTouch = position
                 controllerShoot(position)
+//                controllers.moveController(position)
             }
             
         }
     }
     func leftControllerOnTouchBegin()
     {
-        startpositionOfTouch = controllers.controllBallleft.position
-        endpositionOfTouch = controllers.controllBallleft.position
+        startpositionOfTouch = controllers.initposition_left
+        endpositionOfTouch = controllers.initposition_left
         if(self.panel.cells[0].mArrowNum > 0) {
+            controllers.startLeftMovement()
             isshooting = true
         } else {
             self.panel.remindOutofArrow()
@@ -324,8 +326,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     func rightControllerOnTouchBegin()
     {
-        startpositionOfTouch = controllers.controllBallright.position
-        endpositionOfTouch = controllers.controllBallright.position
+        startpositionOfTouch = controllers.initposition_right
+        endpositionOfTouch = controllers.initposition_right
+        controllers.startRightMovement()
         isshooting = true
     }
     func controllerShoot(position: CGPoint){ }
@@ -342,6 +345,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
     }
     func controllerOnTouchEnded(){}
+    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         if(self.touch_disable == true){
@@ -352,10 +356,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         if(self.isshooting == true)
         {
             controllerOnTouchEnded()
-            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
-            {
-                return
-            }
+//            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
+//            {
+//                return
+//            }
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
