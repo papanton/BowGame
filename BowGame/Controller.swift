@@ -26,38 +26,114 @@ class Controller: NSObject {
     var bezierLayerright1 = CAShapeLayer()
     var bezierLayerright2 = CAShapeLayer()
     
+    var controller_left: SKSpriteNode!
+    var target_left: SKSpriteNode!
+    var controller_right: SKSpriteNode!
+    var target_right: SKSpriteNode!
+
+    var initposition_left: CGPoint!
+    var initposition_right: CGPoint!
     
     var mScene: SKScene!
     var mUI: SKNode!
-
-    init(scene : GameScene){
-        super.init()
-        self.mScene = scene
-    }
     
     init(UI: SKNode, scene : SKScene)
     {
         super.init()
         self.mScene = scene
         self.mUI = UI
+    }
+    
+    func initLeftController()
+    {
+        self.initposition_left = CGPointMake(mScene.frame.size.width * 0.2, mScene.frame.size.height / 3)
+        controller_left = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        controller_left.name = "controller_left"
+        controller_left.position = initposition_left
         
+        target_left = SKSpriteNode(texture: SKTexture(imageNamed: "target"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        target_left.name = "target_left"
+        target_left.position = initposition_left
+        
+        self.mUI.addChild(controller_left)
     }
     
-    func addLeftController()
+    func initRightController()
     {
-        controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
-        controllPowerleft = initControllPowerleft(self.controllPowerradius)
-        initbezierleft()
-
+        self.initposition_right = CGPointMake(mScene.frame.size.width * 0.8, mScene.frame.size.height / 3)
+        controller_right = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        controller_right.name = "controller_right"
+        controller_right.position = initposition_right
+        
+        target_right = SKSpriteNode(texture: SKTexture(imageNamed: "target"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        target_right.name = "target_right"
+        target_right.position = initposition_right
+        
+        self.mUI.addChild(controller_right)
     }
     
-    func addRightController()
+    func resetLeftController()
     {
-        controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
-        controllPowerright = initControllPowerright(self.controllPowerradius)
-        initbezierright()
-
+        self.controller_left.position = initposition_left
+        self.target_left.position = initposition_left
+        self.target_left.removeFromParent()
     }
+    func resetRightController()
+    {
+        self.controller_right.position = initposition_right
+        self.target_right.position = initposition_right
+        self.target_right.removeFromParent()
+    }
+    
+    func startLeftMovement()
+    {
+        self.mUI.addChild(target_left)
+    }
+    func startRightMovement()
+    {
+        self.mUI.addChild(target_right)
+    }
+    
+    func moveLeftController(touchlocation : CGPoint)
+    {
+        self.controller_left.position = touchlocation
+        let dif_x = initposition_left.x - touchlocation.x
+        let dif_y = initposition_left.y - touchlocation.y
+        self.target_left.position = CGPointMake(initposition_left.x + dif_x, initposition_left.y + dif_y)
+    }
+    func moveRightController(touchlocation : CGPoint)
+    {
+        self.controller_right.position = touchlocation
+        let dif_x = initposition_right.x - touchlocation.x
+        let dif_y = initposition_right.y - touchlocation.y
+        self.target_right.position = CGPointMake(initposition_right.x + dif_x, initposition_right.y + dif_y)
+    }
+    
+    func getLeftImpulse()->CGVector
+    {
+        let impulse = CGVectorMake((initposition_left.x - controller_left.position.x) / 9, (initposition_left.y - controller_left.position.y) / 9)
+        return impulse
+    }
+    func getRightUmpulse()->CGVector
+    {
+        let impulse = CGVectorMake((initposition_right.x - controller_right.position.x) / 9, (initposition_right.y - controller_right.position.y) / 9)
+        return impulse
+    }
+    
+//    func addLeftController()
+//    {
+//        controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
+//        controllPowerleft = initControllPowerleft(self.controllPowerradius)
+//        initbezierleft()
+//
+//    }
+    
+//    func addRightController()
+//    {
+//        controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
+//        controllPowerright = initControllPowerright(self.controllPowerradius)
+//        initbezierright()
+//    }
     
     func initControllBallleft(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
     {

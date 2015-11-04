@@ -64,16 +64,16 @@ class StageGameScene: GameScene{
     //init ui controllers
     override func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
-        controllers.addLeftController()
-        
+        controllers.initLeftController()
     }
     override func controllerShoot(position : CGPoint)
     {
-        controllers.shootingleft(position)
+        controllers.moveLeftController(position)
     }
     override func controllerOnTouchEnded()
     {
-        leftControllerOnTouchEnded()
+        //leftControllerOnTouchEnded()
+        controllers.resetLeftController()
     }
 /*    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first!

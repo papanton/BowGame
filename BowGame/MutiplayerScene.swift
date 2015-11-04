@@ -26,20 +26,20 @@ class MutiplayerScene: GameScene
     {
         if(rounds % 2 == 1)
         {
-            controllers.shootingleft(position)
+            controllers.moveLeftController(position)
         }else{
-            controllers.shootingright(position)
+            controllers.moveRightController(position)
         }
     }
     override func controllerOnTouchEnded()
     {
         if(self.rounds % 2 == 1)
         {
-            leftControllerOnTouchEnded()
+            controllers.resetLeftController()
         }
         if(self.rounds % 2 == 0)
         {
-            rightControllerOnTouchEnded();
+            controllers.resetRightController()
         }
     }
 }
