@@ -14,8 +14,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var world : SKNode!
     var UI : SKNode!
 
-    var controllBallradius : CGFloat = 30
-    var controllPowerradius : CGFloat = 65
     var controllers : Controller!
 
     var touch_disable:Bool = true
@@ -23,7 +21,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var startViewLocation: CGFloat!
-    var startAnchorLocation: CGFloat!
     var startWorldLocation: CGFloat!
     
     var rounds : Int = 0
