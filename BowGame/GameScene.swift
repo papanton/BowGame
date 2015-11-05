@@ -334,15 +334,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func controllerShoot(position: CGPoint){ }
     func leftControllerOnTouchEnded()
     {
-        controllers.bezierLayerleft1.removeFromSuperlayer()
-        controllers.bezierLayerleft2.removeFromSuperlayer()
-        controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
+        controllers.resetLeftController()
     }
     func rightControllerOnTouchEnded()
     {
-        controllers.bezierLayerright1.removeFromSuperlayer()
-        controllers.bezierLayerright2.removeFromSuperlayer()
-        controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
+        controllers.resetRightController()
     }
     func controllerOnTouchEnded(){}
     
@@ -356,10 +352,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         if(self.isshooting == true)
         {
             controllerOnTouchEnded()
-//            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
-//            {
-//                return
-//            }
+
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)

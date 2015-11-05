@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 class Controller: NSObject {
+/*
     var controllBallleft: SKShapeNode!
     var controllPowerleft: SKShapeNode!
     var controllBallright: SKShapeNode!
@@ -25,7 +26,7 @@ class Controller: NSObject {
     var bezierPathright2: UIBezierPath!
     var bezierLayerright1 = CAShapeLayer()
     var bezierLayerright2 = CAShapeLayer()
-    
+*/
     var controller_left: SKSpriteNode!
     var target_left: SKSpriteNode!
     var controller_right: SKSpriteNode!
@@ -119,21 +120,21 @@ class Controller: NSObject {
         let impulse = CGVectorMake((initposition_right.x - controller_right.position.x) / 9, (initposition_right.y - controller_right.position.y) / 9)
         return impulse
     }
+/*
+    func addLeftController()
+    {
+        controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
+        controllPowerleft = initControllPowerleft(self.controllPowerradius)
+        initbezierleft()
+
+    }
     
-//    func addLeftController()
-//    {
-//        controllBallleft = initControllBallleft(self.controllBallradius, powerradius: self.controllPowerradius)
-//        controllPowerleft = initControllPowerleft(self.controllPowerradius)
-//        initbezierleft()
-//
-//    }
-    
-//    func addRightController()
-//    {
-//        controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
-//        controllPowerright = initControllPowerright(self.controllPowerradius)
-//        initbezierright()
-//    }
+    func addRightController()
+    {
+        controllBallright = initControllBallright(self.controllBallradius, powerradius: self.controllPowerradius)
+        controllPowerright = initControllPowerright(self.controllPowerradius)
+        initbezierright()
+    }
     
     func initControllBallleft(ballradius: CGFloat, powerradius: CGFloat) -> SKShapeNode
     {
@@ -284,6 +285,6 @@ class Controller: NSObject {
             }
         }
     }
-
+*/
 
 }

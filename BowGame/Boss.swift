@@ -142,7 +142,7 @@ private class BossNode: SKSpriteNode, Shotable {
             bosssize = CGSizeMake(200 * 0.7, 250 * 0.7)
             bosstexture = SKTexture(imageNamed: "beeboss")
             let beetexture1 : SKTexture = SKTexture(imageNamed: "beeboss2")
-            var animation = SKAction.animateWithTextures([bosstexture,beetexture1], timePerFrame: 0.2)
+            let animation = SKAction.animateWithTextures([bosstexture,beetexture1], timePerFrame: 0.2)
             newanimation = SKAction.repeatActionForever(animation)
             
             //self.runAction(newanimation)
