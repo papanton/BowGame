@@ -473,9 +473,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     //move to game over view
     func gameOver(){
-
         delay(1.0) {
-            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
+            gameoverScene.scaleMode = self.scaleMode
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.soundEffect?.stopBMG()
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+        }
+    }
+    
+    func youWin(){
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             self.soundEffect?.stopBMG()
