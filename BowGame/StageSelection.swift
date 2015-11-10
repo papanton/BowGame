@@ -73,15 +73,15 @@ class StageSelection: SKScene {
         let stage3 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage3.name = "stage3"
         let stage4 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
-        stage3.name = "stage4"
+        stage4.name = "stage4"
         let stage5 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
-        stage3.name = "stage5"
+        stage5.name = "stage5"
         let stage6 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
-        stage3.name = "stage6"
+        stage6.name = "stage6"
         let stage7 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
-        stage3.name = "stage7"
+        stage7.name = "stage7"
         let stage8 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
-        stage3.name = "stage8"
+        stage8.name = "stage8"
 
         let test = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         test.name = "test"
