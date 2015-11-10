@@ -84,7 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func initUI()
     {
         addArrowPanel()
-        addControllers()
+        //addControllers()
         addSettingButton()
     }
     
