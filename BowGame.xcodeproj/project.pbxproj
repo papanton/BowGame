@@ -358,12 +358,12 @@
 			children = (
 				89A4C47A1BDAE62300094A84 /* StageOne.swift */,
 				89A4C47C1BDAE7E300094A84 /* StageTwo.swift */,
+				89A4C47E1BDAE7F200094A84 /* StageThree.swift */,
 				89AE68FF1BF2AB4300FDAFD7 /* StageFour.swift */,
 				89AE69011BF2AB5B00FDAFD7 /* StageFive.swift */,
+				89AE69031BF2AB6600FDAFD7 /* StageSix.swift */,
 				89AE69051BF2AB7100FDAFD7 /* StageSeven.swift */,
 				89AE69071BF2AB7B00FDAFD7 /* StageEight.swift */,
-				89AE69031BF2AB6600FDAFD7 /* StageSix.swift */,
-				89A4C47E1BDAE7F200094A84 /* StageThree.swift */,
 				89A4C4781BDAE24600094A84 /* TestScene.swift */,
 			);
 			name = stages;

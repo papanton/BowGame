@@ -63,16 +63,20 @@ private class Health {
     {
         if(name == "firstboss")
         {
-            totalHealth = 30
-            currentHealth = 30
-        }else if(name == "whiteboss2")
-        {
             totalHealth = 60
             currentHealth = 60
+        }else if(name == "whiteboss2")
+        {
+            totalHealth = 100
+            currentHealth = 100
         }else if(name == "beeboss")
         {
-            totalHealth = 40
-            currentHealth = 40
+            totalHealth = 80
+            currentHealth = 80
+        }else if(name == "fighterboss1")
+        {
+            totalHealth = 80
+            currentHealth = 80
         }
         
         //init healthbar frame
@@ -131,8 +135,7 @@ private class BossNode: SKSpriteNode, Shotable {
     {
         self.mBoss = mBoss
         var newanimation : SKAction!
-        if(name == "firstboss")
-        {
+        if(name == "firstboss"){
             bosssize = CGSizeMake(224 * 0.7, 169 * 0.7)
             bosstexture = SKTexture(imageNamed: Boss1)
         }else if(name == "whiteboss2"){
@@ -144,9 +147,9 @@ private class BossNode: SKSpriteNode, Shotable {
             let beetexture1 : SKTexture = SKTexture(imageNamed: "beeboss2")
             let animation = SKAction.animateWithTextures([bosstexture,beetexture1], timePerFrame: 0.2)
             newanimation = SKAction.repeatActionForever(animation)
-            
-            //self.runAction(newanimation)
-            //self.addChild(bh)
+        }else if(name == "fighterboss1"){
+            bosssize = CGSizeMake(296 * 0.6, 263 * 0.6)
+            bosstexture = SKTexture(imageNamed: "fighterboss1")
         }
         
         super.init(texture: bosstexture, color: SKColor.clearColor(), size: bosssize)
