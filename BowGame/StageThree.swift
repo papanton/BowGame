@@ -11,23 +11,16 @@ import SpriteKit
 
 class StageThree: StageGameScene {
 
-//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
-//    }
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-
     override func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:"snowbg")
         let background = SKSpriteNode(texture:backgroundTexture, color: SKColor.clearColor(), size: CGSizeMake(self.frame.width * 2, self.frame.height))
         background.zPosition = -100;
         background.position = CGPointMake(size.width,  size.height*0.5)
-
+        
         let decorate = SKSpriteNode(texture: SKTexture(imageNamed: "Sign_4"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
-
+        
         self.world.addChild(background)
         self.world.addChild(decorate)
         
@@ -38,14 +31,6 @@ class StageThree: StageGameScene {
         let groundTexture = SKTexture(imageNamed: "snow_ground")
         let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 3), position: CGPointMake(size.width, 0))
         self.world.addChild(ground)
-        
-        let ground2size = CGSizeMake(311, 87)
-        let ground2 = Ground(texture: SKTexture(imageNamed: "snow_ground3"), size: ground2size, position: CGPointMake(382 + ground2size.width / 2, size.height / 6 + ground2size.height / 2))
-        self.world.addChild(ground2)
-
-        let ground3size = CGSizeMake(327, 136)
-        let ground3 = Ground(texture: SKTexture(imageNamed: "snow_ground3"), size: ground3size, position: CGPointMake(580 + ground3size.width / 2, size.height / 6 + ground3size.height / 2))
-        self.world.addChild(ground3)
 
         
         let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
@@ -58,71 +43,48 @@ class StageThree: StageGameScene {
     override func addBoss()
     {
         let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
-        self.boss = Boss(name: "whiteboss2", scene: self, UI: self.UI, world: self.world, position: bossposition)
+        self.boss = Boss(name: "whiteboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
         boss.add2Scene()
     }
-
     
-    override func addObstacle() {
-        addComponent1()
-        addComponent2()
-        addComponent3()
-    }
     
-    private func addComponent1()
+    override func addObstacle()
     {
-        let start = CGPointMake(382 + 25, self.size.height / 6 + 87)
-        let box1 = woodbox(position: start)
-        let box2 = woodbox(position: CGPointMake(start.x + 100, start.y))
-        let box3 = woodbox(position: CGPointMake(start.x + 50, start.y + 50))
-        self.world.addChild(box1)
-        self.world.addChild(box2)
-        self.world.addChild(box3)
-    }
-    
-    private func addComponent2()
-    {
-        for(var i = 0; i < 3; i++){
-            let ice = Icebox(position: CGPointMake(self.size.width * 2 - 25, self.size.height / 6 + CGFloat(i * 50)))
-            self.world.addChild(ice)
-        }
+        let position1 = CGPointMake(self.size.width * 0.4, size.height / 6 + 25)
+        let position2 = CGPointMake(self.size.width * 0.8, size.height / 6 + 75)
+        let position3 = CGPointMake(self.size.width * 1.2, size.height / 6 + 25)
+        let position4 = CGPointMake(self.size.width * 1.5, size.height / 6 + 50)
         
-        let start = CGPointMake(self.size.width * 2 - 325, self.size.height / 6)
-        for(var i = 0; i < 3; i++){
-            let ice1 = Icebox(position: CGPointMake(start.x + CGFloat(i * 25), start.y + CGFloat(i * 50)))
-            let ice2 = Icebox(position: CGPointMake(start.x + CGFloat(i * 25) + 50, start.y + CGFloat(i * 50)))
-            self.world.addChild(ice1)
-            self.world.addChild(ice2)
-        }
-        for(var i = 0; i < 5; i++){
-            let box = woodbox(position: CGPointMake(start.x + 75 + CGFloat(i * 50), start.y + 150))
-            self.world.addChild(box)
-        }
+        addComponent(position1)
+        addComponent(position2)
+        addComponent(position3)
+        addComponent(position4)
     }
     
-    private func addComponent3()
+    func addComponent(position : CGPoint)
     {
-        let start = CGPointMake(650 + 25, self.size.height / 6 + 136)
-        let box1 = woodbox(position: start)
-        let box2 = woodbox(position: CGPointMake(start.x + 150, start.y))
-        self.world.addChild(box1)
-        self.world.addChild(box2)
-
+        let island : Ground = Ground(texture: SKTexture(imageNamed: "snow_land"), size: CGSizeMake(232 / 2, 84 / 2), position: position)
+        self.world.addChild(island)
+        let canon = Canon()
+        canon.position = CGPointMake(island.position.x, island.position.y + island.size.height / 2 + canon.size.height / 2)
+        self.world.addChild(canon)
+        delay(Double(arc4random_uniform(10) % 4)){
+            canon.startFire()
+        }
     }
     
     override func restartGame() {
-        let gameScene = StageThree(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let gameScene = StageEight(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
     }
-
-
+    
+    
     override func addArrowPanel()
     {
         super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 3, flappy: 2, split: 2, ignore: 0)
+        panel.setArrowNum(10, bomb: 10, flappy: 0, split: 0, ignore: 0)
     }
-
 
 }
