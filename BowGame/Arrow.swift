@@ -119,6 +119,13 @@ class Arrow: SKSpriteNode, Attacker{
         //arrow.runAction(action2)
        
     }
+    func updatePosition(currentPosition:CGPoint){
+        self.position = position
+    }
+    func getPosition() -> CGPoint{
+    
+        return self.position
+    }
     private func isValid()->Bool
     {
        return  parent != nil && position.x >= 0 && position.x <= CGFloat(1.5) * parent!.frame.width && position.y >= 0 && CGFloat(1.5) * position.y <= parent!.frame.height
