@@ -176,6 +176,7 @@ class StageSelection: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if (touchedNode.name != nil){
+            //SoundEffect.getInstance().playSelectStage()
             buttonfuncs[touchedNode.name!]?(self)
         }
     }

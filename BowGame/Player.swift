@@ -116,7 +116,7 @@ class Player : NSObject
             if !attacker.isFrom(self){
                 self.mHealth.getHurt(Float(attacker.getDamage()))
                 bleed()
-//                SoundEffect.getInstance().playScream()
+                SoundEffect.getInstance().playScream()
                 attacker.stop()
                 return true
             }
@@ -147,7 +147,11 @@ class Player : NSObject
     }
     
     func isDead() -> Bool {
-        return self.mHealth.currentHealth <= 0
+        if(self.mHealth.currentHealth <= 0) {
+            SoundEffect.getInstance().playPlayerDie()
+            return true
+        }
+        return false
     }
 
 
