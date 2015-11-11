@@ -12,13 +12,13 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     var mainmenu : StartGameScene!
-    
-    init(size: CGSize, mainmenu : StartGameScene) {
+    var text : SKLabelNode!
+    init(size: CGSize, mainmenu : StartGameScene, textcontent : String) {
         super.init(size: size)
         self.mainmenu = mainmenu
         
-        let text : SKLabelNode = SKLabelNode()
-        text.text = "GAME OVER"
+        text = SKLabelNode()
+        text.text = textcontent
         text.fontColor = SKColor.whiteColor()
         text.fontSize = 65
         text.fontName = "BradleyHandITCTT-Bold"

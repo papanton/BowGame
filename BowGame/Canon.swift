@@ -13,7 +13,7 @@ class Canon: SKSpriteNode
     init() {
         let name = "Canon"
         let texture = SKTexture(imageNamed: name)
-        super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(70,50) )
+        super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(35,25) )
         position = CGPointMake(position.x, position.y + self.size.height / 2)
     }
     required init?(coder aDecoder: NSCoder) {
