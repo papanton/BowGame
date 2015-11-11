@@ -43,56 +43,34 @@ class StageThree: StageGameScene {
     override func addBoss()
     {
         let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
-        self.boss = Boss(name: "whiteboss2", scene: self, UI: self.UI, world: self.world, position: bossposition)
+        self.boss = Boss(name: "whiteboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
         boss.add2Scene()
     }
     
     
-    override func addObstacle() {
-        addComponent1()
-        addComponent2()
-        addComponent3()
-    }
-    
-    private func addComponent1()
+    override func addObstacle()
     {
-        let start = CGPointMake(382 + 25, self.size.height / 6 + 87)
-        let box1 = woodbox(position: start)
-        let box2 = woodbox(position: CGPointMake(start.x + 100, start.y))
-        let box3 = woodbox(position: CGPointMake(start.x + 50, start.y + 50))
-        self.world.addChild(box1)
-        self.world.addChild(box2)
-        self.world.addChild(box3)
-    }
-    
-    private func addComponent2()
-    {
-        for(var i = 0; i < 3; i++){
-            let ice = Icebox(position: CGPointMake(self.size.width * 2 - 25, self.size.height / 6 + CGFloat(i * 50)))
-            self.world.addChild(ice)
-        }
+        let position1 = CGPointMake(self.size.width * 0.4, size.height / 6 + 25)
+        let position2 = CGPointMake(self.size.width * 0.8, size.height / 6 + 75)
+        let position3 = CGPointMake(self.size.width * 1.2, size.height / 6 + 25)
+        let position4 = CGPointMake(self.size.width * 1.5, size.height / 6 + 50)
         
-        let start = CGPointMake(self.size.width * 2 - 325, self.size.height / 6)
-        for(var i = 0; i < 3; i++){
-            let ice1 = Icebox(position: CGPointMake(start.x + CGFloat(i * 25), start.y + CGFloat(i * 50)))
-            let ice2 = Icebox(position: CGPointMake(start.x + CGFloat(i * 25) + 50, start.y + CGFloat(i * 50)))
-            self.world.addChild(ice1)
-            self.world.addChild(ice2)
-        }
-        for(var i = 0; i < 5; i++){
-            let box = woodbox(position: CGPointMake(start.x + 75 + CGFloat(i * 50), start.y + 150))
-            self.world.addChild(box)
-        }
+        addComponent(position1)
+        addComponent(position2)
+        addComponent(position3)
+        addComponent(position4)
     }
     
-    private func addComponent3()
+    func addComponent(position : CGPoint)
     {
-        let start = CGPointMake(650 + 25, self.size.height / 6 + 136)
-        let box1 = woodbox(position: start)
-        let box2 = woodbox(position: CGPointMake(start.x + 150, start.y))
-        self.world.addChild(box1)
-        self.world.addChild(box2)
-        
+        let island : Ground = Ground(texture: SKTexture(imageNamed: "snow_land"), size: CGSizeMake(232 / 2, 84 / 2), position: position)
+        self.world.addChild(island)
+        let canon = Canon()
+        canon.position = CGPointMake(island.position.x, island.position.y + island.size.height / 2 + canon.size.height / 2)
+        self.world.addChild(canon)
+        delay(Double(arc4random_uniform(10) % 4)){
+            canon.startFire()
+        }
     }
     
     override func restartGame() {
@@ -106,7 +84,7 @@ class StageThree: StageGameScene {
     override func addArrowPanel()
     {
         super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 5, flappy: 0, split: 0, ignore: 0)
+        panel.setArrowNum(10, bomb: 10, flappy: 0, split: 0, ignore: 0)
     }
 
 }

@@ -77,6 +77,10 @@ private class Health {
         {
             totalHealth = 80
             currentHealth = 80
+        }else if(name == "whiteboss")
+        {
+            totalHealth = 80
+            currentHealth = 80
         }
         
         //init healthbar frame
@@ -150,6 +154,9 @@ private class BossNode: SKSpriteNode, Shotable {
         }else if(name == "fighterboss1"){
             bosssize = CGSizeMake(296 * 0.6, 263 * 0.6)
             bosstexture = SKTexture(imageNamed: "fighterboss1")
+        }else if(name == "whiteboss"){
+            bosssize = CGSizeMake(310 * 0.5, 310 * 0.5)
+            bosstexture = SKTexture(imageNamed: "whiteboss")
         }
         
         super.init(texture: bosstexture, color: SKColor.clearColor(), size: bosssize)
