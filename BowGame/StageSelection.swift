@@ -121,7 +121,7 @@ class StageSelection: SKScene {
         
         for (index, stage) in stages.enumerate() {
             
-            if (index < currentStage && stagesLocked) {
+            if (index <= currentStage && stagesLocked) {
                 stage.alpha = 1
             }
         }
