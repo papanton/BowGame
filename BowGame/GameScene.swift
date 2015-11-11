@@ -14,8 +14,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var world : SKNode!
     var UI : SKNode!
 
-    var controllBallradius : CGFloat = 30
-    var controllPowerradius : CGFloat = 65
     var controllers : Controller!
 
     var touch_disable:Bool = true
@@ -23,7 +21,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var startViewLocation: CGFloat!
-    var startAnchorLocation: CGFloat!
     var startWorldLocation: CGFloat!
     
     var rounds : Int = 0
@@ -334,15 +331,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func controllerShoot(position: CGPoint){ }
     func leftControllerOnTouchEnded()
     {
-        controllers.bezierLayerleft1.removeFromSuperlayer()
-        controllers.bezierLayerleft2.removeFromSuperlayer()
-        controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
+        controllers.resetLeftController()
     }
     func rightControllerOnTouchEnded()
     {
-        controllers.bezierLayerright1.removeFromSuperlayer()
-        controllers.bezierLayerright2.removeFromSuperlayer()
-        controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
+        controllers.resetRightController()
     }
     func controllerOnTouchEnded(){}
     
@@ -356,10 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         if(self.isshooting == true)
         {
             controllerOnTouchEnded()
-//            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
-//            {
-//                return
-//            }
+
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
@@ -483,9 +473,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     //move to game over view
     func gameOver(){
-
         delay(1.0) {
-            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
+            gameoverScene.scaleMode = self.scaleMode
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.soundEffect?.stopBMG()
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+        }
+    }
+    
+    func youWin(){
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             self.soundEffect?.stopBMG()
