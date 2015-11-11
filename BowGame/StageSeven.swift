@@ -68,11 +68,6 @@ class StageSeven: StageGameScene {
     }
     
     
-    override func addArrowPanel()
-    {
-        super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 1, flappy: 2, split: 2, ignore: 0)
-    }
     
     func addLandWithBox(position : CGPoint)
     {
@@ -102,6 +97,14 @@ class StageSeven: StageGameScene {
         self.world.addChild(box1)
         self.world.addChild(box2)
     }
+    
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(10, bomb: 2, flappy: 5, split: 2, ignore: 0)
+    }
+
+    
     override func restartGame() {
         let gameScene = StageSeven(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
