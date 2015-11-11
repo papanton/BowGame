@@ -57,6 +57,11 @@
 		89A4C47B1BDAE62300094A84 /* StageOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47A1BDAE62300094A84 /* StageOne.swift */; };
 		89A4C47D1BDAE7E300094A84 /* StageTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47C1BDAE7E300094A84 /* StageTwo.swift */; };
 		89A4C47F1BDAE7F200094A84 /* StageThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47E1BDAE7F200094A84 /* StageThree.swift */; };
+		89AE69001BF2AB4300FDAFD7 /* StageFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE68FF1BF2AB4300FDAFD7 /* StageFour.swift */; settings = {ASSET_TAGS = (); }; };
+		89AE69021BF2AB5B00FDAFD7 /* StageFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69011BF2AB5B00FDAFD7 /* StageFive.swift */; settings = {ASSET_TAGS = (); }; };
+		89AE69041BF2AB6600FDAFD7 /* StageSix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69031BF2AB6600FDAFD7 /* StageSix.swift */; settings = {ASSET_TAGS = (); }; };
+		89AE69061BF2AB7100FDAFD7 /* StageSeven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69051BF2AB7100FDAFD7 /* StageSeven.swift */; settings = {ASSET_TAGS = (); }; };
+		89AE69081BF2AB7B00FDAFD7 /* StageEight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69071BF2AB7B00FDAFD7 /* StageEight.swift */; settings = {ASSET_TAGS = (); }; };
 		89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B9217A1BBE1F200073E10C /* GameOverScene.swift */; };
 		89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8385C1BDAD1B00016111E /* StageSelection.swift */; };
 		89CCF8091BCF037100ED6B7C /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCF8081BCF037100ED6B7C /* Boss.swift */; };
@@ -135,6 +140,11 @@
 		89A4C47A1BDAE62300094A84 /* StageOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageOne.swift; sourceTree = "<group>"; };
 		89A4C47C1BDAE7E300094A84 /* StageTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageTwo.swift; sourceTree = "<group>"; };
 		89A4C47E1BDAE7F200094A84 /* StageThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageThree.swift; sourceTree = "<group>"; };
+		89AE68FF1BF2AB4300FDAFD7 /* StageFour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageFour.swift; sourceTree = "<group>"; };
+		89AE69011BF2AB5B00FDAFD7 /* StageFive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageFive.swift; sourceTree = "<group>"; };
+		89AE69031BF2AB6600FDAFD7 /* StageSix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageSix.swift; sourceTree = "<group>"; };
+		89AE69051BF2AB7100FDAFD7 /* StageSeven.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageSeven.swift; sourceTree = "<group>"; };
+		89AE69071BF2AB7B00FDAFD7 /* StageEight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageEight.swift; sourceTree = "<group>"; };
 		89B9217A1BBE1F200073E10C /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		89C8385C1BDAD1B00016111E /* StageSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageSelection.swift; sourceTree = "<group>"; };
 		89CCF8081BCF037100ED6B7C /* Boss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boss.swift; sourceTree = "<group>"; };
@@ -349,6 +359,11 @@
 				89A4C47A1BDAE62300094A84 /* StageOne.swift */,
 				89A4C47C1BDAE7E300094A84 /* StageTwo.swift */,
 				89A4C47E1BDAE7F200094A84 /* StageThree.swift */,
+				89AE68FF1BF2AB4300FDAFD7 /* StageFour.swift */,
+				89AE69011BF2AB5B00FDAFD7 /* StageFive.swift */,
+				89AE69031BF2AB6600FDAFD7 /* StageSix.swift */,
+				89AE69051BF2AB7100FDAFD7 /* StageSeven.swift */,
+				89AE69071BF2AB7B00FDAFD7 /* StageEight.swift */,
 				89A4C4781BDAE24600094A84 /* TestScene.swift */,
 			);
 			name = stages;
@@ -471,7 +486,10 @@
 				2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */,
 				1379F1991BD6EE52009F1C01 /* ZoneListener.swift in Sources */,
 				1379F1981BD6EE52009F1C01 /* RoomListener.swift in Sources */,
+				89AE69081BF2AB7B00FDAFD7 /* StageEight.swift in Sources */,
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
+				89AE69021BF2AB5B00FDAFD7 /* StageFive.swift in Sources */,
+				89AE69001BF2AB4300FDAFD7 /* StageFour.swift in Sources */,
 				F81D89971BB31C1300B9718C /* Terrain.swift in Sources */,
 				2AA53ACA1BBE361B00CC72A9 /* DataCenter.swift in Sources */,
 				2A1A59811BD884F2008825FD /* Canon.swift in Sources */,
@@ -480,6 +498,7 @@
 				89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */,
 				2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
+				89AE69061BF2AB7100FDAFD7 /* StageSeven.swift in Sources */,
 				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,
 				2AA53A831BBDCCFF00CC72A9 /* EquipmentItem.swift in Sources */,
 				1379F1951BD6EE52009F1C01 /* AppWarpHelper.swift in Sources */,
@@ -490,6 +509,7 @@
 				898238811BCDD20200B769F0 /* StageGameScene.swift in Sources */,
 				2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */,
 				89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */,
+				89AE69041BF2AB6600FDAFD7 /* StageSix.swift in Sources */,
 				2A198E101BA0C32800F050A4 /* Player.swift in Sources */,
 				2AF0CAF11BC0970800FBC36A /* ArrowItem.swift in Sources */,
 				2AF0CAF51BC0977B00FBC36A /* BowItem.swift in Sources */,
