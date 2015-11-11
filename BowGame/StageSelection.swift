@@ -42,6 +42,10 @@ class StageSelection: SKScene {
         addBackButton()
         addSelections()
         currentStage = readStageProgress()
+        if currentStage < 1 {
+        //first time playing
+            currentStage = 1
+        }
         print (currentStage)
     }
     
@@ -117,7 +121,7 @@ class StageSelection: SKScene {
         
         for (index, stage) in stages.enumerate() {
             
-            if (index < currentStage && stagesLocked) {
+            if (index <= currentStage && stagesLocked) {
                 stage.alpha = 1
             }
         }
@@ -254,6 +258,7 @@ class StageSelection: SKScene {
         
         return stage
     }
+    
     
     
     
