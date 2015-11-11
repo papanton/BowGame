@@ -64,127 +64,18 @@ class StageGameScene: GameScene{
     //init ui controllers
     override func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
-        controllers.addLeftController()
-        
+        controllers.initLeftController()
     }
     override func controllerShoot(position : CGPoint)
     {
-        controllers.shootingleft(position)
+        controllers.moveLeftController(position)
     }
     override func controllerOnTouchEnded()
     {
-        leftControllerOnTouchEnded()
+        //leftControllerOnTouchEnded()
+        controllers.resetLeftController()
     }
-/*    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first!
-        let touchLocation = touch.locationInNode(self)
-        let touchedNode = self.nodeAtPoint(touchLocation)
 
-        if(self.touch_disable == true){
-            for child in (self.world.children) {
-                if child is FlappyArrow{
-                    let arrow = child as! FlappyArrow
-                    arrow.flappy()
-                }
-            }
-            return
-        }
-        print(isFirstResponder())
-        print(touchedNode.name)
-        
-        if(touchedNode.name == "settings"){
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(mainmenu,transition: transitionType)
-        }
-        else if(touchedNode.name == "controlBallLeft")
-        {
-            startpositionOfTouch = controllers.controllBallleft.position
-            endpositionOfTouch = controllers.controllBallleft.position
-            isshooting = true
-        }
-        else if(touchedNode.name == "arrowPanel") {
-            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
-            if (panel.expanded) {
-                panel.resume()
-            } else {
-                panel.expand()
-            }
-        } else if(touchedNode.name == "arrowCell") {
-            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
-            if (arrow.selected == false) {
-                arrow.selected = true
-                
-                for cell in panel.cells {
-                    if (!cell.isEqual(arrow)) {
-                        cell.selected = false
-                    }
-                }
-            }
-            if (panel.expanded) {
-                panel.resume()
-            }
-        }
-        else{
-            cameraMoveStart(touch)
-        }
-
-
-        
-    }
-*/
-/*    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        
-        if(self.touch_disable == true)
-        {
-            return
-        }
-        
-        for touch in (touches)
-        {
-            
-            let  position = touch.locationInNode(self)
-
-            //setup camera location according to touch movement
-            if(!self.isshooting && !self.touch_disable){
-                if(startViewLocation != nil){
-                    moveCameraLocation(touch)
-                }
-            }
-            
-            
-            if(self.isshooting == true && !self.touch_disable)
-            {
-                self.endpositionOfTouch = position
-                controllers.shootingleft(position)
-            }
-        }
-    }
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if(self.touch_disable == true){
-            return
-        }
-        
-        
-        if(self.isshooting == true)
-        {
-            controllers.bezierLayerleft1.removeFromSuperlayer()
-            controllers.bezierLayerleft2.removeFromSuperlayer()
-            controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
-            
-            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
-            {
-                return
-            }
-            let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x)/9, (startpositionOfTouch.y - endpositionOfTouch.y)/9)
-            GameController.getInstance().currentPlayerShoot(impulse, scene: self)
-
-            self.touch_disable = true
-            ShootingAngle.getInstance().hide()
-        }
-    }
-*/
     /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
@@ -219,6 +110,7 @@ class StageGameScene: GameScene{
     
     override func backToPreviousScene() {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        self.soundEffect?.stopBMG()
         view?.presentScene(selectionScene,transition: transitionType)
     }
 }
