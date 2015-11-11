@@ -13,6 +13,7 @@ class Buff: SKSpriteNode, Shotable {
     
     private let buffSize = CGSizeMake(50.0, 50.0)
     private var mScene : SKScene!
+    private var mWorld : SKNode!
     private var type : String!
     
     
@@ -20,7 +21,7 @@ class Buff: SKSpriteNode, Shotable {
     // buff_heal
     // buff_power
     init() {
-        var id : Int = Int(arc4random_uniform(3))
+        let id : Int = Int(arc4random_uniform(3))
         var name : String!
         if(id == 0){
             name = "buff_heal"
@@ -55,36 +56,33 @@ class Buff: SKSpriteNode, Shotable {
     
     //called when shot
     //cannot add new buff to correct position
-    func shot(arrow : Arrow){
-        var player = arrow.getHost()
-        
-        if(type == "buff_heal"){
-            player.healed(30)
-        }else
-        if(type == "buff_power"){
-            player.powerup(10)
-        }
-        else
-        if(type == "buff_damage"){
-            for player_index in GameController.getInstance().getPlayers(){
-                if player != player_index{
-                    player_index.hurted(50)
-                    break
-                }
+    func shot(attack : Attacker)->Bool
+    {
+        if let arrow = attack as? Arrow {
+            let player = arrow.getHost()
+            if(type == "buff_heal"){
+                player.healed(30)
+            }else  if(type == "buff_power"){
+                    player.powerup(10)
             }
+            else if(type == "buff_damage"){
+                        for player_index in GameController.getInstance().getPlayers(){
+                            if player != player_index{
+                                player_index.hurted(50)
+                                break
+                            }
+                        }
+            }
+            
+            print("shotbuff", terminator: "")
+            
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
+            arrow.tryStop()
         }
-        
-        print("shotbuff")
-        
-        let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-        arrow.stop()
-        runAction(fadeout, completion: {
-            self.removeFromParent()
-        })
-    }
-    
-    func shot(shotable: Shotable) {
-        
+        return true
     }
     
     //set the position of the buff
@@ -92,14 +90,14 @@ class Buff: SKSpriteNode, Shotable {
     //position is between 0.3-0.7 width and 0.5 - 1 height
     func setPosition()
     {
-        var minX = mScene.size.width * 0.3
-        var maxX = mScene.size.width * 0.7
-        var rangeX = maxX - minX
+        let minX = mScene.size.width * 0.3
+        let maxX = mScene.size.width * 0.7
+        let rangeX = maxX - minX
         let positionX:CGFloat = CGFloat(arc4random()) % CGFloat(rangeX) + CGFloat(minX)
 
-        var minY = mScene.size.height * 0.5
-        var maxY = mScene.size.height - self.size.height
-        var rangeY = maxY - minY
+        let minY = mScene.size.height * 0.5
+        let maxY = mScene.size.height - self.size.height
+        let rangeY = maxY - minY
         let positionY:CGFloat = CGFloat(arc4random()) % CGFloat(rangeY) + CGFloat(minY)
 
         self.position = CGPointMake(positionX, positionY)
@@ -107,11 +105,12 @@ class Buff: SKSpriteNode, Shotable {
     }
     
     //add the buff to the GameScene
-    func add2Scene(scene : SKScene)
+    func add2Scene(scene : SKScene, world : SKNode)
     {
         mScene = scene
+        mWorld = world
         setPosition()
-        mScene.addChild(self)
+        mWorld.addChild(self)
     }
     
 }

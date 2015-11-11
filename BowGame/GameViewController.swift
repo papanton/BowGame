@@ -8,12 +8,12 @@
 
 import UIKit
 import SpriteKit
-
+import CoreData
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+            let sceneData = try! NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe)
+            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
             let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
@@ -31,25 +31,24 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         let scene = StartGameScene(size: view.bounds.size)
         let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsPhysics = true
-        skView.showsNodeCount = true
+//        skView.showsFPS = true
+//        skView.showsPhysics = true
+//        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .ResizeFill
+        scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
-        //skView.showsPhysics = true
-
+//        skView.showsPhysics = true
     }
 
     override func shouldAutorotate() -> Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 

@@ -9,26 +9,27 @@
 import UIKit
 import SpriteKit
 
-class Ground: SKNode, Shotable
+class Ground: SKSpriteNode, Shotable
 {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    init(size:CGSize,position: CGPoint) {
-        super.init()
+    init(texture: SKTexture, size:CGSize,position: CGPoint) {
+        super.init(texture: texture, color: SKColor.clearColor(), size: size)
         self.position = position
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        
+        self.physicsBody = SKPhysicsBody(texture: texture, size: size)
+        
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
-//        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
-//        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = 0x0
     }
-    func shot(arrow :Arrow)
+    func shot(attack : Attacker)->Bool
     {
-        arrow.stop()
-    }
-    
-    func shot(shotable: Shotable) {
-        
+        if let arrow = attack as? Arrow {
+            arrow.tryStop()
+        }
+        return true
     }
 }

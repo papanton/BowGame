@@ -9,11 +9,75 @@
 import UIKit
 import SpriteKit
 
+protocol GameControllerObserver
+{
+    func turnChanged(turn:Int)
+    func gameOver()
+    func youWin()
+}
 class GameController
 {
+    private var mTurn  = 1
+    private var mObservers = [GameControllerObserver]()
     private var mCurPlayer: Player?
     private var mPlayers = [Player]()
+    private var mBoss : Boss?
     private static var mInstance : GameController!
+    private var mCanShooting = true
+    
+    func setBoss(boss : Boss)
+    {
+        mBoss = boss
+    }
+    func isGameOver()->Bool
+    {
+        var isGameOver = false
+        for player in mPlayers{
+            if(player.isDead()){
+                isGameOver = true
+                break
+            }
+        }
+        return isGameOver
+    }
+    func isBossDead()->Bool
+    {
+        if mBoss != nil && mBoss!.isDead(){
+            return true;
+        }
+        return false
+    }
+    
+    private func notify()
+    {
+
+        for ob in mObservers{
+            if(isGameOver()){
+                ob.gameOver()
+            }
+            else if(isBossDead()){
+                ob.youWin()
+            }
+            else{
+                ob.turnChanged(mTurn)
+            }
+        }
+    }
+    /*func getTurn()->Int
+    {
+        return mTurn
+    }*/
+    func afterArrowDead()
+    {
+        ++mTurn;
+        changePlayer()
+        self.notify()
+        mCanShooting = true
+    }
+    func addGameControllerObserver(ob:GameControllerObserver)
+    {
+        mObservers.append(ob)
+    }
     static func getInstance() ->GameController
     {
         if mInstance == nil{
@@ -22,23 +86,35 @@ class GameController
         return mInstance!
     }
     private init(){}
-
-    func currentPlayer()->Player?
+    func reset()
     {
-        if mCurPlayer == nil && mPlayers.count > 0{
-            mCurPlayer = mPlayers[0]
+        mTurn = 1
+        mPlayers = [Player]()
+        mObservers = [GameControllerObserver]()
+        mCurPlayer = nil
+        mCanShooting = true
+        mBoss = nil
+    }
+    func currentPlayerShoot(impulse: CGVector , scene : SKScene)
+    {
+        if mCanShooting{
+            if mCurPlayer == nil && mPlayers.count > 0{
+                mCurPlayer = mPlayers[0]
+            }
+            mCurPlayer?.shoot(impulse, scene: scene)
+            mCanShooting = false
         }
-        return mCurPlayer
     }
    
-    func changePlayerWithDelay(seconds :Double){
+    /*func changePlayerWithDelay(seconds :Double){
         let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             self.changePlayer()
         })
     }
-    func changePlayer()
+    */
+    private func changePlayer()
     {
         for player in mPlayers{
             if mCurPlayer != player{
@@ -56,5 +132,17 @@ class GameController
     func addPlayer(player : Player)
     {
         mPlayers.append(player)
+    }
+    /*func enableShooting()
+    {
+        mCanShooting = true
+    }
+    func disableShooting()
+    {
+        mCanShooting = false
+    }*/
+    func canShooting()->Bool
+    {
+        return mCanShooting
     }
 }

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>0A8F4E4C-7365-463C-9F2F-4C79CF5F5B48</string>
 	<key>IDESourceControlProjectName</key>
-	<string>BowGame</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>BA3D2B72BF8C44669D40411ECB480E79CE72895D</key>
 		<string>https://github.com/papanton/BowGame.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>BowGame.xcodeproj</string>
+	<string>BowGame.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>BA3D2B72BF8C44669D40411ECB480E79CE72895D</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>BA3D2B72BF8C44669D40411ECB480E79CE72895D</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Bowgame</string>
+			<string>BowGame</string>
 		</dict>
 	</array>
 </dict>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C2043" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ArrowItem" representedClassName="BowGame.ArrowItem" syncable="YES">
+        <attribute name="damage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="BowItem" representedClassName="BowGame.BowItem" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CurrentItem" representedClassName="BowGame.CurrentItem" syncable="YES">
+        <attribute name="arrowname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bowname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="playername" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PlayerItem" representedClassName="BowGame.PlayerItem" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ArrowItem" positionX="-414" positionY="-72" width="128" height="75"/>
+        <element name="BowItem" positionX="-36" positionY="27" width="128" height="60"/>
+        <element name="CurrentItem" positionX="-207" positionY="-9" width="128" height="88"/>
+        <element name="PlayerItem" positionX="-405" positionY="30" width="128" height="60"/>
+    </elements>
+</model>

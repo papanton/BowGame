@@ -12,6 +12,9 @@ class SoundEffect
 {
     private var arrow : AVAudioPlayer?
     private var scream : AVAudioPlayer?
+    private var bombDropping : AVAudioPlayer?
+    private var bombExplosion : AVAudioPlayer?
+    private var backgroundMusic : AVAudioPlayer?
     private static var instance : SoundEffect?
     static func getInstance()->SoundEffect
     {
@@ -38,18 +41,61 @@ class SoundEffect
         }
         scream?.play()
     }
-
+    func stopBombDropping()
+    {
+        if nil != bombDropping {
+            bombDropping?.stop()
+        }
+        
+    }
+    func playBombDropping()
+    {
+        if nil == bombDropping {
+            bombDropping = getSound("sound/BombDropping", type: "mp3")
+        }
+        bombDropping?.play()
+    }
+    func playBombExplosion()
+    {
+        if nil == bombExplosion {
+            bombExplosion = getSound("sound/BombExplosion", type: "mp3")
+        }
+        bombExplosion?.play()
+    }
+    func playBGM()
+    {
+        if (nil == backgroundMusic) {
+            backgroundMusic = getSound("sound/Background", type: "mp3")
+            backgroundMusic?.numberOfLoops = -1
+        }
+        backgroundMusic?.play()
+    }
+    
+    func stopBMG()
+    {
+        if (backgroundMusic != nil) {
+            backgroundMusic?.stop()
+            backgroundMusic?.currentTime = 0
+        }
+    }
+    
+    
     private func getSound(file:String, type:String) -> AVAudioPlayer  {
         //1
-        var path = NSBundle.mainBundle().pathForResource(file, ofType:type)
-        var url = NSURL.fileURLWithPath(path!)
+        let path = NSBundle.mainBundle().pathForResource(file, ofType:type)
+        let url = NSURL.fileURLWithPath(path!)
         
         //2
         var error: NSError?
         
         //3
         var audioPlayer:AVAudioPlayer?
-        audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOfURL: url)
+        } catch let error1 as NSError {
+            error = error1
+            audioPlayer = nil
+        }
         
         //4
         return audioPlayer!
