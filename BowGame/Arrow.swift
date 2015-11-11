@@ -20,6 +20,8 @@ class ArrowFactory
             return ArrowThrowsBombs(player: player)
         }else if(arrowitem.name == "SplitableArrow"){
             return SplitableArrow(player: player)
+        }else if(arrowitem.name == "IgnoreArrow"){
+            return IgnoreArrow(player: player)
         }
         return Arrow(player: player)
     }
@@ -85,6 +87,7 @@ class Arrow: SKSpriteNode, Attacker{
         //println(DataCenter.getInstance().getArrowItem().damage.shortValue)
         damage = Int(DataCenter.getInstance().getArrowItem().damage.shortValue) + player.getPower()
         super.init(texture: texture, color: SKColor.clearColor(), size: spriteSize)
+        zPosition = 200;
         addPhysicsBody()
         
     }
@@ -142,7 +145,7 @@ class Arrow: SKSpriteNode, Attacker{
     }*/
 }
 
-class NonStopArrow : Arrow
+class IgnoreArrow : Arrow
 {
     override func tryStop(){
     }
@@ -253,6 +256,12 @@ class ArrowThrowsBombs : Arrow, ClickObersever{
         }
 
     }
+    override func go(var impulse: CGVector, position: CGPoint)
+    {
+        impulse.dx = impulse.dx/1.5
+        impulse.dy = impulse.dy/1.5
+        super.go(impulse, position: position)
+    }
     func onClick()
     {
         if mBombNum > 0{
@@ -266,6 +275,10 @@ class ArrowThrowsBombs : Arrow, ClickObersever{
         let bomb = Bomb(arrow: self)
         print("throws bomb \n")
         bomb.physicsBody?.dynamic = true
+        
+        bomb.physicsBody?.velocity.dx = (physicsBody?.velocity.dx)!
+        bomb.physicsBody?.velocity.dy = (physicsBody?.velocity.dx)! * -0.3
+        
         bomb.position = self.position
         bomb.position.y -= 50
         bomb.position.x -= 50 * self.xScale

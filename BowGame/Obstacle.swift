@@ -126,7 +126,7 @@ class woodbox : Obstacle {
         print("shot wood box")
         
         if let arrow = attacker as? Arrow{
-            arrow.stop()
+            arrow.tryStop()
             
         }
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
