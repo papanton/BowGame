@@ -182,6 +182,7 @@ class AppWarpHelper: NSObject
                     
                     return
                 }
+                
                 let userName : (String!) = responseDict.objectForKey("userName") as! String
                 
                 

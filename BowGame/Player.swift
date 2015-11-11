@@ -71,8 +71,14 @@ class Player : NSObject
     private var power : Int = 0
     private var mWorld: SKNode!
     private var mUI: SKNode!
+    private var multiName:String!
     
-    
+    func getMultiName() -> String {
+        return multiName
+    }
+    func setMultiName(name:String) {
+        self.multiName = name
+    }
     func add2Scene(scene: SKScene)
     {
         mScene = scene
@@ -203,6 +209,7 @@ private class Health
         let size = CGSizeMake(210, 30)
         healthframe = SKSpriteNode(texture: healthframetexture, color: SKColor.clearColor(), size: size)
     }
+    
     func add2Scene(scene: SKScene)
     {
         scene.addChild(healthbar)
