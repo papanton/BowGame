@@ -32,9 +32,9 @@ class Canon: SKSpriteNode
     {
         let fireaction = SKAction.runBlock(fire)
         var firesequeue = [SKAction]()
-        for _ in 1 ... 10{
+        for _ in 1 ... 5{
             firesequeue.append(fireaction)
-            firesequeue.append(SKAction.waitForDuration(0.3))
+            firesequeue.append(SKAction.waitForDuration(0.5))
         }
         return firesequeue
     }

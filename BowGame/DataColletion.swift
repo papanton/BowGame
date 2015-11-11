@@ -12,8 +12,8 @@ class ArrowColletion: NSObject
 {
     var mCollection = [ArrowItem]()
     var mCollectionMap = [String : ArrowItem]()
-    let mArrowName = ["arrow", "FlappyArrow", "ArrowThrowsBombs","SplitableArrow"]
-    let mArrowDamage = [10, 20, 10, 10]
+    let mArrowName = ["arrow", "FlappyArrow", "ArrowThrowsBombs","SplitableArrow","IgnoreArrow"]
+    let mArrowDamage = [10, 20, 10, 10, 10]
     private static var mInstance : ArrowColletion!
     static func getInstance()->ArrowColletion
     {
