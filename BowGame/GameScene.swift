@@ -13,13 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var world : SKNode!
     var UI : SKNode!
-<<<<<<< HEAD
-    
-    var controllBallradius : CGFloat = 30
-    var controllPowerradius : CGFloat = 65
-=======
 
->>>>>>> master
+
     var controllers : Controller!
     
     var touch_disable:Bool = true
@@ -40,11 +35,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var panel:ArrowPanel!
     
-<<<<<<< HEAD
-=======
+
     var soundEffect:SoundEffect?
 
->>>>>>> master
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
         self.mainmenu = mainmenu
@@ -491,10 +484,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     //move to game over view
     func gameOver(){
-<<<<<<< HEAD
-        
-=======
->>>>>>> master
+
         delay(1.0) {
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
             gameoverScene.scaleMode = self.scaleMode
@@ -513,6 +503,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             self.soundEffect?.stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
+            
+            if (!self.multiPlayerON){
+                var stageProgress =  self.readStageProgress()
+                stageProgress = stageProgress + 1
+                self.storeStageProgress(stageProgress)
+                
+            }
         }
     }
     
@@ -579,7 +576,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         }
         
         else if (dataDict.objectForKey("dictType")!.isEqual("2")){
-        print("IM HERE")
         for child in (self.world.children) {
         if child is Arrow{
         let arrow = child as! Arrow
@@ -602,10 +598,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         AppWarpHelper.sharedInstance.playerName = uName
         AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
-<<<<<<< HEAD
-        }
-        
-=======
+
     }
     
     func restartGame(){}
@@ -617,6 +610,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         view?.presentScene(mainmenu,transition: transitionType)
     }
     
+    func storeStageProgress(stage:Int) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(stage, forKey: "stageKey")
+        
+        defaults.synchronize()
+        
+        
+    }
     
->>>>>>> master
+    func readStageProgress() -> Int {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let stage = defaults.integerForKey("stageKey")
+        
+        return stage
+    }
+
+    
+ 
 }
