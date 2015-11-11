@@ -10,14 +10,7 @@ import UIKit
 import SpriteKit
 
 class StageTwo: StageGameScene {
-    
-    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
+
     override func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:"forestbg")
@@ -26,16 +19,19 @@ class StageTwo: StageGameScene {
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
         
-        print(background.frame.width)
-        print(background.frame.height)
+        let decorate = SKSpriteNode(texture: SKTexture(imageNamed: "Sign_1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
+        self.world.addChild(decorate)
         
     }
+    
     
     override func addGround()
     {
         let groundTexture = SKTexture(imageNamed: "forest_ground")
         let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 3), position: CGPointMake(size.width, 0))
         let ground2 : Ground = Ground(texture: SKTexture(imageNamed: "forest_land3"), size: CGSizeMake(228 * 0.8, 152 * 0.8), position: CGPointMake(size.width * 1.5, self.size.height / 6 + 152 * 0.2))
+        ground2.zPosition = -2
         self.world.addChild(ground2)
         self.world.addChild(ground)
         
@@ -45,60 +41,40 @@ class StageTwo: StageGameScene {
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
-        
     }
     
     override func addBoss()
     {
-        let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 3)
-        self.boss = Boss(name: "beeboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
+        let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
+        self.boss = Boss(name: "fighterboss1", scene: self, UI: self.UI, world: self.world, position: bossposition)
         boss.add2Scene()
     }
-    
-    override func addObstacle() {
-        let position = CGPointMake(self.size.width * 0.5, size.height - 100)
-        addLandWithBox(position)
-        addRock(position)
-        
-        let position2 = CGPointMake(self.size.width * 0.8, size.height - 200)
-        addLandWithBox(position2)
-        
-        let position3 = CGPointMake(self.size.width * 1.1, size.height - 150)
-        addLandWithBox(position3)
-        addStones(position3)
-        
-        let position4 = CGPointMake(self.size.width * 1.5, size.height - 80)
-        addLandWithBox2(position4)
+
+    override func addObstacle(){
+        let position1 = CGPointMake(self.size.width * 0.5, size.height - 100)
+        let position2 = CGPointMake(self.size.width * 0.8, size.height - 250)
+        let position3 = CGPointMake(self.size.width * 1.2, size.height - 150)
+        addLand(position1)
+        addLand(position2)
+        addLand(position3)
     }
-    
-    func addLandWithBox(position : CGPoint)
+    func addLand(position : CGPoint)
     {
         let island : Ground = Ground(texture: SKTexture(imageNamed: "forest_land1"), size: CGSizeMake(232 / 2, 84 / 2), position: position)
         self.world.addChild(island)
-        let box = woodbox(position: CGPointMake(position.x, position.y + 84 / 4))
-        self.world.addChild(box)
-    }
-    func addRock(position : CGPoint)
-    {
-        let rock : Rock = Rock(position: CGPointMake(position.x, size.height / 6))
-        self.world.addChild(rock)
-    }
-    func addStones(position : CGPoint)
-    {
-        for(var i = 0; i < 3; i++){
-            let Stone = stone(position: CGPointMake(position.x + CGFloat(50 * i), self.size.height/6))
-            self.world.addChild(Stone)
-        }
-    }
-    func addLandWithBox2(position : CGPoint)
-    {
-        let island : Ground = Ground(texture: SKTexture(imageNamed: "forest_land2"), size: CGSizeMake(348 / 2, 84 / 2), position: position)
-        self.world.addChild(island)
-        let box1 = woodbox(position: CGPointMake(position.x - 25, position.y + 84 / 4))
-        let box2 = woodbox(position: CGPointMake(position.x + 25, position.y + 84 / 4))
-        self.world.addChild(box1)
-        self.world.addChild(box2)
     }
     
-
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(5, bomb: 0, flappy: 5, split: 0, ignore: 0)
+    }
+    
+    
+    override func restartGame() {
+        let gameScene = StageTwo(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
+    }
 }

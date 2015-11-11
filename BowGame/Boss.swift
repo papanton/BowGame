@@ -63,16 +63,24 @@ private class Health {
     {
         if(name == "firstboss")
         {
-            totalHealth = 30
-            currentHealth = 30
-        }else if(name == "whiteboss2")
-        {
             totalHealth = 60
             currentHealth = 60
+        }else if(name == "whiteboss2")
+        {
+            totalHealth = 100
+            currentHealth = 100
         }else if(name == "beeboss")
         {
-            totalHealth = 40
-            currentHealth = 40
+            totalHealth = 80
+            currentHealth = 80
+        }else if(name == "fighterboss1")
+        {
+            totalHealth = 80
+            currentHealth = 80
+        }else if(name == "whiteboss")
+        {
+            totalHealth = 80
+            currentHealth = 80
         }
         
         //init healthbar frame
@@ -130,19 +138,32 @@ private class BossNode: SKSpriteNode, Shotable {
     init(name : String, mBoss : Boss)
     {
         self.mBoss = mBoss
-        if(name == "firstboss")
-        {
+        var newanimation : SKAction!
+        if(name == "firstboss"){
             bosssize = CGSizeMake(224 * 0.7, 169 * 0.7)
             bosstexture = SKTexture(imageNamed: Boss1)
         }else if(name == "whiteboss2"){
-            bosssize = CGSizeMake(230 * 0.7, 231 * 0.7)
+            bosssize = CGSizeMake(230 * 0.6, 231 * 0.6)
             bosstexture = SKTexture(imageNamed: "whiteboss2")
         }else if(name == "beeboss"){
             bosssize = CGSizeMake(200 * 0.7, 250 * 0.7)
             bosstexture = SKTexture(imageNamed: "beeboss")
+            let beetexture1 : SKTexture = SKTexture(imageNamed: "beeboss2")
+            let animation = SKAction.animateWithTextures([bosstexture,beetexture1], timePerFrame: 0.2)
+            newanimation = SKAction.repeatActionForever(animation)
+        }else if(name == "fighterboss1"){
+            bosssize = CGSizeMake(296 * 0.6, 263 * 0.6)
+            bosstexture = SKTexture(imageNamed: "fighterboss1")
+        }else if(name == "whiteboss"){
+            bosssize = CGSizeMake(310 * 0.5, 310 * 0.5)
+            bosstexture = SKTexture(imageNamed: "whiteboss")
         }
         
         super.init(texture: bosstexture, color: SKColor.clearColor(), size: bosssize)
+        if(name == "beeboss")
+        {
+            self.runAction(newanimation)
+        }
         addPhysicsBody()
     }
     
@@ -161,9 +182,17 @@ private class BossNode: SKSpriteNode, Shotable {
         self.physicsBody?.collisionBitMask = 0x0
 
     }
-    
+
     func shot(attacker: Attacker) -> Bool {
         if attacker.isAlive(){
+            var sequence = [SKAction]()
+            for i in 1...3{
+                sequence.append(SKAction.rotateByAngle(CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+                sequence.append(SKAction.rotateByAngle(-CGFloat(M_PI) / CGFloat(3*i), duration: 0.1))
+            }
+            //let action = SKAction.repeatActionForever(SKAction.sequence(sequence))
+            runAction(SKAction.sequence(sequence))
+            
             return mBoss.shot(attacker)
         }
         return false

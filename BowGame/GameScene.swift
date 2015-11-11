@@ -13,9 +13,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var world : SKNode!
     var UI : SKNode!
+<<<<<<< HEAD
     
     var controllBallradius : CGFloat = 30
     var controllPowerradius : CGFloat = 65
+=======
+
+>>>>>>> master
     var controllers : Controller!
     
     var touch_disable:Bool = true
@@ -23,7 +27,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var startpositionOfTouch: CGPoint!
     var endpositionOfTouch: CGPoint!
     var startViewLocation: CGFloat!
-    var startAnchorLocation: CGFloat!
     var startWorldLocation: CGFloat!
     
     var rounds : Int = 0
@@ -37,6 +40,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var panel:ArrowPanel!
     
+<<<<<<< HEAD
+=======
+    var soundEffect:SoundEffect?
+
+>>>>>>> master
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
         super.init(size: size)
         self.mainmenu = mainmenu
@@ -51,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.addChild(world)
         self.addChild(UI)
         
-        self.physicsWorld.gravity = CGVectorMake(0, -2.8)
+        self.physicsWorld.gravity = CGVectorMake(0, -3.3)
         self.physicsWorld.contactDelegate = self
         
         initworld()
@@ -76,6 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addBorder()
         addPlayers()
         addObstacle()
+        addBGM()
     }
     
     func initUI()
@@ -85,7 +94,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addSettingButton()
     }
     
-    
+    func addBGM()
+    {
+        soundEffect = SoundEffect.getInstance()
+        soundEffect!.playBGM()
+    }
     
     
     //add Scene background picture to world node
@@ -152,18 +165,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func addControllers(){
         self.controllers = Controller(UI: self.UI , scene: self)
-        controllers.addLeftController()
-        controllers.addRightController()
+        controllers.initLeftController()
+        controllers.initRightController()
     }
     
     //add setting button to scene
     func addSettingButton()
     {
         
-        let settings = SKSpriteNode(imageNamed: InGameSettingButton )
-        settings.position = CGPointMake(size.width*0.95,size.height*0.95)
-        settings.name = "settings"
-        settings.size = CGSize(width: 16, height: 16)
+        let settings = SKSpriteNode(imageNamed: "backbutton")
+        settings.position = CGPointMake(30, size.height - 30)
+        settings.name = "back"
+        settings.size = CGSize(width: 30, height: 30)
         self.UI.addChild(settings)
         
     }
@@ -188,8 +201,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel = ArrowPanel.init()
         panel.initCell(self)
         
-        
-        panel.position = CGPointMake(120, 335)
+        panel.position = CGPointMake(170, 335)
+        panel.zPosition = 5
         panel.xScale = 0.2
         panel.yScale = 0.2
         self.addChild(panel)
@@ -215,7 +228,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         print(touchedNode.name)
         
-        if(touchedNode.name == "settings"){
+        if(touchedNode.name == "restartbutton"){
+            restartGame()
+        }
+        else if(touchedNode.name == "back"){
             
             if multiPlayerON {
                 let dataDict = NSMutableDictionary()
@@ -227,10 +243,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             AppWarpHelper.sharedInstance.disconnectFromServer()
             
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            view?.presentScene(mainmenu,transition: transitionType)
+            backToPreviousScene()
         }
-        else if(touchedNode.name == "controlBallLeft" ) {
+        else if(touchedNode.name == "controller_left" ) {
             print("touchLeft: ")
             print(multiPlayerON)
             print(AppWarpHelper.sharedInstance.isRoomOwner)
@@ -240,7 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
             
             leftControllerOnTouchBegin()
-        }else if(touchedNode.name == "controlBallRight"){
+        }else if(touchedNode.name == "controller_right"){
             print("touchRight: ")
             print(multiPlayerON)
             print(AppWarpHelper.sharedInstance.isRoomOwner)
@@ -303,38 +318,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 self.endpositionOfTouch = position
                 controllerShoot(position)
+//                controllers.moveController(position)
             }
             
         }
     }
     func leftControllerOnTouchBegin()
     {
-        startpositionOfTouch = controllers.controllBallleft.position
-        endpositionOfTouch = controllers.controllBallleft.position
+        startpositionOfTouch = controllers.initposition_left
+        endpositionOfTouch = controllers.initposition_left
         if(self.panel.cells[0].mArrowNum > 0) {
+            controllers.startLeftMovement()
             isshooting = true
+        } else {
+            self.panel.remindOutofArrow()
         }
+        
     }
     func rightControllerOnTouchBegin()
     {
-        startpositionOfTouch = controllers.controllBallright.position
-        endpositionOfTouch = controllers.controllBallright.position
+        startpositionOfTouch = controllers.initposition_right
+        endpositionOfTouch = controllers.initposition_right
+        controllers.startRightMovement()
         isshooting = true
     }
     func controllerShoot(position: CGPoint){ }
     func leftControllerOnTouchEnded()
     {
-        controllers.bezierLayerleft1.removeFromSuperlayer()
-        controllers.bezierLayerleft2.removeFromSuperlayer()
-        controllers.controllBallleft.position = CGPoint(x: 100 + self.controllPowerradius - self.controllBallradius, y: 120)
+        controllers.resetLeftController()
     }
     func rightControllerOnTouchEnded()
     {
-        controllers.bezierLayerright1.removeFromSuperlayer()
-        controllers.bezierLayerright2.removeFromSuperlayer()
-        controllers.controllBallright.position = CGPoint(x: self.size.width - 90 - self.controllPowerradius + self.controllBallradius, y: 120)
+        controllers.resetRightController()
     }
     func controllerOnTouchEnded(){}
+    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         if(self.touch_disable == true){
@@ -345,10 +363,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         if(self.isshooting == true)
         {
             controllerOnTouchEnded()
-            if(startpositionOfTouch.x == endpositionOfTouch.x && startpositionOfTouch.y == endpositionOfTouch.y)
-            {
-                return
-            }
+
             let impulse = CGVectorMake((startpositionOfTouch.x - endpositionOfTouch.x) / 9, (startpositionOfTouch.y - endpositionOfTouch.y) / 9)
             
             GameController.getInstance().currentPlayerShoot(impulse, scene: self)
@@ -476,11 +491,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     //move to game over view
     func gameOver(){
+<<<<<<< HEAD
         
+=======
+>>>>>>> master
         delay(1.0) {
-            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu)
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.soundEffect?.stopBMG()
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+        }
+    }
+    
+    func youWin(){
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
+            gameoverScene.scaleMode = self.scaleMode
+            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            self.soundEffect?.stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
         }
@@ -572,6 +602,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         AppWarpHelper.sharedInstance.playerName = uName
         AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
+<<<<<<< HEAD
         }
         
+=======
+    }
+    
+    func restartGame(){}
+    
+    func backToPreviousScene()
+    {
+        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        soundEffect?.stopBMG()
+        view?.presentScene(mainmenu,transition: transitionType)
+    }
+    
+    
+>>>>>>> master
 }
