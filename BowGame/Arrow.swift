@@ -181,6 +181,7 @@ class FlappyArrow : Arrow, ClickObersever
     func onClick()
     {
         if isFlying != 0 && physicsBody != nil{
+            SoundEffect.getInstance().playArrowFlappy()
             physicsBody!.velocity.dy = 200
             if(physicsBody!.velocity.dx > 0){
                 physicsBody!.velocity.dx = 100

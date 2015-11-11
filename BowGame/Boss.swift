@@ -49,6 +49,7 @@ class Boss : NSObject, Shotable{
         self.health.decreaseHealth(Float(attacker.getDamage()))
         print("shoot boss health = \(health.currentHealth)")
         attacker.stop()
+        SoundEffect.getInstance().playBossScream()
         return true;
     }
 }
