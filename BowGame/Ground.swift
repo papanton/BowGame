@@ -28,7 +28,7 @@ class Ground: SKSpriteNode, Shotable
     func shot(attack : Attacker)->Bool
     {
         if let arrow = attack as? Arrow {
-            arrow.stop()
+            arrow.tryStop()
         }
         return true
     }
