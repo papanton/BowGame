@@ -13,7 +13,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = true //for testing
+    let stagesLocked = false //for testing
     var currentStage: Int!
 
     let buttonfuncs = [
