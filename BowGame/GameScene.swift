@@ -35,16 +35,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var panel:ArrowPanel!
     
-
+    var stage:Int!
     var soundEffect:SoundEffect?
 
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, stage: Int) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
         self.localPlayer = localPlayer
         self.multiPlayerON = multiPlayerON
-        
+        self.stage = stage
         self.world = SKNode()
         self.UI = SKNode()
         //        self.UI.zPosition = 100;
@@ -258,6 +258,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             }
             rightControllerOnTouchBegin()
         }else if(touchedNode.name == "arrowPanel") {
+            SoundEffect.getInstance().playMenuSelect()
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
             if (panel.expanded) {
                 panel.resume()
@@ -265,8 +266,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 panel.expand()
             }
         }else if(touchedNode.name == "arrowCell") {
+            
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
             if(arrow.mArrowNum != 0) {
+                SoundEffect.getInstance().playMenuSelect()
                 arrow.onSelected()
                 /*if (arrow.selected == false) {
                 arrow.selected = true
@@ -281,6 +284,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                     arrow.mArrowPanel.switchCell(arrow.mArrowName)
                     arrow.mArrowPanel.resume()
                 }
+            } else {
+                SoundEffect.getInstance().playSelectFault()
             }
         }else{
             cameraMoveStart(touch)
@@ -506,9 +511,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             if (!self.multiPlayerON){
                 var stageProgress =  self.readStageProgress()
+                if self.stage == stageProgress{
+
                 stageProgress = stageProgress + 1
                 self.storeStageProgress(stageProgress)
-                
+                }
             }
         }
     }

@@ -14,8 +14,8 @@ class StageGameScene: GameScene{
     var boss : Boss!
     var selectionScene : StageSelection!
 
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
-        super.init(size: size, mainmenu: mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection, stage:Int) {
+        super.init(size: size, mainmenu: mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, stage: stage)
         self.selectionScene = selectionScene
     }
 

@@ -42,6 +42,7 @@ class Canon: SKSpriteNode
     func fire()
     {
         let bomb = CanonBomb(pos: position)
+        SoundEffect.getInstance().playCannon()
         parent?.addChild(bomb)
         delay(0.6){
             bomb.removeFromParent()

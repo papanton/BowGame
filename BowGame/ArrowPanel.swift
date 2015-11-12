@@ -160,7 +160,7 @@ class ArrowCell: SKSpriteNode {
             
         } else if(arrowName == "SplitableArrow") {
             texture = SKTexture(imageNamed: "cell_splitarrow")
-        } else {
+        } else if(arrowName == "IgnoreArrow"){
             texture = SKTexture(imageNamed: "cell_ignorearrow")
         }
         

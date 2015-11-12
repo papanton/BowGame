@@ -76,11 +76,11 @@ class StageOne: StageGameScene {
     override func addArrowPanel()
     {
         super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 1, flappy: 0, split: 2, ignore: 0)
+        panel.setArrowNum(10, bomb: 1, flappy: 0, split: 2, ignore: 10)
     }
     
     override func restartGame() {
-        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
