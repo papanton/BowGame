@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 class StageFour: StageGameScene
 {
@@ -17,7 +18,14 @@ class StageFour: StageGameScene
         boss.add2Scene()
     }
     
-    
+    override func addBackground()
+    {
+        let backgroundTexture =  SKTexture(imageNamed:"snowbg")
+        let background = SKSpriteNode(texture:backgroundTexture, color: SKColor.clearColor(), size: CGSizeMake(self.frame.width * 2, self.frame.height))
+        background.zPosition = -100;
+        background.position = CGPointMake(size.width,  size.height*0.5)
+        self.world.addChild(background)
+    }
     override func addObstacle() {
         for(var i = 0; i < 6; i++){
             let ice = Icebox(position: CGPointMake(size.width/2, 150+CGFloat(i * 50)))
@@ -26,5 +34,17 @@ class StageFour: StageGameScene
         let ice = SuperIcebox(position: CGPointMake(size.width, 40), ice_size: CGSizeMake(size.width*2, 30))
             self.world.addChild(ice)
     }
-
+    override func addGround()
+    {
+        let groundTexture = SKTexture(imageNamed: "snow_ground")
+        let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 4), position: CGPointMake(size.width, 0))
+        self.world.addChild(ground)
+        
+        
+        let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
+    }
 }
