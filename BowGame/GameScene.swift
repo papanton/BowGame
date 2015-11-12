@@ -35,16 +35,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     var panel:ArrowPanel!
     
-
+    var stage:Int!
     var soundEffect:SoundEffect?
 
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, stage: Int) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
         self.localPlayer = localPlayer
         self.multiPlayerON = multiPlayerON
-        
+        self.stage = stage
         self.world = SKNode()
         self.UI = SKNode()
         //        self.UI.zPosition = 100;
@@ -511,9 +511,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             if (!self.multiPlayerON){
                 var stageProgress =  self.readStageProgress()
+                if self.stage == stageProgress{
+
                 stageProgress = stageProgress + 1
                 self.storeStageProgress(stageProgress)
-                
+                }
             }
         }
     }
