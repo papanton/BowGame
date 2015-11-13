@@ -35,7 +35,7 @@ class DataCenter: NSObject
             println("save successfully! \(mArrowItem.damage)")
         }
     }*/
-    func setCurrentArrow(name : String)
+    private func setCurrentArrow(name : String)
     {
         initCurrentItem()
         mCurrentItem.arrowname = name
@@ -48,7 +48,14 @@ class DataCenter: NSObject
             print("Could not save \(error), \(error?.userInfo)")
         }
     }
-    func setArrowItem(index : Int)
+    func setArrowItemByName(name : String)
+    {
+        if ArrowColletion.getInstance().mArrowName.contains(name){
+            setCurrentArrow(name)
+        }
+        
+    }
+    func setArrowItemByIndex(index : Int)
     {
         setCurrentArrow(ArrowColletion.getInstance().mArrowName[index])
     }

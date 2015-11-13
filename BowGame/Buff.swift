@@ -13,6 +13,7 @@ class Buff: SKSpriteNode, Shotable {
     
     private let buffSize = CGSizeMake(50.0, 50.0)
     private var mScene : SKScene!
+    private var mWorld : SKNode!
     private var type : String!
     
     
@@ -57,6 +58,7 @@ class Buff: SKSpriteNode, Shotable {
     //cannot add new buff to correct position
     func shot(attack : Attacker)->Bool
     {
+        SoundEffect.getInstance().playGetBuff()
         if let arrow = attack as? Arrow {
             let player = arrow.getHost()
             if(type == "buff_heal"){
@@ -79,7 +81,7 @@ class Buff: SKSpriteNode, Shotable {
             runAction(fadeout, completion: {
                 self.removeFromParent()
             })
-            arrow.stop()
+            arrow.tryStop()
         }
         return true
     }
@@ -104,11 +106,12 @@ class Buff: SKSpriteNode, Shotable {
     }
     
     //add the buff to the GameScene
-    func add2Scene(scene : SKScene)
+    func add2Scene(scene : SKScene, world : SKNode)
     {
         mScene = scene
+        mWorld = world
         setPosition()
-        mScene.addChild(self)
+        mWorld.addChild(self)
     }
     
 }

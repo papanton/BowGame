@@ -18,6 +18,28 @@ let PlayerImage1 = "player"
 let PlayerImage2 = "Player2"
 let ArrowImage = "arrow"
 let InGameSettingButton = "InGameSettings"
+let GroundTexture1 = "groundtexture1"
+let HealthBarFrame = "healthbarframelong"
+
+let BombImage = "bomb"
+
+
+/*
+Boss texture
+*/
+let Boss1 = "pigboss1"
+
+/*
+Obstacle textures
+*/
+let Woodbox = "woodbox"
+let Stone = "stone"
+let StoneBroken = "stonebroken"
+let Ice = "icebox"
+let CanonStone = "CanonStone"
+let BangTexture = "BangTexture"
+let Board = "Board"
+
 /*
 Main menu images (buttons etc)
 */
@@ -39,4 +61,14 @@ struct Category {
     static let Player: UInt32 = 1
     static let Arrow: UInt32 = 2
     
+}
+
+
+func delay(delay:Double, closure:()->()) {
+    dispatch_after(
+        dispatch_time(
+            DISPATCH_TIME_NOW,
+            Int64(delay * Double(NSEC_PER_SEC))
+        ),
+        dispatch_get_main_queue(), closure)
 }

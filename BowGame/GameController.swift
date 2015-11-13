@@ -13,6 +13,7 @@ protocol GameControllerObserver
 {
     func turnChanged(turn:Int)
     func gameOver()
+    func youWin()
 }
 class GameController
 {
@@ -20,9 +21,15 @@ class GameController
     private var mObservers = [GameControllerObserver]()
     private var mCurPlayer: Player?
     private var mPlayers = [Player]()
+    private var mBoss : Boss?
     private static var mInstance : GameController!
     private var mCanShooting = true
-    private func notify()
+    
+    func setBoss(boss : Boss)
+    {
+        mBoss = boss
+    }
+    func isGameOver()->Bool
     {
         var isGameOver = false
         for player in mPlayers{
@@ -31,10 +38,27 @@ class GameController
                 break
             }
         }
+        return isGameOver
+    }
+    func isBossDead()->Bool
+    {
+        if mBoss != nil && mBoss!.isDead(){
+            return true;
+        }
+        return false
+    }
+    
+    private func notify()
+    {
+
         for ob in mObservers{
-            if(isGameOver){
+            if(isGameOver()){
                 ob.gameOver()
-            }else{
+            }
+            else if(isBossDead()){
+                ob.youWin()
+            }
+            else{
                 ob.turnChanged(mTurn)
             }
         }
@@ -69,6 +93,7 @@ class GameController
         mObservers = [GameControllerObserver]()
         mCurPlayer = nil
         mCanShooting = true
+        mBoss = nil
     }
     func currentPlayerShoot(impulse: CGVector , scene : SKScene)
     {
