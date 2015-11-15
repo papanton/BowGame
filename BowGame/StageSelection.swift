@@ -13,7 +13,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = true //for testing
+    let stagesLocked = false //for testing
     var currentStage: Int!
 
     let buttonfuncs = [
@@ -44,6 +44,7 @@ class StageSelection: SKScene {
         currentStage = readStageProgress()
         if currentStage < 1 {
         //first time playing
+            storeStageProgress(1)
             currentStage = 1
         }
         print (currentStage)
@@ -76,7 +77,8 @@ class StageSelection: SKScene {
     func addSelections()
     {
         let currentStage = readStageProgress()
-        
+        print("Current Stage is \(currentStage) ")
+
         let stage1 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage1.alpha = 0.5
         stage1.name = "stage1"
@@ -121,7 +123,7 @@ class StageSelection: SKScene {
         
         for (index, stage) in stages.enumerate() {
             
-            if (index <= currentStage && stagesLocked) {
+            if (index + 1 <= currentStage && stagesLocked) {
                 stage.alpha = 1
             }
         }
@@ -152,7 +154,7 @@ class StageSelection: SKScene {
         
         if currentStage >= 1 || !stagesLocked {
         print("select stage 1")
-        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 1)
         changeScene(gameScene)
         }
     }
@@ -162,7 +164,7 @@ class StageSelection: SKScene {
         if currentStage >= 2 || !stagesLocked {
 
         print("select stage 2")
-        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self,stage: 2)
         changeScene(gameScene)
         }
     }
@@ -172,7 +174,7 @@ class StageSelection: SKScene {
         if currentStage >= 3 || !stagesLocked {
 
         print("select stage 3")
-        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 3)
         changeScene(gameScene)
         }
     }
@@ -182,7 +184,7 @@ class StageSelection: SKScene {
         if currentStage >= 4 || !stagesLocked {
 
         print("select stage 4")
-        let gameScene = StageFour(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageFour(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 4)
         changeScene(gameScene)
         }
     }
@@ -190,7 +192,7 @@ class StageSelection: SKScene {
     {
         if currentStage >= 5  || !stagesLocked {
         print("select stage 5")
-        let gameScene = StageFive(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageFive(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 5)
         changeScene(gameScene)
         }
     }
@@ -199,7 +201,7 @@ class StageSelection: SKScene {
         if currentStage >= 6 || !stagesLocked {
 
         print("select stage 6")
-        let gameScene = StageSix(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageSix(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 6)
         changeScene(gameScene)
         }
     }
@@ -208,7 +210,7 @@ class StageSelection: SKScene {
         if currentStage >= 7 || !stagesLocked  {
 
         print("select stage 7")
-        let gameScene = StageSeven(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageSeven(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 7)
         changeScene(gameScene)
         }
     }
@@ -217,7 +219,7 @@ class StageSelection: SKScene {
         if currentStage >= 8 || !stagesLocked {
 
         print("select stage 8")
-        let gameScene = StageEight(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageEight(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 8)
         changeScene(gameScene)
         }
     }
@@ -227,7 +229,7 @@ class StageSelection: SKScene {
         let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-        let gameScene = TestScene(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = TestScene(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 9)
         
         changeScene(gameScene)
     }
@@ -239,6 +241,7 @@ class StageSelection: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if (touchedNode.name != nil){
+            //SoundEffect.getInstance().playSelectStage()
             buttonfuncs[touchedNode.name!]?(self)
         }
     }
@@ -247,6 +250,7 @@ class StageSelection: SKScene {
     //define transition type to change scene
     func changeScene(scene : SKScene)
     {
+        scene.scaleMode = .AspectFit
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
@@ -259,6 +263,15 @@ class StageSelection: SKScene {
         return stage
     }
     
+    func storeStageProgress(stage:Int) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(stage, forKey: "stageKey")
+        
+        defaults.synchronize()
+        
+        
+    }
     
     
     

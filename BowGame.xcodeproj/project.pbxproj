@@ -671,6 +671,7 @@
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
 				);
 				INFOPLIST_FILE = BowGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -693,6 +694,7 @@
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
 				);
 				INFOPLIST_FILE = BowGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
