@@ -11,14 +11,6 @@ import SpriteKit
 
 class TestScene: StageGameScene {
     
-//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
-//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
-//    }
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-
-    
     override func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:BackgroundImage)
@@ -94,12 +86,12 @@ class TestScene: StageGameScene {
             world.addChild(ice2)
         }
     }
-    override func addBlackHole()
+    func addBlackHole()
     {
-        let bh = BlackHole(position: CGPointMake(400,200))
+        let bh = BlackHole(position: CGPointMake(400,200), dest: CGPointMake((scene?.size.width)!*2-100, 300))
         world.addChild(bh)
     }
-    override func addCanon()
+    func addCanon()
     {
         let canon = Canon()
         canon.position.x = size.width/2

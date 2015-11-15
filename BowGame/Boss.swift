@@ -43,7 +43,14 @@ class Boss : NSObject, Shotable{
         mUI.addChild(health.healthbar)
         mUI.addChild(health.healthframe)
     }
-    
+    func showBoss()
+    {
+       mWorld.addChild(bossnode)
+    }
+    func hideBoss()
+    {
+        bossnode.removeFromParent()
+    }
     func shot(attacker : Attacker)->Bool
     {
         self.health.decreaseHealth(Float(attacker.getDamage()))
