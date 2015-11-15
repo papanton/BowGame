@@ -250,6 +250,7 @@ class StageSelection: SKScene {
     //define transition type to change scene
     func changeScene(scene : SKScene)
     {
+        scene.scaleMode = .AspectFit
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }

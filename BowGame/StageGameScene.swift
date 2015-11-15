@@ -50,8 +50,8 @@ class StageGameScene: GameScene{
     override func addObstacle() {}
     override func addBackground() {}
     func addBoss(){}
-    func addBlackHole() {}
-    func addCanon() {}
+    //func addBlackHole() {}
+    //func addCanon() {}
 
     
     override func addPlayers()
