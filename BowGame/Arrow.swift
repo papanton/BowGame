@@ -298,7 +298,7 @@ class Bomb : Obstacle
     var mArrow : Arrow!
     init(arrow : ArrowThrowsBombs)
     {
-        super.init(name: BombImage, damage: 10, position: arrow.position, size: CGSizeMake(200/10, 177/10))
+        super.init(name: BombImage, damage: 10, position: arrow.position, size: CGSizeMake(200/7, 177/7))
         physicsBody?.categoryBitMask = CollisonHelper.ArrowMask
         physicsBody?.contactTestBitMask = CollisonHelper.ShotableMask
         physicsBody?.collisionBitMask = 0x0

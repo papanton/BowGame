@@ -9,8 +9,23 @@
 
 import UIKit
 import SpriteKit
+
 class StageSix: StageGameScene
 {
+    var mBlackHoleballoon : Balloon!
+    override func addObstacle()
+    {
+        addIceBallons()
+        addBlackHoleBallons()
+    }
+    func addIceBallons()
+    {
+        let ice = SuperIcebox(position: CGPointMake(size.width/2, 40), ice_size: CGSizeMake(200, 20))
+        let balloon = Balloon(position: CGPointMake(self.size.width/2, self.frame.height*2/3), movements: [CGVectorMake(100,0),CGVectorMake(-100,0)])
+        balloon.decorate(ice)
+        self.world.addChild(balloon)
+
+    }
     override func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:"MoonBackground")
@@ -21,13 +36,32 @@ class StageSix: StageGameScene
         //background.size = world.frame.size
         self.world.addChild(background)
     }
-    override func addObstacle(){
-        addRock(CGPointMake(self.size.width * 1.1, size.height - 100))
-    }
-    func addRock(position : CGPoint)
+    override func addBoss()
     {
-        let rock : Rock = Rock(position: position)
-        self.world.addChild(rock)
+        let bosshole = BossBlackHole(position: CGPointMake(size.width - 50,size.height/2 - 50), dest: randomPoint())
+        let bossposition = CGPointMake(bosshole.mDestination.x, self.size.height / 6)
+        self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
+        bosshole.setBoss(boss)
+        boss.add2Scene()
+        boss.hideBoss()
+        mBlackHoleballoon.decorate(bosshole)
+    }
+    func addBlackHoleBallons()
+    {
+        mBlackHoleballoon = Balloon(position: CGPointMake(size.width, size.height / 2), movements: [CGVectorMake(-100,0),CGVectorMake(100,0)])
+
+        let points = [CGPointMake(size.width-100, size.height/2 + 120),CGPointMake(size.width-200, size.height/2 + 50), CGPointMake(size.width - 100, size.height/2 + 25), CGPointMake(size.width, size.height/2 + 50),  CGPointMake(size.width-150, size.height/2 - 50)]
+        for point in points{
+            let bh = BlackHole(position: point, dest: randomPoint())
+            mBlackHoleballoon.decorate(bh)
+        }
+        world.addChild(mBlackHoleballoon)
+    }
+    private func randomPoint() -> CGPoint
+    {
+        let dx = arc4random_uniform(UInt32((scene?.size.width)!) - 200) + UInt32((scene?.size.width)!) + 100
+        let dy = arc4random_uniform(UInt32((scene?.size.height)!) - 250)+200
+        return CGPointMake(CGFloat(dx), CGFloat(dy))
     }
     override func addGround(){}
 }
