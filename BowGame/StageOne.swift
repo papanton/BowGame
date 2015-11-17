@@ -11,13 +11,6 @@ import SpriteKit
 
 class StageOne: StageGameScene {
     
-//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
-//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, selectionScene : selectionScene)
-//    }
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-    
     override func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:BackgroundImage)
@@ -57,26 +50,10 @@ class StageOne: StageGameScene {
         woodBoard2.add2Scene(self, world: self.world)
     }
     
-    
-    
-    override func addBlackHole()
-    {
-        let bh = BlackHole(position: CGPointMake(400,200))
-        world.addChild(bh)
-    }
-    override func addCanon()
-    {
-        let canon = Canon()
-        canon.position.x = size.width/2
-        canon.position.y = 80;
-        world.addChild(canon)
-        canon.startFire()
-    }
-    
     override func addArrowPanel()
     {
         super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 1, flappy: 0, split: 2, ignore: 0)
+        panel.setArrowNum(10, bomb: 1, flappy: 0, split: 2, ignore: 10)
     }
     
     override func restartGame() {

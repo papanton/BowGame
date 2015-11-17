@@ -13,7 +13,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = true //for testing
+    let stagesLocked = false //for testing
     var currentStage: Int!
 
     let buttonfuncs = [
@@ -241,6 +241,7 @@ class StageSelection: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if (touchedNode.name != nil){
+            //SoundEffect.getInstance().playSelectStage()
             buttonfuncs[touchedNode.name!]?(self)
         }
     }
@@ -249,6 +250,7 @@ class StageSelection: SKScene {
     //define transition type to change scene
     func changeScene(scene : SKScene)
     {
+        scene.scaleMode = .AspectFit
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
