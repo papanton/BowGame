@@ -11,6 +11,7 @@ import SpriteKit
 
 class Balloon: Obstacle
 {
+    var mOriginPosition: CGPoint!
     var mObstacles = [Obstacle]()
     private let BallonSize = CGSizeMake(40, 70)
     func decorate(ob: Obstacle)
@@ -24,7 +25,21 @@ class Balloon: Obstacle
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
+        mOriginPosition = position
         MovementWrapper.addMovement(self, movements: movements)
+        addResetAction()
+    }
+    private func addResetAction()
+    {
+        let sequence = [SKAction.waitForDuration(1.0), SKAction.runBlock(resetPositionIfOutBound)]
+        runAction(SKAction.repeatActionForever(SKAction.sequence(sequence)) )
+    }
+    private func resetPositionIfOutBound()
+    {
+        if position.y > parent?.scene?.size.height{
+            position = mOriginPosition
+        }
+        
     }
     required init?(coder aDecoder: NSCoder)
     {
@@ -52,6 +67,6 @@ class Balloon: Obstacle
         let obPos = ob.position
         ob.position = position
         curScene?.addChild(ob)
-        ob.runAction(SKAction.moveTo(obPos, duration: 0.7))
+        ob.runAction(SKAction.moveTo(obPos, duration: 1))
     }
 }

@@ -21,7 +21,7 @@ class StageSix: StageGameScene
     func addIceBallons()
     {
         let ice = SuperIcebox(position: CGPointMake(size.width/2, 40), ice_size: CGSizeMake(200, 20))
-        let balloon = Balloon(position: CGPointMake(self.size.width/2, self.frame.height*2/3), movements: [CGVectorMake(100,0),CGVectorMake(-100,0)])
+        let balloon = Balloon(position: CGPointMake(self.size.width/2, 0),  movements: [CGVectorMake(40,40),CGVectorMake(-40,40)])
         balloon.decorate(ice)
         self.world.addChild(balloon)
 
@@ -48,7 +48,7 @@ class StageSix: StageGameScene
     }
     func addBlackHoleBallons()
     {
-        mBlackHoleballoon = Balloon(position: CGPointMake(size.width, size.height / 2), movements: [CGVectorMake(-100,0),CGVectorMake(100,0)])
+        mBlackHoleballoon = Balloon(position: CGPointMake(size.width * 2/3, 0),  movements: [CGVectorMake(50,70),CGVectorMake(-50,70)])
 
         let points = [CGPointMake(size.width-100, size.height/2 + 120),CGPointMake(size.width-200, size.height/2 + 50), CGPointMake(size.width - 100, size.height/2 + 25), CGPointMake(size.width, size.height/2 + 50),  CGPointMake(size.width-150, size.height/2 - 50)]
         for point in points{
