@@ -110,7 +110,12 @@ class StageGameScene: GameScene{
     
     override func backToPreviousScene() {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-        self.soundEffect?.stopBMG()
+        SoundEffect.getInstance().stopBMG()
+        if(SoundEffect.getInstance().getMuteSound()) {
+            selectionScene.mute.texture = SKTexture(imageNamed: "muteSound")
+        } else {
+            selectionScene.mute.texture = SKTexture(imageNamed: "unmuteSound")
+        }
         view?.presentScene(selectionScene,transition: transitionType)
     }
 }

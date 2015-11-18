@@ -23,6 +23,7 @@ class StageTwo: StageGameScene {
         decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
         self.world.addChild(decorate)
         
+        
     }
     
     
