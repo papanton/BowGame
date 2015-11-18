@@ -20,12 +20,14 @@ class Controller: NSObject {
     
     var mScene: SKScene!
     var mUI: SKNode!
+    var mWorld: SKNode!
     
-    init(UI: SKNode, scene : SKScene)
+    init(UI: SKNode, world : SKNode, scene : SKScene)
     {
         super.init()
         self.mScene = scene
         self.mUI = UI
+        self.mWorld = world;
     }
     
     func initLeftController()
@@ -39,12 +41,12 @@ class Controller: NSObject {
         target_left.name = "target_left"
         target_left.position = initposition_left
         
-        self.mUI.addChild(controller_left)
+        self.mWorld.addChild(controller_left)
     }
     
     func initRightController()
     {
-        self.initposition_right = CGPointMake(mScene.frame.size.width * 0.8, mScene.frame.size.height / 3)
+        self.initposition_right = CGPointMake(mScene.frame.size.width * 1.8, mScene.frame.size.height / 3)
         controller_right = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
         controller_right.name = "controller_right"
         controller_right.position = initposition_right
@@ -53,7 +55,7 @@ class Controller: NSObject {
         target_right.name = "target_right"
         target_right.position = initposition_right
         
-        self.mUI.addChild(controller_right)
+        self.mWorld.addChild(controller_right)
     }
     
     func resetLeftController()

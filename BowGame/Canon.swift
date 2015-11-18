@@ -10,7 +10,7 @@ import SpriteKit
 
 class Canon: SKSpriteNode, Shotable
 {
-    private let CanonSize = CGSizeMake(50,35)
+    private let CanonSize = CGSizeMake(35,25)
     init() {
         let texture = SKTexture(imageNamed: "Canon")
         super.init(texture: texture, color: UIColor.clearColor(), size: CanonSize )
@@ -74,10 +74,16 @@ class Canon: SKSpriteNode, Shotable
     func stop()
     {
     }
-    func shot(attacker : Attacker)->Bool
+    
+    func shot(attacker :Attacker)->Bool
     {
-        if(attacker is Bomb){
-            removeFromParent()
+        
+        if let bomb = attacker as? Bomb{
+            bomb.stop()
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
             return true
         }
         return false
@@ -101,4 +107,3 @@ private class CanonBomb : Obstacle
         return parent != nil
     }
 }
-
