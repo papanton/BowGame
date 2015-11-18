@@ -106,7 +106,7 @@ class StageEight: StageGameScene {
     }
     
     override func restartGame() {
-        let gameScene = StageEight(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let gameScene = StageEight(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()

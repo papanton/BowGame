@@ -14,8 +14,8 @@ class StageGameScene: GameScene{
     var boss : Boss!
     var selectionScene : StageSelection!
 
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
-        super.init(size: size, mainmenu: mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON)
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection, stage:Int) {
+        super.init(size: size, mainmenu: mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, stage: stage)
         self.selectionScene = selectionScene
     }
 
@@ -50,8 +50,8 @@ class StageGameScene: GameScene{
     override func addObstacle() {}
     override func addBackground() {}
     func addBoss(){}
-    func addBlackHole() {}
-    func addCanon() {}
+    //func addBlackHole() {}
+    //func addCanon() {}
 
     
     override func addPlayers()
@@ -63,7 +63,7 @@ class StageGameScene: GameScene{
     
     //init ui controllers
     override func addControllers(){
-        self.controllers = Controller(UI: self.UI , scene: self)
+        self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
     }
     override func controllerShoot(position : CGPoint)

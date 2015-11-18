@@ -11,25 +11,32 @@ import SpriteKit
 
 class BlackHole: Obstacle
 {
-    init(position: CGPoint)
+    static var sNumShotBlackHole = 0
+    var mIsShot = false
+    var mDestination: CGPoint!
+    init(position: CGPoint, dest: CGPoint)
     {
-        super.init(name: "BackHole1", damage: 0, position: position, size : CGSizeMake(70, 70))
+        super.init(name: "BackHole1", damage: 0, position: position, size : CGSizeMake(60, 60))
         physicsBody?.affectedByGravity = false
         let backhole1 = SKTexture(imageNamed: "BackHole1")
         let backhole2 = SKTexture(imageNamed: "BackHole2")
         let animation = SKAction.animateWithTextures([backhole1,backhole2], timePerFrame: 0.2)
         let newanimation = SKAction.repeatActionForever(animation)
+        mDestination = dest
         runAction(newanimation)
+        //BlackHole.sReAppearTasks.maxConcurrentOperationCount = 1
     }
-    func disableCollision()
+    private func disableCollision()
     {
+        mIsShot = true
         self.physicsBody?.categoryBitMask = 0
         self.physicsBody?.contactTestBitMask = 0
         self.physicsBody?.collisionBitMask = 0
 
     }
-    func enableCollision()
+    private func enableCollision()
     {
+        mIsShot = false
         self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
@@ -38,55 +45,84 @@ class BlackHole: Obstacle
         fatalError("init(coder:) has not been implemented")
     }
     override func shot(attack: Attacker) -> Bool {
-        if attack is Arrow{
-            let temp = position
+        if !mIsShot && attack is Arrow{
             disableCollision()
             let arrow = attack as! Arrow
-            absorb(arrow)
-            disappear()
-            appear(arrow, pos: CGPointMake(((parent?.scene?.size.width)!*2)-100, 300))
-            reshootAnimation(arrow)
-            delay(3.5){
-               self.disappear()
-               self.appear(nil, pos: temp)
-            }
+            arrow.runAction(SKAction.sequence(arrowAbsorbActions(arrow)))
+            runAction(SKAction.sequence(blackDisappearActions()))
+            reAppear(arrow)
         }
         return false
     }
-    func absorb(arrow : Arrow)
+    private func arrowAbsorbActions(arrow : Arrow)->[SKAction]
     {
-        arrow.physicsBody?.dynamic = false
-        let sequence = [SKAction.moveTo(position, duration: 0.5), SKAction.scaleTo(0, duration: 1)]
-        arrow.runAction(SKAction.sequence(sequence), completion: arrow.removeFromParent)
+        return [SKAction.runBlock({arrow.physicsBody?.dynamic = false}), SKAction.moveTo(position, duration: 0.5), SKAction.scaleTo(0, duration: 1),SKAction.runBlock({arrow.removeFromParent()}),SKAction.runBlock({self.reAdd(arrow, pos: self.mDestination)})]
     }
-    func disappear()
+    private func blackDisappearActions()->[SKAction]{
+        return [SKAction.waitForDuration(0.5), SKAction.scaleTo(0, duration: 1)]
+    }
+    private func arrowReappearActions(arrow : Arrow)->[SKAction]
     {
-        let sequence = [SKAction.waitForDuration(0.5), SKAction.scaleTo(0, duration: 1)]
-        runAction(SKAction.sequence(sequence))
+        var sequence = [SKAction]()
+        sequence.append(SKAction.scaleTo(1, duration: 1))
+        sequence.append(SKAction.runBlock({self.reshoot(arrow)}))
+        return sequence
     }
-    func reAdd(arrow : Arrow, pos : CGPoint)
+    private func blackReappearActions()->[SKAction]
+    {
+        let origin = position
+        var sequence = [SKAction]()
+        sequence.appendContentsOf([SKAction.runBlock({self.position = self.mDestination}), SKAction.scaleTo(1, duration: 1)])// reappear
+        sequence.appendContentsOf([SKAction.waitForDuration(0.5), SKAction.scaleTo(0, duration: 1)])//disappear
+        sequence.appendContentsOf([SKAction.runBlock({self.position = origin}), SKAction.scaleTo(1, duration: 1)])//reappear to original position
+        //sequence.append( SKAction.runBlock({self.enableCollision()}) )
+        return sequence
+    }
+    private func reAppear(arrow : Arrow)
+    {
+        let curnum = BlackHole.sNumShotBlackHole++
+        delay(1.5 + 3.5 * Double(curnum)){
+            self.runAction(SKAction.sequence(self.blackReappearActions()), completion: {
+                --BlackHole.sNumShotBlackHole
+                self.enableCollision()
+            })
+        arrow.runAction(SKAction.sequence(self.arrowReappearActions(arrow)))
+        }
+    }
+
+    private func reAdd(arrow : Arrow, pos : CGPoint)
     {
         arrow.position = pos
+        arrow.zRotation = CGFloat(-M_PI/2)
+        arrow.physicsBody?.velocity.dx = 0
+        arrow.physicsBody?.velocity.dy = 0
         parent?.addChild(arrow)
     }
-    func reshoot(arrow : Arrow)
+    private func reshoot(arrow : Arrow)
     {
-        arrow.physicsBody?.dynamic = true
-        arrow.zRotation = CGFloat(-M_PI/2)
-        arrow.go(CGVectorMake(0, -5), position: arrow.position)
-    }
-    func reshootAnimation(arrow : Arrow)
-    {
-        let sequence = [SKAction.waitForDuration(3), SKAction.scaleTo(1, duration: 1), SKAction.runBlock({self.reshoot(arrow)}),SKAction.waitForDuration(0.5)]
-        arrow.runAction(SKAction.sequence(sequence), completion: enableCollision)
-    }
-    func appear(arrow : Arrow?, pos : CGPoint)
-    {
-
-        var sequence = [SKAction.waitForDuration(2), SKAction.runBlock({self.position = pos}), SKAction.scaleTo(1, duration: 1)]
-        if arrow != nil{
-            sequence.append(SKAction.runBlock({self.reAdd(arrow!, pos: pos)}))
+        delay(0.1){
+            arrow.physicsBody?.dynamic = true
+            //arrow.zRotation = CGFloat(-M_PI/2)
+            arrow.go(CGVectorMake(0, -5), position: arrow.position)
+            arrow.zRotation = CGFloat(-M_PI/2)
         }
-        runAction(SKAction.sequence(sequence))
+    }
+    
+}
+class BossBlackHole : BlackHole
+{
+    var mBoss: Boss!
+    func setBoss(boss: Boss){
+        mBoss = boss
+        //mBoss.bossposition = mDestination
+    }
+    private override func blackReappearActions()->[SKAction]
+    {
+        let showBoss = SKAction.runBlock(mBoss.showBoss)
+        let hideBoss = SKAction.runBlock(mBoss.hideBoss)
+        var res = [showBoss]
+        res.appendContentsOf(super.blackReappearActions())
+        res.append(hideBoss)
+        return res
     }
 }

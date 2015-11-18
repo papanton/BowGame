@@ -11,13 +11,6 @@ import SpriteKit
 
 class StageOne: StageGameScene {
     
-//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
-//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, selectionScene : selectionScene)
-//    }
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-    
     override func addBackground()
     {
         let backgroundTexture =  SKTexture(imageNamed:BackgroundImage)
@@ -57,22 +50,6 @@ class StageOne: StageGameScene {
         woodBoard2.add2Scene(self, world: self.world)
     }
     
-    
-    
-    override func addBlackHole()
-    {
-        let bh = BlackHole(position: CGPointMake(400,200))
-        world.addChild(bh)
-    }
-    override func addCanon()
-    {
-        let canon = Canon()
-        canon.position.x = size.width/2
-        canon.position.y = 80;
-        world.addChild(canon)
-        canon.startFire()
-    }
-    
     override func addArrowPanel()
     {
         super.addArrowPanel()
@@ -80,7 +57,7 @@ class StageOne: StageGameScene {
     }
     
     override func restartGame() {
-        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
