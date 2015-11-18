@@ -15,9 +15,11 @@ class StageSelection: SKScene {
     var dataFilePath: String!
     let stagesLocked = false //for testing
     var currentStage: Int!
+    var mute: SKSpriteNode!
 
     let buttonfuncs = [
         "back": {(s:StageSelection)->Void in s.backToMainMenu()},
+        "muteSound" : {(s:StageSelection)->Void in s.muteSound()},
         "stage1": {(s:StageSelection)->Void in s.goStageOne()},
         "stage2": {(s:StageSelection)->Void in s.goStageTwo()},
         "stage3": {(s:StageSelection)->Void in s.goStageThree()},
@@ -40,6 +42,7 @@ class StageSelection: SKScene {
         
         addBackground()
         addBackButton()
+        addMuteButton()
         addSelections()
         currentStage = readStageProgress()
         if currentStage < 1 {
@@ -61,6 +64,18 @@ class StageSelection: SKScene {
         let background = SKSpriteNode(texture: SKTexture(imageNamed: "snowbg"), color: UIColor.clearColor(), size: CGSizeMake(self.size.width * 2, self.size.height))
         background.position = CGPoint(x: 0.0, y: background.size.height/2)
         self.addChild(background)
+    }
+    
+    func addMuteButton() {
+        if(SoundEffect.getInstance().getMuteSound()) {
+            mute = SKSpriteNode(texture: SKTexture(imageNamed: "muteSound"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
+        } else{
+            mute = SKSpriteNode(texture: SKTexture(imageNamed: "unmuteSound"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
+        }
+        mute.position = CGPointMake(80,self.size.height-30)
+        mute.name = "muteSound"
+        mute.zPosition = 2
+        self.addChild(mute)
     }
     
     //add back button to return the main menu
@@ -146,6 +161,15 @@ class StageSelection: SKScene {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(self.mainmenu,transition: transitionType)
         self.removeFromParent()
+    }
+    
+    func muteSound() {
+        if(!SoundEffect.getInstance().getMuteSound()) {
+            self.mute.texture = SKTexture(imageNamed: "muteSound")
+        } else {
+            self.mute.texture = SKTexture(imageNamed: "unmuteSound")
+        }
+        SoundEffect.getInstance().changeMuteSound()
     }
     
     //functions go to correspoding stages

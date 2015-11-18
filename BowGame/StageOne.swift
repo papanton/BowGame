@@ -41,6 +41,8 @@ class StageOne: StageGameScene {
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
         
+        self.BGM = 2
+        
     }
     
     func initTutorial()

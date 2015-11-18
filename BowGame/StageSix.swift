@@ -35,6 +35,8 @@ class StageSix: StageGameScene
         background.position = CGPointMake(size.width,  size.height*0.5)
         //background.size = world.frame.size
         self.world.addChild(background)
+        
+        self.BGM = 2
     }
     override func addBoss()
     {
