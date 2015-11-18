@@ -63,7 +63,7 @@ class StageGameScene: GameScene{
     
     //init ui controllers
     override func addControllers(){
-        self.controllers = Controller(UI: self.UI , scene: self)
+        self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
     }
     override func controllerShoot(position : CGPoint)
@@ -110,7 +110,12 @@ class StageGameScene: GameScene{
     
     override func backToPreviousScene() {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-        self.soundEffect?.stopBMG()
+        SoundEffect.getInstance().stopBMG()
+        if(SoundEffect.getInstance().getMuteSound()) {
+            selectionScene.mute.texture = SKTexture(imageNamed: "muteSound")
+        } else {
+            selectionScene.mute.texture = SKTexture(imageNamed: "unmuteSound")
+        }
         view?.presentScene(selectionScene,transition: transitionType)
     }
 }
