@@ -91,8 +91,8 @@ class SoundEffect
         }
         if nil == boss {
             boss = getSound("sound/Boss", type: "mp3")
+            boss?.volume = 1.0
         }
-        boss?.volume = 1.0
         boss?.play()
     }
     func playBossDie() {
@@ -101,8 +101,8 @@ class SoundEffect
         }
         if nil == bossDie {
             bossDie = getSound("sound/BossDie", type: "mp3")
+            bossDie?.volume = 1.0
         }
-        bossDie?.volume = 1.0
         bossDie?.play()
     }
     
@@ -173,8 +173,8 @@ class SoundEffect
         }
         if nil == selectFault {
             selectFault = getSound("sound/SelectFault", type: "mp3")
+            selectFault?.volume = 0.1
         }
-        selectFault?.volume = 0.1
         selectFault?.play()
     }
     
@@ -206,9 +206,9 @@ class SoundEffect
         }
         if nil == arrowFlappy {
             arrowFlappy = getSound("sound/flappy_arrow", type: "wav")
+            arrowFlappy?.volume = 0.3
         }
         testRepeatAudio(arrowFlappy!)
-        arrowFlappy?.volume = 0.3
         arrowFlappy?.play()
     }
     
@@ -218,9 +218,9 @@ class SoundEffect
         }
         if nil == cannon {
             cannon = getSound("sound/Cannon", type: "wav")
+            cannon?.volume = 0.5
         }
         testRepeatAudio(cannon!)
-        cannon?.volume = 0.5
         cannon?.play()
     }
     func playSelectStage() {
@@ -261,6 +261,7 @@ class SoundEffect
         }
         if nil == bombExplosion {
             bombExplosion = getSound("sound/BombExplosion", type: "mp3")
+            bombExplosion?.volume = 0.5
         }
         testRepeatAudio(bombExplosion!)
         bombExplosion?.play()
@@ -293,8 +294,8 @@ class SoundEffect
         if (nil == backgroundMusic) {
             backgroundMusic = getSound("sound/Background", type: "mp3")
             backgroundMusic?.numberOfLoops = -1
+            backgroundMusic?.volume = 0.2
         }
-        backgroundMusic?.volume = 0.2
         backgroundMusic?.play()
     }
     
@@ -305,8 +306,8 @@ class SoundEffect
         if(nil == backgroundMusic2) {
             backgroundMusic2 = getSound("sound/Background2",type : "mp3")
             backgroundMusic2?.numberOfLoops = -1
+            backgroundMusic2?.volume = 0.6
         }
-        backgroundMusic2?.volume = 0.6
         backgroundMusic2?.play()
     }
     
