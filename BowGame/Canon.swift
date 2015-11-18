@@ -8,13 +8,20 @@
 
 import SpriteKit
 
-class Canon: SKSpriteNode
+class Canon: SKSpriteNode, Shotable
 {
     init() {
         let name = "Canon"
         let texture = SKTexture(imageNamed: name)
         super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(35,25) )
         position = CGPointMake(position.x, position.y + self.size.height / 2)
+        
+        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.size)
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
+        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
+        self.physicsBody?.dynamic = false
+        self.physicsBody?.affectedByGravity = false
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -65,6 +72,21 @@ class Canon: SKSpriteNode
     func stop()
     {
     }
+    
+    func shot(attacker :Attacker)->Bool
+    {
+        
+        if let bomb = attacker as? Bomb{
+            bomb.stop()
+            let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+            runAction(fadeout, completion: {
+                self.removeFromParent()
+            })
+            return true
+        }
+        return false
+    }
+    
 }
 private class CanonBomb : Obstacle
 {
