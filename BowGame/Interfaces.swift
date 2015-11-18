@@ -31,12 +31,12 @@ protocol ClickObersever
 
 class MovementWrapper
 {
-    static func addMovement(node: SKSpriteNode, movements : [CGVector])
+    static func addMovement(node: SKSpriteNode, movements : [CGVector], duration : NSTimeInterval)
     {
        // let dy = CGFloat(arc4random_uniform(UInt32((scene?.size.height)!)/3) + 30)
         var action = [SKAction]()
         for movement in movements{
-            action.append(SKAction.moveBy(movement, duration: 0.8))
+            action.append(SKAction.moveBy(movement, duration: duration))
         }
     node.runAction(SKAction.repeatActionForever(SKAction.sequence(action)), withKey: "MovementWrapper")
     }

@@ -26,7 +26,7 @@ class Balloon: Obstacle
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = 0x0
         mOriginPosition = position
-        MovementWrapper.addMovement(self, movements: movements)
+        MovementWrapper.addMovement(self, movements: movements, duration: 1)
         addResetAction()
     }
     private func addResetAction()
