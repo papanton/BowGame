@@ -15,7 +15,6 @@ class StartGameScene: SKScene {
     let buttonImage = ["Single" : "singleplayerbutton", "Multiple" : "multipleplayerbutton", "Settings" : "settingsbutton","Exit" : "exitbutton"]
     let buttonfuncs = ["Single": {(s:StartGameScene)->Void in s.startStage()},
         "Multiple" : {(s:StartGameScene)->Void in s.startGame()},
-        //"Resume" : {(s:StartGameScene)->Void in s.resume()},
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Exit" : {(s:StartGameScene)->Void in exit(0)}]
     
