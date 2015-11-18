@@ -36,7 +36,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var panel:ArrowPanel!
     
     var stage:Int!
-    var soundEffect:SoundEffect?
+    
+    var muteSoundButton : SKSpriteNode!
+    
+    var BGM = 1
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, stage: Int) {
         super.init(size: size)
@@ -85,12 +88,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addArrowPanel()
         addControllers()
         addSettingButton()
+        addMuteSoundButton()
     }
     
     func addBGM()
     {
-        soundEffect = SoundEffect.getInstance()
-        soundEffect!.playBGM()
+        if(self.BGM == 1) {
+            SoundEffect.getInstance().playBGM()
+        } else if(BGM == 2){
+            SoundEffect.getInstance().playBGM2()
+        }
     }
     
     
@@ -174,6 +181,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
     }
     
+    //add muteSoundButton to scene
+    func addMuteSoundButton() {
+        if(SoundEffect.getInstance().getMuteSound()) {
+            self.muteSoundButton = SKSpriteNode(imageNamed: "muteSound")
+        } else {
+            self.muteSoundButton = SKSpriteNode(imageNamed: "unmuteSound")
+        }
+        self.muteSoundButton.position = CGPointMake(80, size.height - 30)
+        self.muteSoundButton.name = "muteSound"
+        self.muteSoundButton.size = CGSize(width: 30, height: 30)
+        self.UI.addChild(self.muteSoundButton)
+    }
     
     //add one Buff to Scene
     func addBuffs()
@@ -237,6 +256,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             AppWarpHelper.sharedInstance.disconnectFromServer()
             
             backToPreviousScene()
+        }
+        else if(touchedNode.name == "muteSound") {
+            SoundEffect.getInstance().changeMuteSound()
+            if(SoundEffect.getInstance().getMuteSound()) {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "muteSound")
+                SoundEffect.getInstance().stopBMG()
+            } else {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "unmuteSound")
+                if(self.BGM == 1) {
+                    SoundEffect.getInstance().playBGM()
+                } else if(self.BGM == 2) {
+                    SoundEffect.getInstance().playBGM2()
+                }
+            }
+            
         }
         else if(touchedNode.name == "controller_left" ) {
             print("touchLeft: ")
@@ -494,7 +528,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            self.soundEffect?.stopBMG()
+            SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
         }
@@ -505,7 +539,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            self.soundEffect?.stopBMG()
+            SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
             
@@ -613,7 +647,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func backToPreviousScene()
     {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-        soundEffect?.stopBMG()
+        SoundEffect.getInstance().stopBMG()
         view?.presentScene(mainmenu,transition: transitionType)
     }
     
