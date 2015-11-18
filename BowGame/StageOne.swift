@@ -136,6 +136,21 @@ class StageOne: StageGameScene {
             
             backToPreviousScene()
         }
+        else if(touchedNode.name == "muteSound") {
+            SoundEffect.getInstance().changeMuteSound()
+            if(SoundEffect.getInstance().getMuteSound()) {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "muteSound")
+                SoundEffect.getInstance().stopBMG()
+            } else {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "unmuteSound")
+                if(self.BGM == 1) {
+                    SoundEffect.getInstance().playBGM()
+                } else if(self.BGM == 2) {
+                    SoundEffect.getInstance().playBGM2()
+                }
+            }
+            
+        }
         else if(touchedNode.name == "controller_left" ) {
             print("touchLeft: ")
             print(multiPlayerON)
