@@ -207,6 +207,7 @@ class SuperIcebox : Obstacle {
         print("shot ice box")
         
         if let arrow = attacker as? Arrow{
+            SoundEffect.getInstance().playHitIce()
             if(!isLeft(arrow.position) && !isRight(arrow.position))
             {
                 arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
@@ -252,6 +253,8 @@ class WoodBoard : Obstacle {
             arrow.slowDown()
         }
         if(self.rootFlag == true) {
+            SoundEffect.getInstance().playWoodHitGround()
+            
             let part1 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: self.position,flag: false)
             let part2 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: CGPointMake(self.position.x, self.position.y + self.size.height/2 + 5), flag: false)
             part2.zRotation = -10
@@ -261,6 +264,7 @@ class WoodBoard : Obstacle {
             self.removeFromParent()
         }
         else {
+           
             let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
             runAction(fadeout, completion: {
                 self.removeFromParent()

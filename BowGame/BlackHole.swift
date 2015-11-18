@@ -50,6 +50,7 @@ class BlackHole: Obstacle
             let arrow = attack as! Arrow
             arrow.runAction(SKAction.sequence(arrowAbsorbActions(arrow)))
             runAction(SKAction.sequence(blackDisappearActions()))
+            SoundEffect.getInstance().playBlackHole()
             reAppear(arrow)
         }
         return false
@@ -86,7 +87,8 @@ class BlackHole: Obstacle
                 --BlackHole.sNumShotBlackHole
                 self.enableCollision()
             })
-        arrow.runAction(SKAction.sequence(self.arrowReappearActions(arrow)))
+            arrow.runAction(SKAction.sequence(self.arrowReappearActions(arrow)))
+            SoundEffect.getInstance().playBlackHole()
         }
     }
 

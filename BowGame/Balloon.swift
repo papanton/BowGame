@@ -48,6 +48,7 @@ class Balloon: Obstacle
     override func shot(attacker : Attacker)->Bool
     {
         if let arrow = attacker as? Arrow{
+            SoundEffect.getInstance().playBallonBurst()
             MovementWrapper.removeMovement(self)
             arrow.tryStop()
             releaseObstacles()
