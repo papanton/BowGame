@@ -14,6 +14,7 @@ class ArrowPanel: SKSpriteNode {
     var expanded:Bool = false
     var scaleFactor:CGFloat = 0.2
     var cells = [ArrowCell]()
+    var positionHeight : CGFloat!
     
     let mArrowName = ArrowColletion.getInstance().mArrowName
     
@@ -26,9 +27,10 @@ class ArrowPanel: SKSpriteNode {
     }
     
     func initCell(scene:GameScene) {
+        positionHeight = scene.size.height-40
         for name in mArrowName {
             let cell = ArrowCell.init(arrowName: name,arrowPanel: self)
-            cell.position = CGPointMake(170, 335)
+            cell.position = CGPointMake(170, positionHeight)
             cell.xScale = scaleFactor
             cell.yScale = scaleFactor
             cells.append(cell)
@@ -93,7 +95,7 @@ class ArrowPanel: SKSpriteNode {
                 cells[i] = previousFirst
                 cells[i].position = cells[0].position
                 cells[i].zPosition = cells[0].zPosition
-                cells[0].position = CGPointMake(170, 335)
+                cells[0].position = CGPointMake(170, positionHeight)
                 cells[0].zPosition = 4
                 break
             }
