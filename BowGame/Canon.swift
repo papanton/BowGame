@@ -10,7 +10,7 @@ import SpriteKit
 
 class Canon: SKSpriteNode, Shotable
 {
-    private let CanonSize = CGSizeMake(50,35)
+    private let CanonSize = CGSizeMake(35,25)
     init() {
         let texture = SKTexture(imageNamed: "Canon")
         super.init(texture: texture, color: UIColor.clearColor(), size: CanonSize )
