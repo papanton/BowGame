@@ -28,7 +28,10 @@ class Ground: SKSpriteNode, Shotable
     func shot(attack : Attacker)->Bool
     {
         if let arrow = attack as? Arrow {
+            SoundEffect.getInstance().playArrowHitObstacle()
+
             arrow.tryStop()
+
         }
         return true
     }

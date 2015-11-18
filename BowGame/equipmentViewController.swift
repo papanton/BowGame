@@ -16,6 +16,9 @@ class EquipmentViewController: UIViewController {
     @IBOutlet weak var  mArrowDamageText : UILabel!
     @IBOutlet weak var  mBowText : UILabel!
     @IBOutlet weak var  mPlayerText : UILabel!
+    @IBOutlet weak var  mChoosedItem : UIImageView!
+    @IBOutlet weak var  mItemDesription : UILabel!
+    
     var  mLabelMap : [String : UILabel]!
     var  mCellMap : [String : UICollectionView]!
     var  mNameMap : [UICollectionView : String]!
@@ -92,12 +95,19 @@ extension EquipmentViewController : UICollectionViewDelegate{
         cell.changeEquipment(mNameMap[collectionView]!, index: indexPath.item)
         if(mNameMap[collectionView]! == "ArrowItem"){
             mLabelMap[mNameMap[collectionView]!]!.text = ArrowColletion.getInstance().mArrowDamage[indexPath.item].description
+            
+            changeChoosedItemDescription(ArrowColletion.getInstance().mArrowImageName[indexPath.item], description: ArrowColletion.getInstance().mArrowDescription[indexPath.item])
         }
+    }
+    func changeChoosedItemDescription(imageName :String, description : String)
+    {
+        mChoosedItem.image = UIImage(named: imageName)
+        mItemDesription.text = description
     }
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
     {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath)!
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
         
-        cell.layer.backgroundColor = UIColor.clearColor().CGColor
+        cell?.layer.backgroundColor = UIColor.clearColor().CGColor
     }
 }

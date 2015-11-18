@@ -23,6 +23,7 @@ class StageTwo: StageGameScene {
         decorate.position = CGPointMake(30, self.size.height / 6 + decorate.size.height / 2)
         self.world.addChild(decorate)
         
+        
     }
     
     
@@ -51,9 +52,9 @@ class StageTwo: StageGameScene {
     }
 
     override func addObstacle(){
-        let position1 = CGPointMake(self.size.width * 0.5, size.height - 100)
-        let position2 = CGPointMake(self.size.width * 0.8, size.height - 250)
-        let position3 = CGPointMake(self.size.width * 1.2, size.height - 150)
+        let position1 = CGPointMake(self.size.width * 0.5, size.height * 2/3)
+        let position2 = CGPointMake(self.size.width * 0.8, size.height/2)
+        let position3 = CGPointMake(self.size.width * 1.2, size.height/4)
         addLand(position1)
         addLand(position2)
         addLand(position3)
@@ -61,6 +62,7 @@ class StageTwo: StageGameScene {
     func addLand(position : CGPoint)
     {
         let island : Ground = Ground(texture: SKTexture(imageNamed: "forest_land1"), size: CGSizeMake(232 / 2, 84 / 2), position: position)
+        MovementWrapper.addMovement(island, movements: [CGVectorMake(0, frame.height * 3/4 - island.position.y), CGVectorMake(0, -frame.height/2), CGVectorMake(0, -frame.height/4 + island.position.y)], duration: 3)
         self.world.addChild(island)
     }
     
@@ -72,7 +74,7 @@ class StageTwo: StageGameScene {
     
     
     override func restartGame() {
-        let gameScene = StageTwo(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let gameScene = StageTwo(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage:self.stage)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()

@@ -11,12 +11,11 @@ import SpriteKit
 
 class StageOne: StageGameScene {
     
-//    override init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection) {
-//        super.init(size: size, mainmenu:mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, selectionScene : selectionScene)
-//    }
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
+    var step1 : SKLabelNode!
+    var step2 : SKLabelNode!
+    var step3 : SKLabelNode!
+    var step4 : SKLabelNode!
+    var step : Int!
     
     override func addBackground()
     {
@@ -25,6 +24,8 @@ class StageOne: StageGameScene {
         background.zPosition = -100;
         background.position = CGPointMake(size.width,  size.height*0.5)
         self.world.addChild(background)
+        
+        initTutorial()
     }
     
     override func addGround()
@@ -40,6 +41,37 @@ class StageOne: StageGameScene {
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
         
+        self.BGM = 2
+        
+    }
+    
+    func initTutorial()
+    {
+        self.step = 1
+        
+        step1 = SKLabelNode(text: "1.Drag Here to Shoot!")
+        step1.position = CGPointMake(self.size.width * 0.2, self.size.height * 0.4)
+        setLabel(step1)
+        self.world.addChild(step1)
+        
+        step2 = SKLabelNode(text: "2.Click Here to Select Another Arrow!")
+        step2.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.7)
+        setLabel(step2)
+        
+        step3 = SKLabelNode(text: "<------ 3.Hold the Screen to Move the Camera ------->")
+        step3.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
+        setLabel(step3)
+        
+        step4 = SKLabelNode(text: "4.Try to Kill the Boss!")
+        step4.position = CGPointMake(self.size.width * 1.8, self.size.height * 0.5)
+        setLabel(step4)
+    }
+    
+    private func setLabel(label : SKLabelNode)
+    {
+        label.fontSize = 17
+        label.fontColor = SKColor.redColor()
+        label.fontName = "AvenirNext-Heavy"
     }
     
     override func addBoss()
@@ -57,22 +89,6 @@ class StageOne: StageGameScene {
         woodBoard2.add2Scene(self, world: self.world)
     }
     
-    
-    
-    override func addBlackHole()
-    {
-        let bh = BlackHole(position: CGPointMake(400,200))
-        world.addChild(bh)
-    }
-    override func addCanon()
-    {
-        let canon = Canon()
-        canon.position.x = size.width/2
-        canon.position.y = 80;
-        world.addChild(canon)
-        canon.startFire()
-    }
-    
     override func addArrowPanel()
     {
         super.addArrowPanel()
@@ -80,10 +96,152 @@ class StageOne: StageGameScene {
     }
     
     override func restartGame() {
-        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene)
+        let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        let touch = touches.first!
+        let touchLocation = touch.locationInNode(self)
+        let touchedNode = self.nodeAtPoint(touchLocation)
+        
+        if(self.touch_disable == true){
+            for child in (self.world.children) {
+                if child is ClickObersever{
+                    let co = child as! ClickObersever
+                    co.onClick()
+                }
+            }
+            return
+        }
+        
+        print(touchedNode.name)
+        
+        if(touchedNode.name == "restartbutton"){
+            restartGame()
+        }
+        else if(touchedNode.name == "back"){
+            
+            if multiPlayerON {
+                let dataDict = NSMutableDictionary()
+                dataDict.setObject(NSString(string: "true"), forKey: "QuitGame")
+                dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "Sender")
+                
+                AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+            }
+            AppWarpHelper.sharedInstance.disconnectFromServer()
+            
+            backToPreviousScene()
+        }
+        else if(touchedNode.name == "muteSound") {
+            SoundEffect.getInstance().changeMuteSound()
+            if(SoundEffect.getInstance().getMuteSound()) {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "muteSound")
+                SoundEffect.getInstance().stopBMG()
+            } else {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "unmuteSound")
+                if(self.BGM == 1) {
+                    SoundEffect.getInstance().playBGM()
+                } else if(self.BGM == 2) {
+                    SoundEffect.getInstance().playBGM2()
+                }
+            }
+            
+        }
+        else if(touchedNode.name == "controller_left" ) {
+            print("touchLeft: ")
+            print(multiPlayerON)
+            print(AppWarpHelper.sharedInstance.isRoomOwner)
+            
+            if (multiPlayerON && !AppWarpHelper.sharedInstance.isRoomOwner) {
+                return
+            }
+            
+            if(self.step == 1)
+            {
+                let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+                self.step1.runAction(fadeout, completion: {
+                    self.step1.removeFromParent()
+                    self.UI.addChild(self.step2)
+                })
+                self.step = self.step + 1;
+            }
+            
+            leftControllerOnTouchBegin()
+        }else if(touchedNode.name == "arrowPanel") {
+            SoundEffect.getInstance().playMenuSelect()
+            let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
+            if (panel.expanded) {
+                panel.resume()
+            } else {
+                panel.expand()
+            }
+            
+            
+            if(self.step == 2)
+            {
+                let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+                self.step2.runAction(fadeout, completion: {
+                    self.step2.removeFromParent()
+                    self.UI.addChild(self.step3)
+                })
+                self.step = self.step + 1;
+            }
+            
+        }else if(touchedNode.name == "arrowCell") {
+            
+            let arrow:ArrowCell = (touchedNode as? ArrowCell)!
+            if(arrow.mArrowNum != 0) {
+                SoundEffect.getInstance().playMenuSelect()
+                arrow.onSelected()
+                if (arrow.mArrowPanel.expanded) {
+                    arrow.mArrowPanel.switchCell(arrow.mArrowName)
+                    arrow.mArrowPanel.resume()
+                }
+            } else {
+                SoundEffect.getInstance().playSelectFault()
+            }
+        }else{
+            if(self.step == 3)
+            {
+                let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
+                self.step3.runAction(fadeout, completion: {
+                    self.step3.removeFromParent()
+                    self.world.addChild(self.step4)
+                })
+                self.step = self.step + 1;
+            }
+
+            cameraMoveStart(touch)
+        }
+    }
+    
+    override func turnChanged(turn:Int)
+    {
+        print("turnChanged() called")
+        
+        self.rounds = turn
+        delay(1.0){
+            let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 0.5)
+            self.world.runAction(moveCamera)
+            self.showTurns()
+        }
+        delay(1.5){
+//            if(self.step == 2){
+//                self.UI.addChild(self.step2)
+//            }else if(self.step == 3){
+//                self.UI.addChild(self.step3)
+//            }else if(self.step == 4){
+//                self.world.addChild(self.step4)
+//            }
+            self.touch_disable = false
+            self.isshooting = false
+        }
+    }
+
+
 
 }
