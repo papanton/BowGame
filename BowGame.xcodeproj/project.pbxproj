@@ -28,6 +28,7 @@
 		2A1A59811BD884F2008825FD /* Canon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59801BD884F2008825FD /* Canon.swift */; };
 		2A1A59831BD89EFA008825FD /* BlackHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59821BD89EFA008825FD /* BlackHole.swift */; };
 		2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */; };
+		2A68E6481BFABD8A00E708A4 /* Balloon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A68E6471BFABD8A00E708A4 /* Balloon.swift */; settings = {ASSET_TAGS = (); }; };
 		2A8274691BAB62D900A59823 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 2A8274671BAB62D900A59823 /* sound */; };
 		2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8274681BAB62D900A59823 /* SoundEffect.swift */; };
 		2A8EFD761BD6F3A3008E170B /* Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8EFD751BD6F3A3008E170B /* Interfaces.swift */; };
@@ -112,6 +113,7 @@
 		2A1A59801BD884F2008825FD /* Canon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canon.swift; sourceTree = "<group>"; };
 		2A1A59821BD89EFA008825FD /* BlackHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackHole.swift; sourceTree = "<group>"; };
 		2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutiplayerScene.swift; sourceTree = "<group>"; };
+		2A68E6471BFABD8A00E708A4 /* Balloon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Balloon.swift; sourceTree = "<group>"; };
 		2A8274671BAB62D900A59823 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		2A8274681BAB62D900A59823 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		2A8EFD751BD6F3A3008E170B /* Interfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interfaces.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				539680DE1BAF2975000906FE /* Obstacle.swift */,
 				2A198E031BA0C32800F050A4 /* Arrow.swift */,
 				2A198E081BA0C32800F050A4 /* Player.swift */,
+				2A68E6471BFABD8A00E708A4 /* Balloon.swift */,
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
 				2A1A59821BD89EFA008825FD /* BlackHole.swift */,
 			);
@@ -501,6 +504,7 @@
 				89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */,
 				2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
+				2A68E6481BFABD8A00E708A4 /* Balloon.swift in Sources */,
 				89AE69061BF2AB7100FDAFD7 /* StageSeven.swift in Sources */,
 				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,
 				2AA53A831BBDCCFF00CC72A9 /* EquipmentItem.swift in Sources */,

@@ -31,8 +31,10 @@ class StageFour: StageGameScene
             let ice = Icebox(position: CGPointMake(size.width/2, 150+CGFloat(i * 50)))
             self.world.addChild(ice)
         }
-        let ice = SuperIcebox(position: CGPointMake(size.width, 40), ice_size: CGSizeMake(size.width*2, 30))
-            self.world.addChild(ice)
+        let ground = SuperIcebox(position: CGPointMake(size.width, 40), ice_size: CGSizeMake(size.width*2, 30))
+            self.world.addChild(ground)
+        let ice = SuperIcebox(position: CGPointMake(size.width, 70), ice_size: CGSizeMake(30, 130))
+        self.world.addChild(ice)
     }
     override func addGround()
     {

@@ -61,6 +61,7 @@ class StageTwo: StageGameScene {
     func addLand(position : CGPoint)
     {
         let island : Ground = Ground(texture: SKTexture(imageNamed: "forest_land1"), size: CGSizeMake(232 / 2, 84 / 2), position: position)
+        MovementWrapper.addMovement(island, movements: [CGVectorMake(0,-20),CGVectorMake(0,20)])
         self.world.addChild(island)
     }
     

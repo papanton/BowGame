@@ -10,21 +10,23 @@ import SpriteKit
 
 class Canon: SKSpriteNode, Shotable
 {
+    private let CanonSize = CGSizeMake(50,35)
     init() {
-        let name = "Canon"
-        let texture = SKTexture(imageNamed: name)
-        super.init(texture: texture, color: UIColor.clearColor(), size: CGSizeMake(35,25) )
+        let texture = SKTexture(imageNamed: "Canon")
+        super.init(texture: texture, color: UIColor.clearColor(), size: CanonSize )
         position = CGPointMake(position.x, position.y + self.size.height / 2)
-        
-        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.size)
-        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
-        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
-        self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask | CollisonHelper.ShotableMask
-        self.physicsBody?.dynamic = false
-        self.physicsBody?.affectedByGravity = false
+        addPhysicsBody(texture)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    //init physicsBody to the obstacle
+    private func addPhysicsBody(texture :SKTexture )
+    {
+        self.physicsBody = SKPhysicsBody(texture: texture, size: CanonSize)
+        self.physicsBody?.dynamic = false
+        self.physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
+        self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
     }
     func preFireAction()->SKAction
     {
@@ -86,7 +88,6 @@ class Canon: SKSpriteNode, Shotable
         }
         return false
     }
-    
 }
 private class CanonBomb : Obstacle
 {
@@ -106,4 +107,3 @@ private class CanonBomb : Obstacle
         return parent != nil
     }
 }
-
