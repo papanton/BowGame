@@ -157,7 +157,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     func addControllers(){
-        self.controllers = Controller(UI: self.UI , scene: self)
+        self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
         controllers.initRightController()
     }
