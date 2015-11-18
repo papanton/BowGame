@@ -316,7 +316,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 self.endpositionOfTouch = position
                 controllerShoot(position)
-//                controllers.moveController(position)
             }
             
         }
