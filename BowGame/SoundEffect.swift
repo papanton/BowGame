@@ -217,10 +217,9 @@ class SoundEffect
             return
         }
         if nil == cannon {
-            cannon = getSound("sound/Cannon", type: "wav")
+            cannon = getSound("sound/Cannon2", type: "wav")
             cannon?.volume = 0.5
         }
-        testRepeatAudio(cannon!)
         cannon?.play()
     }
     func playSelectStage() {
