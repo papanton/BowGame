@@ -8,14 +8,15 @@
 
 import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
-
+    
     var mainmenu: StartGameScene!
-
+    
     var world : SKNode!
     var UI : SKNode!
 
-    var controllers : Controller!
 
+    var controllers : Controller!
+    
     var touch_disable:Bool = true
     
     var startpositionOfTouch: CGPoint!
@@ -26,26 +27,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     var rounds : Int = 0
     
     var isshooting = false
-
+    
     var localPlayer = "local"
     var enemyPlayer = "temp"
-
+    
     var multiPlayerON = false
     
     var panel:ArrowPanel!
     
-    var soundEffect:SoundEffect?
+    var stage:Int!
+    
+    var muteSoundButton : SKSpriteNode!
+    
+    var BGM = 1
 
-    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool) {
+    init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, stage: Int) {
         super.init(size: size)
         self.mainmenu = mainmenu
         self.mainmenu.setCurrentGame(self)
         self.localPlayer = localPlayer
         self.multiPlayerON = multiPlayerON
-        
+        self.stage = stage
         self.world = SKNode()
         self.UI = SKNode()
-//        self.UI.zPosition = 100;
+        //        self.UI.zPosition = 100;
         self.world.zPosition = -1;
         self.addChild(world)
         self.addChild(UI)
@@ -55,7 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         initworld()
         initUI()
-
+        
         gameStart()
     }
     
@@ -83,12 +88,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         addArrowPanel()
         addControllers()
         addSettingButton()
+        addMuteSoundButton()
     }
     
     func addBGM()
     {
-        soundEffect = SoundEffect.getInstance()
-        soundEffect!.playBGM()
+        if(self.BGM == 1) {
+            SoundEffect.getInstance().playBGM()
+        } else if(BGM == 2){
+            SoundEffect.getInstance().playBGM2()
+        }
     }
     
     
@@ -116,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         let bottomBorder = Bound(texture: texture,size: CGSizeMake(self.size.width * 2, 1.0),position: CGPointMake(self.size.width, 0))
         self.world.addChild(bottomBorder)
-       
+        
     }
     
     
@@ -126,11 +135,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         let player1position = CGPointMake(self.size.width * 2 * 0.1, self.size.height / 6)
         let player1 = PlayerFactory.getPlayer("player1", sceneSize: self.size, playerposition: player1position)
+        
         player1.add2Scene(self, world: self.world, UI: self.UI)
         
         let player2position = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
         let player2 = PlayerFactory.getPlayer("player2", sceneSize: self.size, playerposition: player2position)
         player2.add2Scene(self, world: self.world, UI: self.UI)
+        if multiPlayerON {
+            player1.setMultiName(localPlayer)
+            player2.setMultiName(enemyPlayer)
+        }
     }
     
     
@@ -150,7 +164,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     func addControllers(){
-        self.controllers = Controller(UI: self.UI , scene: self)
+        self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
         controllers.initRightController()
     }
@@ -166,18 +180,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.UI.addChild(settings)
         
     }
-
+    
+    //add muteSoundButton to scene
+    func addMuteSoundButton() {
+        if(SoundEffect.getInstance().getMuteSound()) {
+            self.muteSoundButton = SKSpriteNode(imageNamed: "muteSound")
+        } else {
+            self.muteSoundButton = SKSpriteNode(imageNamed: "unmuteSound")
+        }
+        self.muteSoundButton.position = CGPointMake(80, size.height - 30)
+        self.muteSoundButton.name = "muteSound"
+        self.muteSoundButton.size = CGSize(width: 30, height: 30)
+        self.UI.addChild(self.muteSoundButton)
+    }
     
     //add one Buff to Scene
     func addBuffs()
     {
-
+        
         
     }
     
     //add one Obstacle to Scene
     func addObstacle() {
-
+        
         
     }
     
@@ -187,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         panel = ArrowPanel.init()
         panel.initCell(self)
         
-        panel.position = CGPointMake(170, 335)
+        panel.position = CGPointMake(170, self.size.height-40)
         panel.zPosition = 5
         panel.xScale = 0.2
         panel.yScale = 0.2
@@ -197,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-
+        
         let touch = touches.first!
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
@@ -231,6 +257,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             backToPreviousScene()
         }
+        else if(touchedNode.name == "muteSound") {
+            SoundEffect.getInstance().changeMuteSound()
+            if(SoundEffect.getInstance().getMuteSound()) {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "muteSound")
+                SoundEffect.getInstance().stopBMG()
+            } else {
+                self.muteSoundButton.texture = SKTexture(imageNamed: "unmuteSound")
+                if(self.BGM == 1) {
+                    SoundEffect.getInstance().playBGM()
+                } else if(self.BGM == 2) {
+                    SoundEffect.getInstance().playBGM2()
+                }
+            }
+            
+        }
         else if(touchedNode.name == "controller_left" ) {
             print("touchLeft: ")
             print(multiPlayerON)
@@ -249,8 +290,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             if (multiPlayerON && AppWarpHelper.sharedInstance.isRoomOwner) {
                 return
             }
-           rightControllerOnTouchBegin()
+            rightControllerOnTouchBegin()
         }else if(touchedNode.name == "arrowPanel") {
+            SoundEffect.getInstance().playMenuSelect()
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
             if (panel.expanded) {
                 panel.resume()
@@ -258,22 +300,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 panel.expand()
             }
         }else if(touchedNode.name == "arrowCell") {
+            
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
             if(arrow.mArrowNum != 0) {
+                SoundEffect.getInstance().playMenuSelect()
                 arrow.onSelected()
-            /*if (arrow.selected == false) {
+                /*if (arrow.selected == false) {
                 arrow.selected = true
                 
                 for cell in panel.cells {
-                    if (!cell.isEqual(arrow)) {
-                        cell.selected = false
-                    }
+                if (!cell.isEqual(arrow)) {
+                cell.selected = false
                 }
-            }*/
+                }
+                }*/
                 if (arrow.mArrowPanel.expanded) {
                     arrow.mArrowPanel.switchCell(arrow.mArrowName)
                     arrow.mArrowPanel.resume()
                 }
+            } else {
+                SoundEffect.getInstance().playSelectFault()
             }
         }else{
             cameraMoveStart(touch)
@@ -290,7 +336,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         
         for touch in (touches )
         {
-
+            
             let  position = touch.locationInNode(self)
             
             //setup camera location according to touch movement
@@ -304,7 +350,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 self.endpositionOfTouch = position
                 controllerShoot(position)
-//                controllers.moveController(position)
             }
             
         }
@@ -345,7 +390,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             return
         }
         
-
+        
         if(self.isshooting == true)
         {
             controllerOnTouchEnded()
@@ -362,18 +407,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             //Multiplayer update enemy player
             
             if multiPlayerON {
-            let dataDict = NSMutableDictionary()
-            dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
-            let stringImpulse = NSStringFromCGVector(impulse)
-            dataDict.setObject(stringImpulse, forKey: "impulse")
-            
-            AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
+                let dataDict = NSMutableDictionary()
+                dataDict.setObject("1", forKey: "dictType")
+                dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
+                let stringImpulse = NSStringFromCGVector(impulse)
+                dataDict.setObject(stringImpulse, forKey: "impulse")
+                
+                AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             }
         }
     }
     
     
-
+    
     /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
@@ -384,8 +430,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 let arrow = child as! Arrow
                 if arrow.update(){
                     setCameraLocation(arrow.position)
+                    
                 }
             }
+            
         }
     }
     
@@ -434,8 +482,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             worldLocation = -size.width
         }
         world.position = CGPointMake(worldLocation, 0)
+        
     }
-
+    
     
     
     //show game start information and move view to P1
@@ -469,15 +518,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         })
         
     }
-
+    
     
     //move to game over view
     func gameOver(){
+
         delay(1.0) {
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            self.soundEffect?.stopBMG()
+            SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
         }
@@ -488,9 +538,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-            self.soundEffect?.stopBMG()
+            SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
+            
+            if (!self.multiPlayerON){
+                var stageProgress =  self.readStageProgress()
+                if self.stage == stageProgress{
+
+                stageProgress = stageProgress + 1
+                self.storeStageProgress(stageProgress)
+                }
+            }
         }
     }
     
@@ -498,7 +557,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func showTurns(){
         let text : SKLabelNode = SKLabelNode()
         if(!multiPlayerON){
-        text.text = "Round \(self.rounds)"
+            text.text = "Round \(self.rounds)"
         }
         else if (multiPlayerON){
             if(self.rounds%2 == 0){
@@ -525,7 +584,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func turnChanged(turn : Int)
     {
         print("turnChanged() called")
-
+        
         self.rounds = turn
         delay(1.0){
             if(turn % 2 == 1)
@@ -549,23 +608,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func updateEnemyStatus(dataDict: NSDictionary){
         
-        enemyPlayer =  dataDict.objectForKey("userName") as! String
-        print(enemyPlayer)
-        let stringImpulse:String = dataDict.objectForKey("impulse") as! String
-        let realImpulse:CGVector = CGVectorFromString(stringImpulse)
-        GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
+        if(dataDict.objectForKey("dictType")!.isEqual("1")){
+            enemyPlayer =  dataDict.objectForKey("userName") as! String
+            let stringImpulse:String = dataDict.objectForKey("impulse") as! String
+            let realImpulse:CGVector = CGVectorFromString(stringImpulse)
+            GameController.getInstance().currentPlayerShoot(realImpulse, scene: self)
+        }
         
+        else if (dataDict.objectForKey("dictType")!.isEqual("2")){
+        for child in (self.world.children) {
+        if child is Arrow{
+        let arrow = child as! Arrow
+        arrow.updatePosition(CGPointFromString((dataDict.objectForKey("arrowPosition") as! String)))
+        enemyPlayer =  dataDict.objectForKey("userName") as! String
+            }
+            }
+        }
     }
-    func playAsGuest()
-    {
+    
+        
+        
+        func playAsGuest()
+        {
         
         let uName:String = localPlayer as String
         let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
-            AppWarpHelper.sharedInstance.playerName = uName
-            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
+        AppWarpHelper.sharedInstance.playerName = uName
+        AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
         }
+
     }
     
     func restartGame(){}
@@ -573,9 +646,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func backToPreviousScene()
     {
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
-        soundEffect?.stopBMG()
+        SoundEffect.getInstance().stopBMG()
         view?.presentScene(mainmenu,transition: transitionType)
     }
     
+    func storeStageProgress(stage:Int) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(stage, forKey: "stageKey")
+        
+        defaults.synchronize()
+        
+        
+    }
     
+    func readStageProgress() -> Int {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let stage = defaults.integerForKey("stageKey")
+        
+        return stage
+    }
+
+  
+
+    
+ 
 }

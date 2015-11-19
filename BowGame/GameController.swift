@@ -94,6 +94,7 @@ class GameController
         mCurPlayer = nil
         mCanShooting = true
         mBoss = nil
+        DataCenter.getInstance().setArrowItemByName("arrow")
     }
     func currentPlayerShoot(impulse: CGVector , scene : SKScene)
     {

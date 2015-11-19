@@ -15,7 +15,6 @@ class StartGameScene: SKScene {
     let buttonImage = ["Single" : "singleplayerbutton", "Multiple" : "multipleplayerbutton", "Settings" : "settingsbutton","Exit" : "exitbutton"]
     let buttonfuncs = ["Single": {(s:StartGameScene)->Void in s.startStage()},
         "Multiple" : {(s:StartGameScene)->Void in s.startGame()},
-        //"Resume" : {(s:StartGameScene)->Void in s.resume()},
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Exit" : {(s:StartGameScene)->Void in exit(0)}]
     
@@ -25,7 +24,7 @@ class StartGameScene: SKScene {
     var current_game : SKScene?
 
     var tempFlagVal = 0
-
+    
     
     var alertController:UIAlertController!
     
@@ -127,7 +126,7 @@ class StartGameScene: SKScene {
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
         
-        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: true)
+        let gameScene = MutiplayerScene(size: scenesize, mainmenu: self, localPlayer: playerName, multiPlayerON: true, stage: -1)
         gameScene.scaleMode = SKSceneScaleMode.AspectFit
         self.view?.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {})
         AppWarpHelper.sharedInstance.gameScene = gameScene
@@ -149,7 +148,6 @@ class StartGameScene: SKScene {
         stageSelect.scaleMode = SKSceneScaleMode.AspectFit
         textField.removeFromSuperview()
         changeScene(stageSelect)
-        DataCenter.getInstance().setArrowItemByName("arrow")
     }
     
     func changeScene(scene : SKScene)

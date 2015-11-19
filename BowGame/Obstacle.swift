@@ -126,7 +126,7 @@ class woodbox : Obstacle {
         print("shot wood box")
         
         if let arrow = attacker as? Arrow{
-            arrow.stop()
+            arrow.tryStop()
             
         }
         let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
@@ -174,12 +174,21 @@ class stone : Obstacle {
     }
 
 }
-
-class Icebox : Obstacle {
-    private var ice_size : CGSize!
+class Icebox : SuperIcebox{
     init(position : CGPoint)
     {
-        self.ice_size = CGSizeMake(50, 50)
+        super.init(position: position, ice_size: CGSizeMake(50, 50))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+class SuperIcebox : Obstacle {
+    private var ice_size : CGSize!
+    init(position : CGPoint, ice_size : CGSize)
+    {
+        self.ice_size = ice_size
         super.init(name: Ice, damage: 0, position: position, size: ice_size)
     }
     
@@ -187,12 +196,19 @@ class Icebox : Obstacle {
         super.init(coder: aDecoder)
     }
     
+    func isLeft(pos : CGPoint)->Bool{
+        return pos.x < position.x - ice_size.width / 2
+    }
+    func isRight(pos : CGPoint)->Bool{
+        return pos.x > position.x + ice_size.width / 2
+    }
     //wood box disappears after shot
     override func shot(attacker: Attacker) -> Bool {
         print("shot ice box")
         
         if let arrow = attacker as? Arrow{
-            if(self.position.x < arrow.position.x && arrow.position.x < self.position.x + 50)
+            SoundEffect.getInstance().playHitIce()
+            if(!isLeft(arrow.position) && !isRight(arrow.position))
             {
                 arrow.physicsBody?.velocity.dy = -(arrow.physicsBody?.velocity.dy)!
             }else{
@@ -237,6 +253,8 @@ class WoodBoard : Obstacle {
             arrow.slowDown()
         }
         if(self.rootFlag == true) {
+            SoundEffect.getInstance().playWoodHitGround()
+            
             let part1 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: self.position,flag: false)
             let part2 = WoodBoard(size: CGSizeMake(self.size.width, self.size.height/2),position: CGPointMake(self.position.x, self.position.y + self.size.height/2 + 5), flag: false)
             part2.zRotation = -10
@@ -246,6 +264,7 @@ class WoodBoard : Obstacle {
             self.removeFromParent()
         }
         else {
+           
             let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
             runAction(fadeout, completion: {
                 self.removeFromParent()

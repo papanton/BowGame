@@ -12,9 +12,14 @@ import SpriteKit
 class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
-    
+    var dataFilePath: String!
+    let stagesLocked = false //for testing
+    var currentStage: Int!
+    var mute: SKSpriteNode!
+
     let buttonfuncs = [
         "back": {(s:StageSelection)->Void in s.backToMainMenu()},
+        "muteSound" : {(s:StageSelection)->Void in s.muteSound()},
         "stage1": {(s:StageSelection)->Void in s.goStageOne()},
         "stage2": {(s:StageSelection)->Void in s.goStageTwo()},
         "stage3": {(s:StageSelection)->Void in s.goStageThree()},
@@ -37,7 +42,15 @@ class StageSelection: SKScene {
         
         addBackground()
         addBackButton()
+        addMuteButton()
         addSelections()
+        currentStage = readStageProgress()
+        if currentStage < 1 {
+        //first time playing
+            storeStageProgress(1)
+            currentStage = 1
+        }
+        print (currentStage)
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -53,6 +66,18 @@ class StageSelection: SKScene {
         self.addChild(background)
     }
     
+    func addMuteButton() {
+        if(SoundEffect.getInstance().getMuteSound()) {
+            mute = SKSpriteNode(texture: SKTexture(imageNamed: "muteSound"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
+        } else{
+            mute = SKSpriteNode(texture: SKTexture(imageNamed: "unmuteSound"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
+        }
+        mute.position = CGPointMake(80,self.size.height-30)
+        mute.name = "muteSound"
+        mute.zPosition = 2
+        self.addChild(mute)
+    }
+    
     //add back button to return the main menu
     func addBackButton()
     {
@@ -66,30 +91,60 @@ class StageSelection: SKScene {
     //add selections to enter a stage
     func addSelections()
     {
+        let currentStage = readStageProgress()
+        print("Current Stage is \(currentStage) ")
+
         let stage1 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        stage1.alpha = 0.5
         stage1.name = "stage1"
+        
         let stage2 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        stage2.alpha = 0.5
         stage2.name = "stage2"
+        
         let stage3 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage3.name = "stage3"
+        stage3.alpha = 0.5
+
         let stage4 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage4.name = "stage4"
+        stage4.alpha = 0.5
+
         let stage5 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage5.name = "stage5"
+        stage5.alpha = 0.5
+
         let stage6 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage6.name = "stage6"
+        stage6.alpha = 0.5
+
         let stage7 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage7.name = "stage7"
+        stage7.alpha = 0.5
+
+        
         let stage8 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage8.name = "stage8"
+        stage8.alpha = 0.5
+
 
         let test = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         test.name = "test"
+        test.alpha = 0.5
+        
         
         
         let stages = [stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,test]
+        
+        for (index, stage) in stages.enumerate() {
+            
+            if (index + 1 <= currentStage && stagesLocked) {
+                stage.alpha = 1
+            }
+        }
         var i = 1.0
         var offset : CGFloat = 5
+        
         for button in stages{
             offset = offset * -1
             button.position = CGPointMake((button.size.width + 15) * CGFloat(i), self.size.height * 0.2 + offset)
@@ -108,55 +163,89 @@ class StageSelection: SKScene {
         self.removeFromParent()
     }
     
+    func muteSound() {
+        if(!SoundEffect.getInstance().getMuteSound()) {
+            self.mute.texture = SKTexture(imageNamed: "muteSound")
+        } else {
+            self.mute.texture = SKTexture(imageNamed: "unmuteSound")
+        }
+        SoundEffect.getInstance().changeMuteSound()
+    }
+    
     //functions go to correspoding stages
     func goStageOne()
     {
+        
+        if currentStage >= 1 || !stagesLocked {
         print("select stage 1")
-        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 1)
         changeScene(gameScene)
+        }
     }
     func goStageTwo()
     {
+        
+        if currentStage >= 2 || !stagesLocked {
+
         print("select stage 2")
-        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self,stage: 2)
         changeScene(gameScene)
+        }
     }
     func goStageThree()
     {
+        
+        if currentStage >= 3 || !stagesLocked {
+
         print("select stage 3")
-        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 3)
         changeScene(gameScene)
+        }
     }
     func goStageFour()
     {
-        print("select stage 4")
-        let gameScene = StageFour(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
-        changeScene(gameScene)
         
+        if currentStage >= 4 || !stagesLocked {
+
+        print("select stage 4")
+        let gameScene = StageFour(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 4)
+        changeScene(gameScene)
+        }
     }
     func goStageFive()
     {
+        if currentStage >= 5  || !stagesLocked {
         print("select stage 5")
-        let gameScene = StageFive(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageFive(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 5)
         changeScene(gameScene)
+        }
     }
     func goStageSix()
     {
+        if currentStage >= 6 || !stagesLocked {
+
         print("select stage 6")
-        let gameScene = StageSix(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageSix(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 6)
         changeScene(gameScene)
+        }
     }
     func goStageSeven()
     {
+        if currentStage >= 7 || !stagesLocked  {
+
         print("select stage 7")
-        let gameScene = StageSeven(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageSeven(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 7)
         changeScene(gameScene)
+        }
     }
     func goStageEight()
     {
+        if currentStage >= 8 || !stagesLocked {
+
         print("select stage 8")
-        let gameScene = StageEight(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = StageEight(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 8)
         changeScene(gameScene)
+        }
     }
     func goTestStage()
     {
@@ -164,7 +253,7 @@ class StageSelection: SKScene {
         let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
-        let gameScene = TestScene(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self)
+        let gameScene = TestScene(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 9)
         
         changeScene(gameScene)
     }
@@ -176,6 +265,7 @@ class StageSelection: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if (touchedNode.name != nil){
+            //SoundEffect.getInstance().playSelectStage()
             buttonfuncs[touchedNode.name!]?(self)
         }
     }
@@ -184,11 +274,28 @@ class StageSelection: SKScene {
     //define transition type to change scene
     func changeScene(scene : SKScene)
     {
+        scene.scaleMode = .AspectFit
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         view?.presentScene(scene,transition: transitionType)
     }
 
     
+    func readStageProgress() -> Int {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let stage = defaults.integerForKey("stageKey")
+        
+        return stage
+    }
+    
+    func storeStageProgress(stage:Int) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(stage, forKey: "stageKey")
+        
+        defaults.synchronize()
+        
+        
+    }
     
     
     

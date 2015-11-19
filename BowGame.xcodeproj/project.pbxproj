@@ -28,6 +28,7 @@
 		2A1A59811BD884F2008825FD /* Canon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59801BD884F2008825FD /* Canon.swift */; };
 		2A1A59831BD89EFA008825FD /* BlackHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A59821BD89EFA008825FD /* BlackHole.swift */; };
 		2A1D3E901BD3169E0014B658 /* MutiplayerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */; };
+		2A68E6481BFABD8A00E708A4 /* Balloon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A68E6471BFABD8A00E708A4 /* Balloon.swift */; };
 		2A8274691BAB62D900A59823 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 2A8274671BAB62D900A59823 /* sound */; };
 		2A82746A1BAB62D900A59823 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8274681BAB62D900A59823 /* SoundEffect.swift */; };
 		2A8EFD761BD6F3A3008E170B /* Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8EFD751BD6F3A3008E170B /* Interfaces.swift */; };
@@ -57,11 +58,11 @@
 		89A4C47B1BDAE62300094A84 /* StageOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47A1BDAE62300094A84 /* StageOne.swift */; };
 		89A4C47D1BDAE7E300094A84 /* StageTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47C1BDAE7E300094A84 /* StageTwo.swift */; };
 		89A4C47F1BDAE7F200094A84 /* StageThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4C47E1BDAE7F200094A84 /* StageThree.swift */; };
-		89AE69001BF2AB4300FDAFD7 /* StageFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE68FF1BF2AB4300FDAFD7 /* StageFour.swift */; settings = {ASSET_TAGS = (); }; };
-		89AE69021BF2AB5B00FDAFD7 /* StageFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69011BF2AB5B00FDAFD7 /* StageFive.swift */; settings = {ASSET_TAGS = (); }; };
-		89AE69041BF2AB6600FDAFD7 /* StageSix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69031BF2AB6600FDAFD7 /* StageSix.swift */; settings = {ASSET_TAGS = (); }; };
-		89AE69061BF2AB7100FDAFD7 /* StageSeven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69051BF2AB7100FDAFD7 /* StageSeven.swift */; settings = {ASSET_TAGS = (); }; };
-		89AE69081BF2AB7B00FDAFD7 /* StageEight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69071BF2AB7B00FDAFD7 /* StageEight.swift */; settings = {ASSET_TAGS = (); }; };
+		89AE69001BF2AB4300FDAFD7 /* StageFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE68FF1BF2AB4300FDAFD7 /* StageFour.swift */; };
+		89AE69021BF2AB5B00FDAFD7 /* StageFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69011BF2AB5B00FDAFD7 /* StageFive.swift */; };
+		89AE69041BF2AB6600FDAFD7 /* StageSix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69031BF2AB6600FDAFD7 /* StageSix.swift */; };
+		89AE69061BF2AB7100FDAFD7 /* StageSeven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69051BF2AB7100FDAFD7 /* StageSeven.swift */; };
+		89AE69081BF2AB7B00FDAFD7 /* StageEight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AE69071BF2AB7B00FDAFD7 /* StageEight.swift */; };
 		89B9217B1BBE1F200073E10C /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B9217A1BBE1F200073E10C /* GameOverScene.swift */; };
 		89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8385C1BDAD1B00016111E /* StageSelection.swift */; };
 		89CCF8091BCF037100ED6B7C /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCF8081BCF037100ED6B7C /* Boss.swift */; };
@@ -111,6 +112,7 @@
 		2A1A59801BD884F2008825FD /* Canon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canon.swift; sourceTree = "<group>"; };
 		2A1A59821BD89EFA008825FD /* BlackHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackHole.swift; sourceTree = "<group>"; };
 		2A1D3E8F1BD3169E0014B658 /* MutiplayerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutiplayerScene.swift; sourceTree = "<group>"; };
+		2A68E6471BFABD8A00E708A4 /* Balloon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Balloon.swift; sourceTree = "<group>"; };
 		2A8274671BAB62D900A59823 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		2A8274681BAB62D900A59823 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		2A8EFD751BD6F3A3008E170B /* Interfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interfaces.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				539680DE1BAF2975000906FE /* Obstacle.swift */,
 				2A198E031BA0C32800F050A4 /* Arrow.swift */,
 				2A198E081BA0C32800F050A4 /* Player.swift */,
+				2A68E6471BFABD8A00E708A4 /* Balloon.swift */,
 				2A198E041BA0C32800F050A4 /* Bow.swift */,
 				2A1A59821BD89EFA008825FD /* BlackHole.swift */,
 			);
@@ -498,6 +501,7 @@
 				89C8385D1BDAD1B00016111E /* StageSelection.swift in Sources */,
 				2AA53A6D1BBD97EC00CC72A9 /* EquipmentViewController.swift in Sources */,
 				2AA9B1DC1BABE55E009491AC /* ShootingAngle.swift in Sources */,
+				2A68E6481BFABD8A00E708A4 /* Balloon.swift in Sources */,
 				89AE69061BF2AB7100FDAFD7 /* StageSeven.swift in Sources */,
 				539680DF1BAF2975000906FE /* Obstacle.swift in Sources */,
 				2AA53A831BBDCCFF00CC72A9 /* EquipmentItem.swift in Sources */,
@@ -667,6 +671,7 @@
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
 				);
 				INFOPLIST_FILE = BowGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -689,6 +694,7 @@
 					"$(PROJECT_DIR)/BowGame/AppWarpHelperClasses",
 				);
 				INFOPLIST_FILE = BowGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

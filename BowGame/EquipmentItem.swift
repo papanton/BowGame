@@ -27,7 +27,7 @@ class EquipmentItem: UICollectionViewCell {
             mImageView.image = UIImage(named: EquipmentItem.PlayerItemNames[index])
         }
         if name == "ArrowItem"{
-            mImageView.image = UIImage(named: ArrowColletion.getInstance().mArrowName[index])
+            mImageView.image = UIImage(named: ArrowColletion.getInstance().mArrowImageName[index])
             print("index \(index)")
         }
     }

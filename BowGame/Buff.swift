@@ -58,6 +58,7 @@ class Buff: SKSpriteNode, Shotable {
     //cannot add new buff to correct position
     func shot(attack : Attacker)->Bool
     {
+        SoundEffect.getInstance().playGetBuff()
         if let arrow = attack as? Arrow {
             let player = arrow.getHost()
             if(type == "buff_heal"){

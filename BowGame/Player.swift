@@ -71,8 +71,14 @@ class Player : NSObject
     private var power : Int = 0
     private var mWorld: SKNode!
     private var mUI: SKNode!
+    private var multiName:String!
     
-    
+    func getMultiName() -> String {
+        return multiName
+    }
+    func setMultiName(name:String) {
+        self.multiName = name
+    }
     func add2Scene(scene: SKScene)
     {
         mScene = scene
@@ -116,7 +122,7 @@ class Player : NSObject
             if !attacker.isFrom(self){
                 self.mHealth.getHurt(Float(attacker.getDamage()))
                 bleed()
-//                SoundEffect.getInstance().playScream()
+                SoundEffect.getInstance().playScream()
                 attacker.stop()
                 return true
             }
@@ -147,7 +153,11 @@ class Player : NSObject
     }
     
     func isDead() -> Bool {
-        return self.mHealth.currentHealth <= 0
+        if(self.mHealth.currentHealth <= 0) {
+            SoundEffect.getInstance().playPlayerDie()
+            return true
+        }
+        return false
     }
 
 
@@ -199,6 +209,7 @@ private class Health
         let size = CGSizeMake(210, 30)
         healthframe = SKSpriteNode(texture: healthframetexture, color: SKColor.clearColor(), size: size)
     }
+    
     func add2Scene(scene: SKScene)
     {
         scene.addChild(healthbar)
