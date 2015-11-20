@@ -76,6 +76,12 @@ class StageGameScene: GameScene{
         controllers.resetLeftController()
     }
 
+    override func updatePlayerAnimation(player:Player, position: CGPoint)
+    {
+        player.updateAnimation(position)
+    }
+    
+    
     /*Funciton updating the angle and posiiton of the arrow during flight */
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */

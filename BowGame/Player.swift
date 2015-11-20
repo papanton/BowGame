@@ -15,6 +15,7 @@ class PlayerFactory{
         let sheet = ShootAnimation.getInstance()
         name = name.lowercaseString;
         let playerNode = PlayerNode(texture: sheet.Shoot_01())
+        
         var health : Health!
         var bloodposition : CGPoint!
         var xScale : CGFloat = 0.4
@@ -98,15 +99,24 @@ class Player : NSObject
         mHealth = health
         mPlayerNode = playerNode
     }
+    
+    func updateAnimation(position:CGPoint) {
+        let sheet = ShootAnimation.getInstance()
+        let left_init = CGPointMake(mScene.frame.size.width * 0.2, mScene.frame.size.height / 3)
+        let diff = left_init.x - position.x
+        
+        mPlayerNode.texture = sheet.getTextureByDiff(diff)
+    }
+
     func shoot(impulse: CGVector , scene : SKScene)
     {
         
-        let shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.04)
+        let shoot = SKAction.animateWithTextures(ShootAnimation.getInstance().Shoot(), timePerFrame: 0.03)
         mPlayerNode.runAction(shoot)
         let bow = Bow()
         let arrow = ArrowFactory.createArrow(self)
         
-        delay(0.64) {
+        delay(0.03) {
             if(self.mWorld != nil){
                 self.mWorld.addChild(arrow)
             }else{
