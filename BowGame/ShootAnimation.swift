@@ -63,26 +63,46 @@ class ShootAnimation {
     func Shoot_17() -> SKTexture { return textureAtlas.textureNamed(SHOOT_17) }
     func Shoot_18() -> SKTexture { return textureAtlas.textureNamed(SHOOT_18) }
 
-
+    func getTextureByDiff (diff: CGFloat) -> SKTexture {
+        let section:CGFloat = diff / 4.5 + 8
+        let intValue = Int(section)
+        let number:String
+        
+        if (intValue <= 0) {
+            number = "01"
+        } else if (section < 10) {
+            number = "0" + String(intValue)
+        } else if (section > 17) {
+            number = String(17)
+        } else {
+            number = String(intValue)
+        }
+        print("\nnumber:")
+        print(number)
+        
+        return textureAtlas.textureNamed("Shoot/" + number)
+    }
+    
+    
     // texture arrays for animations
     func Shoot() -> [SKTexture] {
         return [
-            Shoot_01(),
-            Shoot_02(),
-            Shoot_03(),
-            Shoot_04(),
-            Shoot_05(),
-            Shoot_06(),
-            Shoot_07(),
-            Shoot_08(),
-            Shoot_09(),
-            Shoot_10(),
-            Shoot_11(),
-            Shoot_12(),
-            Shoot_13(),
-            Shoot_14(),
-            Shoot_15(),
-            Shoot_16(),
+//            Shoot_01(),
+//            Shoot_02(),
+//            Shoot_03(),
+//            Shoot_04(),
+//            Shoot_05(),
+//            Shoot_06(),
+//            Shoot_07(),
+//            Shoot_08(),
+//            Shoot_09(),
+//            Shoot_10(),
+//            Shoot_11(),
+//            Shoot_12(),
+//            Shoot_13(),
+//            Shoot_14(),
+//            Shoot_15(),
+//            Shoot_16(),
             Shoot_17(),
             Shoot_18(),
             Shoot_17(),

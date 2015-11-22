@@ -350,10 +350,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             {
                 self.endpositionOfTouch = position
                 controllerShoot(position)
+                updatePlayerAnimation(GameController.getInstance().getPlayers()[0], position: position)
             }
             
         }
     }
+    
+    func updatePlayerAnimation(player: Player, position:CGPoint) {
+        
+    }
+    
     func leftControllerOnTouchBegin()
     {
         startpositionOfTouch = controllers.initposition_left
@@ -374,6 +380,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         isshooting = true
     }
     func controllerShoot(position: CGPoint){ }
+    
     func leftControllerOnTouchEnded()
     {
         controllers.resetLeftController()
