@@ -13,6 +13,7 @@ class Balloon: Obstacle
 {
     var mOriginPosition: CGPoint!
     var mObstacles = [Obstacle]()
+    var isBlowed = false
     private let BallonSize = CGSizeMake(40, 70)
     func decorate(ob: Obstacle)
     {
@@ -48,11 +49,14 @@ class Balloon: Obstacle
     override func shot(attacker : Attacker)->Bool
     {
         if let arrow = attacker as? Arrow{
-            SoundEffect.getInstance().playBallonBurst()
-            MovementWrapper.removeMovement(self)
-            arrow.tryStop()
-            releaseObstacles()
-            removeFromParent()
+            if !isBlowed{
+                isBlowed = true
+                SoundEffect.getInstance().playBallonBurst()
+                MovementWrapper.removeMovement(self)
+                arrow.tryStop()
+                releaseObstacles()
+                removeFromParent()
+            }
         }
         return true;
     }
