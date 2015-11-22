@@ -32,6 +32,8 @@ class SoundEffect
     private var backgroundMusic2: AVAudioPlayer?
     private var woodCrash: AVAudioPlayer?
     private var woodHitGround : AVAudioPlayer?
+    private var win: AVAudioPlayer?
+    private var lose: AVAudioPlayer?
     
     private var muteSound = false
     
@@ -115,6 +117,26 @@ class SoundEffect
         }
         testRepeatAudio(getBuff!)
         getBuff?.play()
+    }
+    
+    func playWin() {
+        if(muteSound) {
+            return
+        }
+        if nil == win {
+            win = getSound("sound/Win",type : "mp3")
+        }
+        win?.play()
+    }
+    
+    func playLose() {
+        if(muteSound) {
+            return
+        }
+        if nil == lose {
+            lose = getSound("sound/Lose",type : "mp3")
+        }
+        lose?.play()
     }
     
     func playWoodCrash() {

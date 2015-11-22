@@ -539,6 +539,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             gameoverScene.scaleMode = self.scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             SoundEffect.getInstance().stopBMG()
+            SoundEffect.getInstance().playWin()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
             
