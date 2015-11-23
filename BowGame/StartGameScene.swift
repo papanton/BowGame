@@ -56,7 +56,8 @@ class StartGameScene: SKScene {
     func resume()
     {
         if(current_game != nil){
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             view?.presentScene(self.current_game!,transition: transitionType)
         }
     }
@@ -152,7 +153,9 @@ class StartGameScene: SKScene {
     
     func changeScene(scene : SKScene)
     {
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+        //let transitionType = SKTransition.pushWithDirection(SKTransitionDirection.Down, duration: 1.0)
         view?.presentScene(scene,transition: transitionType)
     }
     override func didMoveToView(view: SKView) {
