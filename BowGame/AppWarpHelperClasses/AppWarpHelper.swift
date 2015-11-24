@@ -175,7 +175,8 @@ class AppWarpHelper: NSObject
                     alert.show()
                     
                     
-                    let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+                    //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+                    let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
                     gameScene?.view?.presentScene((gameScene?.mainmenu)!, transition: transitionType)
                     
                     disconnectFromServer()

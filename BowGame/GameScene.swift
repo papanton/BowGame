@@ -533,7 +533,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         delay(1.0) {
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
             gameoverScene.scaleMode = self.scaleMode
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
@@ -544,7 +545,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         delay(1.0) {
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
             gameoverScene.scaleMode = self.scaleMode
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
@@ -652,7 +654,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func backToPreviousScene()
     {
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         SoundEffect.getInstance().stopBMG()
         view?.presentScene(mainmenu,transition: transitionType)
     }
