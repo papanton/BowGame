@@ -10,6 +10,9 @@ import UIKit
 
 class MutiplayerScene: GameScene
 {
+    
+    
+    
     override func leftControllerOnTouchBegin()
     {
         if self.rounds % 2 == 1{

@@ -73,11 +73,11 @@ class Controller: NSObject {
     
     func startLeftMovement()
     {
-        self.mUI.addChild(target_left)
+        self.mWorld.addChild(target_left)
     }
     func startRightMovement()
     {
-        self.mUI.addChild(target_right)
+        self.mWorld.addChild(target_right)
     }
     
     func moveLeftController(touchlocation : CGPoint)
