@@ -197,7 +197,8 @@ class StageSelection: SKScene {
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         AppWarpHelper.sharedInstance.disconnectFromServer()
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         view?.presentScene(self.mainmenu,transition: transitionType)
         self.removeFromParent()
     }
@@ -384,7 +385,8 @@ class StageSelection: SKScene {
         }
 
         scene.scaleMode = .AspectFit
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         view?.presentScene(scene,transition: transitionType)
     }
     
