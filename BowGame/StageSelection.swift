@@ -15,7 +15,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = false //for testing
+    let stagesLocked = true //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
@@ -33,6 +33,7 @@ class StageSelection: SKScene {
         "stage8": {(s:StageSelection)->Void in s.goStageEight()},
         "test": {(s:StageSelection)->Void in s.goTestStage()},
     ]
+    
     
     let playerName = "temp"
     let screensize = UIScreen.mainScreen().bounds.size;
@@ -135,37 +136,37 @@ class StageSelection: SKScene {
         stage1.alpha = 0.5
         stage1.name = "stage1"
         
-        let stage2 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage2 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage2.alpha = 0.5
         stage2.name = "stage2"
         
-        let stage3 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage3 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage3.name = "stage3"
         stage3.alpha = 0.5
         
-        let stage4 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage4 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage4.name = "stage4"
         stage4.alpha = 0.5
         
-        let stage5 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage5 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage5.name = "stage5"
         stage5.alpha = 0.5
         
-        let stage6 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage6 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage6.name = "stage6"
         stage6.alpha = 0.5
         
-        let stage7 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage7 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage7.name = "stage7"
         stage7.alpha = 0.5
         
         
-        let stage8 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage8 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage8.name = "stage8"
         stage8.alpha = 0.5
         
         
-        let test = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let test = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         test.name = "test"
         test.alpha = 0.5
         
@@ -176,6 +177,7 @@ class StageSelection: SKScene {
         for (index, stage) in stages.enumerate() {
             
             if (index + 1 <= currentStage && stagesLocked) {
+                stage.texture = SKTexture(imageNamed: stage.name!)
                 stage.alpha = 1
             }
         }
