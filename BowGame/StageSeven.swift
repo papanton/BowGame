@@ -112,4 +112,5 @@ class StageSeven: StageGameScene {
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
     }
+    
 }
