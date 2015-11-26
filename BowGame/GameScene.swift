@@ -337,7 +337,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         for touch in (touches )
         {
             
-            let  position = touch.locationInNode(self)
+            let  position = touch.locationInNode(self.world)
+//            let  worldposition = touch.locationInNode(self.world)
             
             //setup camera location according to touch movement
             if(!self.isshooting && !self.touch_disable){

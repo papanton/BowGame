@@ -11,13 +11,16 @@ import SpriteKit
 
 class StageSelection: SKScene {
     
+    var selectedStage = 0
+    
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = false //for testing
+    let stagesLocked = true //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
-
+    var proceed:SKSpriteNode!
     let buttonfuncs = [
+        "proceedButton":{(s:StageSelection)->Void in s.proceedToStage()},
         "back": {(s:StageSelection)->Void in s.backToMainMenu()},
         "muteSound" : {(s:StageSelection)->Void in s.muteSound()},
         "stage1": {(s:StageSelection)->Void in s.goStageOne()},
@@ -30,6 +33,7 @@ class StageSelection: SKScene {
         "stage8": {(s:StageSelection)->Void in s.goStageEight()},
         "test": {(s:StageSelection)->Void in s.goTestStage()},
     ]
+    
     
     let playerName = "temp"
     let screensize = UIScreen.mainScreen().bounds.size;
@@ -46,7 +50,7 @@ class StageSelection: SKScene {
         addSelections()
         currentStage = readStageProgress()
         if currentStage < 1 {
-        //first time playing
+            //first time playing
             storeStageProgress(1)
             currentStage = 1
         }
@@ -58,6 +62,31 @@ class StageSelection: SKScene {
         super.init(coder: aDecoder)
     }
     
+    override func didMoveToView(view: SKView) {
+        
+        self.selectedStage = 0
+        
+        /* Setup your scene here */
+        
+        
+    }
+    
+    /*
+    Add stage description subview each time a stage is selected.
+    
+    */
+    func showInfo(stageTitle: String, stageDescription: String, stageImage: UIImage) {
+        
+        let myInfo = StageInfo(frame: CGRect(x: self.size.width * 0.2 , y: self.size.height * 0.1, width: self.size.width * 0.5, height: self.size.height * 0.2))
+        myInfo.textView.text = stageDescription
+        myInfo.imageView.image = stageImage
+        myInfo.title.text = stageTitle
+        
+        
+        self.view?.addSubview(myInfo)
+        
+        
+    }
     //add background for stage selection
     func addBackground()
     {
@@ -78,6 +107,15 @@ class StageSelection: SKScene {
         self.addChild(mute)
     }
     
+    func addProceedButton() {
+        proceed = SKSpriteNode(texture: SKTexture(imageNamed: "normalarrow"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
+        proceed.position = CGPointMake(self.size.width * 0.8, self.size.height * 0.5)
+        proceed.name = "proceedButton"
+        proceed.zPosition = 2
+        self.addChild(proceed)
+        
+    }
+    
     //add back button to return the main menu
     func addBackButton()
     {
@@ -93,42 +131,42 @@ class StageSelection: SKScene {
     {
         let currentStage = readStageProgress()
         print("Current Stage is \(currentStage) ")
-
+        
         let stage1 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage1.alpha = 0.5
         stage1.name = "stage1"
         
-        let stage2 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage2 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage2.alpha = 0.5
         stage2.name = "stage2"
         
-        let stage3 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        let stage3 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage3.name = "stage3"
         stage3.alpha = 0.5
-
-        let stage4 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        
+        let stage4 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage4.name = "stage4"
         stage4.alpha = 0.5
-
-        let stage5 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        
+        let stage5 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage5.name = "stage5"
         stage5.alpha = 0.5
-
-        let stage6 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        
+        let stage6 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage6.name = "stage6"
         stage6.alpha = 0.5
-
-        let stage7 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        
+        let stage7 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage7.name = "stage7"
         stage7.alpha = 0.5
-
         
-        let stage8 = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        
+        let stage8 = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         stage8.name = "stage8"
         stage8.alpha = 0.5
-
-
-        let test = SKSpriteNode(texture: SKTexture(imageNamed: "stage1"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+        
+        
+        let test = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
         test.name = "test"
         test.alpha = 0.5
         
@@ -139,6 +177,7 @@ class StageSelection: SKScene {
         for (index, stage) in stages.enumerate() {
             
             if (index + 1 <= currentStage && stagesLocked) {
+                stage.texture = SKTexture(imageNamed: stage.name!)
                 stage.alpha = 1
             }
         }
@@ -157,6 +196,8 @@ class StageSelection: SKScene {
     //back to the Main Menu when press back button
     func backToMainMenu()
     {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
+
         AppWarpHelper.sharedInstance.disconnectFromServer()
         //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
@@ -176,80 +217,145 @@ class StageSelection: SKScene {
     //functions go to correspoding stages
     func goStageOne()
     {
-        
+        view!.subviews.forEach({ $0.removeFromSuperview() })
+
+
         if currentStage >= 1 || !stagesLocked {
-        print("select stage 1")
-        let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 1)
-        changeScene(gameScene)
+
+            let stageTitle = "Stage 1"
+            let stageDescription = " A fresh start! Learn the basics that will transform you into an amazing archer"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 1
         }
     }
     func goStageTwo()
     {
-        
-        if currentStage >= 2 || !stagesLocked {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
 
-        print("select stage 2")
-        let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self,stage: 2)
-        changeScene(gameScene)
+        if currentStage >= 2 || !stagesLocked {
+            
+            let stageTitle = "Stage 2"
+            let stageDescription = "Kill the troll! Use the flappy arrow to get some damage in and then shoot straight through the obstacles!"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 2
         }
     }
     func goStageThree()
     {
-        
-        if currentStage >= 3 || !stagesLocked {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
 
-        print("select stage 3")
-        let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 3)
-        changeScene(gameScene)
+        if currentStage >= 3 || !stagesLocked {
+            
+            let stageTitle = "Stage 3"
+            let stageDescription = " Stage 3 Rocks"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 3
         }
     }
     func goStageFour()
     {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
+
         
         if currentStage >= 4 || !stagesLocked {
-
-        print("select stage 4")
-        let gameScene = StageFour(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 4)
-        changeScene(gameScene)
+            
+            let stageTitle = "Stage 4"
+            let stageDescription = " Stage 4 Rocks"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 4
         }
     }
     func goStageFive()
     {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
+
         if currentStage >= 5  || !stagesLocked {
-        print("select stage 5")
-        let gameScene = StageFive(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 5)
-        changeScene(gameScene)
+            let stageTitle = "Stage 5"
+            let stageDescription = " Stage 5 Rocks"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 5
         }
     }
     func goStageSix()
     {
-        if currentStage >= 6 || !stagesLocked {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
 
-        print("select stage 6")
-        let gameScene = StageSix(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 6)
-        changeScene(gameScene)
+        if currentStage >= 6 || !stagesLocked {
+            
+            let stageTitle = "Stage 6"
+            let stageDescription = " Stage 6 Rocks"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 6
         }
     }
     func goStageSeven()
     {
-        if currentStage >= 7 || !stagesLocked  {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
 
-        print("select stage 7")
-        let gameScene = StageSeven(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 7)
-        changeScene(gameScene)
+        if currentStage >= 7 || !stagesLocked  {
+            
+            let stageTitle = "Stage 7"
+            let stageDescription = " Stage 7 Rocks"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 7
         }
     }
     func goStageEight()
     {
-        if currentStage >= 8 || !stagesLocked {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
 
-        print("select stage 8")
-        let gameScene = StageEight(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 8)
-        changeScene(gameScene)
+        if currentStage >= 8 || !stagesLocked {
+            
+            let stageTitle = "Stage 8"
+            let stageDescription = " Stage 8 Rocks"
+            let stagePicture = UIImage(named: "pigboss1")
+            addProceedButton()
+            
+            showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
+            
+            
+            self.selectedStage = 8
         }
     }
     func goTestStage()
     {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
+
         print("select test stage")
         let playerName = "temp"
         let screensize = UIScreen.mainScreen().bounds.size;
@@ -275,12 +381,17 @@ class StageSelection: SKScene {
     //define transition type to change scene
     func changeScene(scene : SKScene)
     {
+        view!.subviews.forEach({ $0.removeFromSuperview() })
+        if proceed != nil {
+        proceed.removeFromParent()
+        }
+
         scene.scaleMode = .AspectFit
         //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         view?.presentScene(scene,transition: transitionType)
     }
-
+    
     
     func readStageProgress() -> Int {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -299,6 +410,55 @@ class StageSelection: SKScene {
         
     }
     
+    func proceedToStage(){
+        
+        switch selectedStage {
+        case (0):
+            proceed.removeFromParent()
+            break
+        case (1):
+
+            let gameScene = StageOne(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 1)
+            changeScene(gameScene)
+        case (2):
+
+            let gameScene = StageTwo(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 2)
+            changeScene(gameScene)
+        case(3):
+
+            let gameScene = StageThree(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 3)
+            changeScene(gameScene)
+        case(4):
+
+            let gameScene = StageFour(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 4)
+            changeScene(gameScene)
+        case(5):
+
+            let gameScene = StageFive(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 5)
+            changeScene(gameScene)
+        case(6):
+
+            let gameScene = StageSix(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 6)
+            changeScene(gameScene)
+        case(7):
+
+            let gameScene = StageSeven(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 7)
+            changeScene(gameScene)
+        case(8):
+
+            let gameScene = StageEight(size: scenesize, mainmenu: self.mainmenu, localPlayer: playerName, multiPlayerON: false, selectionScene: self, stage: 8)
+            changeScene(gameScene)
+       
+            
+
+            
+            
+        default:
+            self.selectedStage = 0
+
+            
+        }
+    }
     
     
 }

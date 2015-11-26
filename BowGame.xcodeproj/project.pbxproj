@@ -17,6 +17,8 @@
 		1379F1971BD6EE52009F1C01 /* NotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1911BD6EE52009F1C01 /* NotificationListener.swift */; };
 		1379F1981BD6EE52009F1C01 /* RoomListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1921BD6EE52009F1C01 /* RoomListener.swift */; };
 		1379F1991BD6EE52009F1C01 /* ZoneListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379F1931BD6EE52009F1C01 /* ZoneListener.swift */; };
+		13D55A061C03C79100C917E1 /* StageInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D55A051C03C79100C917E1 /* StageInfo.xib */; };
+		13D55A081C03C79B00C917E1 /* StageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D55A071C03C79B00C917E1 /* StageInfo.swift */; };
 		2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E021BA0C32800F050A4 /* AppDelegate.swift */; };
 		2A198E0B1BA0C32800F050A4 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E031BA0C32800F050A4 /* Arrow.swift */; };
 		2A198E0C1BA0C32800F050A4 /* Bow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A198E041BA0C32800F050A4 /* Bow.swift */; };
@@ -100,6 +102,8 @@
 		1379F1921BD6EE52009F1C01 /* RoomListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomListener.swift; sourceTree = "<group>"; };
 		1379F1931BD6EE52009F1C01 /* ZoneListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoneListener.swift; sourceTree = "<group>"; };
 		1379F19A1BD6EE81009F1C01 /* BowGame-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BowGame-Bridging-Header.h"; sourceTree = "<group>"; };
+		13D55A051C03C79100C917E1 /* StageInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StageInfo.xib; sourceTree = "<group>"; };
+		13D55A071C03C79B00C917E1 /* StageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
 		13F795631BDD80CC00642501 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2A198E021BA0C32800F050A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A198E031BA0C32800F050A4 /* Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
@@ -259,9 +263,19 @@
 			path = AppWarpHelperClasses;
 			sourceTree = "<group>";
 		};
+		13D55A041C03C78100C917E1 /* StageInfo */ = {
+			isa = PBXGroup;
+			children = (
+				13D55A071C03C79B00C917E1 /* StageInfo.swift */,
+				13D55A051C03C79100C917E1 /* StageInfo.xib */,
+			);
+			name = StageInfo;
+			sourceTree = "<group>";
+		};
 		2A4795B11BBAF989009A20F0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				13D55A041C03C78100C917E1 /* StageInfo */,
 				2A4795C21BBB3B84009A20F0 /* Equipment */,
 			);
 			name = UI;
@@ -462,6 +476,7 @@
 				1369CA9F1B9DFFE400895E88 /* LaunchScreen.xib in Resources */,
 				2AA53A6E1BBD97EC00CC72A9 /* EquipmentViewController.xib in Resources */,
 				5379AC721BA9E8320061BC19 /* blood.sks in Resources */,
+				13D55A061C03C79100C917E1 /* StageInfo.xib in Resources */,
 				1369CA9C1B9DFFE400895E88 /* Images.xcassets in Resources */,
 				1369CA9A1B9DFFE400895E88 /* Main.storyboard in Resources */,
 				2A8274691BAB62D900A59823 /* sound in Resources */,
@@ -490,6 +505,7 @@
 				1379F1991BD6EE52009F1C01 /* ZoneListener.swift in Sources */,
 				1379F1981BD6EE52009F1C01 /* RoomListener.swift in Sources */,
 				89AE69081BF2AB7B00FDAFD7 /* StageEight.swift in Sources */,
+				13D55A081C03C79B00C917E1 /* StageInfo.swift in Sources */,
 				2A198E0A1BA0C32800F050A4 /* AppDelegate.swift in Sources */,
 				89AE69021BF2AB5B00FDAFD7 /* StageFive.swift in Sources */,
 				89AE69001BF2AB4300FDAFD7 /* StageFour.swift in Sources */,
