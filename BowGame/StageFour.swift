@@ -41,7 +41,7 @@ class StageFour: StageGameScene
         let groundTexture = SKTexture(imageNamed: "snow_ground")
         let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 4), position: CGPointMake(size.width, 0))
         self.world.addChild(ground)
-        
+        ground.physicsBody = nil
         
         let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
