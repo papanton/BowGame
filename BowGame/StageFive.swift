@@ -34,22 +34,7 @@ class StageFive: StageGameScene {
                 world.addChild(bh)
             }
         }
-        
-        /*for i in 1...10{
-            let x = i * 100
-            let y = sin(Double(i)/5 * M_PI) * 300
-            let point = CGPointMake(CGFloat(x), CGFloat(y))
-            let bh = BlackHole(position: point, dest: randomPoint())
-            world.addChild(bh)
-
-        }*/
     }
-    /*override func addBoss()
-    {
-        let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
-        self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
-        boss.add2Scene()
-    }*/
     private func randomPoint() -> CGPoint
     {
         let dx = arc4random_uniform(UInt32((scene?.size.width)!) - 200) + UInt32((scene?.size.width)!) + 100
@@ -67,6 +52,13 @@ class StageFive: StageGameScene {
         self.world.addChild(background)
         
         self.BGM = 2
+    }
+    override func restartGame() {
+        let gameScene = StageFive(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
     }
     override func addGround(){}
 }
