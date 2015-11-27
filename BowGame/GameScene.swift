@@ -228,22 +228,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         
-        if(self.touch_disable == true){
-            for child in (self.world.children) {
-                if child is ClickObersever{
-                    let co = child as! ClickObersever
-                    co.onClick()
-                }
-            }
-            return
-        }
-        
         print(touchedNode.name)
         
         if(touchedNode.name == "restartbutton"){
             restartGame()
         }
-        else if(touchedNode.name == "back"){
+        if(touchedNode.name == "back"){
             
             if multiPlayerON {
                 let dataDict = NSMutableDictionary()
@@ -257,7 +247,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             backToPreviousScene()
         }
-        else if(touchedNode.name == "muteSound") {
+        if(self.touch_disable == true){
+            for child in (self.world.children) {
+                if child is ClickObersever{
+                    let co = child as! ClickObersever
+                    co.onClick()
+                }
+            }
+            return
+        }
+
+        if(touchedNode.name == "muteSound") {
             SoundEffect.getInstance().changeMuteSound()
             if(SoundEffect.getInstance().getMuteSound()) {
                 self.muteSoundButton.texture = SKTexture(imageNamed: "muteSound")
@@ -337,7 +337,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         for touch in (touches )
         {
             
-            let  position = touch.locationInNode(self)
+            let  position = touch.locationInNode(self.world)
+//            let  worldposition = touch.locationInNode(self.world)
             
             //setup camera location according to touch movement
             if(!self.isshooting && !self.touch_disable){

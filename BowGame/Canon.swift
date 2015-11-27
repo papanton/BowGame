@@ -93,7 +93,7 @@ private class CanonBomb : Obstacle
 {
     init(pos : CGPoint)
     {
-        super.init(name: CanonStone, damage: 0, position: pos, size: CGSizeMake(20, 20))
+        super.init(name: CanonStone, damage: 0, position: pos, size: CGSizeMake(25, 25))
         physicsBody?.categoryBitMask = CollisonHelper.ShotableMask
         physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         physicsBody?.collisionBitMask = 0x0
