@@ -15,7 +15,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = false //for testing
+    let stagesLocked = true //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
@@ -166,13 +166,13 @@ class StageSelection: SKScene {
         stage8.alpha = 0.5
         
         
-        let test = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
-        test.name = "test"
-        test.alpha = 0.5
+//        let test = SKSpriteNode(texture: SKTexture(imageNamed: "stageLock"), color: UIColor.clearColor(), size: CGSizeMake(87/2, 94/2))
+//        test.name = "test"
+//        test.alpha = 0.5
         
         
         
-        let stages = [stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,test]
+        let stages = [stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8]
         
         for (index, stage) in stages.enumerate() {
             
