@@ -89,6 +89,7 @@ class StartGameScene: SKScene {
         let nametag = SKSpriteNode(imageNamed: "archerschool")
         nametag.position = CGPointMake(size.width*0.35, size.height/1.3)
         nametag.size.width = 400
+        nametag.zPosition = 2
         //nametag.size.height = 50
         addChild(nametag)
         print("nametag")
