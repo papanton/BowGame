@@ -102,7 +102,8 @@ class TestScene: StageGameScene {
     
     override func restartGame() {
         let gameScene = TestScene(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
     }
