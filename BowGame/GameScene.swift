@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func initUI()
     {
-        addArrowPanel()
+        //addArrowPanel()
         addControllers()
         addSettingButton()
         addMuteSoundButton()
@@ -208,19 +208,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     //add arrow panel
-    func addArrowPanel()
-    {
-        panel = ArrowPanel.init()
-        panel.initCell(self)
-        
-        panel.position = CGPointMake(170, self.size.height-40)
-        panel.zPosition = 5
-        panel.xScale = 0.2
-        panel.yScale = 0.2
-        self.addChild(panel)
-        
-        
-    }
+//    func addArrowPanel()
+//    {
+//        panel = ArrowPanel.init()
+//        panel.initCell(self)
+//        
+//        panel.position = CGPointMake(170, self.size.height-40)
+//        panel.zPosition = 5
+//        panel.xScale = 0.2
+//        panel.yScale = 0.2
+//        self.addChild(panel)
+//        
+//        
+//    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
@@ -368,12 +368,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         startpositionOfTouch = controllers.initposition_left
         endpositionOfTouch = controllers.initposition_left
-        if(self.panel.cells[0].mArrowNum > 0) {
+       // if(self.panel.cells[0].mArrowNum > 0) {
             controllers.startLeftMovement()
             isshooting = true
-        } else {
-            self.panel.remindOutofArrow()
-        }
+       // } else {
+        //    self.panel.remindOutofArrow()
+        //}
         
     }
     func rightControllerOnTouchBegin()
@@ -413,7 +413,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
             
-            self.panel.updateArrowNum()
+            if self.panel != nil {
+                self.panel.updateArrowNum()
+            }
             
             //Multiplayer update enemy player
             
