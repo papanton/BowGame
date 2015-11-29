@@ -29,6 +29,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSThread.sleepForTimeInterval(1.5)
         let scene = StartGameScene(size: view.bounds.size)
         let skView = view as! SKView
 //        skView.showsFPS = true
