@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1369CA8A1B9DFFE400895E88"
-               BuildableName = "BowGame.app"
-               BlueprintName = "BowGame"
-               ReferencedContainer = "container:BowGame.xcodeproj">
+               BuildableName = "ArcherSchool.app"
+               BlueprintName = "ArcherSchool"
+               ReferencedContainer = "container:ArcherSchool.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,27 +29,27 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1369CAA31B9DFFE400895E88"
-               BuildableName = "BowGameTests.xctest"
-               BlueprintName = "BowGameTests"
-               ReferencedContainer = "container:BowGame.xcodeproj">
+               BuildableName = "ArcherSchool.xctest"
+               BlueprintName = "ArcherSchoolTests"
+               ReferencedContainer = "container:ArcherSchool.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1369CAA31B9DFFE400895E88"
-               BuildableName = "BowGameTests.xctest"
-               BlueprintName = "BowGameTests"
-               ReferencedContainer = "container:BowGame.xcodeproj">
+               BuildableName = "ArcherSchool.xctest"
+               BlueprintName = "ArcherSchoolTests"
+               ReferencedContainer = "container:ArcherSchool.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,48 +57,51 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1369CA8A1B9DFFE400895E88"
-            BuildableName = "BowGame.app"
-            BlueprintName = "BowGame"
-            ReferencedContainer = "container:BowGame.xcodeproj">
+            BuildableName = "ArcherSchool.app"
+            BlueprintName = "ArcherSchool"
+            ReferencedContainer = "container:ArcherSchool.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1369CA8A1B9DFFE400895E88"
-            BuildableName = "BowGame.app"
-            BlueprintName = "BowGame"
-            ReferencedContainer = "container:BowGame.xcodeproj">
+            BuildableName = "ArcherSchool.app"
+            BlueprintName = "ArcherSchool"
+            ReferencedContainer = "container:ArcherSchool.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1369CA8A1B9DFFE400895E88"
-            BuildableName = "BowGame.app"
-            BlueprintName = "BowGame"
-            ReferencedContainer = "container:BowGame.xcodeproj">
+            BuildableName = "ArcherSchool.app"
+            BlueprintName = "ArcherSchool"
+            ReferencedContainer = "container:ArcherSchool.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
