@@ -217,6 +217,10 @@ class StageSelection: SKScene {
     //functions go to correspoding stages
     func goStageOne()
     {
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
 
@@ -235,13 +239,18 @@ class StageSelection: SKScene {
     }
     func goStageTwo()
     {
+        
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         if currentStage >= 2 || !stagesLocked {
             
             let stageTitle = "Stage 2"
             let stageDescription = "Kill the troll! Use the flappy arrow to get some damage in and then shoot straight through the obstacles!"
-            let stagePicture = UIImage(named: "pigboss1")
+            let stagePicture = UIImage(named: "fighterboss1")
             addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -252,13 +261,18 @@ class StageSelection: SKScene {
     }
     func goStageThree()
     {
+        
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         if currentStage >= 3 || !stagesLocked {
             
             let stageTitle = "Stage 3"
             let stageDescription = " Stage 3 Rocks"
-            let stagePicture = UIImage(named: "pigboss1")
+            let stagePicture = UIImage(named: "whiteboss")
             addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -269,6 +283,11 @@ class StageSelection: SKScene {
     }
     func goStageFour()
     {
+        
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         
@@ -276,7 +295,7 @@ class StageSelection: SKScene {
             
             let stageTitle = "Stage 4"
             let stageDescription = " Stage 4 Rocks"
-            let stagePicture = UIImage(named: "pigboss1")
+            let stagePicture = UIImage(named: "whiteboss2")
             addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -287,12 +306,16 @@ class StageSelection: SKScene {
     }
     func goStageFive()
     {
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         if currentStage >= 5  || !stagesLocked {
             let stageTitle = "Stage 5"
             let stageDescription = " Stage 5 Rocks"
-            let stagePicture = UIImage(named: "pigboss1")
+            let stagePicture = UIImage(named: "beeboss")
             addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -303,6 +326,11 @@ class StageSelection: SKScene {
     }
     func goStageSix()
     {
+        
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         if currentStage >= 6 || !stagesLocked {
@@ -320,13 +348,17 @@ class StageSelection: SKScene {
     }
     func goStageSeven()
     {
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         if currentStage >= 7 || !stagesLocked  {
             
             let stageTitle = "Stage 7"
             let stageDescription = " Stage 7 Rocks"
-            let stagePicture = UIImage(named: "pigboss1")
+            let stagePicture = UIImage(named: "beeboss")
             addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -337,13 +369,17 @@ class StageSelection: SKScene {
     }
     func goStageEight()
     {
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         if currentStage >= 8 || !stagesLocked {
             
             let stageTitle = "Stage 8"
             let stageDescription = " Stage 8 Rocks"
-            let stagePicture = UIImage(named: "pigboss1")
+            let stagePicture = UIImage(named: "whiteboss2")
             addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -354,6 +390,10 @@ class StageSelection: SKScene {
     }
     func goTestStage()
     {
+        if proceed != nil {
+            proceed.removeFromParent()
+        }
+
         view!.subviews.forEach({ $0.removeFromSuperview() })
 
         print("select test stage")
