@@ -167,6 +167,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
         controllers.initRightController()
+        if(multiPlayerON) {
+            if(AppWarpHelper.sharedInstance.isRoomOwner) {
+                controllers.controller_right.hidden = true
+            } else {
+                controllers.controller_left.hidden = true
+            }
+        }
     }
     
     //add setting button to scene
