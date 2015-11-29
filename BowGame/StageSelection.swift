@@ -15,7 +15,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = true //for testing
+    let stagesLocked = false //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
@@ -227,7 +227,7 @@ class StageSelection: SKScene {
         if currentStage >= 1 || !stagesLocked {
 
             let stageTitle = "Stage 1"
-            let stageDescription = " A fresh start! Learn the basics that will transform you into an amazing archer"
+            let stageDescription = "A fresh start! Learn the basics that will transform you into an amazing archer"
             let stagePicture = UIImage(named: "pigboss1")
             addProceedButton()
             
@@ -271,7 +271,7 @@ class StageSelection: SKScene {
         if currentStage >= 3 || !stagesLocked {
             
             let stageTitle = "Stage 3"
-            let stageDescription = " Stage 3 Rocks"
+            let stageDescription = "The cannon stop you from shootting the boss! Can you destroyed them with the Bomb Arrow?"
             let stagePicture = UIImage(named: "whiteboss")
             addProceedButton()
             
@@ -294,7 +294,7 @@ class StageSelection: SKScene {
         if currentStage >= 4 || !stagesLocked {
             
             let stageTitle = "Stage 4"
-            let stageDescription = " Stage 4 Rocks"
+            let stageDescription = "Try to shoot the boss with the help of the ices!"
             let stagePicture = UIImage(named: "whiteboss2")
             addProceedButton()
             
@@ -314,7 +314,7 @@ class StageSelection: SKScene {
 
         if currentStage >= 5  || !stagesLocked {
             let stageTitle = "Stage 5"
-            let stageDescription = " Stage 5 Rocks"
+            let stageDescription = "Can't see the boss? Try to shoot something else!"
             let stagePicture = UIImage(named: "beeboss")
             addProceedButton()
             
@@ -336,7 +336,7 @@ class StageSelection: SKScene {
         if currentStage >= 6 || !stagesLocked {
             
             let stageTitle = "Stage 6"
-            let stageDescription = " Stage 6 Rocks"
+            let stageDescription = "More Tricky!"
             let stagePicture = UIImage(named: "pigboss1")
             addProceedButton()
             
@@ -357,7 +357,7 @@ class StageSelection: SKScene {
         if currentStage >= 7 || !stagesLocked  {
             
             let stageTitle = "Stage 7"
-            let stageDescription = " Stage 7 Rocks"
+            let stageDescription = "Shoot the bee with the help of flappy arrows or more powerful arrows!"
             let stagePicture = UIImage(named: "beeboss")
             addProceedButton()
             
@@ -378,7 +378,7 @@ class StageSelection: SKScene {
         if currentStage >= 8 || !stagesLocked {
             
             let stageTitle = "Stage 8"
-            let stageDescription = " Stage 8 Rocks"
+            let stageDescription = "What if the boss is hidden behind its small room? Destroy it first!"
             let stagePicture = UIImage(named: "whiteboss2")
             addProceedButton()
             
