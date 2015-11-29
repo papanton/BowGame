@@ -511,9 +511,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func gameStart(){
         self.touch_disable = true
         self.rounds++
-        self.world.position = CGPointMake(-self.size.width, 0)
+        var moveCamera: SKAction!
         
-        let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
+        if(multiPlayerON) {
+            if(AppWarpHelper.sharedInstance.isRoomOwner) {
+                self.world.position = CGPointMake(-self.size.width, 0)
+                moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
+            } else {
+                self.world.position = CGPointMake(0, 0)
+                moveCamera = SKAction.moveTo(CGPointMake(-self.size.width, 0), duration: 2)
+            }
+            
+        }
+        
         world.runAction(moveCamera)
         self.showStart()
         delay(3.0){
