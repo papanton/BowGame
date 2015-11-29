@@ -25,7 +25,7 @@ class StageFive: StageGameScene {
                 mBossBlackHole = BossBlackHole(position: points[i], dest: randomPoint())
                 world.addChild(mBossBlackHole)
                 let bossposition = CGPointMake(mBossBlackHole.mDestination.x, self.size.height / 6)
-                self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
+                self.boss = Boss(name: "beeboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
                 mBossBlackHole.setBoss(boss)
                 boss.add2Scene()
                 boss.hideBoss()

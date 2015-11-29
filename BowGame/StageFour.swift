@@ -14,7 +14,7 @@ class StageFour: StageGameScene
     override func addBoss()
     {
         let bossposition = CGPointMake(self.size.width * 2 * 0.9, self.size.height / 6)
-        self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
+        self.boss = Boss(name: "whiteboss2", scene: self, UI: self.UI, world: self.world, position: bossposition)
         boss.add2Scene()
     }
     
