@@ -15,7 +15,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = false //for testing
+    let stagesLocked = true //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
