@@ -522,6 +522,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 moveCamera = SKAction.moveTo(CGPointMake(-self.size.width, 0), duration: 2)
             }
             
+        }else{
+            self.world.position = CGPointMake(-self.size.width, 0)
+            moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
         }
         
         world.runAction(moveCamera)
