@@ -595,12 +595,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             text.text = "Round \(self.rounds)"
         }
         else if (multiPlayerON){
-            if(self.rounds%2 == 0){
-                text.text = "Player 2 Turn"
+            
+            if(AppWarpHelper.sharedInstance.isRoomOwner){
+                if(self.rounds % 2 == 0){
+                    text.text = "Enemy's Turn"
+                }
+                else {
+                    text.text = "Your Turn"
+                }
+            }else{
+                if(self.rounds % 2 == 0){
+                    text.text = "Your Turn"
+                }
+                else {
+                    text.text = "Enemy's Turn"
+                }
             }
-            else {
-                text.text = "Player 1 Turn"
-            }
+            
         }
         
         text.fontColor = SKColor.blackColor()
