@@ -47,7 +47,10 @@ import UIKit
         view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.blackColor().CGColor
-        view.backgroundColor=UIColor(patternImage: UIImage(named:"textBackground")!)
+//        view.backgroundColor=UIColor(patternImage: UIImage(named:"textBackground")!)
+        
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.5)
+        view.layer.cornerRadius = 10
         textView.backgroundColor = UIColor.clearColor()
         addSubview(view)
 
