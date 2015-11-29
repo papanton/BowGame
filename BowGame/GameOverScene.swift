@@ -45,7 +45,8 @@ class GameOverScene: SKScene {
         let touchedNode = self.nodeAtPoint(touchLocation)
         if(touchedNode.name == "backbutton"){
             mainmenu.removeCurGame()
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             view?.presentScene(self.mainmenu,transition: transitionType)
         }
     }

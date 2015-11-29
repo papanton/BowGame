@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func initUI()
     {
-        addArrowPanel()
+        //addArrowPanel()
         addControllers()
         addSettingButton()
         addMuteSoundButton()
@@ -167,6 +167,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
         controllers.initRightController()
+        if(multiPlayerON) {
+            if(AppWarpHelper.sharedInstance.isRoomOwner) {
+                controllers.controller_right.hidden = true
+            } else {
+                controllers.controller_left.hidden = true
+            }
+        }
     }
     
     //add setting button to scene
@@ -208,19 +215,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     //add arrow panel
-    func addArrowPanel()
-    {
-        panel = ArrowPanel.init()
-        panel.initCell(self)
-        
-        panel.position = CGPointMake(170, self.size.height-40)
-        panel.zPosition = 5
-        panel.xScale = 0.2
-        panel.yScale = 0.2
-        self.addChild(panel)
-        
-        
-    }
+//    func addArrowPanel()
+//    {
+//        panel = ArrowPanel.init()
+//        panel.initCell(self)
+//        
+//        panel.position = CGPointMake(170, self.size.height-40)
+//        panel.zPosition = 5
+//        panel.xScale = 0.2
+//        panel.yScale = 0.2
+//        self.addChild(panel)
+//        
+//        
+//    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
@@ -228,22 +235,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         
-        if(self.touch_disable == true){
-            for child in (self.world.children) {
-                if child is ClickObersever{
-                    let co = child as! ClickObersever
-                    co.onClick()
-                }
-            }
-            return
-        }
-        
         print(touchedNode.name)
         
         if(touchedNode.name == "restartbutton"){
             restartGame()
         }
-        else if(touchedNode.name == "back"){
+        if(touchedNode.name == "back"){
             
             if multiPlayerON {
                 let dataDict = NSMutableDictionary()
@@ -257,7 +254,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             
             backToPreviousScene()
         }
-        else if(touchedNode.name == "muteSound") {
+        if(self.touch_disable == true){
+            for child in (self.world.children) {
+                if child is ClickObersever{
+                    let co = child as! ClickObersever
+                    co.onClick()
+                }
+            }
+            return
+        }
+
+        if(touchedNode.name == "muteSound") {
             SoundEffect.getInstance().changeMuteSound()
             if(SoundEffect.getInstance().getMuteSound()) {
                 self.muteSoundButton.texture = SKTexture(imageNamed: "muteSound")
@@ -291,7 +298,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 return
             }
             rightControllerOnTouchBegin()
-        }else if(touchedNode.name == "arrowPanel") {
+        }
+        else if(touchedNode.name == "arrowPanel") {
             SoundEffect.getInstance().playMenuSelect()
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
             if (panel.expanded) {
@@ -299,7 +307,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             } else {
                 panel.expand()
             }
-        }else if(touchedNode.name == "arrowCell") {
+        }
+        else if(touchedNode.name == "arrowCell") {
             
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
             if(arrow.mArrowNum != 0) {
@@ -321,7 +330,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             } else {
                 SoundEffect.getInstance().playSelectFault()
             }
-        }else{
+        }
+        else{
             cameraMoveStart(touch)
         }
     }
@@ -337,7 +347,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         for touch in (touches )
         {
             
-            let  position = touch.locationInNode(self)
+            let  position = touch.locationInNode(self.world)
+//            let  worldposition = touch.locationInNode(self.world)
             
             //setup camera location according to touch movement
             if(!self.isshooting && !self.touch_disable){
@@ -364,12 +375,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         startpositionOfTouch = controllers.initposition_left
         endpositionOfTouch = controllers.initposition_left
-        if(self.panel.cells[0].mArrowNum > 0) {
+       // if(self.panel.cells[0].mArrowNum > 0) {
             controllers.startLeftMovement()
             isshooting = true
-        } else {
-            self.panel.remindOutofArrow()
-        }
+       // } else {
+        //    self.panel.remindOutofArrow()
+        //}
         
     }
     func rightControllerOnTouchBegin()
@@ -409,7 +420,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
             
-            self.panel.updateArrowNum()
+            if self.panel != nil {
+                self.panel.updateArrowNum()
+            }
             
             //Multiplayer update enemy player
             
@@ -533,7 +546,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         delay(1.0) {
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "GAME OVER")
             gameoverScene.scaleMode = self.scaleMode
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
@@ -544,7 +558,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         delay(1.0) {
             let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.mainmenu, textcontent : "You Win!")
             gameoverScene.scaleMode = self.scaleMode
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             SoundEffect.getInstance().stopBMG()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
@@ -652,7 +667,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func backToPreviousScene()
     {
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         SoundEffect.getInstance().stopBMG()
         view?.presentScene(mainmenu,transition: transitionType)
     }

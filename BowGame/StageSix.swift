@@ -66,4 +66,11 @@ class StageSix: StageGameScene
         return CGPointMake(CGFloat(dx), CGFloat(dy))
     }
     override func addGround(){}
+    override func restartGame() {
+        let gameScene = StageSix(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
+    }
 }

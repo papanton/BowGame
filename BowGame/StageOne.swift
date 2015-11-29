@@ -49,17 +49,17 @@ class StageOne: StageGameScene {
     {
         self.step = 1
         
-        step1 = SKLabelNode(text: "1.Drag Here to Shoot!")
-        step1.position = CGPointMake(self.size.width * 0.2, self.size.height * 0.4)
+        step1 = SKLabelNode(text: "<------ 1.Hold the Screen to Move the Camera ------->")
+        step1.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
         setLabel(step1)
-        self.world.addChild(step1)
+        self.UI.addChild(step1)
         
-        step2 = SKLabelNode(text: "2.Click Here to Select Another Arrow!")
-        step2.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.7)
+        step2 = SKLabelNode(text: "2.Drag Here to Shoot!")
+        step2.position = CGPointMake(self.size.width * 0.2, self.size.height * 0.4)
         setLabel(step2)
         
-        step3 = SKLabelNode(text: "<------ 3.Hold the Screen to Move the Camera ------->")
-        step3.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5)
+        step3 = SKLabelNode(text: "3.Click Here to Select Another Arrow!")
+        step3.position = CGPointMake(self.size.width * 0.3, self.size.height * 0.7)
         setLabel(step3)
         
         step4 = SKLabelNode(text: "4.Try to Kill the Boss!")
@@ -97,7 +97,8 @@ class StageOne: StageGameScene {
     
     override func restartGame() {
         let gameScene = StageOne(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
     }
@@ -160,12 +161,12 @@ class StageOne: StageGameScene {
                 return
             }
             
-            if(self.step == 1)
+            if(self.step == 2)
             {
                 let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-                self.step1.runAction(fadeout, completion: {
-                    self.step1.removeFromParent()
-                    self.UI.addChild(self.step2)
+                self.step2.runAction(fadeout, completion: {
+                    self.step2.removeFromParent()
+                    self.UI.addChild(self.step3)
                 })
                 self.step = self.step + 1;
             }
@@ -181,12 +182,12 @@ class StageOne: StageGameScene {
             }
             
             
-            if(self.step == 2)
+            if(self.step == 3)
             {
                 let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-                self.step2.runAction(fadeout, completion: {
-                    self.step2.removeFromParent()
-                    self.UI.addChild(self.step3)
+                self.step3.runAction(fadeout, completion: {
+                    self.step3.removeFromParent()
+                    self.world.addChild(self.step4)
                 })
                 self.step = self.step + 1;
             }
@@ -205,16 +206,16 @@ class StageOne: StageGameScene {
                 SoundEffect.getInstance().playSelectFault()
             }
         }else{
-            if(self.step == 3)
+            if(self.step == 1)
             {
                 let fadeout: SKAction = SKAction.fadeAlphaTo(0.0, duration: 1.0)
-                self.step3.runAction(fadeout, completion: {
-                    self.step3.removeFromParent()
-                    self.world.addChild(self.step4)
+                self.step1.runAction(fadeout, completion: {
+                    self.step1.removeFromParent()
+                    self.world.addChild(self.step2)
                 })
                 self.step = self.step + 1;
             }
-
+            
             cameraMoveStart(touch)
         }
     }
@@ -230,18 +231,18 @@ class StageOne: StageGameScene {
             self.showTurns()
         }
         delay(1.5){
-//            if(self.step == 2){
-//                self.UI.addChild(self.step2)
-//            }else if(self.step == 3){
-//                self.UI.addChild(self.step3)
-//            }else if(self.step == 4){
-//                self.world.addChild(self.step4)
-//            }
+            //            if(self.step == 2){
+            //                self.UI.addChild(self.step2)
+            //            }else if(self.step == 3){
+            //                self.UI.addChild(self.step3)
+            //            }else if(self.step == 4){
+            //                self.world.addChild(self.step4)
+            //            }
             self.touch_disable = false
             self.isshooting = false
         }
     }
-
-
-
+    
+    
+    
 }

@@ -27,17 +27,8 @@ class StartGameScene: SKScene {
     
     
     var alertController:UIAlertController!
-    
-    
-    func addTextField() {
-        let screensize = UIScreen.mainScreen().bounds.size;
-        
-        textField = UITextField(frame : CGRect(x:20, y:(screensize.height/2.25), width:(screensize.width/10), height:(screensize.height/15) ))
-        self.view!.addSubview(textField)
-        textField.backgroundColor = UIColor.blueColor()
-        textField.textAlignment = .Center
-        textField.font = UIFont(name: "Helvetica Neue", size: 23)
-    }
+    var playerNameAlertController: UIAlertController!
+
 
     func createButton(name : String, position : CGPoint)->SKNode
     {
@@ -56,7 +47,8 @@ class StartGameScene: SKScene {
     func resume()
     {
         if(current_game != nil){
-            let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             view?.presentScene(self.current_game!,transition: transitionType)
         }
     }
@@ -74,6 +66,7 @@ class StartGameScene: SKScene {
         addBackground()
         addButtons()
         addAlertController()
+        addPlayerNameAlertController()
     }
     func addButtons()
     {
@@ -92,6 +85,14 @@ class StartGameScene: SKScene {
         stick.zPosition = 1
         stick.position = CGPointMake(left, size.height/2)
         addChild(stick)
+        
+        let nametag = SKSpriteNode(imageNamed: "archerschool")
+        nametag.position = CGPointMake(size.width*0.35, size.height/1.3)
+        nametag.size.width = 400
+        //nametag.size.height = 50
+        addChild(nametag)
+        print("nametag")
+        
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -99,14 +100,16 @@ class StartGameScene: SKScene {
     
     func startGame()
     {
-        
-        AppWarpHelper.sharedInstance.startGameScene = self
-        
-        playerName = textField.text!
-        
-        textField.resignFirstResponder()
+        self.view?.window?.rootViewController?.presentViewController(playerNameAlertController, animated: true, completion: nil)
 
-        let uName:String = playerName as String
+        
+
+        }
+    
+    func connectAppWarp() {
+        AppWarpHelper.sharedInstance.startGameScene = self
+
+        let uName:String = self.playerName as String
         let uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
@@ -116,12 +119,10 @@ class StartGameScene: SKScene {
         
         self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
         DataCenter.getInstance().setArrowItemByName("arrow")
+
     }
     
     func startMultiplayerGame(){
-        
-        textField.removeFromSuperview()
-
         
         let screensize = UIScreen.mainScreen().bounds.size;
         let scenesize : CGSize = CGSize(width: screensize.width, height: screensize.height)
@@ -146,17 +147,17 @@ class StartGameScene: SKScene {
         let stageSelect = StageSelection(size: scenesize, mainmenu: self)
         
         stageSelect.scaleMode = SKSceneScaleMode.AspectFit
-        textField.removeFromSuperview()
         changeScene(stageSelect)
     }
     
     func changeScene(scene : SKScene)
     {
-        let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+        //let transitionType = SKTransition.pushWithDirection(SKTransitionDirection.Down, duration: 1.0)
         view?.presentScene(scene,transition: transitionType)
     }
     override func didMoveToView(view: SKView) {
-        addTextField()
         playerName = ""
         
         
@@ -192,6 +193,32 @@ class StartGameScene: SKScene {
         alertController.addAction(UIAlertAction(title: "Cancel",
             style: UIAlertActionStyle.Default,
             handler: {(alert: UIAlertAction!) in  AppWarpHelper.sharedInstance.disconnectFromServer()}))
+    }
+    func addPlayerNameAlertController() {
+        
+        playerNameAlertController = UIAlertController(title: "Player Name",
+            message: "Enter Player Name",
+            preferredStyle: .Alert)
+        
+        playerNameAlertController!.addTextFieldWithConfigurationHandler(
+            {(textField: UITextField!) in
+                textField.placeholder = "Enter name"
+        })
+        
+        let action = UIAlertAction(title: "Submit",
+            style: UIAlertActionStyle.Default,
+            handler: {[weak self]
+                (paramAction:UIAlertAction!) in
+                if let textFields = self!.playerNameAlertController!.textFields{
+                    let theTextFields = textFields as [UITextField]
+                    let enteredText = theTextFields[0].text
+                    self!.playerName = enteredText!
+                    self!.connectAppWarp()
+                }
+                
+            })
+        
+        playerNameAlertController.addAction(action)
     }
     
 }
