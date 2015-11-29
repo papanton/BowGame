@@ -15,7 +15,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = false //for testing
+    let stagesLocked = true //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
@@ -76,8 +76,8 @@ class StageSelection: SKScene {
     
     */
     func showInfo(stageTitle: String, stageDescription: String, stageImage: UIImage) {
-        
-        let myInfo = StageInfo(frame: CGRect(x: self.size.width * 0.2 , y: self.size.height * 0.1, width: self.size.width * 0.5, height: self.size.height * 0.2))
+
+        let myInfo = StageInfo(frame: CGRect(x: self.size.width * 0.25 , y: self.size.height * 0.2, width: self.size.width * 0.5, height: self.size.height * 0.2))
         myInfo.textView.text = stageDescription
         myInfo.imageView.image = stageImage
         myInfo.title.text = stageTitle
@@ -108,8 +108,8 @@ class StageSelection: SKScene {
     }
     
     func addProceedButton() {
-        proceed = SKSpriteNode(texture: SKTexture(imageNamed: "normalarrow"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
-        proceed.position = CGPointMake(self.size.width * 0.8, self.size.height * 0.5)
+        proceed = SKSpriteNode(texture: SKTexture(imageNamed: "startbutton"),color: UIColor.clearColor(),size: CGSizeMake(30,30))
+        proceed.position = CGPointMake(self.size.width - 30, self.size.height - 30)
         proceed.name = "proceedButton"
         proceed.zPosition = 2
         self.addChild(proceed)
