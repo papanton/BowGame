@@ -41,7 +41,7 @@ class StageFour: StageGameScene
         let groundTexture = SKTexture(imageNamed: "snow_ground")
         let ground : Ground = Ground(texture: groundTexture, size: CGSizeMake(size.width * 2, size.height / 4), position: CGPointMake(size.width, 0))
         self.world.addChild(ground)
-        
+        ground.physicsBody = nil
         
         let collisionframe = CGRectInset(frame, -frame.width*0.2, -frame.height*0.5)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: collisionframe)
@@ -49,4 +49,12 @@ class StageFour: StageGameScene
         self.physicsBody?.contactTestBitMask = CollisonHelper.ArrowMask
         self.physicsBody?.collisionBitMask = CollisonHelper.ArrowMask
     }
+    override func restartGame() {
+        let gameScene = StageFour(size: self.size, mainmenu: self.mainmenu, localPlayer: "temp", multiPlayerON: false, selectionScene : self.selectionScene, stage: self.stage)
+        //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+        let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+        view?.presentScene(gameScene,transition: transitionType)
+        self.removeFromParent()
+    }
+
 }

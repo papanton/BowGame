@@ -18,8 +18,6 @@ class StartGameScene: SKScene {
         "Settings" : {(s:StartGameScene)->Void in s.settings()},
         "Exit" : {(s:StartGameScene)->Void in exit(0)}]
     
-    
-
     var textField: UITextField!
     var playerName = "test"
 
@@ -31,7 +29,6 @@ class StartGameScene: SKScene {
     var alertController:UIAlertController!
     var playerNameAlertController: UIAlertController!
 
-    
 
     func createButton(name : String, position : CGPoint)->SKNode
     {
@@ -88,6 +85,14 @@ class StartGameScene: SKScene {
         stick.zPosition = 1
         stick.position = CGPointMake(left, size.height/2)
         addChild(stick)
+        
+        let nametag = SKSpriteNode(imageNamed: "archerschool")
+        nametag.position = CGPointMake(size.width*0.35, size.height/1.3)
+        nametag.size.width = 400
+        //nametag.size.height = 50
+        addChild(nametag)
+        print("nametag")
+        
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
