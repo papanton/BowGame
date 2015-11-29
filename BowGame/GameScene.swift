@@ -291,7 +291,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 return
             }
             rightControllerOnTouchBegin()
-        }else if(touchedNode.name == "arrowPanel") {
+        }
+        else if(touchedNode.name == "arrowPanel") {
             SoundEffect.getInstance().playMenuSelect()
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
             if (panel.expanded) {
@@ -299,7 +300,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             } else {
                 panel.expand()
             }
-        }else if(touchedNode.name == "arrowCell") {
+        }
+        else if(touchedNode.name == "arrowCell") {
             
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
             if(arrow.mArrowNum != 0) {
@@ -321,7 +323,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             } else {
                 SoundEffect.getInstance().playSelectFault()
             }
-        }else{
+        }
+        else{
             cameraMoveStart(touch)
         }
     }
