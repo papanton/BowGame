@@ -153,4 +153,27 @@ class StageGameScene: GameScene{
         }
         view?.presentScene(selectionScene,transition: transitionType)
     }
+    
+    
+    override func youWin(){
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.selectionScene, textcontent : "You Win!")
+            gameoverScene.scaleMode = self.scaleMode
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+            SoundEffect.getInstance().stopBMG()
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+            
+            if (!self.multiPlayerON){
+                var stageProgress =  self.readStageProgress()
+                if self.stage == stageProgress{
+                    
+                    stageProgress = stageProgress + 1
+                    self.storeStageProgress(stageProgress)
+                }
+            }
+        }
+    }
+
 }
