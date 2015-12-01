@@ -295,7 +295,7 @@ class SoundEffect
             backgroundMusic?.numberOfLoops = -1
             backgroundMusic?.volume = 0.2
         }
-        backgroundMusic?.play()
+        //backgroundMusic?.play()
     }
     
     func playBGM2() {

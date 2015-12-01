@@ -28,7 +28,7 @@
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zmF-ah-dks" userLabel="statistics">
                     <rect key="frame" x="100" y="250" width="150" height="71"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="191C2E57-754B-4151-A9B5-F222A1F34E84" translatesAutoresizingMaskIntoConstraints="NO" id="Adn-9g-dpp">
+                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="C3B82E66-FB95-4067-A2A8-04C3490C6669" translatesAutoresizingMaskIntoConstraints="NO" id="Adn-9g-dpp">
                             <rect key="frame" x="-50" y="0.0" width="50" height="100"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </imageView>
@@ -142,7 +142,7 @@
         </view>
     </objects>
     <resources>
-        <image name="191C2E57-754B-4151-A9B5-F222A1F34E84" width="160" height="276">
+        <image name="C3B82E66-FB95-4067-A2A8-04C3490C6669" width="160" height="276">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
