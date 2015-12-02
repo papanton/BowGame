@@ -20,6 +20,7 @@ class StageSelection: SKScene {
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
     let buttonfuncs = [
+        "reset": {(s:StageSelection)->Void in s.resetProcess()},
         "proceedButton":{(s:StageSelection)->Void in s.proceedToStage()},
         "back": {(s:StageSelection)->Void in s.backToMainMenu()},
         "muteSound" : {(s:StageSelection)->Void in s.muteSound()},
@@ -33,7 +34,7 @@ class StageSelection: SKScene {
         "stage8": {(s:StageSelection)->Void in s.goStageEight()},
         "test": {(s:StageSelection)->Void in s.goTestStage()},
     ]
-    
+    var stages: [SKSpriteNode]!
     
     let playerName = "temp"
     let screensize = UIScreen.mainScreen().bounds.size;
@@ -48,6 +49,7 @@ class StageSelection: SKScene {
         addBackButton()
         addMuteButton()
         addSelections()
+        addResetButton()
         currentStage = readStageProgress()
         if currentStage < 1 {
             //first time playing
@@ -65,9 +67,7 @@ class StageSelection: SKScene {
     override func didMoveToView(view: SKView) {
         
         self.selectedStage = 0
-        
-        /* Setup your scene here */
-        
+        updateProcess()
         
     }
     
@@ -94,6 +94,7 @@ class StageSelection: SKScene {
         background.position = CGPoint(x: 0.0, y: background.size.height/2)
         self.addChild(background)
     }
+    
     
     func addMuteButton() {
         if(SoundEffect.getInstance().getMuteSound()) {
@@ -122,6 +123,15 @@ class StageSelection: SKScene {
         let back = SKSpriteNode(texture: SKTexture(imageNamed: "backbutton"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
         back.position = CGPointMake(30, self.size.height - 30)
         back.name = "back"
+        back.zPosition = 2
+        self.addChild(back)
+    }
+    
+    //add reset button to clear stage process
+    func addResetButton() {
+        let back = SKSpriteNode(texture: SKTexture(imageNamed: "restartbutton"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        back.position = CGPointMake(self.size.width - 30, 30)
+        back.name = "reset"
         back.zPosition = 2
         self.addChild(back)
     }
@@ -172,7 +182,7 @@ class StageSelection: SKScene {
         
         
         
-        let stages = [stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8]
+        self.stages = [stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8]
         
         for (index, stage) in stages.enumerate() {
             
@@ -448,6 +458,26 @@ class StageSelection: SKScene {
         defaults.synchronize()
         
         
+    }
+    
+    func resetProcess() {
+        storeStageProgress(1)
+        updateProcess()
+    }
+    
+    func updateProcess() {
+        currentStage = readStageProgress()
+
+        for (index, stage) in stages.enumerate() {
+            
+            if (index + 1 <= currentStage && stagesLocked) {
+                stage.texture = SKTexture(imageNamed: stage.name!)
+                stage.alpha = 1
+            }else{
+                stage.texture = SKTexture(imageNamed: "stageLock")
+                stage.alpha = 0.5
+            }
+        }
     }
     
     func proceedToStage(){
