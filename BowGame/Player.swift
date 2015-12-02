@@ -204,8 +204,8 @@ private class DummyHealth : Health
         
 private class Health
 {
-    var totalHealth:Float = 100
-    var currentHealth:Float = 100
+    var totalHealth:Float = 30
+    var currentHealth:Float = 30
     var healthbar:SKShapeNode = SKShapeNode(rect: CGRectMake(0, 0, 170, 10))
     var healthframe:SKSpriteNode!
     
