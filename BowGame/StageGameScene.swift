@@ -162,6 +162,7 @@ class StageGameScene: GameScene{
             //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             SoundEffect.getInstance().stopBMG()
+            SoundEffect.getInstance().playWin()
             self.removeFromParent()
             self.view?.presentScene(gameoverScene,transition: transitionType)
             
