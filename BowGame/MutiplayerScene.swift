@@ -25,6 +25,8 @@ class MutiplayerScene: GameScene
         self.world.addChild(background)
         self.world.addChild(decorate)
         
+        
+        
     }
     
     override func addGround()

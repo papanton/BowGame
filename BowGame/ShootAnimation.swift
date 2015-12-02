@@ -77,8 +77,8 @@ class ShootAnimation {
         } else {
             number = String(intValue)
         }
-        print("\nnumber:")
-        print(number)
+//        print("\nnumber:")
+//        print(number)
         
         return textureAtlas.textureNamed("Shoot/" + number)
     }

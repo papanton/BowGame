@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     
     func initUI()
     {
-        addArrowPanel()
+        //addArrowPanel()
         addControllers()
         addSettingButton()
         addMuteSoundButton()
@@ -167,6 +167,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
         self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
         controllers.initRightController()
+        if(multiPlayerON) {
+            if(AppWarpHelper.sharedInstance.isRoomOwner) {
+                controllers.controller_right.hidden = true
+            } else {
+                controllers.controller_left.hidden = true
+            }
+        }
     }
     
     //add setting button to scene
@@ -208,19 +215,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     }
     
     //add arrow panel
-    func addArrowPanel()
-    {
-        panel = ArrowPanel.init()
-        panel.initCell(self)
-        
-        panel.position = CGPointMake(170, self.size.height-40)
-        panel.zPosition = 5
-        panel.xScale = 0.2
-        panel.yScale = 0.2
-        self.addChild(panel)
-        
-        
-    }
+//    func addArrowPanel()
+//    {
+//        panel = ArrowPanel.init()
+//        panel.initCell(self)
+//        
+//        panel.position = CGPointMake(170, self.size.height-40)
+//        panel.zPosition = 5
+//        panel.xScale = 0.2
+//        panel.yScale = 0.2
+//        self.addChild(panel)
+//        
+//        
+//    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
@@ -291,7 +298,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
                 return
             }
             rightControllerOnTouchBegin()
-        }else if(touchedNode.name == "arrowPanel") {
+        }
+        else if(touchedNode.name == "arrowPanel") {
             SoundEffect.getInstance().playMenuSelect()
             let panel:ArrowPanel = (touchedNode as? ArrowPanel)!
             if (panel.expanded) {
@@ -299,7 +307,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             } else {
                 panel.expand()
             }
-        }else if(touchedNode.name == "arrowCell") {
+        }
+        else if(touchedNode.name == "arrowCell") {
             
             let arrow:ArrowCell = (touchedNode as? ArrowCell)!
             if(arrow.mArrowNum != 0) {
@@ -321,7 +330,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             } else {
                 SoundEffect.getInstance().playSelectFault()
             }
-        }else{
+        }
+        else{
             cameraMoveStart(touch)
         }
     }
@@ -365,12 +375,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     {
         startpositionOfTouch = controllers.initposition_left
         endpositionOfTouch = controllers.initposition_left
-        if(self.panel.cells[0].mArrowNum > 0) {
+       // if(self.panel.cells[0].mArrowNum > 0) {
             controllers.startLeftMovement()
             isshooting = true
-        } else {
-            self.panel.remindOutofArrow()
-        }
+       // } else {
+        //    self.panel.remindOutofArrow()
+        //}
         
     }
     func rightControllerOnTouchBegin()
@@ -410,7 +420,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             self.touch_disable = true
             ShootingAngle.getInstance().hide()
             
-            self.panel.updateArrowNum()
+            if self.panel != nil {
+                self.panel.updateArrowNum()
+            }
             
             //Multiplayer update enemy player
             
@@ -499,9 +511,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
     func gameStart(){
         self.touch_disable = true
         self.rounds++
-        self.world.position = CGPointMake(-self.size.width, 0)
+        var moveCamera: SKAction!
         
-        let moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
+        if(multiPlayerON) {
+            if(AppWarpHelper.sharedInstance.isRoomOwner) {
+                self.world.position = CGPointMake(-self.size.width, 0)
+                moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
+            } else {
+                self.world.position = CGPointMake(0, 0)
+                moveCamera = SKAction.moveTo(CGPointMake(-self.size.width, 0), duration: 2)
+            }
+            
+        }else{
+            self.world.position = CGPointMake(-self.size.width, 0)
+            moveCamera = SKAction.moveTo(CGPointMake(0, 0), duration: 2)
+        }
+        
         world.runAction(moveCamera)
         self.showStart()
         delay(3.0){
@@ -570,12 +595,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameControllerObserver{
             text.text = "Round \(self.rounds)"
         }
         else if (multiPlayerON){
-            if(self.rounds%2 == 0){
-                text.text = "Player 2 Turn"
+            
+            if(AppWarpHelper.sharedInstance.isRoomOwner){
+                if(self.rounds % 2 == 0){
+                    text.text = "Enemy's Turn"
+                }
+                else {
+                    text.text = "Your Turn"
+                }
+            }else{
+                if(self.rounds % 2 == 0){
+                    text.text = "Your Turn"
+                }
+                else {
+                    text.text = "Enemy's Turn"
+                }
             }
-            else {
-                text.text = "Player 1 Turn"
-            }
+            
         }
         
         text.fontColor = SKColor.blackColor()

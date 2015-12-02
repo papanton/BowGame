@@ -50,8 +50,9 @@
 		5379AC701BA9E7C70061BC19 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5379AC6F1BA9E7C70061BC19 /* Ground.swift */; };
 		5379AC721BA9E8320061BC19 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC711BA9E8320061BC19 /* blood.sks */; };
 		5379AC741BA9E83E0061BC19 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5379AC731BA9E83E0061BC19 /* spark.png */; };
+		5391EA151C0AE24700B36B2D /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1379F18D1BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework */; };
+		5391EA161C0AE26800B36B2D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F795631BDD80CC00642501 /* AVFoundation.framework */; };
 		539680DF1BAF2975000906FE /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539680DE1BAF2975000906FE /* Obstacle.swift */; };
-		5396E8651BDDFE0800EEAD9D /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1379F18D1BD6EE52009F1C01 /* AppWarp_iOS_SDK.framework */; };
 		894287571BACC1A400E519B8 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894287561BACC1A400E519B8 /* Buff.swift */; };
 		89696E2D1BDD5F560027FA3D /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89696E2C1BDD5F560027FA3D /* Bound.swift */; };
 		896F423E1BC2F11A0070DAAD /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896F423D1BC2F11A0070DAAD /* Controller.swift */; };
@@ -166,7 +167,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5396E8651BDDFE0800EEAD9D /* AppWarp_iOS_SDK.framework in Frameworks */,
+				5391EA161C0AE26800B36B2D /* AVFoundation.framework in Frameworks */,
+				5391EA151C0AE24700B36B2D /* AppWarp_iOS_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +439,6 @@
 				TargetAttributes = {
 					1369CA8A1B9DFFE400895E88 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 28Y2YPE73K;
 					};
 					1369CAA31B9DFFE400895E88 = {
 						CreatedOnToolsVersion = 6.4;
@@ -679,6 +680,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -702,6 +704,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

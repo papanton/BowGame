@@ -11,9 +11,9 @@ import SpriteKit
 
 
 class GameOverScene: SKScene {
-    var mainmenu : StartGameScene!
+    var mainmenu : SKScene!
     var text : SKLabelNode!
-    init(size: CGSize, mainmenu : StartGameScene, textcontent : String) {
+    init(size: CGSize, mainmenu : SKScene, textcontent : String) {
         super.init(size: size)
         self.mainmenu = mainmenu
         
@@ -44,7 +44,7 @@ class GameOverScene: SKScene {
         let touchLocation = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(touchLocation)
         if(touchedNode.name == "backbutton"){
-            mainmenu.removeCurGame()
+            mainmenu.removeFromParent()
             //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
             view?.presentScene(self.mainmenu,transition: transitionType)

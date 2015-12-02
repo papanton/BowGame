@@ -13,6 +13,7 @@ class StageGameScene: GameScene{
     
     var boss : Boss!
     var selectionScene : StageSelection!
+    //var panel:ArrowPanel!
 
     init(size: CGSize, mainmenu: StartGameScene, localPlayer: String, multiPlayerON: Bool, selectionScene : StageSelection, stage:Int) {
         super.init(size: size, mainmenu: mainmenu, localPlayer: localPlayer, multiPlayerON: multiPlayerON, stage: stage)
@@ -30,6 +31,7 @@ class StageGameScene: GameScene{
         //World
         super.initworld()
         addBoss()
+        addArrowPanel()
     }
     override func initUI() {
         super.initUI()
@@ -53,6 +55,20 @@ class StageGameScene: GameScene{
     //func addBlackHole() {}
     //func addCanon() {}
 
+    //add arrow panel
+    func addArrowPanel()
+    {
+        panel = ArrowPanel.init()
+        panel.initCell(self)
+        
+        panel.position = CGPointMake(170, self.size.height-40)
+        panel.zPosition = 5
+        panel.xScale = 0.2
+        panel.yScale = 0.2
+        self.addChild(panel)
+        
+        
+    }
     
     override func addPlayers()
     {
@@ -66,6 +82,18 @@ class StageGameScene: GameScene{
         self.controllers = Controller(UI: self.UI, world: self.world, scene: self)
         controllers.initLeftController()
     }
+    override func leftControllerOnTouchBegin() {
+      
+        startpositionOfTouch = controllers.initposition_left
+        endpositionOfTouch = controllers.initposition_left
+        if(self.panel.cells[0].mArrowNum > 0) {
+            controllers.startLeftMovement()
+            isshooting = true
+        } else {
+            self.panel.remindOutofArrow()
+        }
+    }
+    
     override func controllerShoot(position : CGPoint)
     {
         controllers.moveLeftController(position)
@@ -125,4 +153,27 @@ class StageGameScene: GameScene{
         }
         view?.presentScene(selectionScene,transition: transitionType)
     }
+    
+    
+    override func youWin(){
+        delay(1.0) {
+            let gameoverScene = GameOverScene(size: UIScreen.mainScreen().bounds.size, mainmenu: self.selectionScene, textcontent : "You Win!")
+            gameoverScene.scaleMode = self.scaleMode
+            //let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
+            let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+            SoundEffect.getInstance().stopBMG()
+            self.removeFromParent()
+            self.view?.presentScene(gameoverScene,transition: transitionType)
+            
+            if (!self.multiPlayerON){
+                var stageProgress =  self.readStageProgress()
+                if self.stage == stageProgress{
+                    
+                    stageProgress = stageProgress + 1
+                    self.storeStageProgress(stageProgress)
+                }
+            }
+        }
+    }
+
 }
