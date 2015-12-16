@@ -24,7 +24,7 @@ class GameController
     private var mBoss : Boss?
     private static var mInstance : GameController!
     private var mCanShooting = true
-    
+    private var mNumShotBlackHole = 0
     func setBoss(boss : Boss)
     {
         mBoss = boss
@@ -95,6 +95,7 @@ class GameController
         mCanShooting = true
         mBoss = nil
         DataCenter.getInstance().setArrowItemByName("arrow")
+        BlackHole.reset()
     }
     func currentPlayerShoot(impulse: CGVector , scene : SKScene)
     {

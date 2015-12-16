@@ -26,6 +26,10 @@ class BlackHole: Obstacle
         runAction(newanimation)
         //BlackHole.sReAppearTasks.maxConcurrentOperationCount = 1
     }
+    static func reset()
+    {
+        sNumShotBlackHole = 0
+    }
     private func disableCollision()
     {
         mIsShot = true
