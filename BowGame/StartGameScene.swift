@@ -20,7 +20,7 @@ class StartGameScene: SKScene {
     
     var textField: UITextField!
     var playerName = "test"
-
+    var multiplayerEnabled = false
     var current_game : SKScene?
 
     var tempFlagVal = 0
@@ -197,6 +197,7 @@ class StartGameScene: SKScene {
     }
     func addPlayerNameAlertController() {
         
+        if (multiplayerEnabled){
         playerNameAlertController = UIAlertController(title: "Player Name",
             message: "Enter Player Name",
             preferredStyle: .Alert)
@@ -222,4 +223,21 @@ class StartGameScene: SKScene {
         playerNameAlertController.addAction(action)
     }
     
+    else {
+            playerNameAlertController = UIAlertController(title: "Multiplayer not enabled",
+                message: "Included in our new game update!",
+                preferredStyle: .Alert)
+            
+            let action = UIAlertAction(title: "OK",
+                style: UIAlertActionStyle.Default,
+                handler: {[weak self]
+                    (paramAction:UIAlertAction!) in
+              
+                    
+                })
+            
+            playerNameAlertController.addAction(action)
+
+    }
+    }
 }

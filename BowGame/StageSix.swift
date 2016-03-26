@@ -40,7 +40,7 @@ class StageSix: StageGameScene
     }
     override func addBoss()
     {
-        let bosshole = BossBlackHole(position: CGPointMake(size.width - 50,size.height/2 - 50), dest: randomPoint())
+        let bosshole = BossBlackHole(position: CGPointMake(size.width - 50,size.height/2 - 50), dest: randomPoint(),isBoss: false)
         let bossposition = CGPointMake(bosshole.mDestination.x, self.size.height / 6)
         self.boss = Boss(name: "firstboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
         bosshole.setBoss(boss)
@@ -54,7 +54,7 @@ class StageSix: StageGameScene
 
         let points = [CGPointMake(size.width-100, size.height/2 + 120),CGPointMake(size.width-200, size.height/2 + 50), CGPointMake(size.width - 100, size.height/2 + 25), CGPointMake(size.width, size.height/2 + 50),  CGPointMake(size.width-150, size.height/2 - 50)]
         for point in points{
-            let bh = BlackHole(position: point, dest: randomPoint())
+            let bh = BlackHole(position: point, dest: randomPoint(),isBoss: false)
             mBlackHoleballoon.decorate(bh)
         }
         world.addChild(mBlackHoleballoon)
@@ -72,5 +72,11 @@ class StageSix: StageGameScene
         let transitionType = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
+    }
+    
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(8, bomb: 0, flappy: 0, split: 2, ignore: 0)
     }
 }

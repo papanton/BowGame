@@ -14,12 +14,19 @@ class BlackHole: Obstacle
     static var sNumShotBlackHole = 0
     var mIsShot = false
     var mDestination: CGPoint!
-    init(position: CGPoint, dest: CGPoint)
+    init(position: CGPoint, dest: CGPoint, isBoss: Bool)
     {
         super.init(name: "BackHole1", damage: 0, position: position, size : CGSizeMake(60, 60))
+        var backhole1 = SKTexture(imageNamed: "BackHole1")
+        var backhole2 = SKTexture(imageNamed: "BackHole2")
+        if (isBoss) {
+          
+             backhole1 = SKTexture(imageNamed: "BackHole1T")
+             backhole2 = SKTexture(imageNamed: "BackHole2T")
+        }
+  
         physicsBody?.affectedByGravity = false
-        let backhole1 = SKTexture(imageNamed: "BackHole1")
-        let backhole2 = SKTexture(imageNamed: "BackHole2")
+      
         let animation = SKAction.animateWithTextures([backhole1,backhole2], timePerFrame: 0.2)
         let newanimation = SKAction.repeatActionForever(animation)
         mDestination = dest
@@ -122,6 +129,7 @@ class BossBlackHole : BlackHole
         mBoss = boss
         //mBoss.bossposition = mDestination
     }
+    
     private override func blackReappearActions()->[SKAction]
     {
         let showBoss = SKAction.runBlock(mBoss.showBoss)

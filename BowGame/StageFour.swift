@@ -56,5 +56,11 @@ class StageFour: StageGameScene
         view?.presentScene(gameScene,transition: transitionType)
         self.removeFromParent()
     }
+    
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(10, bomb: 0, flappy: 0, split: 0, ignore: 0)
+    }
 
 }

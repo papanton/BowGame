@@ -21,8 +21,8 @@ import UIKit
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var textView: UITextView!
     
+    @IBOutlet var textView: UILabel!
     
     @IBOutlet weak var goButton: UIButton!
     
@@ -69,6 +69,12 @@ import UIKit
         
     }
     
+    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        if (CGRectContainsPoint(imageView.frame, point) || CGRectContainsPoint(textView.frame,point) || CGRectContainsPoint(title.frame,point) || CGRectContainsPoint( self.view.frame,point) ) {
+            return true
+        }
+        return false
+    }
     /*
     Function to round UIImageView that contains users profile picture
     */

@@ -21,7 +21,7 @@ class StageSelection: SKScene {
     var proceed:SKSpriteNode!
     let buttonfuncs = [
         "reset": {(s:StageSelection)->Void in s.resetProcess()},
-        "proceedButton":{(s:StageSelection)->Void in s.proceedToStage()},
+        "proceedButton":{(s:StageSelection)->Void in s.backToMainMenu()},
         "back": {(s:StageSelection)->Void in s.backToMainMenu()},
         "muteSound" : {(s:StageSelection)->Void in s.muteSound()},
         "stage1": {(s:StageSelection)->Void in s.goStageOne()},
@@ -81,12 +81,18 @@ class StageSelection: SKScene {
         myInfo.textView.text = stageDescription
         myInfo.imageView.image = stageImage
         myInfo.title.text = stageTitle
-        
+        myInfo.userInteractionEnabled = true
         
         self.view?.addSubview(myInfo)
+
+        let gesture = UITapGestureRecognizer(target: self, action: "proceedToStage:")
+        myInfo.addGestureRecognizer(gesture)
+  
         
-        
+
     }
+    
+    
     //add background for stage selection
     func addBackground()
     {
@@ -239,7 +245,6 @@ class StageSelection: SKScene {
             let stageTitle = "Stage 1"
             let stageDescription = "A fresh start! Learn the basics that will transform you into an amazing archer"
             let stagePicture = UIImage(named: "pigboss1")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -259,9 +264,8 @@ class StageSelection: SKScene {
         if currentStage >= 2 || !stagesLocked {
             
             let stageTitle = "Stage 2"
-            let stageDescription = "Kill the troll! Use the flappy arrow to get some damage in and then shoot straight through the obstacles!"
+            let stageDescription = "Kill the troll! Avoid the moving obstacles and strike it down!"
             let stagePicture = UIImage(named: "fighterboss1")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -281,9 +285,8 @@ class StageSelection: SKScene {
         if currentStage >= 3 || !stagesLocked {
             
             let stageTitle = "Stage 3"
-            let stageDescription = "The cannon stop you from shootting the boss! Can you destroyed them with the Bomb Arrow?"
+            let stageDescription = "Make the cannons dissappear by shotting the boss with the bomb arrow. Two birds with one stone!"
             let stagePicture = UIImage(named: "whiteboss")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -304,9 +307,8 @@ class StageSelection: SKScene {
         if currentStage >= 4 || !stagesLocked {
             
             let stageTitle = "Stage 4"
-            let stageDescription = "Try to shoot the boss with the help of the ices!"
+            let stageDescription = "Geometry! Figure out the right angles to slay the boss"
             let stagePicture = UIImage(named: "whiteboss2")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -324,9 +326,8 @@ class StageSelection: SKScene {
 
         if currentStage >= 5  || !stagesLocked {
             let stageTitle = "Stage 5"
-            let stageDescription = "Can't see the boss? Try to shoot something else!"
+            let stageDescription = "Lets test out your shotting accurassy. Shoot the right target to reach the boss"
             let stagePicture = UIImage(named: "beeboss")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -346,9 +347,8 @@ class StageSelection: SKScene {
         if currentStage >= 6 || !stagesLocked {
             
             let stageTitle = "Stage 6"
-            let stageDescription = "More Tricky!"
+            let stageDescription = "One of them is the correct one, the other ones are dummys. Test your skills by shooting them all!"
             let stagePicture = UIImage(named: "pigboss1")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -367,9 +367,8 @@ class StageSelection: SKScene {
         if currentStage >= 7 || !stagesLocked  {
             
             let stageTitle = "Stage 7"
-            let stageDescription = "Shoot the bee with the help of flappy arrows or more powerful arrows!"
+            let stageDescription = "The flappy arrow shines in against flying bees. Make the most out of them!"
             let stagePicture = UIImage(named: "beeboss")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -388,9 +387,8 @@ class StageSelection: SKScene {
         if currentStage >= 8 || !stagesLocked {
             
             let stageTitle = "Stage 8"
-            let stageDescription = "What if the boss is hidden behind its small room? Destroy it first!"
+            let stageDescription = "Destroy the fortress to reach the boss!"
             let stagePicture = UIImage(named: "whiteboss2")
-            addProceedButton()
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
             
@@ -480,7 +478,7 @@ class StageSelection: SKScene {
         }
     }
     
-    func proceedToStage(){
+    func proceedToStage(sender:UITapGestureRecognizer){
         
         switch selectedStage {
         case (0):

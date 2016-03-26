@@ -88,7 +88,7 @@ class TestScene: StageGameScene {
     }
     func addBlackHole()
     {
-        let bh = BlackHole(position: CGPointMake(400,200), dest: CGPointMake((scene?.size.width)!*2-100, 300))
+        let bh = BlackHole(position: CGPointMake(400,200), dest: CGPointMake((scene?.size.width)!*2-100, 300),isBoss: false)
         world.addChild(bh)
     }
     func addCanon()

@@ -22,7 +22,7 @@ class StageFive: StageGameScene {
         let bossIndex = Int(arc4random_uniform(UInt32(points.count)) + 1)
         for i in 1...points.count-1{
             if i == bossIndex {
-                mBossBlackHole = BossBlackHole(position: points[i], dest: randomPoint())
+                mBossBlackHole = BossBlackHole(position: points[i], dest: randomPoint(), isBoss: false)
                 world.addChild(mBossBlackHole)
                 let bossposition = CGPointMake(mBossBlackHole.mDestination.x, self.size.height / 6)
                 self.boss = Boss(name: "beeboss", scene: self, UI: self.UI, world: self.world, position: bossposition)
@@ -30,7 +30,7 @@ class StageFive: StageGameScene {
                 boss.add2Scene()
                 boss.hideBoss()
             }else{
-                let bh = BlackHole(position: points[i], dest: randomPoint())
+                let bh = BlackHole(position: points[i], dest: randomPoint(), isBoss: false)
                 world.addChild(bh)
             }
         }
@@ -61,4 +61,9 @@ class StageFive: StageGameScene {
         self.removeFromParent()
     }
     override func addGround(){}
+    override func addArrowPanel()
+    {
+        super.addArrowPanel()
+        panel.setArrowNum(7, bomb: 0, flappy: 1, split: 3, ignore: 0)
+    }
 }

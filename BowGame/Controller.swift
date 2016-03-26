@@ -32,12 +32,11 @@ class Controller: NSObject {
     
     func initLeftController()
     {
-        self.initposition_left = CGPointMake(mScene.frame.size.width * 0.2, mScene.frame.size.height / 3)
-        controller_left = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        self.initposition_left = CGPointMake(mScene.frame.size.width * 0.30, mScene.frame.size.height / 2.85)
+        controller_left = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(45, 45))
         controller_left.name = "controller_left"
         controller_left.position = initposition_left
-        
-        target_left = SKSpriteNode(texture: SKTexture(imageNamed: "target"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        target_left = SKSpriteNode(texture: SKTexture(imageNamed: "target"), color: UIColor.clearColor(), size: CGSizeMake(40, 40))
         target_left.name = "target_left"
         target_left.position = initposition_left
         
@@ -46,12 +45,12 @@ class Controller: NSObject {
     
     func initRightController()
     {
-        self.initposition_right = CGPointMake(mScene.frame.size.width * 1.8, mScene.frame.size.height / 3)
-        controller_right = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        self.initposition_right = CGPointMake(mScene.frame.size.width * 1.90, mScene.frame.size.height / 2.85)
+        controller_right = SKSpriteNode(texture: SKTexture(imageNamed: "controller"), color: UIColor.clearColor(), size: CGSizeMake(45, 45))
         controller_right.name = "controller_right"
         controller_right.position = initposition_right
         
-        target_right = SKSpriteNode(texture: SKTexture(imageNamed: "target"), color: UIColor.clearColor(), size: CGSizeMake(30, 30))
+        target_right = SKSpriteNode(texture: SKTexture(imageNamed: "target"), color: UIColor.clearColor(), size: CGSizeMake(45, 45))
         target_right.name = "target_right"
         target_right.position = initposition_right
         
