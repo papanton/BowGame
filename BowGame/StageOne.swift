@@ -54,7 +54,7 @@ class StageOne: StageGameScene {
         setLabel(step1)
         self.UI.addChild(step1)
         
-        step2 = SKLabelNode(text: "2.Drag Here to Shoot!")
+        step2 = SKLabelNode(text: "2.Drag Indicator to Shoot!")
         step2.position = CGPointMake(self.size.width * 0.2, self.size.height * 0.4)
         setLabel(step2)
         
@@ -92,7 +92,7 @@ class StageOne: StageGameScene {
     override func addArrowPanel()
     {
         super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 0, flappy: 0, split: 2, ignore: 2)
+        panel.setArrowNum(10, bomb: 0, flappy: 1, split: 2, ignore: 2)
     }
     
     override func restartGame() {

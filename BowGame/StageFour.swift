@@ -60,7 +60,7 @@ class StageFour: StageGameScene
     override func addArrowPanel()
     {
         super.addArrowPanel()
-        panel.setArrowNum(10, bomb: 0, flappy: 0, split: 0, ignore: 0)
+        panel.setArrowNum(11, bomb: 0, flappy: 2, split: 1, ignore: 0)
     }
 
 }

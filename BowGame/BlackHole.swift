@@ -24,7 +24,7 @@ class BlackHole: Obstacle
              backhole1 = SKTexture(imageNamed: "BackHole1T")
              backhole2 = SKTexture(imageNamed: "BackHole2T")
         }
-  
+        
         physicsBody?.affectedByGravity = false
       
         let animation = SKAction.animateWithTextures([backhole1,backhole2], timePerFrame: 0.2)

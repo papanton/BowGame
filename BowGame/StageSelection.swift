@@ -15,7 +15,7 @@ class StageSelection: SKScene {
     
     var mainmenu: StartGameScene!
     var dataFilePath: String!
-    let stagesLocked = false //for testing
+    let stagesLocked = true //for testing
     var currentStage: Int!
     var mute: SKSpriteNode!
     var proceed:SKSpriteNode!
@@ -285,7 +285,7 @@ class StageSelection: SKScene {
         if currentStage >= 3 || !stagesLocked {
             
             let stageTitle = "Stage 3"
-            let stageDescription = "Make the cannons dissappear by shotting the boss with the bomb arrow. Two birds with one stone!"
+            let stageDescription = "Be smart about your arrows. Use the bomb arrow to destroy the cannons!"
             let stagePicture = UIImage(named: "whiteboss")
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -326,7 +326,7 @@ class StageSelection: SKScene {
 
         if currentStage >= 5  || !stagesLocked {
             let stageTitle = "Stage 5"
-            let stageDescription = "Lets test out your shotting accurassy. Shoot the right target to reach the boss"
+            let stageDescription = "Feeling lucky? One of them is the right portal the rest are dummys. Play our version of russion roulette"
             let stagePicture = UIImage(named: "beeboss")
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -347,7 +347,7 @@ class StageSelection: SKScene {
         if currentStage >= 6 || !stagesLocked {
             
             let stageTitle = "Stage 6"
-            let stageDescription = "One of them is the correct one, the other ones are dummys. Test your skills by shooting them all!"
+            let stageDescription = "One of them is the correct one, the other ones are dummys. Hint use the reflective surfaces to reach the unreachable "
             let stagePicture = UIImage(named: "pigboss1")
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)
@@ -367,7 +367,7 @@ class StageSelection: SKScene {
         if currentStage >= 7 || !stagesLocked  {
             
             let stageTitle = "Stage 7"
-            let stageDescription = "The flappy arrow shines in against flying bees. Make the most out of them!"
+            let stageDescription = "The flappy arrow shines against flying bees. Make the most out of them!"
             let stagePicture = UIImage(named: "beeboss")
             
             showInfo(stageTitle, stageDescription: stageDescription, stageImage: stagePicture!)

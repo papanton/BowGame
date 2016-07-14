@@ -88,7 +88,7 @@
 
 /* Begin PBXFileReference section */
 		134A559F1BA503FA00C09E99 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		1369CA8B1B9DFFE400895E88 /* BowGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BowGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1369CA8B1B9DFFE400895E88 /* Archer School.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Archer School.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1369CA8F1B9DFFE400895E88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1369CA991B9DFFE400895E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1369CA9B1B9DFFE400895E88 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 		1369CA8C1B9DFFE400895E88 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1369CA8B1B9DFFE400895E88 /* BowGame.app */,
+				1369CA8B1B9DFFE400895E88 /* Archer School.app */,
 				1369CAA41B9DFFE400895E88 /* BowGameTests.xctest */,
 			);
 			name = Products;
@@ -405,7 +405,7 @@
 			);
 			name = BowGame;
 			productName = BowGame;
-			productReference = 1369CA8B1B9DFFE400895E88 /* BowGame.app */;
+			productReference = 1369CA8B1B9DFFE400895E88 /* Archer School.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1369CAA31B9DFFE400895E88 /* BowGameTests */ = {
@@ -693,7 +693,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Archer School";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -717,7 +717,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "a.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Archer School";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BowGame/AppWarpHelperClasses/BowGame-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
